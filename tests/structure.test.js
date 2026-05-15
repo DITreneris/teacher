@@ -121,7 +121,7 @@ function run() {
   else failed++;
   if (assert(html.includes('terms.html'), 'Link to terms.html')) passed++;
   else failed++;
-  if (assert(html.includes('lang="en"'), 'HTML lang="en"')) passed++;
+  if (assert(html.includes('lang="en-US"'), 'HTML lang="en-US" on index.html')) passed++;
   else failed++;
 
   // --- SEO basics ---
@@ -131,9 +131,35 @@ function run() {
   else failed++;
   if (assert(html.includes('property="og:title"'), 'Open Graph title present')) passed++;
   else failed++;
+  if (assert(html.includes('property="og:image:width"') && html.includes('property="og:image:height"'), 'Open Graph image dimensions present')) passed++;
+  else failed++;
   if (assert(html.includes('name="robots"') && html.includes('index, follow'), 'Meta robots index, follow')) passed++;
   else failed++;
   if (assert(html.includes('rel="sitemap"'), 'Sitemap link in head')) passed++;
+  else failed++;
+  if (assert(html.includes('rel="manifest"'), 'Web app manifest link in head')) passed++;
+  else failed++;
+  if (assert(html.includes('rel="apple-touch-icon"'), 'Apple touch icon link in head')) passed++;
+  else failed++;
+  if (assert(html.includes('rel="mask-icon"'), 'Mask icon link in head')) passed++;
+  else failed++;
+
+  // --- Structured data (JSON-LD) ---
+  if (assert(html.includes('<script type="application/ld+json">'), 'JSON-LD script tag present')) passed++;
+  else failed++;
+  if (assert(html.includes('"Organization"'), 'JSON-LD Organization entity')) passed++;
+  else failed++;
+  if (assert(html.includes('"SoftwareApplication"'), 'JSON-LD SoftwareApplication entity')) passed++;
+  else failed++;
+  if (assert(html.includes('"FAQPage"'), 'JSON-LD FAQPage entity')) passed++;
+  else failed++;
+  if (assert(html.includes('"WebSite"'), 'JSON-LD WebSite entity')) passed++;
+  else failed++;
+  if (assert(html.includes('"priceCurrency": "USD"'), 'JSON-LD offer in USD')) passed++;
+  else failed++;
+
+  // --- Subresource Integrity ---
+  if (assert(html.includes('integrity="sha384-') && html.includes('crossorigin="anonymous"'), 'Lucide CDN script uses SRI')) passed++;
   else failed++;
 
   const robotsTxt = readFile(path.join(__dirname, '..', 'robots.txt'));
@@ -141,17 +167,83 @@ function run() {
   else failed++;
   if (assert(robotsTxt && robotsTxt.includes('github.com/DITreneris/teacher'), 'robots.txt repo comment')) passed++;
   else failed++;
+  if (assert(robotsTxt && robotsTxt.includes('OAI-SearchBot'), 'robots.txt declares OAI-SearchBot policy')) passed++;
+  else failed++;
+  if (assert(robotsTxt && robotsTxt.includes('PerplexityBot'), 'robots.txt declares PerplexityBot policy')) passed++;
+  else failed++;
+  if (assert(robotsTxt && robotsTxt.includes('GPTBot'), 'robots.txt declares GPTBot policy')) passed++;
+  else failed++;
+  if (assert(robotsTxt && robotsTxt.includes('Google-Extended'), 'robots.txt declares Google-Extended policy')) passed++;
+  else failed++;
+  if (assert(robotsTxt && robotsTxt.includes('ClaudeBot'), 'robots.txt declares ClaudeBot policy')) passed++;
+  else failed++;
 
   const sitemapXml = readFile(path.join(__dirname, '..', 'sitemap.xml'));
   if (assert(sitemapXml && sitemapXml.includes('<lastmod>'), 'sitemap.xml has lastmod')) passed++;
+  else failed++;
+  if (assert(sitemapXml && sitemapXml.includes('xmlns:image='), 'sitemap.xml declares image namespace')) passed++;
+  else failed++;
+  if (assert(sitemapXml && sitemapXml.includes('og-image.png'), 'sitemap.xml references og-image.png')) passed++;
   else failed++;
 
   const humansTxt = readFile(path.join(__dirname, '..', 'humans.txt'));
   if (assert(humansTxt && humansTxt.length > 0, 'humans.txt exists')) passed++;
   else failed++;
 
+  const llmsTxt = readFile(path.join(__dirname, '..', 'llms.txt'));
+  if (assert(llmsTxt && llmsTxt.length > 0, 'llms.txt exists')) passed++;
+  else failed++;
+  if (assert(llmsTxt && llmsTxt.startsWith('# Classroom Prompt Builder'), 'llms.txt starts with product H1')) passed++;
+  else failed++;
+  if (assert(
+    llmsTxt &&
+    llmsTxt.includes('LESSON') &&
+    llmsTxt.includes('ASSESSMENT') &&
+    llmsTxt.includes('TASKS') &&
+    llmsTxt.includes('PRESENTATION') &&
+    llmsTxt.includes('STRATEGY'),
+    'llms.txt lists all 5 modes'
+  )) passed++;
+  else failed++;
+
+  const securityTxt = readFile(path.join(__dirname, '..', '.well-known', 'security.txt'));
+  if (assert(securityTxt && securityTxt.includes('Contact:'), '.well-known/security.txt has Contact')) passed++;
+  else failed++;
+  if (assert(securityTxt && securityTxt.includes('Expires:'), '.well-known/security.txt has Expires')) passed++;
+  else failed++;
+
+  const manifest = readFile(path.join(__dirname, '..', 'manifest.webmanifest'));
+  if (assert(manifest && manifest.includes('"name": "Classroom Prompt Builder"'), 'manifest.webmanifest exists with product name')) passed++;
+  else failed++;
+
+  const notFoundHtml = readFile(path.join(__dirname, '..', '404.html'));
+  if (assert(notFoundHtml && notFoundHtml.includes('noindex'), '404.html has noindex meta')) passed++;
+  else failed++;
+  if (assert(notFoundHtml && notFoundHtml.includes('href="index.html"'), '404.html links back to index')) passed++;
+  else failed++;
+
+  const ogImage = path.join(__dirname, '..', 'og-image.png');
+  if (assert(fs.existsSync(ogImage), 'og-image.png exists at repo root')) passed++;
+  else failed++;
+
+  const appleTouch = path.join(__dirname, '..', 'apple-touch-icon.png');
+  if (assert(fs.existsSync(appleTouch), 'apple-touch-icon.png exists at repo root')) passed++;
+  else failed++;
+
   const deployMd = readFile(path.join(__dirname, '..', 'DEPLOY.md'));
   if (assert(deployMd && deployMd.includes('DITreneris/teacher'), 'DEPLOY.md references teacher repo')) passed++;
+  else failed++;
+
+  // --- Legal pages: lang and JSON-LD ---
+  const privacyHtml = readFile(PRIVACY_PATH);
+  const termsHtml = readFile(TERMS_PATH);
+  if (assert(privacyHtml && privacyHtml.includes('lang="en-US"'), 'privacy.html uses lang="en-US"')) passed++;
+  else failed++;
+  if (assert(termsHtml && termsHtml.includes('lang="en-US"'), 'terms.html uses lang="en-US"')) passed++;
+  else failed++;
+  if (assert(privacyHtml && privacyHtml.includes('"BreadcrumbList"'), 'privacy.html has BreadcrumbList JSON-LD')) passed++;
+  else failed++;
+  if (assert(termsHtml && termsHtml.includes('"BreadcrumbList"'), 'terms.html has BreadcrumbList JSON-LD')) passed++;
   else failed++;
 
   // --- ARIA ---

@@ -24,6 +24,7 @@ The single documentation navigation hub after `README.md`.
 ## Code navigation
 
 - [index.html](../index.html)
+- [404.html](../404.html)
 - [generator.js](../generator.js)
 - [copy.js](../copy.js)
 - [style.css](../style.css)
@@ -32,6 +33,11 @@ The single documentation navigation hub after `README.md`.
 - [robots.txt](../robots.txt)
 - [sitemap.xml](../sitemap.xml)
 - [humans.txt](../humans.txt)
+- [llms.txt](../llms.txt)
+- [.well-known/security.txt](../.well-known/security.txt)
+- [manifest.webmanifest](../manifest.webmanifest)
+- [og-image.png](../og-image.png)
+- [apple-touch-icon.png](../apple-touch-icon.png)
 - [DEPLOY.md](../DEPLOY.md)
 - [tests/structure.test.js](../tests/structure.test.js)
 - [tests/e2e/core-flow.spec.js](../tests/e2e/core-flow.spec.js)

@@ -1,0 +1,48 @@
+# Classroom Prompt Builder
+
+> Free, no-account web app that helps US K-12 teachers build classroom-ready AI prompts for ChatGPT, Claude, and Gemini across five modes: lesson plans, assessments, tasks, presentations, and teaching strategy.
+
+## Key facts
+
+- Operator: Prompt Anatomy
+- Site: https://promptanatomy.online
+- Parent brand: https://www.promptanatomy.app
+- Repository: https://github.com/DITreneris/teacher
+- Contact: info@promptanatomy.app
+- License: site content all-rights-reserved; prompts produced by users belong to those users
+- Pricing: free, no purchases, no subscriptions, no account
+- Audience: US K-12 teachers
+- Data: no personal data collected; localStorage only; cookieless aggregate analytics when enabled by the hosting platform
+
+## Canonical pages
+
+- Home: https://promptanatomy.online/
+- Privacy Policy: https://promptanatomy.online/privacy.html
+- Terms of Use: https://promptanatomy.online/terms.html
+
+## Modes
+
+- LESSON - full lesson plan (intro, activities, reflection)
+- ASSESSMENT - knowledge check (quiz plus open questions)
+- TASKS - classwork and homework, differentiated
+- PRESENTATION - slide outline
+- STRATEGY - teaching method and weekly priorities
+
+## Trust and safety
+
+- No student PII collected by the Service
+- FERPA-friendly stance documented in Privacy Policy section 5
+- Responsible AI disclaimer in Terms of Use section 3: AI outputs must be verified and are not for high-stakes decisions
+
+## Limitations
+
+- The Service does NOT call any AI API. It only constructs the prompt text.
+- Users must paste prompts into ChatGPT, Claude, or Gemini themselves.
+- Output quality depends on the third-party AI tool used.
+- The Service does not store or transmit student records.
+
+## Optional reads
+
+- Open Graph image: https://promptanatomy.online/og-image.png
+- Sitemap: https://promptanatomy.online/sitemap.xml
+- Security contact: https://promptanatomy.online/.well-known/security.txt

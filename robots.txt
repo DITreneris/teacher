@@ -1,10 +1,73 @@
-# Classroom Prompt Builder — https://promptanatomy.online
+# Classroom Prompt Builder - https://promptanatomy.online
 # Source repo: https://github.com/DITreneris/teacher
 # Static site on Vercel. No login, no paywall, no user-generated URLs.
+# Stance: allow all crawlers. Citation/search bots and training bots are
+# both explicitly enumerated below so the policy is auditable. Review
+# quarterly against https://github.com/ai-robots-txt/ai.robots.txt.
+# Last reviewed: 2026-05-15
 
+# --- Default: allow everyone ---
 User-agent: *
 Allow: /
 Disallow:
 
-# Production sitemap (canonical host only)
+# --- AI search / citation bots (explicitly allowed) ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# --- Generative training crawlers (allowed) ---
+# To tighten the IP stance later, change `Allow: /` to `Disallow: /`
+# for any bot in this block without affecting the citation bots above.
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# --- Sitemap (production, canonical host only) ---
 Sitemap: https://promptanatomy.online/sitemap.xml

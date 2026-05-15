@@ -1,0 +1,16 @@
+{
+  "name": "Classroom Prompt Builder",
+  "short_name": "CPB",
+  "description": "Free AI prompt builder for US K-12 teachers. Works with ChatGPT, Claude, and Gemini. No account required.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#0F2A44",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "lang": "en-US",
+  "categories": ["education", "productivity"]
+}

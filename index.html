@@ -1,31 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers | Prompt Anatomy</title>
     <meta name="description" content="Build classroom-ready AI prompts in minutes. Lesson plans, assessments, tasks, presentations, and teaching strategy &mdash; no account, no signup. Works with ChatGPT, Claude, and Gemini.">
+    <meta name="author" content="Prompt Anatomy">
+    <meta name="application-name" content="Classroom Prompt Builder">
+    <meta name="apple-mobile-web-app-title" content="CPB">
     <meta name="theme-color" content="#0F2A44">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="https://promptanatomy.online/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://promptanatomy.online/sitemap.xml">
+    <link rel="alternate" type="text/plain" title="LLM-friendly summary" href="/llms.txt">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers">
     <meta property="og:description" content="Classroom-ready AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.">
     <meta property="og:url" content="https://promptanatomy.online/">
     <meta property="og:image" content="https://promptanatomy.online/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Classroom Prompt Builder &mdash; AI Prompts for K-12 Teachers, by Prompt Anatomy">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="Prompt Anatomy">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers">
     <meta name="twitter:description" content="Classroom-ready AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.">
     <meta name="twitter:image" content="https://promptanatomy.online/og-image.png">
+    <meta name="twitter:image:alt" content="Classroom Prompt Builder &mdash; AI Prompts for K-12 Teachers, by Prompt Anatomy">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" href="favicon.svg" color="#0F2A44">
+    <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://promptanatomy.online/#org",
+                "name": "Prompt Anatomy",
+                "alternateName": "Classroom Prompt Builder",
+                "url": "https://promptanatomy.online/",
+                "logo": "https://promptanatomy.online/og-image.png",
+                "email": "info@promptanatomy.app",
+                "sameAs": [
+                    "https://www.promptanatomy.app/",
+                    "https://t.me/prompt_anatomy",
+                    "https://github.com/DITreneris/teacher"
+                ]
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://promptanatomy.online/#website",
+                "url": "https://promptanatomy.online/",
+                "name": "Classroom Prompt Builder",
+                "publisher": { "@id": "https://promptanatomy.online/#org" },
+                "inLanguage": "en-US"
+            },
+            {
+                "@type": "SoftwareApplication",
+                "@id": "https://promptanatomy.online/#app",
+                "name": "Classroom Prompt Builder",
+                "applicationCategory": "EducationalApplication",
+                "applicationSubCategory": "AI Prompt Builder",
+                "operatingSystem": "Any (web browser)",
+                "url": "https://promptanatomy.online/",
+                "description": "Free, no-account web tool that helps US K-12 teachers generate classroom-ready AI prompts for ChatGPT, Claude, and Gemini across five modes: lesson plans, assessments, tasks, presentations, and teaching strategy.",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+                "featureList": [
+                    "Lesson plan prompt builder",
+                    "Assessment prompt builder",
+                    "Classwork and homework prompt builder",
+                    "Presentation outline prompt builder",
+                    "Teaching strategy prompt builder",
+                    "Grades 1 to 12",
+                    "Local-only session storage",
+                    "No account required"
+                ],
+                "audience": { "@type": "EducationalAudience", "educationalRole": "teacher" },
+                "isAccessibleForFree": true,
+                "publisher": { "@id": "https://promptanatomy.online/#org" }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Is Classroom Prompt Builder free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. The tool is free, requires no account, and accepts no payments."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which AI tools does it work with?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "It generates prompts that you can paste into ChatGPT, Claude, or Gemini. The tool itself does not call any AI API."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Does it collect student data?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. The Service does not collect personal information or student PII. Theme preference, grade selection, and up to five saved sessions are stored only in the browser's localStorage."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Who is it for?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "US K-12 teachers planning lessons, assessments, tasks, presentations, or instructional strategy."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -105,9 +206,8 @@
 
             <!-- Grade Selector -->
             <div class="depth-bar">
-                <span class="depth-label"><i data-lucide="graduation-cap" class="icon icon--sm"></i> Grade</span>
                 <div class="depth-options">
-                    <label class="field-label" for="classLevelSelect">Pick a grade (1&ndash;12)</label>
+                    <label class="field-label" for="classLevelSelect"><i data-lucide="graduation-cap" class="icon icon--sm"></i> Pick a grade (1&ndash;12)</label>
                     <select id="classLevelSelect" class="field-select" aria-label="Grade selection">
                         <option value="1">Grade 1</option>
                         <option value="2">Grade 2</option>
@@ -302,7 +402,7 @@
                             <p class="ops-output-chars">Characters: <strong id="outputCharCount">0</strong></p>
                             <p>Edit the form, then paste into ChatGPT, Claude, or Gemini.</p>
                             <button class="ops-output-cta" id="outputCopyCta" aria-label="Copy prompt">
-                                <span>COPY PROMPT</span>
+                                <span>Copy prompt</span>
                                 <i data-lucide="arrow-right" class="icon icon--md"></i>
                             </button>
                             <div class="ops-tool-launchers" role="group" aria-label="AI tool selection">
@@ -356,7 +456,7 @@
                     <span class="collapsible-title">Template library</span>
                     <span class="collapsible-value">Ready-to-use prompt templates &mdash; apply to the form or copy.</span>
                     <span class="collapsible-count" id="libraryTemplateCount">6 templates</span>
-                    <span class="collapsible-chevron" aria-hidden="true">&#9662;</span>
+                    <i data-lucide="chevron-down" class="icon icon--sm collapsible-chevron" aria-hidden="true"></i>
                 </button>
             </h2>
             <div class="library-body" id="libraryBody" hidden>
@@ -370,10 +470,10 @@
         <section class="rules-section" id="rules">
             <h2 class="collapsible-heading">
                 <button class="collapsible-toggle" id="rulesToggle" type="button" aria-expanded="false" aria-controls="rulesBody">
-                    <span class="step-badge" aria-hidden="true"><i data-lucide="shield-check" class="icon icon--sm"></i></span>
+                    <span class="step-badge" aria-hidden="true">5</span>
                     <span class="collapsible-title">Lesson quality principles</span>
                     <span class="collapsible-value">Built-in decision rules &mdash; every prompt follows these principles.</span>
-                    <span class="collapsible-chevron" aria-hidden="true">&#9662;</span>
+                    <i data-lucide="chevron-down" class="icon icon--sm collapsible-chevron" aria-hidden="true"></i>
                 </button>
             </h2>
             <div class="rules-body" id="rulesBody" hidden>
@@ -418,7 +518,10 @@
         <span class="toast-progress" id="toastProgress" aria-hidden="true"></span>
     </div>
 
-    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"
+            integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
     <script src="generator.js"></script>
     <script src="copy.js"></script>
 </body>

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     <url>
         <loc>https://promptanatomy.online/</loc>
         <lastmod>2026-05-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://promptanatomy.online/og-image.png</image:loc>
+            <image:title>Classroom Prompt Builder</image:title>
+            <image:caption>AI Prompts for K-12 Teachers, by Prompt Anatomy</image:caption>
+        </image:image>
     </url>
     <url>
         <loc>https://promptanatomy.online/privacy.html</loc>

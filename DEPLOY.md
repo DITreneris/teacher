@@ -60,13 +60,23 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 
 | File | URL | Purpose |
 |------|-----|---------|
-| `robots.txt` | `/robots.txt` | Allow all crawlers; points to sitemap |
-| `sitemap.xml` | `/sitemap.xml` | Lists `/`, `/privacy.html`, `/terms.html` |
-| `humans.txt` | `/humans.txt` | Optional human-readable site credits |
-| Canonical | `<link rel="canonical">` on each HTML page | Always `https://promptanatomy.online/...` |
-| `meta robots` | `index, follow` on public pages | Indexable marketing + tool pages |
+| `robots.txt` | `/robots.txt` | Explicit policy for citation bots (OAI-SearchBot, ChatGPT-User, PerplexityBot, Google-Extended, Bingbot, ClaudeBot, Applebot, ...) and training bots (GPTBot, CCBot, anthropic-ai, Bytespider, Diffbot, Amazonbot, cohere-ai); points to sitemap. Stance: allow all. Review quarterly. |
+| `sitemap.xml` | `/sitemap.xml` | Lists `/`, `/privacy.html`, `/terms.html`; declares the Google image extension and references `og-image.png`. |
+| `humans.txt` | `/humans.txt` | Human-readable site credits. |
+| `llms.txt` | `/llms.txt` | Concise, machine-readable product brief for AI engines (operator, contact, pricing, audience, modes, limitations). |
+| `.well-known/security.txt` | `/.well-known/security.txt` | RFC 9116 security contact. |
+| `manifest.webmanifest` | `/manifest.webmanifest` | Web app manifest for browser / OS install hints. |
+| `og-image.png` | `/og-image.png` | 1200 x 630 social preview. Served with `Cross-Origin-Resource-Policy: cross-origin` so Facebook / LinkedIn / X / Slack can embed it. |
+| `apple-touch-icon.png` | `/apple-touch-icon.png` | 180 x 180 home-screen icon. |
+| `404.html` | served by Vercel for unmatched routes | Branded 404 with `noindex, follow`. |
+| Canonical | `<link rel="canonical">` on each HTML page | Always `https://promptanatomy.online/...`. |
+| `meta robots` | `index, follow` on public pages | Indexable marketing + tool pages. |
+| Structured data | JSON-LD in `<head>` | `Organization`, `WebSite`, `SoftwareApplication`, `FAQPage` on `index.html`; `BreadcrumbList` on `privacy.html` and `terms.html`. |
+| Security headers | `vercel.json` `/(.*)` block | HSTS (2 years, preload), COOP, CORP, CSP-Report-Only, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy. |
 
 **Important:** URLs use `.html` extensions (`privacy.html`, `terms.html`). `vercel.json` sets `cleanUrls: false` so canonical URLs, sitemap entries, and tests stay aligned.
+
+**CSP rollout note:** the Content-Security-Policy header is currently `Content-Security-Policy-Report-Only`. After one week of clean reports in production, switch the header key to `Content-Security-Policy` to enforce it.
 
 ---
 

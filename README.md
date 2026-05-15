@@ -7,7 +7,7 @@ A free, single-page AI prompt builder for K-12 teachers. Pick a mode, fill in a 
 | **Repository** | [github.com/DITreneris/teacher](https://github.com/DITreneris/teacher) |
 | **Production** | [promptanatomy.online](https://promptanatomy.online/) |
 | **Parent brand** | [promptanatomy.app](https://www.promptanatomy.app/) |
-| **Status** | US MVP |
+| **Status** | US MVP (v1.0.1) |
 
 ## Quick start
 
