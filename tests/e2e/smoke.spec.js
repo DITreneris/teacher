@@ -21,7 +21,7 @@ for (const viewport of viewports) {
       await expect(page.locator('#form-assessment')).toBeVisible();
 
       await page.selectOption('#classLevelSelect', '10');
-      await expect(page.locator('#classBadge')).toHaveText(/10 klas[ėe]/i);
+      await expect(page.locator('#classBadge')).toHaveText(/Grade\s*10/i);
 
       const outputText = await page.locator('#opsOutput').innerText();
       expect(outputText.length).toBeGreaterThan(40);

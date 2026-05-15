@@ -23,32 +23,32 @@
     var DEFAULT_SOT = {
         modes: {
             LESSON: {
-                label: 'PAMOKA',
-                desc: 'Pilnas pamokos planas',
+                label: 'LESSON',
+                desc: 'Full lesson plan',
                 formId: 'form-lesson',
                 fields: ['topic', 'duration', 'goal', 'context', 'question']
             },
             ASSESSMENT: {
-                label: 'PATIKRINIMAS',
-                desc: 'Žinių patikrinimo užklausa',
+                label: 'ASSESSMENT',
+                desc: 'Knowledge check',
                 formId: 'form-assessment',
                 fields: ['topic', 'format', 'difficulty', 'question']
             },
             TASKS: {
-                label: 'UŽDUOTYS',
-                desc: 'Klasės ir namų darbai',
+                label: 'TASKS',
+                desc: 'Class and homework',
                 formId: 'form-tasks',
                 fields: ['topic', 'task_type', 'constraints', 'question']
             },
             PRESENTATION: {
-                label: 'PREZENTACIJA',
-                desc: 'Skaidrių struktūros užklausa',
+                label: 'PRESENTATION',
+                desc: 'Slide outline',
                 formId: 'form-presentation',
                 fields: ['topic', 'slides', 'style', 'question']
             },
             STRATEGY: {
-                label: 'STRATEGIJA',
-                desc: 'Mokymo metodika ir planas',
+                label: 'STRATEGY',
+                desc: 'Method and priorities',
                 formId: 'form-strategy',
                 fields: ['topic', 'goal', 'challenges', 'question']
             }
@@ -56,53 +56,53 @@
         libraryPrompts: [
             {
                 id: 'lesson_plan',
-                title: 'Pilnas pamokos planas',
-                desc: 'Nuo įvado iki refleksijos',
+                title: 'Full lesson plan',
+                desc: 'From intro to reflection',
                 icon: 'book-open',
-                prompt: 'Rolė: esi patyręs mokytojo asistentas, remkis formoje pateiktais duomenimis.\nOUTPUT:\n- Pamokos eiga etapais: įvadas, pagrindinė dalis, refleksija.\n- 3 aiškios veiklos su trukme ir mokytojo instrukcija.\n- 5 diskusijos klausimai mokinių įsitraukimui.\n- Praktinė užduotis su vertinimo kriterijais.'
+                prompt: 'Role: You are an experienced teaching assistant. Use the data from the form.\nOUTPUT:\n- Lesson flow in stages: intro, main activities, reflection.\n- 3 clear activities with timing and teacher instructions.\n- 5 discussion questions to engage students.\n- A hands-on task with assessment criteria.'
             },
             {
                 id: 'assessment_quiz',
-                title: 'Greitas patikrinimas',
-                desc: 'Testas ir atviri klausimai',
+                title: 'Quick assessment',
+                desc: 'Quiz plus open questions',
                 icon: 'clipboard-check',
-                prompt: 'Rolė: esi vertinimo dizaino asistentas, remkis formoje pateiktais duomenimis.\nOUTPUT:\n- Multiple choice klausimai (4 variantai, 1 teisingas), kiekius pritaikyk pagal klasę ir sudėtingumą.\n- Atviri klausimai, orientuoti į supratimą ir taikymą.\n- Aiškus atsakymų raktas.\n- Trumpi vertinimo kriterijai atviriems klausimams.'
+                prompt: 'Role: You are an assessment design assistant. Use the data from the form.\nOUTPUT:\n- Multiple choice questions (4 options, 1 correct); scale the count to the grade and difficulty.\n- Open-ended questions focused on understanding and application.\n- A clear answer key.\n- Short scoring criteria for the open questions.'
             },
             {
                 id: 'homework_tasks',
-                title: 'Diferencijuotos užduotys',
-                desc: 'Silpnesniems, bazinis, stipresniems',
+                title: 'Differentiated assignments',
+                desc: 'Support, core, and stretch',
                 icon: 'pencil-ruler',
-                prompt: 'Rolė: esi diferencijuotų užduočių kūrimo asistentas, remkis formos duomenimis.\nOUTPUT:\n- Užduotis silpnesniems su aiškia pagalbos užuomina.\n- Bazinė užduotis visai klasei.\n- Išplėsta užduotis stipresniems.\n- Vertinimo kriterijai kiekvienam lygiui.'
+                prompt: 'Role: You are a differentiated assignment designer. Use the data from the form.\nOUTPUT:\n- A support-level task with a clear scaffolding hint.\n- A core task for the whole class.\n- A stretch task for advanced students.\n- Assessment criteria for each level.'
             },
             {
                 id: 'presentation_outline',
-                title: 'Prezentacijos struktūra',
-                desc: 'Skaidrių planas ir tekstas',
+                title: 'Presentation outline',
+                desc: 'Slide plan with talking points',
                 icon: 'presentation',
-                prompt: 'Rolė: esi edukacinių skaidrių struktūros asistentas, remkis formos duomenimis.\nOUTPUT:\n- Skaidrių planas numeruotu sąrašu.\n- Kiekvienai skaidrei: tikslas, 2-3 punktai, vizualinė idėja.\n- Nuoseklus perėjimas tarp skaidrių.\n- Pabaigoje vienas refleksijos klausimas mokiniams.'
+                prompt: 'Role: You are an educational slide-structure assistant. Use the data from the form.\nOUTPUT:\n- A numbered slide outline.\n- For each slide: goal, 2-3 bullets, one visual idea.\n- Smooth transitions between slides.\n- One reflection question for students at the end.'
             },
             {
                 id: 'teaching_strategy',
-                title: 'Mokymo strategija',
-                desc: 'Metodika ir savaitės fokusas',
+                title: 'Teaching strategy',
+                desc: 'Method and weekly focus',
                 icon: 'brain',
-                prompt: 'Rolė: esi mokymo strategijos asistentas, remkis formoje nurodytu tikslu ir iššūkiais.\nOUTPUT:\n- 3 prioritetiniai metodiniai sprendimai.\n- Trumpa veiklų seka savaitei.\n- Rizikos ir prevenciniai veiksmai.\n- 2-3 pažangos matavimo rodikliai.'
+                prompt: 'Role: You are a teaching-strategy assistant. Use the goal and challenges from the form.\nOUTPUT:\n- 3 priority methodological moves.\n- A short weekly activity sequence.\n- Risks and preventive actions.\n- 2-3 progress indicators.'
             },
             {
                 id: 'lesson_reflection',
-                title: 'Pamokos refleksija',
-                desc: 'Kas pavyko ir ką tobulinti',
+                title: 'Lesson reflection',
+                desc: 'What worked, what to improve',
                 icon: 'refresh-ccw',
-                prompt: 'Rolė: esi refleksijos ir kokybės gerinimo asistentas, remkis formos duomenimis.\nOUTPUT:\n- 3 dalykai, kuriuos verta kartoti.\n- 3 dalykai, kuriuos verta keisti.\n- 5 žingsnių korekcijos planas kitai pamokai.\n- Viena trumpa mokytojo savirefleksijos rekomendacija.'
+                prompt: 'Role: You are a reflection and quality-improvement assistant. Use the data from the form.\nOUTPUT:\n- 3 things worth repeating.\n- 3 things worth changing.\n- A 5-step adjustment plan for the next lesson.\n- One short self-reflection prompt for the teacher.'
             }
         ],
         rules: [
-            { text: 'Užklausa turi vesti į aiškų, pritaikomą pamokos rezultatą', icon: 'check-circle' },
-            { text: 'Aiškumas > sudėtingumas: vienas režimas, vienas tikslas', icon: 'check-circle' },
-            { text: 'Kiekvienas veiksmas turi būti įgyvendinamas klasėje', icon: 'check-circle' },
-            { text: 'Vertinimo kriterijai turi būti apibrėžiami iš anksto', icon: 'check-circle' },
-            { text: 'Prezentacija MVP etape yra tik tekstinis užklausos rezultatas', icon: 'check-circle' }
+            { text: 'Every prompt should lead to a clear, classroom-ready outcome.', icon: 'check-circle' },
+            { text: 'Clarity beats complexity: one mode, one goal.', icon: 'check-circle' },
+            { text: 'Every activity must be doable in your classroom.', icon: 'check-circle' },
+            { text: 'Define assessment criteria up front.', icon: 'check-circle' },
+            { text: 'Presentation mode returns a text outline \u2014 bring it into your slides tool.', icon: 'check-circle' }
         ],
         copy: {},
         theme: {
@@ -257,26 +257,26 @@
     function buildLessonPrompt(data) {
         var parts = [];
 
-        parts.push('Rolė: esi patyręs mokytojo asistentas, kuriantis aiškų pamokos planą.');
+        parts.push('Role: You are an experienced teaching assistant building a clear lesson plan.');
         parts.push('');
 
-        parts.push('PAMOKOS KONTEKSTAS:');
-        parts.push('- Klasė: ' + activeClassLevel + ' klasė');
-        if (isFilled(data.topic)) parts.push('- Tema: ' + data.topic);
-        if (isFilled(data.duration)) parts.push('- Trukmė: ' + data.duration);
-        if (isFilled(data.goal)) parts.push('- Tikslas: ' + data.goal);
+        parts.push('LESSON CONTEXT:');
+        parts.push('- Grade: Grade ' + activeClassLevel);
+        if (isFilled(data.topic)) parts.push('- Topic: ' + data.topic);
+        if (isFilled(data.duration)) parts.push('- Length: ' + data.duration);
+        if (isFilled(data.goal)) parts.push('- Goal: ' + data.goal);
         parts.push('');
 
         if (isFilled(data.context)) {
-            parts.push('PAPILDOMAS KONTEKSTAS: ' + data.context);
+            parts.push('ADDITIONAL CONTEXT: ' + data.context);
             parts.push('');
         }
 
-        parts.push('UŽDUOTIS:');
+        parts.push('TASK:');
         if (isFilled(data.question)) {
             parts.push(data.question);
         } else {
-            parts.push('Paruošk pilną pamokos planą su įvadu, veiklomis, diskusijos klausimais, praktine užduotimi ir refleksija.');
+            parts.push('Build a full lesson plan with an intro, activities, discussion questions, a hands-on task, and reflection.');
         }
 
         return parts.join('\n');
@@ -285,19 +285,19 @@
     function buildAssessmentPrompt(data) {
         var parts = [];
 
-        parts.push('Rolė: esi vertinimo dizaino asistentas mokytojui.');
+        parts.push('Role: You are an assessment design assistant for a teacher.');
         parts.push('');
-        parts.push('PATIKRINIMO KONTEKSTAS:');
-        parts.push('- Klasė: ' + activeClassLevel + ' klasė');
-        if (isFilled(data.topic)) parts.push('- Tema: ' + data.topic);
-        if (isFilled(data.format)) parts.push('- Formatas: ' + data.format);
-        if (isFilled(data.difficulty)) parts.push('- Sudėtingumas: ' + data.difficulty);
+        parts.push('ASSESSMENT CONTEXT:');
+        parts.push('- Grade: Grade ' + activeClassLevel);
+        if (isFilled(data.topic)) parts.push('- Topic: ' + data.topic);
+        if (isFilled(data.format)) parts.push('- Format: ' + data.format);
+        if (isFilled(data.difficulty)) parts.push('- Difficulty: ' + data.difficulty);
         parts.push('');
-        parts.push('UŽDUOTIS:');
+        parts.push('TASK:');
         if (isFilled(data.question)) {
             parts.push(data.question);
         } else {
-            parts.push('Sukurk testą su multiple choice ir atvirais klausimais, pridėk atsakymų raktą.');
+            parts.push('Build a quiz with multiple choice and open-ended questions and include an answer key.');
         }
         return parts.join('\n');
     }
@@ -305,19 +305,19 @@
     function buildTasksPrompt(data) {
         var parts = [];
 
-        parts.push('Rolė: esi mokymosi užduočių kūrimo asistentas.');
+        parts.push('Role: You are a learning-task designer for a teacher.');
         parts.push('');
-        parts.push('UŽDUOČIŲ KONTEKSTAS:');
-        parts.push('- Klasė: ' + activeClassLevel + ' klasė');
-        if (isFilled(data.topic)) parts.push('- Tema: ' + data.topic);
-        if (isFilled(data.task_type)) parts.push('- Užduočių tipas: ' + data.task_type);
-        if (isFilled(data.constraints)) parts.push('- Apribojimai: ' + data.constraints);
+        parts.push('TASKS CONTEXT:');
+        parts.push('- Grade: Grade ' + activeClassLevel);
+        if (isFilled(data.topic)) parts.push('- Topic: ' + data.topic);
+        if (isFilled(data.task_type)) parts.push('- Task type: ' + data.task_type);
+        if (isFilled(data.constraints)) parts.push('- Constraints: ' + data.constraints);
         parts.push('');
-        parts.push('UŽDUOTIS:');
+        parts.push('TASK:');
         if (isFilled(data.question)) {
             parts.push(data.question);
         } else {
-            parts.push('Sukurk klasės, namų ir projektines užduotis su vertinimo kriterijais.');
+            parts.push('Build classwork, homework, and project tasks with rubric-style assessment criteria.');
         }
         return parts.join('\n');
     }
@@ -325,19 +325,19 @@
     function buildPresentationPrompt(data) {
         var parts = [];
 
-        parts.push('Rolė: esi edukacinių prezentacijų struktūros asistentas.');
+        parts.push('Role: You are an educational presentation-structure assistant.');
         parts.push('');
-        parts.push('PREZENTACIJOS KONTEKSTAS:');
-        parts.push('- Klasė: ' + activeClassLevel + ' klasė');
-        if (isFilled(data.topic)) parts.push('- Tema: ' + data.topic);
-        if (isFilled(data.slides)) parts.push('- Skaidrių kiekis: ' + data.slides);
-        if (isFilled(data.style)) parts.push('- Stilius: ' + data.style);
+        parts.push('PRESENTATION CONTEXT:');
+        parts.push('- Grade: Grade ' + activeClassLevel);
+        if (isFilled(data.topic)) parts.push('- Topic: ' + data.topic);
+        if (isFilled(data.slides)) parts.push('- Number of slides: ' + data.slides);
+        if (isFilled(data.style)) parts.push('- Style: ' + data.style);
         parts.push('');
-        parts.push('UŽDUOTIS:');
+        parts.push('TASK:');
         if (isFilled(data.question)) {
             parts.push(data.question);
         } else {
-            parts.push('Paruošk skaidrių planą, skaidrių tekstą ir vizualines idėjas. Integracijų su įrankiais nesiūlyk.');
+            parts.push('Build a slide outline with talking points and visual ideas. Do not propose third-party tool integrations.');
         }
         return parts.join('\n');
     }
@@ -345,19 +345,19 @@
     function buildStrategyPrompt(data) {
         var parts = [];
 
-        parts.push('Rolė: esi mokymo strategijos asistentas mokytojui.');
+        parts.push('Role: You are a teaching-strategy assistant for a teacher.');
         parts.push('');
-        parts.push('STRATEGIJOS KONTEKSTAS:');
-        parts.push('- Klasė: ' + activeClassLevel + ' klasė');
-        if (isFilled(data.topic)) parts.push('- Tema: ' + data.topic);
-        if (isFilled(data.goal)) parts.push('- Tikslas: ' + data.goal);
-        if (isFilled(data.challenges)) parts.push('- Iššūkiai: ' + data.challenges);
+        parts.push('STRATEGY CONTEXT:');
+        parts.push('- Grade: Grade ' + activeClassLevel);
+        if (isFilled(data.topic)) parts.push('- Topic: ' + data.topic);
+        if (isFilled(data.goal)) parts.push('- Goal: ' + data.goal);
+        if (isFilled(data.challenges)) parts.push('- Challenges: ' + data.challenges);
         parts.push('');
-        parts.push('UŽDUOTIS:');
+        parts.push('TASK:');
         if (isFilled(data.question)) {
             parts.push(data.question);
         } else {
-            parts.push('Pasiūlyk metodiką, veiklų modelį, diskusijų metodus ir aktyvaus mokymosi idėjas.');
+            parts.push('Suggest methods, an activity model, discussion techniques, and active-learning ideas.');
         }
         return parts.join('\n');
     }
@@ -389,7 +389,7 @@
         if (countEl) countEl.textContent = String(prompt.length);
 
         var classBadge = document.getElementById('classBadge');
-        if (classBadge) classBadge.textContent = activeClassLevel + ' klasė';
+        if (classBadge) classBadge.textContent = 'Grade ' + activeClassLevel;
 
         updateStickyCopyVisibility();
     }
@@ -509,7 +509,7 @@
             mode: activeMode,
             classLevel: activeClassLevel,
             data: JSON.parse(JSON.stringify(formData[activeMode])),
-            date: new Date().toLocaleString('lt-LT')
+            date: new Date().toLocaleString('en-US')
         };
 
         sessions.unshift(session);
@@ -556,38 +556,38 @@
                 clearTimeout(clearUndoTimer);
                 clearUndoTimer = null;
             }
-            if (clearBtn) clearBtn.innerHTML = '<i data-lucide="trash-2" class="icon icon--sm"></i> Ištrinti sesijas';
+            if (clearBtn) clearBtn.innerHTML = '<i data-lucide="trash-2" class="icon icon--sm"></i> Delete sessions';
             if (window.lucide && typeof window.lucide.createIcons === 'function' && clearBtn) {
                 window.lucide.createIcons({ root: clearBtn });
             }
             renderSessions();
-            showToastIfAvailable('Sesijos atkurtos.', 'success');
+            showToastIfAvailable('Sessions restored.', 'success');
             return;
         }
 
         var sessions = getSessions();
         if (!sessions.length) {
-            showToastIfAvailable('Sesijų sąrašas jau tuščias.', 'error');
+            showToastIfAvailable('Session list is already empty.', 'error');
             return;
         }
 
-        if (!window.confirm('Ar tikrai nori ištrinti visas išsaugotas sesijas?')) {
+        if (!window.confirm('Are you sure you want to delete all saved sessions?')) {
             return;
         }
 
         lastClearedSessions = sessions;
         try { localStorage.removeItem(SESSIONS_KEY); } catch (_) { /* ignore */ }
         renderSessions();
-        if (clearBtn) clearBtn.innerHTML = '<i data-lucide="rotate-ccw" class="icon icon--sm"></i> Atkurti sesijas';
+        if (clearBtn) clearBtn.innerHTML = '<i data-lucide="rotate-ccw" class="icon icon--sm"></i> Restore sessions';
         if (window.lucide && typeof window.lucide.createIcons === 'function' && clearBtn) {
             window.lucide.createIcons({ root: clearBtn });
         }
-        showToastIfAvailable('Sesijos ištrintos. Spausk „Atkurti sesijas“ per 8 s.', 'error');
+        showToastIfAvailable('Sessions deleted. Tap "Restore sessions" within 8s.', 'error');
 
         clearUndoTimer = setTimeout(function () {
             lastClearedSessions = null;
             clearUndoTimer = null;
-            if (clearBtn) clearBtn.innerHTML = '<i data-lucide="trash-2" class="icon icon--sm"></i> Ištrinti sesijas';
+            if (clearBtn) clearBtn.innerHTML = '<i data-lucide="trash-2" class="icon icon--sm"></i> Delete sessions';
             if (window.lucide && typeof window.lucide.createIcons === 'function' && clearBtn) {
                 window.lucide.createIcons({ root: clearBtn });
             }
@@ -610,7 +610,7 @@
                 '<span class="sessions-empty-icon" aria-hidden="true">' +
                     '<i data-lucide="sparkles" class="icon icon--sm"></i>' +
                 '</span>' +
-                'Sesijų dar nėra. Sukurk pirmą analizę.';
+                'No sessions yet. Save your first one.';
             list.appendChild(li);
             if (window.lucide && typeof window.lucide.createIcons === 'function') {
                 window.lucide.createIcons({ root: list });
@@ -623,14 +623,14 @@
             li.className = 'session-item';
             li.setAttribute('role', 'button');
             li.setAttribute('tabindex', '0');
-            li.setAttribute('aria-label', 'Įkelti ' + (MODES[session.mode] ? MODES[session.mode].label : session.mode) + ' sesiją nuo ' + session.date);
+            li.setAttribute('aria-label', 'Load ' + (MODES[session.mode] ? MODES[session.mode].label : session.mode) + ' session from ' + session.date);
 
             li.innerHTML =
                 '<div class="session-item-info">' +
                     '<span class="session-item-mode">' + escapeHtml(MODES[session.mode] ? MODES[session.mode].label : session.mode) + '</span>' +
                     '<span class="session-item-date">' + escapeHtml(session.date) + '</span>' +
                 '</div>' +
-                '<span class="session-item-load">Įkelti →</span>';
+                '<span class="session-item-load">Load \u2192</span>';
 
             li.addEventListener('click', function () { loadSession(session); });
             li.addEventListener('keydown', function (e) {
@@ -656,7 +656,7 @@
 
         var countEl = document.getElementById('libraryTemplateCount');
         if (countEl) {
-            countEl.textContent = LIBRARY_PROMPTS.length + ' šablonai';
+            countEl.textContent = LIBRARY_PROMPTS.length + ' templates';
         }
 
         grid.innerHTML = '';
@@ -676,13 +676,13 @@
                 '<div class="library-card-prompt">' + escapeHtml(item.prompt) + '</div>' +
                 '<div class="library-card-actions">' +
                     '<button type="button" class="library-btn library-btn--primary" data-library-apply="' + escapeHtml(item.id) + '">' +
-                        '<i data-lucide="file-input" class="icon icon--sm"></i> Taikyti formoje' +
+                        '<i data-lucide="file-input" class="icon icon--sm"></i> Apply to form' +
                     '</button>' +
                     '<button type="button" class="library-btn" data-library-copy="' + escapeHtml(item.id) + '">' +
-                        '<i data-lucide="copy" class="icon icon--sm"></i> Kopijuoti' +
+                        '<i data-lucide="copy" class="icon icon--sm"></i> Copy' +
                     '</button>' +
                 '</div>' +
-                '<p class="library-card-hint">Įrašo į lauką „Pagrindinis klausimas DI“ – redaguokite formoje.</p>';
+                '<p class="library-card-hint">Pastes into the "Main question for the AI" field \u2014 edit it in the form.</p>';
 
             grid.appendChild(card);
         });
@@ -718,14 +718,14 @@
             updateOutput();
             questionField.scrollIntoView({ behavior: 'smooth', block: 'center' });
             questionField.focus();
-            showToastIfAvailable('Šablonas įrašytas į klausimo lauką. Redaguokite formoje pagal poreikius.');
+            showToastIfAvailable('Template added to the question field. Edit it in the form.');
         }
     }
 
     function copyLibraryPrompt(id) {
         var item = LIBRARY_PROMPTS.find(function (p) { return p.id === id; });
         if (!item) return;
-        copyTextWithFallback(item.prompt, 'Šablonas nukopijuotas.');
+        copyTextWithFallback(item.prompt, 'Template copied.');
     }
 
     /* ===== RULES ===== */
@@ -775,7 +775,7 @@
             return Promise.resolve(false);
         }
         return navigator.share({
-            title: 'DI užklausa',
+            title: 'AI prompt',
             text: text
         }).then(function () {
             return true;
@@ -785,8 +785,8 @@
     }
 
     function copyTextWithFallback(text, successMessage) {
-        var okMessage = successMessage || 'Užklausa nukopijuota.';
-        var errorMessage = 'Nepavyko nukopijuoti. Pažymėk tekstą ir pasirink „Kopijuoti“.';
+        var okMessage = successMessage || 'Prompt copied.';
+        var errorMessage = 'Couldn\'t copy. Select the text and copy it manually.';
         if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
             navigator.clipboard.writeText(text).then(function () {
                 showToastIfAvailable(okMessage, 'success');
@@ -797,7 +797,7 @@
                 }
                 tryNativeShare(text).then(function (shared) {
                     if (shared) {
-                        showToastIfAvailable('Atidarytas bendrinimo langas.', 'success');
+                        showToastIfAvailable('Share dialog opened.', 'success');
                         return;
                     }
                     showToastIfAvailable(errorMessage, 'error');
@@ -812,7 +812,7 @@
         }
         tryNativeShare(text).then(function (shared) {
             if (shared) {
-                showToastIfAvailable('Atidarytas bendrinimo langas.', 'success');
+                showToastIfAvailable('Share dialog opened.', 'success');
                 return;
             }
             showToastIfAvailable(errorMessage, 'error');
@@ -823,11 +823,11 @@
         var toast = document.getElementById('toast');
         if (!toast) return;
         var msgEl = document.getElementById('toastMessage');
-        if (msgEl) msgEl.textContent = message !== undefined ? message : 'Užklausa nukopijuota.';
+        if (msgEl) msgEl.textContent = message !== undefined ? message : 'Prompt copied.';
         var tone = status === 'error' ? 'error' : 'success';
         toast.classList.remove('is-success', 'is-error');
         toast.classList.add(tone === 'error' ? 'is-error' : 'is-success');
-        toast.setAttribute('aria-label', tone === 'error' ? 'Klaidos pranešimas' : 'Sėkmės pranešimas');
+        toast.setAttribute('aria-label', tone === 'error' ? 'Error message' : 'Success message');
         var icon = toast.querySelector('.toast-icon .icon');
         if (icon) {
             icon.setAttribute('data-lucide', tone === 'error' ? 'alert-circle' : 'check');
@@ -847,7 +847,7 @@
 
     function doCopyOutput() {
         var text = getGeneratedPrompt();
-        copyTextWithFallback(text, 'Užklausa nukopijuota.');
+        copyTextWithFallback(text, 'Prompt copied.');
     }
 
     function openExternalTool(toolKey) {
@@ -901,8 +901,8 @@
         if (!btn) return;
         var isDark = theme === 'dark';
         btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-        btn.setAttribute('aria-label', isDark ? 'Perjungti į šviesų režimą' : 'Perjungti į tamsų režimą');
-        btn.setAttribute('title', 'Keisti spalvų režimą');
+        btn.setAttribute('aria-label', isDark ? 'Toggle light mode' : 'Toggle dark mode');
+        btn.setAttribute('title', 'Switch color mode');
     }
 
     function setupThemeToggle() {

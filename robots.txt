@@ -1,0 +1,10 @@
+# Classroom Prompt Builder — https://promptanatomy.online
+# Source repo: https://github.com/DITreneris/teacher
+# Static site on Vercel. No login, no paywall, no user-generated URLs.
+
+User-agent: *
+Allow: /
+Disallow:
+
+# Production sitemap (canonical host only)
+Sitemap: https://promptanatomy.online/sitemap.xml

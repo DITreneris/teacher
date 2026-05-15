@@ -1,8 +1,8 @@
 {
   "brand": {
-    "productName": "DI Pamokų Kūrėjas",
-    "edition": "Golden Standard MVP",
-    "positioning": "Vieno puslapio pamokų kūrimo įrankis mokytojui"
+    "productName": "Classroom Prompt Builder",
+    "edition": "US Edition",
+    "positioning": "Classroom-ready AI prompts for K\u201312 teachers. By Prompt Anatomy."
   },
   "colors": {
     "primaryYellow": "#F5C518",
@@ -25,40 +25,40 @@
     }
   },
   "copy": {
-    "heroTitle": "DI Pamokų Kūrėjas",
-    "heroSubtitle": "Sukurk aiškią DI užklausą pamokai, užduotims ar testui per kelias minutes.",
-    "heroCtaPrimary": "Sukurti DI užklausą pamokai",
-    "heroCtaSecondary": "Peržiūrėti pavyzdžius",
-    "heroCtaMeta": "Padeda mokytojams greičiau paruošti pamokas su DI."
+    "heroTitle": "Classroom Prompt Builder",
+    "heroSubtitle": "Classroom-ready AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.",
+    "heroCtaPrimary": "Build a lesson prompt",
+    "heroCtaSecondary": "Browse templates",
+    "heroCtaMeta": "Made for K\u201312 teachers. By Prompt Anatomy."
   },
   "modes": {
     "LESSON": {
-      "label": "PAMOKA",
-      "desc": "Pilnas pamokos planas",
+      "label": "LESSON",
+      "desc": "Full lesson plan",
       "formId": "form-lesson",
       "fields": ["topic", "duration", "goal", "context", "question"]
     },
     "ASSESSMENT": {
-      "label": "PATIKRINIMAS",
-      "desc": "Žinių patikrinimo užklausa",
+      "label": "ASSESSMENT",
+      "desc": "Knowledge check",
       "formId": "form-assessment",
       "fields": ["topic", "format", "difficulty", "question"]
     },
     "TASKS": {
-      "label": "UŽDUOTYS",
-      "desc": "Klasės ir namų darbai",
+      "label": "TASKS",
+      "desc": "Class and homework",
       "formId": "form-tasks",
       "fields": ["topic", "task_type", "constraints", "question"]
     },
     "PRESENTATION": {
-      "label": "PREZENTACIJA",
-      "desc": "Skaidrių struktūros užklausa",
+      "label": "PRESENTATION",
+      "desc": "Slide outline",
       "formId": "form-presentation",
       "fields": ["topic", "slides", "style", "question"]
     },
     "STRATEGY": {
-      "label": "STRATEGIJA",
-      "desc": "Mokymo metodika ir planas",
+      "label": "STRATEGY",
+      "desc": "Method and priorities",
       "formId": "form-strategy",
       "fields": ["topic", "goal", "challenges", "question"]
     }
@@ -94,52 +94,52 @@
   "libraryPrompts": [
     {
       "id": "lesson_plan",
-      "title": "Pilnas pamokos planas",
-      "desc": "Nuo įvado iki refleksijos",
+      "title": "Full lesson plan",
+      "desc": "From intro to reflection",
       "icon": "book-open",
-      "prompt": "Rolė: esi patyręs mokytojo asistentas, remkis formoje pateiktais duomenimis.\nOUTPUT:\n- Pamokos eiga etapais: įvadas, pagrindinė dalis, refleksija.\n- 3 aiškios veiklos su trukme ir mokytojo instrukcija.\n- 5 diskusijos klausimai mokinių įsitraukimui.\n- Praktinė užduotis su vertinimo kriterijais."
+      "prompt": "Role: You are an experienced teaching assistant. Use the data from the form.\nOUTPUT:\n- Lesson flow in stages: intro, main activities, reflection.\n- 3 clear activities with timing and teacher instructions.\n- 5 discussion questions to engage students.\n- A hands-on task with assessment criteria."
     },
     {
       "id": "assessment_quiz",
-      "title": "Greitas patikrinimas",
-      "desc": "Testas ir atviri klausimai",
+      "title": "Quick assessment",
+      "desc": "Quiz plus open questions",
       "icon": "clipboard-check",
-      "prompt": "Rolė: esi vertinimo dizaino asistentas, remkis formoje pateiktais duomenimis.\nOUTPUT:\n- Multiple choice klausimai (4 variantai, 1 teisingas), kiekius pritaikyk pagal klasę ir sudėtingumą.\n- Atviri klausimai, orientuoti į supratimą ir taikymą.\n- Aiškus atsakymų raktas.\n- Trumpi vertinimo kriterijai atviriems klausimams."
+      "prompt": "Role: You are an assessment design assistant. Use the data from the form.\nOUTPUT:\n- Multiple choice questions (4 options, 1 correct); scale the count to the grade and difficulty.\n- Open-ended questions focused on understanding and application.\n- A clear answer key.\n- Short scoring criteria for the open questions."
     },
     {
       "id": "homework_tasks",
-      "title": "Diferencijuotos užduotys",
-      "desc": "Silpnesniems, bazinis, stipresniems",
+      "title": "Differentiated assignments",
+      "desc": "Support, core, and stretch",
       "icon": "pencil-ruler",
-      "prompt": "Rolė: esi diferencijuotų užduočių kūrimo asistentas, remkis formos duomenimis.\nOUTPUT:\n- Užduotis silpnesniems su aiškia pagalbos užuomina.\n- Bazinė užduotis visai klasei.\n- Išplėsta užduotis stipresniems.\n- Vertinimo kriterijai kiekvienam lygiui."
+      "prompt": "Role: You are a differentiated assignment designer. Use the data from the form.\nOUTPUT:\n- A support-level task with a clear scaffolding hint.\n- A core task for the whole class.\n- A stretch task for advanced students.\n- Assessment criteria for each level."
     },
     {
       "id": "presentation_outline",
-      "title": "Prezentacijos struktūra",
-      "desc": "Skaidrių planas ir tekstas",
+      "title": "Presentation outline",
+      "desc": "Slide plan with talking points",
       "icon": "presentation",
-      "prompt": "Rolė: esi edukacinių skaidrių struktūros asistentas, remkis formos duomenimis.\nOUTPUT:\n- Skaidrių planas numeruotu sąrašu.\n- Kiekvienai skaidrei: tikslas, 2-3 punktai, vizualinė idėja.\n- Nuoseklus perėjimas tarp skaidrių.\n- Pabaigoje vienas refleksijos klausimas mokiniams."
+      "prompt": "Role: You are an educational slide-structure assistant. Use the data from the form.\nOUTPUT:\n- A numbered slide outline.\n- For each slide: goal, 2-3 bullets, one visual idea.\n- Smooth transitions between slides.\n- One reflection question for students at the end."
     },
     {
       "id": "teaching_strategy",
-      "title": "Mokymo strategija",
-      "desc": "Metodika ir savaitės fokusas",
+      "title": "Teaching strategy",
+      "desc": "Method and weekly focus",
       "icon": "brain",
-      "prompt": "Rolė: esi mokymo strategijos asistentas, remkis formoje nurodytu tikslu ir iššūkiais.\nOUTPUT:\n- 3 prioritetiniai metodiniai sprendimai.\n- Trumpa veiklų seka savaitei.\n- Rizikos ir prevenciniai veiksmai.\n- 2-3 pažangos matavimo rodikliai."
+      "prompt": "Role: You are a teaching-strategy assistant. Use the goal and challenges from the form.\nOUTPUT:\n- 3 priority methodological moves.\n- A short weekly activity sequence.\n- Risks and preventive actions.\n- 2-3 progress indicators."
     },
     {
       "id": "lesson_reflection",
-      "title": "Pamokos refleksija",
-      "desc": "Kas pavyko ir ką tobulinti",
+      "title": "Lesson reflection",
+      "desc": "What worked, what to improve",
       "icon": "refresh-ccw",
-      "prompt": "Rolė: esi refleksijos ir kokybės gerinimo asistentas, remkis formos duomenimis.\nOUTPUT:\n- 3 dalykai, kuriuos verta kartoti.\n- 3 dalykai, kuriuos verta keisti.\n- 5 žingsnių korekcijos planas kitai pamokai.\n- Viena trumpa mokytojo savirefleksijos rekomendacija."
+      "prompt": "Role: You are a reflection and quality-improvement assistant. Use the data from the form.\nOUTPUT:\n- 3 things worth repeating.\n- 3 things worth changing.\n- A 5-step adjustment plan for the next lesson.\n- One short self-reflection prompt for the teacher."
     }
   ],
   "rules": [
-    { "text": "Užklausa turi vesti į aiškų, pritaikomą pamokos rezultatą", "icon": "check-circle" },
-    { "text": "Aiškumas > sudėtingumas: vienas režimas, vienas tikslas", "icon": "check-circle" },
-    { "text": "Kiekvienas veiksmas turi būti įgyvendinamas klasėje", "icon": "check-circle" },
-    { "text": "Vertinimo kriterijai turi būti apibrėžiami iš anksto", "icon": "check-circle" },
-    { "text": "Prezentacija MVP etape yra tik tekstinis užklausos rezultatas", "icon": "check-circle" }
+    { "text": "Every prompt should lead to a clear, classroom-ready outcome.", "icon": "check-circle" },
+    { "text": "Clarity beats complexity: one mode, one goal.", "icon": "check-circle" },
+    { "text": "Every activity must be doable in your classroom.", "icon": "check-circle" },
+    { "text": "Define assessment criteria up front.", "icon": "check-circle" },
+    { "text": "Presentation mode returns a text outline \u2014 bring it into your slides tool.", "icon": "check-circle" }
   ]
 }

@@ -8,16 +8,16 @@ test.describe('core first-run flows', () => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await page.goto('/');
 
-    await page.fill('#l-goal', 'Suprasti fotosintezes procesa');
-    await page.fill('#l-topic', 'Fotosinteze');
-    await page.selectOption('#l-duration', { label: '45 min.' });
-    await page.fill('#l-question', 'Paruosk 3 veiklas ir refleksija');
+    await page.fill('#l-goal', 'Understand photosynthesis');
+    await page.fill('#l-topic', 'Photosynthesis');
+    await page.selectOption('#l-duration', { label: '45 min' });
+    await page.fill('#l-question', 'Build 3 activities and a reflection');
 
     await page.click('#outputCopyCta');
-    await expect(page.locator('#toastMessage')).toContainText(/nukopijuota/i);
+    await expect(page.locator('#toastMessage')).toContainText(/copied/i);
 
     const text = await page.locator('#opsOutput').innerText();
-    expect(text).toMatch(/UŽDUOTIS|UZDUOTIS/);
+    expect(text).toMatch(/TASK:/);
   });
 
   test('mobile template apply fills question and copy works', async ({ page, context }) => {
@@ -27,18 +27,18 @@ test.describe('core first-run flows', () => {
     await page.click('#libraryToggle');
     await page.click('[data-library-apply="lesson_plan"]');
 
-    await expect(page.locator('#l-question')).toHaveValue(/Rolė:|Role:/i);
-    await expect(page.locator('#toastMessage')).toContainText(/Šablonas|Sablonas/i);
+    await expect(page.locator('#l-question')).toHaveValue(/Role:/i);
+    await expect(page.locator('#toastMessage')).toContainText(/template/i);
 
     await page.click('#outputCopyCta');
-    await expect(page.locator('#toastMessage')).toContainText(/nukopijuota/i);
+    await expect(page.locator('#toastMessage')).toContainText(/copied/i);
   });
 
   test('session save and restore survives reload', async ({ page }) => {
     await page.goto('/');
 
-    await page.fill('#l-goal', 'Tikslas testui');
-    await page.fill('#l-question', 'Ka daryti pirmiausia?');
+    await page.fill('#l-goal', 'Goal for test');
+    await page.fill('#l-question', 'What should I do first?');
     await page.click('#sessionSaveBtn');
 
     await expect(page.locator('#sessionList .session-item')).toHaveCount(1);
@@ -48,7 +48,7 @@ test.describe('core first-run flows', () => {
 
     await page.fill('#l-goal', '');
     await page.locator('#sessionList .session-item').first().click();
-    await expect(page.locator('#l-goal')).toHaveValue('Tikslas testui');
+    await expect(page.locator('#l-goal')).toHaveValue('Goal for test');
   });
 
   test('accordion stays single-open and hero link opens target section', async ({ page }) => {
@@ -77,7 +77,7 @@ test.describe('core first-run flows', () => {
     await expect(page.locator('#tab-assessment')).toHaveAttribute('aria-selected', 'true');
 
     await page.selectOption('#classLevelSelect', '8');
-    await expect(page.locator('#classBadge')).toHaveText(/8 klas[ėe]/i);
+    await expect(page.locator('#classBadge')).toHaveText(/Grade\s*8/i);
   });
 
   test('keeps only last five saved sessions', async ({ page }) => {
@@ -88,31 +88,31 @@ test.describe('core first-run flows', () => {
     await page.reload();
 
     for (let i = 1; i <= 6; i += 1) {
-      await page.fill('#l-goal', `Tikslas ${i}`);
-      await page.fill('#l-question', `Klausimas ${i}`);
+      await page.fill('#l-goal', `Goal ${i}`);
+      await page.fill('#l-question', `Question ${i}`);
       await page.locator('#sessionSaveBtn').dispatchEvent('click');
       await page.waitForTimeout(50);
     }
 
     await expect(page.locator('#sessionList .session-item')).toHaveCount(5);
-    await expect(page.locator('#sessionList .session-item').first()).toContainText('PAMOKA');
+    await expect(page.locator('#sessionList .session-item').first()).toContainText('LESSON');
     await page.locator('#sessionList .session-item').last().click();
-    await expect(page.locator('#l-goal')).toHaveValue('Tikslas 2');
+    await expect(page.locator('#l-goal')).toHaveValue('Goal 2');
   });
 
   test('clear sessions undo expires after timeout', async ({ page }) => {
     await page.goto('/');
-    await page.fill('#l-goal', 'Tikslas timeout testui');
+    await page.fill('#l-goal', 'Timeout test goal');
     await page.click('#sessionSaveBtn');
     await expect(page.locator('#sessionList .session-item')).toHaveCount(1);
 
     page.once('dialog', (dialog) => dialog.accept());
     await page.click('#sessionClearBtn');
     await expect(page.locator('#sessionList .session-item')).toHaveCount(0);
-    await expect(page.locator('#sessionClearBtn')).toContainText(/Atkurti sesijas/i);
+    await expect(page.locator('#sessionClearBtn')).toContainText(/Restore sessions/i);
 
     await page.waitForTimeout(8300);
-    await expect(page.locator('#sessionClearBtn')).toContainText(/Ištrinti sesijas|Istrinti sesijas/i);
+    await expect(page.locator('#sessionClearBtn')).toContainText(/Delete sessions/i);
   });
 
   test('copy fallback uses execCommand when clipboard fails', async ({ page, context }) => {
@@ -132,10 +132,10 @@ test.describe('core first-run flows', () => {
     });
 
     await page.goto('/');
-    await page.fill('#l-topic', 'Test tema');
-    await page.fill('#l-question', 'Sugeneruok trumpa plana');
+    await page.fill('#l-topic', 'Test topic');
+    await page.fill('#l-question', 'Generate a short plan');
     await page.click('#outputCopyCta');
-    await expect(page.locator('#toastMessage')).toContainText(/nukopijuota/i);
+    await expect(page.locator('#toastMessage')).toContainText(/copied/i);
     await expect.poll(async () => page.evaluate(() => window.__copyCalled)).toBeTruthy();
   });
 });

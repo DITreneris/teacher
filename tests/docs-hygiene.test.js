@@ -12,7 +12,9 @@ const ACTIVE_DOCS = [
 
 const FORBIDDEN_PATTERNS = [
   /github\.com\/DITreneris\/spinoff01/i,
-  /Teacher AI Lesson Builder/i
+  /github\.com\/DITreneris\/mokytojas/i,
+  /DI Pamok/i,
+  /Spin-off Nr\. ?6/i
 ];
 
 const REQUIRED_INDEX_LINKS = [

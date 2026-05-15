@@ -1,9 +1,26 @@
 <!DOCTYPE html>
-<html lang="lt">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>DI Pamokų Kūrėjas</title>
+    <title>Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers | Prompt Anatomy</title>
+    <meta name="description" content="Build classroom-ready AI prompts in minutes. Lesson plans, assessments, tasks, presentations, and teaching strategy &mdash; no account, no signup. Works with ChatGPT, Claude, and Gemini.">
+    <meta name="theme-color" content="#0F2A44">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://promptanatomy.online/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://promptanatomy.online/sitemap.xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers">
+    <meta property="og:description" content="Classroom-ready AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.">
+    <meta property="og:url" content="https://promptanatomy.online/">
+    <meta property="og:image" content="https://promptanatomy.online/og-image.png">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Prompt Anatomy">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers">
+    <meta name="twitter:description" content="Classroom-ready AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.">
+    <meta name="twitter:image" content="https://promptanatomy.online/og-image.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,20 +28,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Pereiti prie turinio</a>
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
-    <nav class="top-nav" aria-label="Greita navigacija">
+    <nav class="top-nav" aria-label="Quick navigation">
         <div class="top-nav-inner">
-            <a href="#main-content" class="top-nav-brand" aria-label="DI Pamokų Kūrėjas" title="DI Pamokų Kūrėjas">
+            <a href="#main-content" class="top-nav-brand" aria-label="Classroom Prompt Builder" title="Classroom Prompt Builder">
                 <i data-lucide="command" class="icon icon--sm"></i>
-                <span class="top-nav-brand-text-full">DI Pamokų Kūrėjas</span>
-                <span class="top-nav-brand-text-short" aria-hidden="true">DPK</span>
+                <span class="top-nav-brand-text-full">Classroom Prompt Builder</span>
+                <span class="top-nav-brand-text-short" aria-hidden="true">CPB</span>
             </a>
             <div class="top-nav-actions">
-                <button type="button" class="top-nav-icon-btn" id="themeToggleBtn" aria-label="Perjungti tamsų režimą" title="Keisti spalvų režimą">
+                <button type="button" class="top-nav-icon-btn" id="themeToggleBtn" aria-label="Toggle dark mode" title="Switch color mode">
                     <i data-lucide="moon" class="icon icon--sm"></i>
                 </button>
-                <button type="button" class="top-nav-copy-btn is-hidden" id="stickyCopyBtn" aria-hidden="true">Kopijuoti užklausą</button>
+                <button type="button" class="top-nav-copy-btn is-hidden" id="stickyCopyBtn" aria-hidden="true">Copy prompt</button>
             </div>
         </div>
     </nav>
@@ -35,21 +52,20 @@
         <!-- HERO -->
         <header class="header">
             <div class="header-badges">
-                <a href="https://www.promptanatomy.app/" class="badge" target="_blank" rel="noopener noreferrer" aria-label="Promptų anatomija - interaktyvus mokymas (atidaroma naujame lange)">Promptų anatomija</a>
-                <span class="badge badge-spinoff" role="status" aria-label="DI Pamokų Kūrėjas, Spin-off Nr. 6">Spin-off Nr. 6</span>
+                <a href="https://www.promptanatomy.app/" class="badge" target="_blank" rel="noopener noreferrer" aria-label="Prompt Anatomy &mdash; interactive prompt training (opens in a new tab)">Prompt Anatomy</a>
             </div>
-            <h1 id="heroTitle">DI Pamokų Kūrėjas</h1>
-            <p id="heroSubtitle">Sukurk aiškią DI užklausą pamokai, užduotims ar testui per kelias minutes.</p>
-            <ul class="header-steps" aria-label="Darbo žingsniai">
-                <li><a href="#operationsCenter" class="header-step is-active"><span class="header-step-num">1</span> Režimas</a></li>
-                <li><a href="#opsForm" class="header-step"><span class="header-step-num">2</span> Forma</a></li>
-                <li><a href="#opsOutputSection" class="header-step"><span class="header-step-num">3</span> Rezultatas</a></li>
-                <li><a href="#library" class="header-step"><span class="header-step-num">4</span> Biblioteka</a></li>
+            <h1 id="heroTitle">Classroom Prompt Builder</h1>
+            <p id="heroSubtitle">Classroom-ready AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.</p>
+            <ul class="header-steps" aria-label="Workflow steps">
+                <li><a href="#operationsCenter" class="header-step is-active"><span class="header-step-num">1</span> Mode</a></li>
+                <li><a href="#opsForm" class="header-step"><span class="header-step-num">2</span> Form</a></li>
+                <li><a href="#opsOutputSection" class="header-step"><span class="header-step-num">3</span> Result</a></li>
+                <li><a href="#library" class="header-step"><span class="header-step-num">4</span> Library</a></li>
             </ul>
             <div class="header-cta">
-                <a id="heroCtaPrimary" href="#operationsCenter" class="cta-button" aria-label="Sukurti DI užklausą pamokai">Sukurti DI užklausą pamokai</a>
-                <a id="heroCtaSecondary" href="#library" class="cta-button-outline" aria-label="Peržiūrėti pavyzdžius">Peržiūrėti pavyzdžius</a>
-                <p class="header-cta-meta" id="heroCtaMeta">Padeda mokytojams greičiau paruošti pamokas su DI.</p>
+                <a id="heroCtaPrimary" href="#operationsCenter" class="cta-button" aria-label="Build a lesson prompt">Build a lesson prompt</a>
+                <a id="heroCtaSecondary" href="#library" class="cta-button-outline" aria-label="Browse templates">Browse templates</a>
+                <p class="header-cta-meta" id="heroCtaMeta">Made for K&ndash;12 teachers. By Prompt Anatomy.</p>
             </div>
         </header>
 
@@ -58,56 +74,56 @@
             <div class="ops-center-header">
                 <span class="step-badge" aria-hidden="true">1</span>
                 <div class="ops-center-header-text">
-                    <span class="collapsible-title">Pamokų kūrimo centras</span>
-                    <span class="collapsible-value">Pasirink režimą, užpildyk laukus ir gauk paruoštą užklausą</span>
+                    <span class="collapsible-title">Lesson workflow center</span>
+                    <span class="collapsible-value">Pick a mode, fill in the fields, and get a ready-made prompt.</span>
                 </div>
             </div>
 
             <!-- Mode Tabs -->
-            <div class="mode-tabs" role="tablist" aria-label="Režimo pasirinkimas">
+            <div class="mode-tabs" role="tablist" aria-label="Mode selection">
                 <button type="button" class="mode-tab is-active" role="tab" id="tab-lesson" aria-selected="true" aria-controls="form-lesson" data-mode="LESSON">
-                    <span class="mode-tab-label">PAMOKA</span>
-                    <span class="mode-tab-desc">Pilnas pamokos planas</span>
+                    <span class="mode-tab-label">LESSON</span>
+                    <span class="mode-tab-desc">Full lesson plan</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-assessment" aria-selected="false" aria-controls="form-assessment" data-mode="ASSESSMENT">
-                    <span class="mode-tab-label">PATIKRINIMAS</span>
-                    <span class="mode-tab-desc">Žinių patikrinimas</span>
+                    <span class="mode-tab-label">ASSESSMENT</span>
+                    <span class="mode-tab-desc">Knowledge check</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-tasks" aria-selected="false" aria-controls="form-tasks" data-mode="TASKS">
-                    <span class="mode-tab-label">UŽDUOTYS</span>
-                    <span class="mode-tab-desc">Klasei ir namams</span>
+                    <span class="mode-tab-label">TASKS</span>
+                    <span class="mode-tab-desc">Class and homework</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-presentation" aria-selected="false" aria-controls="form-presentation" data-mode="PRESENTATION">
-                    <span class="mode-tab-label">PREZENTACIJA</span>
-                    <span class="mode-tab-desc">Skaidrių struktūra</span>
+                    <span class="mode-tab-label">PRESENTATION</span>
+                    <span class="mode-tab-desc">Slide outline</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-strategy" aria-selected="false" aria-controls="form-strategy" data-mode="STRATEGY">
-                    <span class="mode-tab-label">STRATEGIJA</span>
-                    <span class="mode-tab-desc">Metodika ir prioritetai</span>
+                    <span class="mode-tab-label">STRATEGY</span>
+                    <span class="mode-tab-desc">Method and priorities</span>
                 </button>
             </div>
 
-            <!-- Class Selector -->
+            <!-- Grade Selector -->
             <div class="depth-bar">
-                <span class="depth-label"><i data-lucide="graduation-cap" class="icon icon--sm"></i> Klasė</span>
+                <span class="depth-label"><i data-lucide="graduation-cap" class="icon icon--sm"></i> Grade</span>
                 <div class="depth-options">
-                    <label class="field-label" for="classLevelSelect">Pasirink klasę (1-12)</label>
-                    <select id="classLevelSelect" class="field-select" aria-label="Klasės pasirinkimas">
-                        <option value="1">1 klasė</option>
-                        <option value="2">2 klasė</option>
-                        <option value="3">3 klasė</option>
-                        <option value="4">4 klasė</option>
-                        <option value="5">5 klasė</option>
-                        <option value="6">6 klasė</option>
-                        <option value="7" selected>7 klasė</option>
-                        <option value="8">8 klasė</option>
-                        <option value="9">9 klasė</option>
-                        <option value="10">10 klasė</option>
-                        <option value="11">11 klasė</option>
-                        <option value="12">12 klasė</option>
+                    <label class="field-label" for="classLevelSelect">Pick a grade (1&ndash;12)</label>
+                    <select id="classLevelSelect" class="field-select" aria-label="Grade selection">
+                        <option value="1">Grade 1</option>
+                        <option value="2">Grade 2</option>
+                        <option value="3">Grade 3</option>
+                        <option value="4">Grade 4</option>
+                        <option value="5">Grade 5</option>
+                        <option value="6">Grade 6</option>
+                        <option value="7" selected>Grade 7</option>
+                        <option value="8">Grade 8</option>
+                        <option value="9">Grade 9</option>
+                        <option value="10">Grade 10</option>
+                        <option value="11">Grade 11</option>
+                        <option value="12">Grade 12</option>
                     </select>
                 </div>
-                <div class="field-help">Klasė taikoma visiems režimams.</div>
+                <div class="field-help">Grade applies to all modes.</div>
             </div>
 
             <!-- Layout: Form + Output -->
@@ -119,34 +135,34 @@
                     <div id="form-lesson" role="tabpanel" aria-labelledby="tab-lesson">
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="book-open" class="icon icon--sm"></i> Pamokos kūrimas
+                                <i data-lucide="book-open" class="icon icon--sm"></i> Lesson builder
                             </div>
                             <div class="ops-form-grid">
                                 <div>
-                                    <label class="field-label" for="l-topic">Tema</label>
-                                    <input type="text" id="l-topic" name="topic" class="field-input" placeholder="Pvz.: Fotosinteze">
+                                    <label class="field-label" for="l-topic">Topic</label>
+                                    <input type="text" id="l-topic" name="topic" class="field-input" placeholder="e.g., Photosynthesis">
                                 </div>
                                 <div>
-                                    <label class="field-label" for="l-duration">Pamokos trukmė</label>
-                                    <select id="l-duration" name="duration" class="field-select" aria-label="Pamokos trukmė">
-                                        <option value="">Pasirink trukmę</option>
-                                        <option value="45 min.">45 min.</option>
-                                        <option value="60 min.">60 min.</option>
-                                        <option value="90 min.">90 min.</option>
-                                        <option value="120 min.">120 min.</option>
+                                    <label class="field-label" for="l-duration">Lesson length</label>
+                                    <select id="l-duration" name="duration" class="field-select" aria-label="Lesson length">
+                                        <option value="">Pick a length</option>
+                                        <option value="45 min">45 min</option>
+                                        <option value="60 min">60 min</option>
+                                        <option value="90 min">90 min</option>
+                                        <option value="120 min">120 min</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="field-label" for="l-goal">Mokymosi tikslas</label>
-                                    <input type="text" id="l-goal" name="goal" class="field-input" placeholder="Pvz.: Suprasti fotosintezės procesą">
+                                    <label class="field-label" for="l-goal">Learning goal</label>
+                                    <input type="text" id="l-goal" name="goal" class="field-input" placeholder="e.g., Understand how photosynthesis works">
                                 </div>
                                 <div class="field-full">
-                                    <label class="field-label" for="l-context">Papildomas kontekstas</label>
-                                    <textarea id="l-context" name="context" class="field-textarea" rows="3" placeholder="Pvz.: klasėje yra 4 mokiniai su individualiais poreikiais"></textarea>
+                                    <label class="field-label" for="l-context">Additional context</label>
+                                    <textarea id="l-context" name="context" class="field-textarea" rows="3" placeholder="e.g., 4 students need individualized support"></textarea>
                                 </div>
                                 <div class="field-full">
-                                    <label class="field-label" for="l-question">Pagrindinis klausimas DI</label>
-                                    <textarea id="l-question" name="question" class="field-textarea" rows="2" placeholder="Pvz.: Paruošk pilną 45 min. pamokos planą"></textarea>
+                                    <label class="field-label" for="l-question">Main question for the AI</label>
+                                    <textarea id="l-question" name="question" class="field-textarea" rows="2" placeholder="e.g., Build a full 45-minute lesson plan"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -156,24 +172,24 @@
                     <div id="form-assessment" role="tabpanel" aria-labelledby="tab-assessment" hidden>
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="clipboard-check" class="icon icon--sm"></i> Patikrinimo kūrimas
+                                <i data-lucide="clipboard-check" class="icon icon--sm"></i> Assessment builder
                             </div>
                             <div class="ops-form-grid">
                                 <div>
-                                    <label class="field-label" for="a-topic">Tema</label>
-                                    <input type="text" id="a-topic" name="topic" class="field-input" placeholder="Pvz.: Fotosinteze">
+                                    <label class="field-label" for="a-topic">Topic</label>
+                                    <input type="text" id="a-topic" name="topic" class="field-input" placeholder="e.g., Photosynthesis">
                                 </div>
                                 <div>
-                                    <label class="field-label" for="a-format">Patikrinimo formatas</label>
-                                    <input type="text" id="a-format" name="format" class="field-input" placeholder="Pvz.: testas + atviri klausimai">
+                                    <label class="field-label" for="a-format">Assessment format</label>
+                                    <input type="text" id="a-format" name="format" class="field-input" placeholder="e.g., quiz plus open questions">
                                 </div>
                                 <div>
-                                    <label class="field-label" for="a-difficulty">Sudėtingumo lygis</label>
-                                    <input type="text" id="a-difficulty" name="difficulty" class="field-input" placeholder="Pvz.: bazinis su 2 sunkesniais klausimais">
+                                    <label class="field-label" for="a-difficulty">Difficulty</label>
+                                    <input type="text" id="a-difficulty" name="difficulty" class="field-input" placeholder="e.g., core level with 2 challenge questions">
                                 </div>
                                 <div class="field-full">
-                                    <label class="field-label" for="a-question">Klausimas DI</label>
-                                    <textarea id="a-question" name="question" class="field-textarea" rows="2" placeholder="Pvz.: Sugeneruok 10 klausimų patikrinimą su atsakymais"></textarea>
+                                    <label class="field-label" for="a-question">Question for the AI</label>
+                                    <textarea id="a-question" name="question" class="field-textarea" rows="2" placeholder="e.g., Build a 10-question quiz with an answer key"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -183,24 +199,24 @@
                     <div id="form-tasks" role="tabpanel" aria-labelledby="tab-tasks" hidden>
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="pencil-ruler" class="icon icon--sm"></i> Užduočių kūrimas
+                                <i data-lucide="pencil-ruler" class="icon icon--sm"></i> Tasks builder
                             </div>
                             <div class="ops-form-grid">
                                 <div>
-                                    <label class="field-label" for="t-topic">Tema</label>
-                                    <input type="text" id="t-topic" name="topic" class="field-input" placeholder="Pvz.: Procentai">
+                                    <label class="field-label" for="t-topic">Topic</label>
+                                    <input type="text" id="t-topic" name="topic" class="field-input" placeholder="e.g., Percentages">
                                 </div>
                                 <div>
-                                    <label class="field-label" for="t-task-type">Užduočių tipas</label>
-                                    <input type="text" id="t-task-type" name="task_type" class="field-input" placeholder="Pvz.: klasės + namų darbai">
+                                    <label class="field-label" for="t-task-type">Task type</label>
+                                    <input type="text" id="t-task-type" name="task_type" class="field-input" placeholder="e.g., classwork plus homework">
                                 </div>
                                 <div class="field-full">
-                                    <label class="field-label" for="t-constraints">Apribojimai</label>
-                                    <textarea id="t-constraints" name="constraints" class="field-textarea" rows="3" placeholder="Pvz.: 20 min. klasėje + 20 min. namuose"></textarea>
+                                    <label class="field-label" for="t-constraints">Constraints</label>
+                                    <textarea id="t-constraints" name="constraints" class="field-textarea" rows="3" placeholder="e.g., 20 min in class plus 20 min at home"></textarea>
                                 </div>
                                 <div class="field-full">
-                                    <label class="field-label" for="t-question">Klausimas DI</label>
-                                    <textarea id="t-question" name="question" class="field-textarea" rows="2" placeholder="Pvz.: Paruošk 3 lygių užduotis su vertinimo kriterijais"></textarea>
+                                    <label class="field-label" for="t-question">Question for the AI</label>
+                                    <textarea id="t-question" name="question" class="field-textarea" rows="2" placeholder="e.g., Create 3 levels of tasks with rubric criteria"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -210,24 +226,24 @@
                     <div id="form-presentation" role="tabpanel" aria-labelledby="tab-presentation" hidden>
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="presentation" class="icon icon--sm"></i> Prezentacijos užklausa
+                                <i data-lucide="presentation" class="icon icon--sm"></i> Presentation builder
                             </div>
                             <div class="ops-form-grid">
                                 <div>
-                                    <label class="field-label" for="p-topic">Tema</label>
-                                    <input type="text" id="p-topic" name="topic" class="field-input" placeholder="Pvz.: Lietuvos upes">
+                                    <label class="field-label" for="p-topic">Topic</label>
+                                    <input type="text" id="p-topic" name="topic" class="field-input" placeholder="e.g., U.S. rivers">
                                 </div>
                                 <div>
-                                    <label class="field-label" for="p-slides">Skaidrių kiekis</label>
-                                    <input type="text" id="p-slides" name="slides" class="field-input" placeholder="Pvz.: 8 skaidrės">
+                                    <label class="field-label" for="p-slides">Number of slides</label>
+                                    <input type="text" id="p-slides" name="slides" class="field-input" placeholder="e.g., 8 slides">
                                 </div>
                                 <div>
-                                    <label class="field-label" for="p-style">Stilius</label>
-                                    <input type="text" id="p-style" name="style" class="field-input" placeholder="Pvz.: aiškus, vizualus, trumpi punktai">
+                                    <label class="field-label" for="p-style">Style</label>
+                                    <input type="text" id="p-style" name="style" class="field-input" placeholder="e.g., clear, visual, short bullets">
                                 </div>
                                 <div class="field-full">
-                                    <label class="field-label" for="p-question">Klausimas DI</label>
-                                    <textarea id="p-question" name="question" class="field-textarea" rows="2" placeholder="Pvz.: Paruošk skaidrių planą su tekstais ir vizualinėmis idėjomis"></textarea>
+                                    <label class="field-label" for="p-question">Question for the AI</label>
+                                    <textarea id="p-question" name="question" class="field-textarea" rows="2" placeholder="e.g., Build a slide outline with talking points and visuals"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -237,24 +253,24 @@
                     <div id="form-strategy" role="tabpanel" aria-labelledby="tab-strategy" hidden>
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="brain" class="icon icon--sm"></i> Mokymo strategija
+                                <i data-lucide="brain" class="icon icon--sm"></i> Teaching strategy
                             </div>
                             <div class="ops-form-grid">
                                 <div>
-                                    <label class="field-label" for="s-topic">Tema</label>
-                                    <input type="text" id="s-topic" name="topic" class="field-input" placeholder="Pvz.: Algebra">
+                                    <label class="field-label" for="s-topic">Topic</label>
+                                    <input type="text" id="s-topic" name="topic" class="field-input" placeholder="e.g., Algebra">
                                 </div>
                                 <div>
-                                    <label class="field-label" for="s-goal">Tikslas</label>
-                                    <input type="text" id="s-goal" name="goal" class="field-input" placeholder="Pvz.: Sustiprinti argumentuotą sprendimą">
+                                    <label class="field-label" for="s-goal">Goal</label>
+                                    <input type="text" id="s-goal" name="goal" class="field-input" placeholder="e.g., Strengthen reasoned decision-making">
                                 </div>
                                 <div>
-                                    <label class="field-label" for="s-challenges">Iššūkiai</label>
-                                    <input type="text" id="s-challenges" name="challenges" class="field-input" placeholder="Pvz.: netolygus klasės pasirengimas">
+                                    <label class="field-label" for="s-challenges">Challenges</label>
+                                    <input type="text" id="s-challenges" name="challenges" class="field-input" placeholder="e.g., uneven class readiness">
                                 </div>
                                 <div class="field-full">
-                                    <label class="field-label" for="s-question">Klausimas DI</label>
-                                    <textarea id="s-question" name="question" class="field-textarea" rows="2" placeholder="Pvz.: Pasiūlyk metodiką ir savaitės prioritetus"></textarea>
+                                    <label class="field-label" for="s-question">Question for the AI</label>
+                                    <textarea id="s-question" name="question" class="field-textarea" rows="2" placeholder="e.g., Suggest methods and weekly priorities"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -263,43 +279,43 @@
                 </div>
 
                 <div class="journey-next-wrap" id="journeyNextWrap">
-                    <a href="#opsOutputSection" class="journey-next-link" id="journeyNextLink" aria-label="Pereiti prie sugeneruotos užklausos">Žiūrėti sugeneruotą užklausą</a>
+                    <a href="#opsOutputSection" class="journey-next-link" id="journeyNextLink" aria-label="Go to the generated prompt">View generated prompt</a>
                 </div>
 
                 <!-- OUTPUT SIDEBAR -->
                 <div class="ops-sidebar">
-                    <div class="ops-output" id="opsOutputSection" role="region" aria-label="Sugeneruota DI užklausa">
+                    <div class="ops-output" id="opsOutputSection" role="region" aria-label="Generated AI prompt">
                         <div class="ops-output-header">
                             <div class="ops-output-badge">
                                 <span class="pulse"></span>
-                                <span>Sugeneruota užklausa</span>
+                                <span>Generated prompt</span>
                             </div>
-                            <span class="ops-output-depth" id="classBadge">7 klasė</span>
-                            <button class="ops-output-copy" id="outputCopyBtn" aria-label="Kopijuoti sugeneruotą užklausą">
+                            <span class="ops-output-depth" id="classBadge">Grade 7</span>
+                            <button class="ops-output-copy" id="outputCopyBtn" aria-label="Copy the generated prompt">
                                 <i data-lucide="copy" class="icon icon--md"></i>
                             </button>
                         </div>
                         <div class="ops-output-text" id="opsOutput" aria-live="polite">
-                            Pasirink režimą ir užpildyk bent pagrindinius laukus – užklausa sugeneruojama automatiškai.
+                            Pick a mode and fill in the basics &mdash; your prompt generates automatically.
                         </div>
                         <div class="ops-output-footer">
-                            <p class="ops-output-chars">Simbolių: <strong id="outputCharCount">0</strong></p>
-                            <p>Redaguok formos laukuose, tada nukopijuok ir įklijuok į ChatGPT, Claude ar Gemini.</p>
-                            <button class="ops-output-cta" id="outputCopyCta" aria-label="Kopijuoti užklausą">
-                                <span>KOPIJUOTI UŽKLAUSĄ</span>
+                            <p class="ops-output-chars">Characters: <strong id="outputCharCount">0</strong></p>
+                            <p>Edit the form, then paste into ChatGPT, Claude, or Gemini.</p>
+                            <button class="ops-output-cta" id="outputCopyCta" aria-label="Copy prompt">
+                                <span>COPY PROMPT</span>
                                 <i data-lucide="arrow-right" class="icon icon--md"></i>
                             </button>
-                            <div class="ops-tool-launchers" role="group" aria-label="DI įrankių pasirinkimas">
-                                <p class="ops-tool-launchers-label">Nori išbandyti užklausą? Pasirink įrankį:</p>
-                                <div class="ops-tool-launchers-list" role="group" aria-label="Atidaryti DI įrankį">
-                                    <button type="button" class="ops-tool-btn" data-ai-tool="chatgpt" aria-label="Atidaryti ChatGPT naujame lange">
-                                        Atidaryti ChatGPT
+                            <div class="ops-tool-launchers" role="group" aria-label="AI tool selection">
+                                <p class="ops-tool-launchers-label">Want to test the prompt? Pick a tool:</p>
+                                <div class="ops-tool-launchers-list" role="group" aria-label="Open AI tool">
+                                    <button type="button" class="ops-tool-btn" data-ai-tool="chatgpt" aria-label="Open ChatGPT in a new tab">
+                                        Open ChatGPT
                                     </button>
-                                    <button type="button" class="ops-tool-btn" data-ai-tool="claude" aria-label="Atidaryti Claude naujame lange">
-                                        Atidaryti Claude
+                                    <button type="button" class="ops-tool-btn" data-ai-tool="claude" aria-label="Open Claude in a new tab">
+                                        Open Claude
                                     </button>
-                                    <button type="button" class="ops-tool-btn" data-ai-tool="gemini" aria-label="Atidaryti Gemini naujame lange">
-                                        Atidaryti Gemini
+                                    <button type="button" class="ops-tool-btn" data-ai-tool="gemini" aria-label="Open Gemini in a new tab">
+                                        Open Gemini
                                     </button>
                                 </div>
                             </div>
@@ -310,21 +326,21 @@
                     <div class="ops-sessions" id="sessionsPanel">
                         <div class="ops-sessions-header">
                             <span class="ops-sessions-title">
-                                <i data-lucide="history" class="icon icon--sm"></i> Sesijos
+                                <i data-lucide="history" class="icon icon--sm"></i> Sessions
                             </span>
                             <div class="ops-sessions-actions">
                                 <button type="button" class="session-btn" id="sessionSaveBtn">
-                                    <i data-lucide="save" class="icon icon--sm"></i> Išsaugoti
+                                    <i data-lucide="save" class="icon icon--sm"></i> Save
                                 </button>
                                 <button type="button" class="session-btn session-btn--danger" id="sessionClearBtn">
-                                    <i data-lucide="trash-2" class="icon icon--sm"></i> Ištrinti sesijas
+                                    <i data-lucide="trash-2" class="icon icon--sm"></i> Delete sessions
                                 </button>
                             </div>
                         </div>
-                        <ul class="session-list" id="sessionList" aria-label="Išsaugotos sesijos">
+                        <ul class="session-list" id="sessionList" aria-label="Saved sessions">
                             <li class="sessions-empty" id="sessionsEmpty">
                                 <span class="sessions-empty-icon" aria-hidden="true"><i data-lucide="sparkles" class="icon icon--sm"></i></span>
-                                Sesijų dar nėra. Sukurk pirmą analizę.
+                                No sessions yet. Save your first one.
                             </li>
                         </ul>
                     </div>
@@ -337,10 +353,10 @@
             <h2 class="collapsible-heading">
                 <button class="collapsible-toggle" id="libraryToggle" type="button" aria-expanded="false" aria-controls="libraryBody">
                     <span class="step-badge" aria-hidden="true">4</span>
-                    <span class="collapsible-title">Šablonų biblioteka</span>
-                    <span class="collapsible-value">Paruošti užklausų šablonai – taikyk formoje arba kopijuok</span>
-                    <span class="collapsible-count" id="libraryTemplateCount">6 šablonai</span>
-                    <span class="collapsible-chevron" aria-hidden="true">▾</span>
+                    <span class="collapsible-title">Template library</span>
+                    <span class="collapsible-value">Ready-to-use prompt templates &mdash; apply to the form or copy.</span>
+                    <span class="collapsible-count" id="libraryTemplateCount">6 templates</span>
+                    <span class="collapsible-chevron" aria-hidden="true">&#9662;</span>
                 </button>
             </h2>
             <div class="library-body" id="libraryBody" hidden>
@@ -355,9 +371,9 @@
             <h2 class="collapsible-heading">
                 <button class="collapsible-toggle" id="rulesToggle" type="button" aria-expanded="false" aria-controls="rulesBody">
                     <span class="step-badge" aria-hidden="true"><i data-lucide="shield-check" class="icon icon--sm"></i></span>
-                    <span class="collapsible-title">Pamokos kokybės taisyklės</span>
-                    <span class="collapsible-value">Mokytojo sprendimų sistema - kiekviena užklausa laikosi šių principų</span>
-                    <span class="collapsible-chevron" aria-hidden="true">▾</span>
+                    <span class="collapsible-title">Lesson quality principles</span>
+                    <span class="collapsible-value">Built-in decision rules &mdash; every prompt follows these principles.</span>
+                    <span class="collapsible-chevron" aria-hidden="true">&#9662;</span>
                 </button>
             </h2>
             <div class="rules-body" id="rulesBody" hidden>
@@ -369,36 +385,36 @@
 
         <!-- COMMUNITY -->
         <section class="community" id="community" aria-labelledby="community-title">
-            <h2 id="community-title">Nori daugiau?<br>Prisijunk prie WhatsApp grupės.</h2>
-            <p class="community-subtitle">Bendros diskusijos, patarimai ir naujienos apie promptus ir DI.</p>
-            <a href="https://chat.whatsapp.com/It49fzTl1n90huRCoWWkwu?mode=gi_t" class="community-cta-primary" target="_blank" rel="noopener noreferrer" aria-label="Prisijungti prie WhatsApp grupės (atidaroma naujame lange)">Prisijungti prie WhatsApp grupės</a>
-            <a href="https://www.promptanatomy.app/" class="community-cta-secondary" target="_blank" rel="noopener noreferrer" aria-label="Atidaryti Promptų anatomiją (atidaroma naujame lange)">Promptų anatomija -></a>
+            <h2 id="community-title">Want more?<br>Join our Telegram community.</h2>
+            <p class="community-subtitle">Share prompts, swap lesson ideas, and stay current on AI in the classroom.</p>
+            <a href="https://t.me/prompt_anatomy" class="community-cta-primary" target="_blank" rel="noopener noreferrer" aria-label="Join our Telegram community (opens in a new tab)">Join our Telegram</a>
+            <a href="https://www.promptanatomy.app/" class="community-cta-secondary" target="_blank" rel="noopener noreferrer" aria-label="Open Prompt Anatomy (opens in a new tab)">Learn the prompt framework &rarr;</a>
         </section>
 
         <!-- FOOTER -->
         <footer class="footer">
-            <h3>DI Pamokų Kūrėjas <span class="icon-wrap" aria-hidden="true"><i data-lucide="sparkles" class="icon icon--md"></i></span></h3>
-            <p>Padeda mokytojams greičiau paruošti pamokas su DI.</p>
-            <p class="footer-product-link">Spin-off Nr. 6. El. paštas: <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
+            <h3>Classroom Prompt Builder <span class="icon-wrap" aria-hidden="true"><i data-lucide="sparkles" class="icon icon--md"></i></span></h3>
+            <p>Helping teachers build classroom-ready AI prompts.</p>
+            <p class="footer-product-link">By Prompt Anatomy. Contact: <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
             <div class="tags" role="list">
-                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="command" class="icon icon--sm"></i></span> Pamokų centras</span>
-                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="book-open" class="icon icon--sm"></i></span> Mokytojams</span>
-                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="zap" class="icon icon--sm"></i></span> 5 režimai</span>
-                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="layers" class="icon icon--sm"></i></span> Klasė 1-12</span>
+                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="command" class="icon icon--sm"></i></span> Prompt builder</span>
+                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="book-open" class="icon icon--sm"></i></span> For teachers</span>
+                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="zap" class="icon icon--sm"></i></span> 5 modes</span>
+                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="layers" class="icon icon--sm"></i></span> Grades 1&ndash;12</span>
             </div>
             <div class="copyright">
-                <p>&copy; 2026 Tomas Staniulis. Mokymų medžiaga. Visos teisės saugomos. <a href="privatumas.html">Privatumas</a></p>
+                <p>&copy; 2026 Tomas Staniulis. Educational tool. All rights reserved. <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a></p>
             </div>
         </footer>
 
         </main>
     </div>
 
-    <textarea class="hidden" id="hiddenTextarea" aria-label="Kopijuojamo teksto laukas" aria-hidden="true"></textarea>
+    <textarea class="hidden" id="hiddenTextarea" aria-label="Hidden field for copying text" aria-hidden="true"></textarea>
 
-    <div class="toast is-success" id="toast" role="status" aria-live="polite" aria-atomic="true" aria-label="Sėkmės pranešimas">
+    <div class="toast is-success" id="toast" role="status" aria-live="polite" aria-atomic="true" aria-label="Success message">
         <div class="toast-icon" aria-hidden="true"><i data-lucide="check" class="icon icon--lg"></i></div>
-        <span id="toastMessage">Užklausa nukopijuota.</span>
+        <span id="toastMessage">Prompt copied.</span>
         <span class="toast-progress" id="toastProgress" aria-hidden="true"></span>
     </div>
 

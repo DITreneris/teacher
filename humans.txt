@@ -1,0 +1,15 @@
+/* TEAM */
+Product: Classroom Prompt Builder
+Brand: Prompt Anatomy (parent platform)
+Site: https://promptanatomy.online/
+Repository: https://github.com/DITreneris/teacher
+Contact: info@promptanatomy.app
+
+/* THANKS */
+Built for US K-12 teachers who use ChatGPT, Claude, or Gemini in the classroom.
+
+/* SITE */
+Language: English (en-US)
+Stack: Static HTML, CSS, vanilla JavaScript
+Hosting: Vercel
+Analytics: Vercel Analytics (aggregate, cookieless)

@@ -1,24 +1,47 @@
-# DI Pamokų Kūrėjas
+# Classroom Prompt Builder
 
-Vieno puslapio DI užklausų generatorius mokytojui. Produktas fokusuotas į pamokų kūrimo eigą, ne platformą.
+A free, single-page AI prompt builder for K-12 teachers. Pick a mode, fill in a few fields, and copy a ready-made prompt for ChatGPT, Claude, or Gemini.
 
-## Greita pradžia
+| | |
+|---|---|
+| **Repository** | [github.com/DITreneris/teacher](https://github.com/DITreneris/teacher) |
+| **Production** | [promptanatomy.online](https://promptanatomy.online/) |
+| **Parent brand** | [promptanatomy.app](https://www.promptanatomy.app/) |
+| **Status** | US MVP |
 
-- Atidaryk `index.html` naršyklėje.
-- Arba paleisk lokalų serverį:
+## Quick start
 
 ```bash
 npx serve . -l 3000
 ```
 
-## Dokumentacija ir kodo navigacija
+Open [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 
-`README.md` yra vienintelis įėjimo taškas. Visa tolesnė navigacija į dokumentaciją ir pagrindinius kodo failus vyksta per:
+## Documentation
 
-- [`docs/INDEX.md`](docs/INDEX.md)
+- [`docs/INDEX.md`](docs/INDEX.md) — doc navigation
+- [`DEPLOY.md`](DEPLOY.md) — **human + robot deployment reference** (Vercel, DNS, SEO files)
+- [`CHANGELOG.md`](CHANGELOG.md) — release notes
 
-## Vieno įėjimo taško politika
+## Deployment (summary)
 
-- Aktyvi dokumentacija laikoma tik per `README.md` ir `docs/INDEX.md`.
-- Aktyvus dokumentų minimumas: `README.md`, `docs/INDEX.md`, `AGENTS.md`.
-- Visi kiti dokumentai laikomi archyvu, jei jie nėra pažymėti kaip aktyvūs `docs/INDEX.md`.
+**Hosting:** Vercel, static root, no build command.  
+**Config:** [`vercel.json`](vercel.json)  
+**SEO for crawlers:** [`robots.txt`](robots.txt), [`sitemap.xml`](sitemap.xml), [`humans.txt`](humans.txt)
+
+Full checklist → **[DEPLOY.md](DEPLOY.md)**
+
+```bash
+git remote add origin https://github.com/DITreneris/teacher.git
+git push -u origin main
+```
+
+## Quality gates
+
+```bash
+npm ci
+npm test
+npm run test:smoke
+npm run test:e2e
+npm run test:a11y
+```
