@@ -17,10 +17,16 @@
     "test:mixed": "npm run test && npm run test:smoke && npm run test:e2e && npm run test:a11y",
     "test:a11y": "start-server-and-test \"serve . -l 3000\" http://127.0.0.1:3000/ \"pa11y http://127.0.0.1:3000/ --config .pa11yrc.json && pa11y http://127.0.0.1:3000/privacy.html --config .pa11yrc.json && pa11y http://127.0.0.1:3000/terms.html --config .pa11yrc.json && pa11y http://127.0.0.1:3000/success?session_id=cs_test_A1b2C3d4E5f6G7h8I9j0KlMnOpQr --config .pa11yrc.json\"",
     "lint:html": "npx html-validator-cli --file index.html && npx html-validator-cli --file privacy.html && npx html-validator-cli --file terms.html && npx html-validator-cli --file success.html",
-    "lint:js": "eslint . --ext .js"
+    "lint:js": "eslint . --ext .js",
+    "pdf:export": "node scripts/export-pdfs.js",
+    "pdf:upload-blob": "node scripts/upload-pdfs-to-blob.js",
+    "check:fulfillment": "node scripts/check-fulfillment-env.js",
+    "vendor:analytics": "node scripts/vendor-vercel-analytics.js",
+    "postinstall": "node scripts/vendor-vercel-analytics.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.53.2",
+    "@vercel/blob": "^2.3.3",
     "eslint": "^8.57.0",
     "html-validator-cli": "^7.0.0",
     "pa11y": "^6.2.3",
@@ -29,6 +35,7 @@
     "wait-on": "^8.0.1"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "@upstash/redis": "^1.38.0",
     "resend": "^6.12.3",
     "stripe": "^22.1.1"

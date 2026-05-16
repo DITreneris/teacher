@@ -36,6 +36,60 @@ const PRODUCTS = {
 let redisClient = null;
 let resendClient = null;
 
+const FULFILLMENT_REQUIRED_ENV = [
+  'UPSTASH_REDIS_REST_URL',
+  'UPSTASH_REDIS_REST_TOKEN',
+  'DOWNLOAD_TOKEN_SECRET',
+  'RESEND_API_KEY',
+  'FULFILLMENT_FROM_EMAIL',
+  'PDF_BEGINNERS_SOURCE_URL',
+  'PDF_ADVANCED_SOURCE_URL'
+];
+
+function listMissingFulfillmentEnv() {
+  return FULFILLMENT_REQUIRED_ENV.filter((key) => !process.env[key]);
+}
+
+function assertFulfillmentConfigured() {
+  const missing = listMissingFulfillmentEnv();
+  if (missing.length) {
+    throw new Error(`Fulfillment env missing on server: ${missing.join(', ')}`);
+  }
+
+  const secret = process.env.DOWNLOAD_TOKEN_SECRET;
+  if (typeof secret === 'string' && secret.includes(' ') && !secret.includes('+')) {
+    throw new Error(
+      'DOWNLOAD_TOKEN_SECRET looks corrupted (spaces instead of +). Re-paste the value in Vercel with quotes or use a base64 secret without + characters.'
+    );
+  }
+}
+
+async function checkFulfillmentHealth() {
+  const missing = listMissingFulfillmentEnv();
+  const blobConfigured = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  if (missing.length) {
+    return { ok: false, missing, redis: 'skipped', blobConfigured };
+  }
+
+  try {
+    const ping = await getRedis().ping();
+    return {
+      ok: ping === 'PONG',
+      missing: [],
+      redis: ping === 'PONG' ? 'ok' : String(ping),
+      blobConfigured
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      missing: [],
+      redis: 'error',
+      redisDetail: error && error.message ? String(error.message) : 'Redis ping failed',
+      blobConfigured
+    };
+  }
+}
+
 function getRedis() {
   if (redisClient) return redisClient;
 
@@ -68,6 +122,14 @@ function getProductByPriceId(priceId) {
   return Object.values(PRODUCTS).find((product) => process.env[product.priceEnv] === priceId) || null;
 }
 
+/** Fallback when STRIPE_PRICE_* env vars are unset or Payment Link uses a different Price object. */
+function getProductByAmountCents(amountCents) {
+  if (typeof amountCents !== 'number' || !Number.isFinite(amountCents)) return null;
+  if (amountCents === 499) return PRODUCTS.beginners;
+  if (amountCents === 999) return PRODUCTS.advanced;
+  return null;
+}
+
 function getProductFromSession(session) {
   const metadataProduct = session && session.metadata ? getProductById(session.metadata.product) : null;
   if (metadataProduct) return metadataProduct;
@@ -80,9 +142,26 @@ function getProductFromSession(session) {
     const priceId = item && item.price ? item.price.id : '';
     const product = getProductByPriceId(priceId);
     if (product) return product;
+
+    const unitAmount = item && item.price && typeof item.price.unit_amount === 'number'
+      ? item.price.unit_amount
+      : null;
+    const byUnit = getProductByAmountCents(unitAmount);
+    if (byUnit) return byUnit;
   }
 
-  throw new Error('Checkout Session does not contain a configured PDF product.');
+  if (session && typeof session.amount_total === 'number') {
+    const byTotal = getProductByAmountCents(session.amount_total);
+    if (byTotal) return byTotal;
+  }
+
+  const priceIds = [
+    process.env.STRIPE_PRICE_BEGINNERS_PDF ? `beginners=${process.env.STRIPE_PRICE_BEGINNERS_PDF}` : 'beginners=unset',
+    process.env.STRIPE_PRICE_ADVANCED_PDF ? `advanced=${process.env.STRIPE_PRICE_ADVANCED_PDF}` : 'advanced=unset'
+  ].join(', ');
+  throw new Error(
+    `Checkout Session does not contain a configured PDF product (metadata.product, price id, or $4.99/$9.99 amount). Env: ${priceIds}.`
+  );
 }
 
 function getCustomerEmail(session) {
@@ -202,7 +281,7 @@ async function assertProductAssetAvailable(product) {
   throw new Error(`${product.name} PDF source is not configured.`);
 }
 
-function getSourceHeaders() {
+function getSourceHeaders(sourceUrl) {
   const headers = {};
   if (process.env.PDF_SOURCE_AUTH_HEADER) {
     const separatorIndex = process.env.PDF_SOURCE_AUTH_HEADER.indexOf(':');
@@ -215,13 +294,21 @@ function getSourceHeaders() {
   if (process.env.PDF_SOURCE_AUTH_TOKEN) {
     headers.Authorization = `Bearer ${process.env.PDF_SOURCE_AUTH_TOKEN}`;
   }
+  if (
+    sourceUrl &&
+    /blob\.vercel-storage\.com/i.test(sourceUrl) &&
+    process.env.BLOB_READ_WRITE_TOKEN &&
+    !headers.Authorization
+  ) {
+    headers.Authorization = `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`;
+  }
   return headers;
 }
 
 async function loadProductPdf(product) {
   const sourceUrl = process.env[product.sourceUrlEnv];
   if (sourceUrl) {
-    const response = await globalThis.fetch(sourceUrl, { headers: getSourceHeaders() });
+    const response = await globalThis.fetch(sourceUrl, { headers: getSourceHeaders(sourceUrl) });
     if (!response.ok) {
       throw new Error(`${product.name} PDF source returned ${response.status}.`);
     }
@@ -290,13 +377,21 @@ async function sendFulfillmentEmail(email, product, downloadUrl) {
     throw new Error('FULFILLMENT_FROM_EMAIL is not configured.');
   }
 
-  await getResend().emails.send({
+  const { data, error } = await getResend().emails.send({
     from: process.env.FULFILLMENT_FROM_EMAIL,
     to: email,
     subject: `Your ${product.name} download`,
     text: buildEmailText(product, downloadUrl),
     html: buildEmailHtml(product, downloadUrl)
   });
+
+  if (error) {
+    const detail = error.message || JSON.stringify(error);
+    throw new Error(`Resend rejected email: ${detail}`);
+  }
+  if (!data || !data.id) {
+    throw new Error('Resend did not return a message id.');
+  }
 }
 
 async function fulfillCheckoutSession(stripe, sessionId, origin) {
@@ -432,6 +527,9 @@ async function getDownloadUrlBySessionId(sessionId, origin) {
 
 module.exports = {
   PRODUCTS,
+  assertFulfillmentConfigured,
+  checkFulfillmentHealth,
+  listMissingFulfillmentEnv,
   fulfillCheckoutSession,
   loadProductPdf,
   resolveDownload,

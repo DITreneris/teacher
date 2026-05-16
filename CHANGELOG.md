@@ -84,18 +84,38 @@ Marketing-audit follow-through from `docs/marketing_plan.md`. Centralizes Stripe
 
 ### Stage 5 - Stripe Payment Link activation (publish gate enforced)
 
-P0 release-blocker §1, SOT half: live Stripe Payment Link URLs pasted into `config/sot.json#commerce.stripePaymentLinks` and `commerce.allowPlaceholderCheckout` flipped to `false`. The CI publish gate in `tests/structure.test.js` ("live buy.stripe.com URLs (no YOUR_ placeholders)") is now mandatory on every run and currently green. `generator.js` `initCommerce()` injects the URLs into the two `data-stripe-cta` anchors at runtime; `index.html` remains placeholder-free.
+P0 release-blocker §1, SOT half: live Stripe Payment Link URLs pasted into `config/sot.json#commerce.stripePaymentLinks` and `commerce.allowPlaceholderCheckout` flipped to `false`. The CI publish gate in `tests/structure.test.js` ("live buy.stripe.com URLs (no YOUR_ placeholders)") is now mandatory on every run and currently green. `generator.js` `initCommerce()` injects the URLs into the two `data-stripe-cta` anchors at runtime.
 
 #### Changed
 - `config/sot.json`: `commerce.allowPlaceholderCheckout` -> `false`; `commerce.stripePaymentLinks.beginners` and `commerce.stripePaymentLinks.advanced` set to live Stripe Payment Link URLs (the actual URLs live in SOT, not duplicated here).
-- [todo.md](todo.md) P0 §1: the two "paste URLs" and "flip allowPlaceholderCheckout" checkboxes are now checked. Remaining P0 work is Stripe-Dashboard-only (success URL template, customer email receipts) plus the live test-mode E2E purchase + refund.
+- [todo.md](todo.md) P0 §1: all five checkboxes checked (Stripe Dashboard success URL, customer email receipts, `invoice_creation`, SOT URL paste, `allowPlaceholderCheckout` flip).
 
-### Docs delta (all five stages)
+### Stage 6b - Fulfillment mapping + webhook diagnostics (no PDF after payment)
+
+Buyers could pay via Stripe Payment Link but receive no PDF and see `success.html` error "We could not find this checkout session" when the webhook never stored `fulfillment:cs_...` in **promptanatomy.online** Redis. Common cause: Stripe webhook pointed at `promptanatomy.app` while Payment Links redirect to `promptanatomy.online` (separate deployments → `200` on `.app` but empty `.online` fulfillment lookup). Also: misconfigured Vercel env, missing webhook on `.online`, empty `metadata`, or product not matched.
+
+#### Fixed
+- `api/_lib/fulfillment.js`: resolve product by `metadata.product`, `STRIPE_PRICE_*` env ids, line-item `unit_amount`, or session `amount_total` (`499` / `999` cents for $4.99 / $9.99); clearer error message when mapping fails.
+- `api/stripe-webhook.js`: log fulfillment errors to Vercel; return `detail` in 500 JSON for Stripe Dashboard debugging.
+- `DEPLOY.md`: Payment Link metadata `product=beginners|advanced`; troubleshooting checklist for failed fulfillment + event replay.
+- `todo.md` P0 §1b: Vercel fulfillment env checklist.
+
+### Stage 6 - Stripe PDF CTA checkout fix (production hotfix)
+
+Stage 4 moved Stripe `href`s to SOT-only hydration; until `fetch('config/sot.json')` finished, both PDF CTAs kept `href="#pdf-guides"`, so clicks scrolled in-page instead of opening Stripe Checkout. `initCommerce()` also ran after `initializeApp()`, so any init error could skip link hydration entirely.
+
+#### Fixed
+- `index.html`: both `data-stripe-cta` anchors now ship with live `https://buy.stripe.com/...` `href` values (works before JS and if SOT fetch fails).
+- `generator.js`: bootstrap `initCommerce()` / `initLegal()` synchronously on `DOMContentLoaded` from `DEFAULT_SOT`, then re-hydrate after SOT loads; `initCommerce()` runs before `initializeApp()`; deep-merge `commerce.stripePaymentLinks` in `loadSotConfig()`; `DEFAULT_SOT` synced with live URLs and `allowPlaceholderCheckout: false`; skip overwriting `href` when a placeholder URL is blocked.
+- `index.html`: `generator.js?v=1.0.2` cache-bust so browsers do not keep an immutable-cached bundle without the bootstrap path.
+- `tests/structure.test.js`: allow optional `?v=` on the generator script tag; assert both PDF CTAs expose static `buy.stripe.com` href fallbacks.
+
+### Docs delta (all six stages)
 - `docs/INDEX.md`: registers `success.html`, `api/download-link.js`, both cover PNGs, and the six watermarked sample-page PNGs.
 - `docs/marketing_plan.md`: canonical US go-to-market plan (readiness scores, promotion gates A/B/C, compliance reference, X content playbook, 30-day calendar, risk register). Linked from `README.md` and `AGENTS.md` (Orchestrator).
 
 ### Verified (last full pass, all stages stacked)
-- `npm test`: 146 / 146 structural assertions pass (`copy.js` `activeSectionId` is a pre-existing eslint warning, unrelated). Publish gate is now enforced (not skipped): "Publish gate: live buy.stripe.com URLs (no YOUR_ placeholders)" passes against the activated SOT.
+- `npm test`: 148 / 148 structural assertions pass (`copy.js` `activeSectionId` is a pre-existing eslint warning, unrelated). Publish gate is enforced: "Publish gate: live buy.stripe.com URLs (no YOUR_ placeholders)" plus static Stripe href fallbacks on both PDF CTAs.
 - `npm run test:smoke`: 9 / 9 across 320, 375, 768 viewports (Stripe-href poll + delivery-promise hook covered).
 - `npm run test:e2e`: 11 / 11 (success-page polling + preview-dialog focus restore included).
 - `npm run test:a11y`: pa11y reports "No issues found" on `/`, `/privacy.html`, `/terms.html`, and the post-purchase success page (cleanUrl form `/success?session_id=...`).

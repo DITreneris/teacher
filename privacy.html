@@ -52,7 +52,7 @@
         <p>Clearing your browser data removes this information. We cannot read, recover, or access it.</p>
 
         <h2>3. Analytics</h2>
-        <p>The Service&rsquo;s own source code does not include any analytics or tracking script. The Service is hosted on Vercel. When the hosting project has <strong>Vercel Analytics</strong> enabled, the platform records aggregate, non-identifying page-view metrics; it does not use cookies, does not collect IP addresses in a persistent form, and does not build cross-site user profiles. We use that aggregate data, if and when available, only to understand which pages are visited and at what frequency.</p>
+        <p>We use <strong>Vercel Web Analytics</strong> on public pages through a small <code>analytics.js</code> module (powered by <code>@vercel/analytics</code>). It records aggregate, non-identifying page-view metrics only. Per Vercel&rsquo;s documentation, Web Analytics does not use cookies, does not collect IP addresses in a persistent form, and does not build cross-site user profiles. We use that aggregate data only to understand which pages are visited and at what frequency. Web Analytics must be enabled in the Vercel project dashboard for metrics to be collected.</p>
 
         <h2>4. Student data</h2>
         <p>The Service is designed for teacher use. <strong>We do not knowingly collect student personally identifiable information (PII).</strong> Teachers should not enter student names, IDs, contact information, grades, or other identifying details into the form fields. If you choose to copy a prompt into ChatGPT, Claude, Gemini, or any other third-party AI tool, that tool&rsquo;s privacy policy will govern how it handles whatever text you send.</p>
@@ -82,5 +82,6 @@
             <p><a href="index.html">&larr; Back to Classroom Prompt Builder</a> &middot; <a href="terms.html">Terms of Use</a></p>
         </div>
     </main>
+    <script type="module" src="analytics.js"></script>
 </body>
 </html>

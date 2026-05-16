@@ -274,6 +274,11 @@ function run() {
   if (assert(downloadLinkSrc && downloadLinkSrc.includes("'private, no-store'"), 'api/download-link.js sets Cache-Control: private, no-store')) passed++;
   else failed++;
 
+  const fulfillmentHealthPath = path.join(__dirname, '..', 'api', 'fulfillment-health.js');
+  const fulfillmentHealthSrc = readFile(fulfillmentHealthPath);
+  if (assert(fulfillmentHealthSrc && fulfillmentHealthSrc.includes('checkFulfillmentHealth'), 'api/fulfillment-health.js exposes operator health check')) passed++;
+  else failed++;
+
   // --- Rules ---
   if (assert(html.includes('id="rules"'), 'Rules section exists')) passed++;
   else failed++;
@@ -444,6 +449,9 @@ function run() {
   if (assert(html.includes('href="style.css"'), 'Link to style.css')) passed++;
   else failed++;
   if (assert(/src="generator\.js(?:\?[^"]*)?"/.test(html), 'Script src generator.js')) passed++;
+  if (assert(fs.existsSync(path.join(__dirname, '..', 'analytics.js')), 'analytics.js exists')) passed++;
+  if (assert(fs.existsSync(path.join(__dirname, '..', 'vendor', 'vercel-analytics.mjs')), 'vendor/vercel-analytics.mjs exists')) passed++;
+  if (assert(/analytics\.js/.test(html), 'index.html loads Vercel Analytics module')) passed++;
   if (
     assert(
       /data-stripe-cta="beginners"[^>]*href="https:\/\/buy\.stripe\.com\//.test(html) ||
@@ -480,6 +488,8 @@ function run() {
   const webhookFile = readFile(WEBHOOK_PATH);
   if (assert(webhookFile && webhookFile.includes('constructEvent'), 'Stripe webhook verifies signatures')) passed++;
   else failed++;
+  if (assert(webhookFile && webhookFile.includes('assertFulfillmentConfigured'), 'Stripe webhook validates fulfillment env before processing')) passed++;
+  else failed++;
   const downloadFile = readFile(DOWNLOAD_PATH);
   if (assert(downloadFile && downloadFile.includes('resolveDownload'), 'Download route validates tokens')) passed++;
   else failed++;
@@ -487,6 +497,11 @@ function run() {
   if (assert(fulfillmentFile && fulfillmentFile.includes('DOWNLOAD_TOKEN_SECRET') && fulfillmentFile.includes('timingSafeEqual'), 'Fulfillment helper signs download tokens')) passed++;
   else failed++;
   if (assert(fulfillmentFile && fulfillmentFile.includes('getDownloadUrlBySessionId') && fulfillmentFile.includes('IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS') && fulfillmentFile.includes('maskEmail'), 'Fulfillment helper exposes in-page download URL helper + email masking')) passed++;
+  if (assert(fulfillmentFile && fulfillmentFile.includes('getProductByAmountCents'), 'Fulfillment maps Payment Link amounts ($4.99 / $9.99) when price env vars mismatch')) passed++;
+  else failed++;
+  if (assert(fulfillmentFile && fulfillmentFile.includes('assertFulfillmentConfigured') && fulfillmentFile.includes('checkFulfillmentHealth'), 'Fulfillment helper validates env + health probe')) passed++;
+  else failed++;
+  if (assert(fulfillmentFile && fulfillmentFile.includes('BLOB_READ_WRITE_TOKEN') && /blob\\.vercel-storage\\.com/.test(fulfillmentFile), 'Fulfillment authenticates Vercel Blob private PDF fetches')) passed++;
   else failed++;
 
   // --- Legal pages exist ---

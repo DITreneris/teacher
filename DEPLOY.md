@@ -124,19 +124,49 @@ Set these in Vercel Project Settings → Environment Variables. Do not commit se
 
 1. Create two Stripe Products / Prices: Beginners PDF Guide (`$4.99`) and Advanced Educators PDF Guide (`$9.99`).
 2. Create one Payment Link per product and paste those URLs into [`config/sot.json`](config/sot.json) under `commerce.stripePaymentLinks.beginners` / `.advanced`. Then flip `commerce.allowPlaceholderCheckout` to `false` so `npm test` enforces the publish gate (no `YOUR_` placeholders, must match `https://buy.stripe.com/`). The PDF CTA `href`s in `index.html` are hydrated from SOT at runtime by `generator.js` `initCommerce()`; no HTML edit is required.
+   - On **each** Payment Link, add **Metadata**: key `product`, value `beginners` or `advanced` (Stripe Dashboard → Payment Link → Additional options → Metadata). This is the most reliable product mapping for fulfillment.
+   - Copy each Payment Link's **Price ID** (`price_...`) into Vercel as `STRIPE_PRICE_BEGINNERS_PDF` / `STRIPE_PRICE_ADVANCED_PDF`. If these env vars are missing or point at a different Price than the Payment Link uses, the webhook cannot match the product unless metadata or the `$4.99` / `$9.99` amount fallback applies.
 3. **Set the success URL** on each Payment Link (Stripe Dashboard → Payment Link → After payment → "Don't show confirmation page → Redirect customers to your website") to:
    ```
    https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}
    ```
    The `{CHECKOUT_SESSION_ID}` literal is replaced by Stripe with the real session id and consumed by `success.html`.
 4. **Enable Stripe receipts** for both products (Stripe Dashboard → Settings → Customer emails → Successful payments → ON). Optionally enable invoice creation on the Payment Link if you want a paid invoice PDF in addition to the receipt.
-5. Add a live webhook endpoint for `https://promptanatomy.online/api/stripe-webhook`.
+5. Add a live webhook endpoint for **`https://promptanatomy.online/api/stripe-webhook`** (not `promptanatomy.app` unless that domain is the **same** Vercel project and shares the same Redis env vars).
 6. Subscribe to `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
 7. Use Stripe CLI locally to forward events when testing webhook changes.
 
-### PDF storage
+**Critical:** Payment Links redirect buyers to `promptanatomy.online/success.html` and the download API is `promptanatomy.online/api/download-link`. Fulfillment state is stored in the **promptanatomy.online** Vercel project's Redis. A webhook pointing at `https://www.promptanatomy.app/api/stripe-webhook` (or any other host) will return `200` but the buyer will still see *"We could not find this checkout session"* on `.online` because that deployment never wrote `fulfillment:cs_...`.
 
-Production PDFs should live in private object storage and be fetched server-side through `PDF_BEGINNERS_SOURCE_URL` and `PDF_ADVANCED_SOURCE_URL`. The public site root must not contain paid PDF binaries. Local-only PDF files can be placed in `api/_private/pdfs/`, but `*.pdf` files in that folder are ignored by git.
+### PDF storage (Vercel Blob — recommended)
+
+1. Vercel → **Storage** → **Create Database / Store** → **Blob** → connect to the **promptanatomy.online** project (`BLOB_READ_WRITE_TOKEN` is added automatically).
+2. Locally, add `BLOB_READ_WRITE_TOKEN` to `.env` (or run `vercel env pull`).
+3. Generate PDFs and upload:
+
+```bash
+npm run pdf:export
+npm run pdf:upload-blob
+```
+
+4. Paste printed `PDF_BEGINNERS_SOURCE_URL`, `PDF_ADVANCED_SOURCE_URL`, and `BLOB_READ_WRITE_TOKEN` into Vercel **Production** env, then redeploy.
+
+Private Blob URLs require `BLOB_READ_WRITE_TOKEN` when the webhook fetches PDFs (handled in `api/_lib/fulfillment.js`).
+
+Production PDFs must not live in the public site root. Local-only copies may sit in `api/_private/pdfs/` (gitignored).
+
+### Troubleshooting: paid but no PDF / `success.html` says "could not find this checkout session"
+
+This means the Stripe webhook never wrote `fulfillment:cs_...` to **promptanatomy.online's** Redis (or used the wrong Stripe mode). The buyer still paid; fix fulfillment and **replay** the event.
+
+**First check:** Stripe → Webhooks → which URL received `checkout.session.completed`? If it is `promptanatomy.app` (or any host other than `promptanatomy.online`), add a second endpoint for `https://promptanatomy.online/api/stripe-webhook`, paste its signing secret into the **promptanatomy.online** Vercel env as `STRIPE_WEBHOOK_SECRET`, then **Resend** the event to the `.online` endpoint.
+
+1. **Stripe Dashboard → Developers → Webhooks** → your `https://promptanatomy.online/api/stripe-webhook` endpoint → open the `checkout.session.completed` event. Read the response body (`fulfillment` or `detail` field) and HTTP status. A `200` with only `{ "received": true }` and no `fulfillment` field on the **wrong host** does not help `.online`.
+2. **Vercel → Project → Settings → Environment Variables** (Production): confirm all of `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_BEGINNERS_PDF`, `STRIPE_PRICE_ADVANCED_PDF`, `DOWNLOAD_TOKEN_SECRET`, `RESEND_API_KEY`, `FULFILLMENT_FROM_EMAIL`, `UPSTASH_REDIS_REST_*`, `PDF_BEGINNERS_SOURCE_URL`, `PDF_ADVANCED_SOURCE_URL` are set. `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` must be **live** keys if the Payment Link is live (not test).
+3. **Payment Link metadata**: each link should have `product` = `beginners` or `advanced`.
+4. **Resend**: domain/sender `FULFILLMENT_FROM_EMAIL` must be verified; check Resend dashboard for bounces.
+5. After fixing env/metadata, **Replay** the event in Stripe (Webhooks → event → Resend). Or run locally: `stripe events resend evt_...`.
+6. **Manual buyer support**: email `info@promptanatomy.app` with the buyer's address and the `session_id` from `success.html?session_id=cs_...` after replay succeeds.
 
 ---
 

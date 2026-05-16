@@ -33,6 +33,22 @@ For **both** Beginners ($4.99) and Advanced ($9.99) Payment Links, in the Stripe
   - `commerce.stripePaymentLinks.advanced` -> `https://buy.stripe.com/28E8wPamgd7v15i11ufjG05`
 - [x] Flip `commerce.allowPlaceholderCheckout` to `false` in [config/sot.json](config/sot.json). `tests/structure.test.js` now enforces live `https://buy.stripe.com/...` URLs (publish gate green: 146 / 146). [index.html](index.html) does not hardcode the URLs - `generator.js` `initCommerce()` injects them at runtime.
 
+### 1b. Vercel fulfillment env (required for PDF email + success page download)
+
+If `success.html` shows **"We could not find this checkout session"** and no Resend email arrives, the webhook did not fulfill. In Vercel **Production** env, confirm:
+
+- [ ] `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET` (same mode as Payment Links: live vs test)
+- [ ] `STRIPE_PRICE_BEGINNERS_PDF` + `STRIPE_PRICE_ADVANCED_PDF` match the Price IDs on each Payment Link
+- [ ] Each Payment Link has metadata `product` = `beginners` or `advanced`
+- [ ] `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
+- [ ] `RESEND_API_KEY` + `FULFILLMENT_FROM_EMAIL` (verified sender)
+- [ ] `DOWNLOAD_TOKEN_SECRET` + `PDF_BEGINNERS_SOURCE_URL` + `PDF_ADVANCED_SOURCE_URL`
+- [ ] Live webhook **`https://promptanatomy.online/api/stripe-webhook`** subscribed to `checkout.session.completed` (not only `promptanatomy.app` — Payment Links redirect to `.online`, so fulfillment Redis must be on the same Vercel project as `.online`)
+
+See [DEPLOY.md](DEPLOY.md) troubleshooting section if a real purchase already failed — replay the Stripe event to the **`.online`** endpoint after env is fixed.
+
+**Known incident (2026-05-16):** webhook `prompt-anatomy-webhook` delivered `200` to `https://www.promptanatomy.app/api/stripe-webhook` while buyer landed on `promptanatomy.online/success.html` → session `cs_live_a1K4HVZR01TwNYzMV2IleCMwUbAmtzgIt4PyVeX0K21TdoLFYT1oEBW1M3`, email `tomas.staniulis76@gmail.com`, $4.99 Beginners. Fix: add `.online` webhook + replay `evt_1TXf3bGYF93wS2KaIZrz8Gja`.
+
 ### 2. Smoke-test end-to-end in Stripe test mode
 
 After step 1, run the same checklist that lives in [DEPLOY.md](DEPLOY.md):

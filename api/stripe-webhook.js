@@ -1,7 +1,7 @@
 'use strict';
 
 const Stripe = require('stripe');
-const { fulfillCheckoutSession } = require('./_lib/fulfillment');
+const { assertFulfillmentConfigured, fulfillCheckoutSession } = require('./_lib/fulfillment');
 
 function sendJson(res, statusCode, payload) {
   res.statusCode = statusCode;
@@ -36,6 +36,15 @@ module.exports = async function stripeWebhook(req, res) {
     return;
   }
 
+  try {
+    assertFulfillmentConfigured();
+  } catch (error) {
+    const message = error && error.message ? String(error.message) : 'Fulfillment is not configured';
+    console.error('[stripe-webhook] config error:', message);
+    sendJson(res, 500, { error: 'Fulfillment is not configured', detail: message });
+    return;
+  }
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const signature = req.headers['stripe-signature'];
   const rawBody = await readRawBody(req);
@@ -56,7 +65,9 @@ module.exports = async function stripeWebhook(req, res) {
   try {
     const result = await fulfillCheckoutSession(stripe, event.data.object.id, getOrigin(req));
     sendJson(res, 200, { received: true, fulfillment: result.status });
-  } catch (_error) {
-    sendJson(res, 500, { error: 'Fulfillment failed' });
+  } catch (error) {
+    const message = error && error.message ? String(error.message) : 'Fulfillment failed';
+    console.error('[stripe-webhook] fulfillment error:', message);
+    sendJson(res, 500, { error: 'Fulfillment failed', detail: message });
   }
 };
