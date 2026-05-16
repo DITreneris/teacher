@@ -443,7 +443,21 @@ function run() {
   // --- Module files ---
   if (assert(html.includes('href="style.css"'), 'Link to style.css')) passed++;
   else failed++;
-  if (assert(html.includes('src="generator.js"'), 'Script src generator.js')) passed++;
+  if (assert(/src="generator\.js(?:\?[^"]*)?"/.test(html), 'Script src generator.js')) passed++;
+  if (
+    assert(
+      /data-stripe-cta="beginners"[^>]*href="https:\/\/buy\.stripe\.com\//.test(html) ||
+        /href="https:\/\/buy\.stripe\.com\/[^"]*"[^>]*data-stripe-cta="beginners"/.test(html),
+      'Beginners PDF CTA has static buy.stripe.com href fallback'
+    )
+  ) passed++;
+  if (
+    assert(
+      /data-stripe-cta="advanced"[^>]*href="https:\/\/buy\.stripe\.com\//.test(html) ||
+        /href="https:\/\/buy\.stripe\.com\/[^"]*"[^>]*data-stripe-cta="advanced"/.test(html),
+      'Advanced PDF CTA has static buy.stripe.com href fallback'
+    )
+  ) passed++;
   else failed++;
   if (assert(html.includes('src="copy.js"'), 'Script src copy.js')) passed++;
   else failed++;

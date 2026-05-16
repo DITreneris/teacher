@@ -106,10 +106,10 @@
         ],
         copy: {},
         commerce: {
-            allowPlaceholderCheckout: true,
+            allowPlaceholderCheckout: false,
             stripePaymentLinks: {
-                beginners: 'https://buy.stripe.com/YOUR_BEGINNERS_PDF_LINK',
-                advanced: 'https://buy.stripe.com/YOUR_ADVANCED_PDF_LINK'
+                beginners: 'https://buy.stripe.com/eVq28r8e88Rf6pC4dGfjG04',
+                advanced: 'https://buy.stripe.com/28E8wPamgd7v15i11ufjG05'
             },
             pricing: {
                 beginners: { now: '$4.99', was: '$9.99' },
@@ -219,7 +219,21 @@
             })
             .then(function (remoteConfig) {
                 var merged = cloneJson(DEFAULT_SOT);
-                Object.assign(merged, remoteConfig || {});
+                var remote = remoteConfig || {};
+                Object.keys(remote).forEach(function (key) {
+                    if (key === 'commerce' && remote.commerce && typeof remote.commerce === 'object') {
+                        merged.commerce = Object.assign({}, merged.commerce, remote.commerce);
+                        if (remote.commerce.stripePaymentLinks && typeof remote.commerce.stripePaymentLinks === 'object') {
+                            merged.commerce.stripePaymentLinks = Object.assign(
+                                {},
+                                merged.commerce.stripePaymentLinks,
+                                remote.commerce.stripePaymentLinks
+                            );
+                        }
+                        return;
+                    }
+                    merged[key] = remote[key];
+                });
                 return merged;
             })
             .catch(function () {
@@ -1076,11 +1090,12 @@
             var cta = ctas[i];
             var key = cta.getAttribute('data-stripe-cta');
             var url = key && Object.prototype.hasOwnProperty.call(links, key) ? links[key] : '';
-            if (typeof url === 'string' && /^https:\/\//.test(url)) {
+            var placeholdersBlocked =
+                commerce.allowPlaceholderCheckout === false && isPlaceholderStripeUrl(url);
+            if (typeof url === 'string' && /^https:\/\//.test(url) && !placeholdersBlocked) {
                 cta.setAttribute('href', url);
-                if (isPlaceholderStripeUrl(url) && commerce.allowPlaceholderCheckout === false && typeof console !== 'undefined' && console.warn) {
-                    console.warn('Stripe payment link is still a placeholder for ' + key);
-                }
+            } else if (placeholdersBlocked && typeof console !== 'undefined' && console.warn) {
+                console.warn('Stripe payment link is still a placeholder for ' + key);
             }
         }
 
@@ -1243,15 +1258,19 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        var bootstrapConfig = cloneJson(DEFAULT_SOT);
+        initCommerce(bootstrapConfig);
+        initLegal(bootstrapConfig);
+
         loadSotConfig().then(function (config) {
             assignSotConfig(config);
             initFormData();
+            initCommerce(config);
+            initLegal(config);
             initializeApp();
             initPdfPreviewDialog();
             initPdfGuideTocs(config);
             initBuyerFaq(config);
-            initCommerce(config);
-            initLegal(config);
         });
     });
 })();
