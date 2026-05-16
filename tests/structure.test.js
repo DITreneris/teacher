@@ -351,6 +351,18 @@ function run() {
   if (assert(html.includes('lang="en-US"'), 'HTML lang="en-US" on index.html')) passed++;
   else failed++;
 
+  if (assert(html.includes('class="hero-content"'), 'hero-content wrapper present in index.html')) passed++;
+  else failed++;
+  const heroTail = html.slice(html.indexOf('id="heroCtaMeta"'));
+  const closeTag = '</' + 'div>';
+  const firstClose = heroTail.indexOf(closeTag);
+  const secondClose = heroTail.indexOf(closeTag, firstClose + 1);
+  const cardIdx = heroTail.indexOf('class="hero-prompt-card"');
+  if (assert(secondClose > firstClose && cardIdx > secondClose, 'hero-prompt-card is outside hero-content')) passed++;
+  else failed++;
+  if (assert(html.includes('hero-prompt-card__chrome'), 'hero-prompt-card chrome bar present')) passed++;
+  else failed++;
+
   // --- SEO basics ---
   if (assert(html.includes('<meta name="description"'), 'Meta description present')) passed++;
   else failed++;

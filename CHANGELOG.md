@@ -10,6 +10,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); version
 - `.cursor/skills/pdf-fulfillment/SKILL.md`: repo-local skill for Stripe webhook / env / domain-mismatch diagnostics (checklist from [memo_pdf.md](memo_pdf.md)).
 
 ### Changed
+- Hero decorative prompt card: `.hero-content` wrapper, CSS Grid desktop layout (≥1025px), glass chrome bar, gold glow, subtle float; hidden ≤1024px; E2E placement + glass assertions.
 - SEO/GEO P2 (US): `og-image.png` compressed to &lt; 300 KB; `og:image:type` meta; `SoftwareApplication` JSON-LD `screenshot` + `countriesSupported: US`; `sitemap.xml` `lastmod` 2026-05-16; [DEPLOY.md](DEPLOY.md) post-deploy checklist (GSC, Bing, social debuggers, Rich Results). CSP stays Report-Only per operator choice.
 - `tests/structure.test.js`: OG file size/dimensions, `og:image:type`, buyer FAQ JSON-LD sync with `config/sot.json#buyerFaq`.
 - Community primary CTA (Telegram) aligned to DS 2.0 gold tokens (`--cta-bg` / `--cta-text`); legacy green removed. `.community-actions` flex wrapper; mobile stack rules at 480px.
