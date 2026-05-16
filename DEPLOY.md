@@ -123,7 +123,7 @@ Set these in Vercel Project Settings → Environment Variables. Do not commit se
 ### Stripe setup
 
 1. Create two Stripe Products / Prices: Beginners PDF Guide (`$4.99`) and Advanced Educators PDF Guide (`$9.99`).
-2. Create one Payment Link per product and paste those URLs into the PDF buttons in `index.html`.
+2. Create one Payment Link per product and paste those URLs into [`config/sot.json`](config/sot.json) under `commerce.stripePaymentLinks.beginners` / `.advanced`. Then flip `commerce.allowPlaceholderCheckout` to `false` so `npm test` enforces the publish gate (no `YOUR_` placeholders, must match `https://buy.stripe.com/`). The PDF CTA `href`s in `index.html` are hydrated from SOT at runtime by `generator.js` `initCommerce()`; no HTML edit is required.
 3. **Set the success URL** on each Payment Link (Stripe Dashboard → Payment Link → After payment → "Don't show confirmation page → Redirect customers to your website") to:
    ```
    https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}

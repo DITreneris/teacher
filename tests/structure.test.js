@@ -128,7 +128,7 @@ function run() {
   else failed++;
   if (assert(html.includes('class="pdf-guide-trust"') && html.includes('Stripe checkout') && html.includes('Apple Pay') && html.includes('256-bit SSL'), 'Trust row lists Stripe, card brands, Apple Pay, and SSL')) passed++;
   else failed++;
-  if (assert(html.includes('class="pdf-guide-promise"') && html.includes('Instant delivery') && html.includes('under 60 seconds') && html.includes('7 days'), 'Instant-delivery promise is shown under the CTA')) passed++;
+  if (assert(html.includes('class="pdf-guide-promise"') && html.includes('data-commerce-delivery-promise'), 'Delivery promise hook exists on both PDF cards')) passed++;
   else failed++;
   if (assert(html.includes('data-preview-trigger="beginners"') && html.includes('data-preview-trigger="advanced"'), 'Preview-3-pages buttons exist for both guides')) passed++;
   else failed++;
@@ -142,9 +142,9 @@ function run() {
   else failed++;
   if (assert(html.includes('id="lostLinkMailto"') && html.includes('mailto:info@promptanatomy.app?subject=Resend'), 'Lost-your-link footer mailto link present')) passed++;
   else failed++;
-  if (assert(html.includes('class="pdf-testimonials"') && (html.match(/class="pdf-testimonial"/g) || []).length === 3, 'Three pilot testimonial cards rendered')) passed++;
+  if (assert(html.includes('class="pdf-testimonials"') && html.includes('data-commerce-testimonials'), 'Testimonials list + commerce hook present')) passed++;
   else failed++;
-  if (assert(html.includes('class="pdf-compare-strip"') && html.includes('~ $149') && html.includes('$4.99') && html.includes('$9.99'), 'Compare strip lists PD workshop vs PDF guide prices')) passed++;
+  if (assert(html.includes('class="pdf-compare-strip"') && html.includes('data-commerce-compare-strip') && html.includes('$4.99') && html.includes('$9.99'), 'Compare strip exposes commerce hooks and PDF guide prices')) passed++;
   else failed++;
   if (assert(html.includes('class="pdf-author-panel"') && html.includes('Published by Prompt Anatomy') && html.includes('promptanatomy.app'), 'Author panel block present')) passed++;
   else failed++;
@@ -170,6 +170,71 @@ function run() {
     sotPdfGuides.buyerFaq.every(function (item) { return item.id && item.q && item.a; }),
     'config/sot.json#buyerFaq has 5 well-formed buyer questions'
   )) passed++;
+  else failed++;
+
+  // --- Commerce + legal SOT schema (audit hardening) ---
+  const commerce = sotPdfGuides && sotPdfGuides.commerce;
+  if (assert(
+    commerce &&
+    typeof commerce === 'object' &&
+    commerce.stripePaymentLinks &&
+    typeof commerce.stripePaymentLinks.beginners === 'string' &&
+    typeof commerce.stripePaymentLinks.advanced === 'string' &&
+    typeof commerce.deliveryPromise === 'string' &&
+    Array.isArray(commerce.testimonials) && commerce.testimonials.length >= 1 &&
+    commerce.compareStrip && typeof commerce.compareStrip.pdValue === 'string',
+    'config/sot.json#commerce has stripe links, deliveryPromise, testimonials, compareStrip'
+  )) passed++;
+  else failed++;
+
+  if (assert(
+    commerce &&
+    typeof commerce.deliveryPromise === 'string' &&
+    !/under 60 seconds/i.test(commerce.deliveryPromise),
+    'commerce.deliveryPromise avoids the "under 60 seconds" overclaim'
+  )) passed++;
+  else failed++;
+
+  if (assert(
+    commerce &&
+    commerce.compareStrip &&
+    typeof commerce.compareStrip.pdValue === 'string' &&
+    !/^\s*~\s*\$\d/.test(commerce.compareStrip.pdValue),
+    'commerce.compareStrip.pdValue avoids the unsourced "~ $NN" exact-price comparison'
+  )) passed++;
+  else failed++;
+
+  if (assert(
+    sotPdfGuides &&
+    sotPdfGuides.legal &&
+    typeof sotPdfGuides.legal.operatorLine === 'string' &&
+    sotPdfGuides.legal.operatorLine.length > 0,
+    'config/sot.json#legal.operatorLine is set'
+  )) passed++;
+  else failed++;
+
+  // Publish gate: when allowPlaceholderCheckout is false, Stripe links must be live
+  if (commerce && commerce.allowPlaceholderCheckout === false) {
+    const linkBeginners = commerce.stripePaymentLinks.beginners;
+    const linkAdvanced = commerce.stripePaymentLinks.advanced;
+    if (assert(
+      !linkBeginners.includes('YOUR_') &&
+      !linkAdvanced.includes('YOUR_') &&
+      /^https:\/\/buy\.stripe\.com\//.test(linkBeginners) &&
+      /^https:\/\/buy\.stripe\.com\//.test(linkAdvanced),
+      'Publish gate: live buy.stripe.com URLs (no YOUR_ placeholders)'
+    )) passed++;
+    else failed++;
+  } else {
+    console.log('\u2139\ufe0f  Publish gate skipped: commerce.allowPlaceholderCheckout is true');
+  }
+
+  // index.html must not hardcode placeholder URLs (links live in SOT now)
+  if (assert(!/YOUR_BEGINNERS_PDF_LINK|YOUR_ADVANCED_PDF_LINK/.test(html), 'index.html does not hardcode YOUR_*_PDF_LINK placeholders')) passed++;
+  else failed++;
+
+  // Footer hook for legal operator line
+  if (assert(html.includes('data-legal-operator-line'), 'Footer exposes data-legal-operator-line hook')) passed++;
   else failed++;
 
   const beginnersCoverPath = path.join(__dirname, '..', 'assets', 'pdf-covers', 'beginners.png');

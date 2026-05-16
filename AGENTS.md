@@ -4,7 +4,7 @@ Tikslas: vienareiksmis darbo modelis edukaciniam MVP.
 
 ## Rolės ir atsakomybės
 
-- **Orchestrator** - valdo prioritetą, suformuoja užduoties aprašą ir priima galutinį rezultatą.
+- **Orchestrator** - valdo prioritetą, suformuoja užduoties aprašą ir priima galutinį rezultatą. US go-to-market prioritetai ir promotion vartai - [`docs/marketing_plan.md`](docs/marketing_plan.md).
 - **Content** - atsako už copy, promptų semantiką ir mokytojo konteksto aiškumą.
 - **UI/UX** - atsako už vartotojo srautą, mobile hierarchiją ir a11y.
 - **QA** - vykdo kokybės vartus ir pateikia release rekomendaciją.

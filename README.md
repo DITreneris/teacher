@@ -20,6 +20,7 @@ Open [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 ## Documentation
 
 - [`docs/INDEX.md`](docs/INDEX.md) — doc navigation
+- [`docs/marketing_plan.md`](docs/marketing_plan.md) — US market & X/Twitter promotion plan (gates, messaging, 30-day calendar)
 - [`DEPLOY.md`](DEPLOY.md) — **human + robot deployment reference** (Vercel, DNS, SEO files)
 - [`CHANGELOG.md`](CHANGELOG.md) — release notes
 

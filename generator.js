@@ -105,6 +105,34 @@
             { text: 'Presentation mode returns a text outline \u2014 bring it into your slides tool.', icon: 'check-circle' }
         ],
         copy: {},
+        commerce: {
+            allowPlaceholderCheckout: true,
+            stripePaymentLinks: {
+                beginners: 'https://buy.stripe.com/YOUR_BEGINNERS_PDF_LINK',
+                advanced: 'https://buy.stripe.com/YOUR_ADVANCED_PDF_LINK'
+            },
+            pricing: {
+                beginners: { now: '$4.99', was: '$9.99' },
+                advanced: { now: '$9.99', was: '$19.99' }
+            },
+            compareStrip: {
+                pdLabel: 'Typical single-session PD',
+                pdValue: 'often $100+',
+                vsLabel: 'vs',
+                beginnersLabel: 'Beginners guide',
+                advancedLabel: 'Advanced guide',
+                caption: 'Classroom-ready in a week. Re-readable. Yours to print and use across every section you teach.',
+                sourceNote: 'Estimate; replace with cited figure when available.'
+            },
+            deliveryPromise: 'Usually within a minute: Stripe receipt plus a separate download email. The success page also shows a one-click download. Link valid 7 days \u2014 ask us to resend anytime.',
+            pilotMeta: 'Shaped with pilot feedback from US K\u201312 teachers across grade bands and content areas.',
+            testimonialsNote: 'Quotes paraphrased from pilot feedback during private beta. Names withheld at request; school identifiers redacted.',
+            testimonials: []
+        },
+        legal: {
+            operatorLine: '\u00a9 2026 Tomas Staniulis. Educational tool. All rights reserved.',
+            entityNote: 'LEGAL_REVIEW: replace with counsel-approved entity name, state, and country before paid ads.'
+        },
         theme: {
             light: {
                 '--primary': '#0F2A44',
@@ -1026,6 +1054,87 @@
         });
     }
 
+    function setHookText(selector, text) {
+        if (typeof text !== 'string') return;
+        var nodes = document.querySelectorAll(selector);
+        for (var i = 0; i < nodes.length; i += 1) {
+            nodes[i].textContent = text;
+        }
+    }
+
+    function isPlaceholderStripeUrl(url) {
+        return typeof url === 'string' && /YOUR_/.test(url);
+    }
+
+    function initCommerce(config) {
+        if (!config || !config.commerce || typeof config.commerce !== 'object') return;
+        var commerce = config.commerce;
+
+        var links = commerce.stripePaymentLinks || {};
+        var ctas = document.querySelectorAll('[data-stripe-cta]');
+        for (var i = 0; i < ctas.length; i += 1) {
+            var cta = ctas[i];
+            var key = cta.getAttribute('data-stripe-cta');
+            var url = key && Object.prototype.hasOwnProperty.call(links, key) ? links[key] : '';
+            if (typeof url === 'string' && /^https:\/\//.test(url)) {
+                cta.setAttribute('href', url);
+                if (isPlaceholderStripeUrl(url) && commerce.allowPlaceholderCheckout === false && typeof console !== 'undefined' && console.warn) {
+                    console.warn('Stripe payment link is still a placeholder for ' + key);
+                }
+            }
+        }
+
+        if (commerce.pilotMeta) {
+            setHookText('[data-commerce-pilot-meta]', commerce.pilotMeta);
+        }
+        if (commerce.testimonialsNote) {
+            setHookText('[data-commerce-testimonials-note]', commerce.testimonialsNote);
+        }
+        if (commerce.deliveryPromise) {
+            setHookText('[data-commerce-delivery-promise]', commerce.deliveryPromise);
+        }
+
+        var compare = commerce.compareStrip || {};
+        if (compare.pdLabel) setHookText('[data-commerce-compare-pd-label]', compare.pdLabel);
+        if (compare.pdValue) setHookText('[data-commerce-compare-pd-value]', compare.pdValue);
+        if (compare.vsLabel) setHookText('[data-commerce-compare-vs]', compare.vsLabel);
+        if (compare.beginnersLabel) setHookText('[data-commerce-compare-beginners-label]', compare.beginnersLabel);
+        if (compare.advancedLabel) setHookText('[data-commerce-compare-advanced-label]', compare.advancedLabel);
+        if (compare.caption) setHookText('[data-commerce-compare-caption]', compare.caption);
+
+        var pricing = commerce.pricing || {};
+        if (pricing.beginners && pricing.beginners.now) {
+            setHookText('[data-commerce-compare-beginners-value]', pricing.beginners.now);
+        }
+        if (pricing.advanced && pricing.advanced.now) {
+            setHookText('[data-commerce-compare-advanced-value]', pricing.advanced.now);
+        }
+
+        var list = document.querySelector('[data-commerce-testimonials]');
+        if (list && Array.isArray(commerce.testimonials)) {
+            var html = '';
+            for (var j = 0; j < commerce.testimonials.length; j += 1) {
+                var t = commerce.testimonials[j];
+                if (!t || !t.quote) continue;
+                var cite = t.cite ? '<cite>' + escapeHtmlText(t.cite) + '</cite>' : '';
+                var meta = t.meta ? ' &middot; ' + escapeHtmlText(t.meta) : '';
+                html +=
+                    '<li class="pdf-testimonial">' +
+                        '<blockquote><p>&ldquo;' + escapeHtmlText(t.quote) + '&rdquo;</p></blockquote>' +
+                        '<footer>' + cite + meta + '</footer>' +
+                    '</li>';
+            }
+            list.innerHTML = html;
+        }
+    }
+
+    function initLegal(config) {
+        if (!config || !config.legal || typeof config.legal !== 'object') return;
+        if (config.legal.operatorLine) {
+            setHookText('[data-legal-operator-line]', config.legal.operatorLine);
+        }
+    }
+
     function initBuyerFaq(config) {
         if (!config || !Array.isArray(config.buyerFaq)) return;
         var list = document.querySelector('[data-buyer-faq-list]');
@@ -1141,6 +1250,8 @@
             initPdfPreviewDialog();
             initPdfGuideTocs(config);
             initBuyerFaq(config);
+            initCommerce(config);
+            initLegal(config);
         });
     });
 })();

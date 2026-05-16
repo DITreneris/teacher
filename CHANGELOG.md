@@ -63,17 +63,45 @@ Pilot testimonials with honest provenance, compare strip vs the typical PD-works
 #### Changed
 - `tests/e2e/smoke.spec.js`: cover-image natural-width assertion now scrolls the figure into view first and polls until `naturalWidth > 100`, because the new social-proof block above the cards pushes the cover below the initial viewport on 320 / 375 widths where `loading="lazy"` defers it.
 
-### Docs delta (all three stages)
+### Stage 4 - GTM code hardening (single source of truth for commerce + audit-safe copy)
+
+Marketing-audit follow-through from `docs/marketing_plan.md`. Centralizes Stripe links, pricing, social proof, compare strip, and delivery copy in `config/sot.json`; replaces audit-flagged claims with safer language; adds a CI publish gate so checkout cannot ship with placeholder URLs once activated.
+
+#### Added
+- `config/sot.json#commerce`: `allowPlaceholderCheckout`, `stripePaymentLinks.{beginners,advanced}`, `pricing.{beginners,advanced}`, `compareStrip.{pdLabel,pdValue,vsLabel,beginnersLabel,advancedLabel,caption,sourceNote}`, `deliveryPromise`, `pilotMeta`, `testimonialsNote`, `testimonials[]`. Audit-safe defaults: `pdValue` is `often $100+` (no unsourced `~ $149`); `deliveryPromise` is `Usually within a minute: ...` (no `under 60 seconds`); first testimonial drops the `~4 hours -> under 1 hour` time-savings claim.
+- `config/sot.json#legal.operatorLine` and `legal.entityNote` (counsel-review marker before paid ads).
+- `generator.js`: `initCommerce(config)` and `initLegal(config)` hydrate the PDF section + footer from SOT. Sets `data-stripe-cta` `href`s only when the SOT URL starts with `https://`, fills compare-strip pills, delivery-promise spans on both cards, testimonials list, footer operator line. `DEFAULT_SOT` mirrors the new structure for `file://` local preview.
+- `tests/structure.test.js`: SOT schema asserts for `commerce` (Stripe links, deliveryPromise, testimonials, compareStrip) and `legal.operatorLine`; copy-safety asserts (`deliveryPromise` rejects `/under 60 seconds/i`; `compareStrip.pdValue` rejects `/^\s*~\s*\$\d/`); guard that `index.html` no longer hardcodes `YOUR_*_PDF_LINK`; footer hook `data-legal-operator-line`. Conditional **publish gate** that fires when `commerce.allowPlaceholderCheckout === false`: requires both Stripe URLs to start with `https://buy.stripe.com/` and contain no `YOUR_`. While placeholders are still allowed, the test prints `Publish gate skipped: commerce.allowPlaceholderCheckout is true`.
+
+#### Changed
+- `index.html` paid PDF section: PDF cards drop the literal `https://buy.stripe.com/YOUR_*` href in favor of `data-stripe-cta="beginners|advanced"` (href hydrates from SOT). Testimonials list, compare strip pills, pilot meta, testimonials note, and the two delivery-promise spans now expose `data-commerce-*` hooks; the static fallback text mirrors the SOT defaults so no-JS readers still see safe copy.
+- `index.html` footer: copyright `<p>` wraps the operator line in `<span data-legal-operator-line>` for SOT-driven hydration.
+- `tests/structure.test.js`: dropped the brittle `Instant delivery` / `under 60 seconds` / `~ $149` literal-string assertions in raw HTML; replaced them with hook-presence + SOT-schema checks. Testimonial count check moved off the static HTML (now SOT-driven) onto the `data-commerce-testimonials` hook.
+- `tests/e2e/smoke.spec.js`: Stripe-href assertions now use `expect.poll` (5s timeout) because hrefs are hydrated by `generator.js` after SOT loads. Promise-card assertion now checks the `[data-commerce-delivery-promise]` hook is non-empty rather than matching the old `Instant delivery` literal.
+- `todo.md` P0: replaces the "edit `index.html`" step with "paste URLs into `config/sot.json#commerce.stripePaymentLinks` and flip `allowPlaceholderCheckout` to `false`" - the publish gate then becomes mandatory in CI.
+- `DEPLOY.md` Stripe setup step 2: same SOT-based instruction.
+- `docs/marketing_plan.md`: Gate A references the SOT publish gate; messaging rules updated to point at `commerce.compareStrip.pdValue` and call out `under 60 seconds` explicitly; §11 maintenance note documents where commerce copy lives.
+
+### Stage 5 - Stripe Payment Link activation (publish gate enforced)
+
+P0 release-blocker §1, SOT half: live Stripe Payment Link URLs pasted into `config/sot.json#commerce.stripePaymentLinks` and `commerce.allowPlaceholderCheckout` flipped to `false`. The CI publish gate in `tests/structure.test.js` ("live buy.stripe.com URLs (no YOUR_ placeholders)") is now mandatory on every run and currently green. `generator.js` `initCommerce()` injects the URLs into the two `data-stripe-cta` anchors at runtime; `index.html` remains placeholder-free.
+
+#### Changed
+- `config/sot.json`: `commerce.allowPlaceholderCheckout` -> `false`; `commerce.stripePaymentLinks.beginners` and `commerce.stripePaymentLinks.advanced` set to live Stripe Payment Link URLs (the actual URLs live in SOT, not duplicated here).
+- [todo.md](todo.md) P0 §1: the two "paste URLs" and "flip allowPlaceholderCheckout" checkboxes are now checked. Remaining P0 work is Stripe-Dashboard-only (success URL template, customer email receipts) plus the live test-mode E2E purchase + refund.
+
+### Docs delta (all five stages)
 - `docs/INDEX.md`: registers `success.html`, `api/download-link.js`, both cover PNGs, and the six watermarked sample-page PNGs.
+- `docs/marketing_plan.md`: canonical US go-to-market plan (readiness scores, promotion gates A/B/C, compliance reference, X content playbook, 30-day calendar, risk register). Linked from `README.md` and `AGENTS.md` (Orchestrator).
 
 ### Verified (last full pass, all stages stacked)
-- `npm test`: 139 / 139 structural assertions pass (`copy.js` `activeSectionId` is a pre-existing eslint warning, unrelated).
-- `npm run test:smoke`: 9 / 9 across 320, 375, 768 viewports.
+- `npm test`: 146 / 146 structural assertions pass (`copy.js` `activeSectionId` is a pre-existing eslint warning, unrelated). Publish gate is now enforced (not skipped): "Publish gate: live buy.stripe.com URLs (no YOUR_ placeholders)" passes against the activated SOT.
+- `npm run test:smoke`: 9 / 9 across 320, 375, 768 viewports (Stripe-href poll + delivery-promise hook covered).
 - `npm run test:e2e`: 11 / 11 (success-page polling + preview-dialog focus restore included).
 - `npm run test:a11y`: pa11y reports "No issues found" on `/`, `/privacy.html`, `/terms.html`, and the post-purchase success page (cleanUrl form `/success?session_id=...`).
 
-### Pre-release blocker (Stripe Dashboard, no code)
-- Each Stripe Payment Link must redirect to `https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}` and have customer email receipts ON. See [todo.md](todo.md) P0.
+### Pre-release blocker (live E2E, no code) - remaining after Stage 5
+- P0 §1 is fully done: SOT URLs + publish gate (Stage 5), Stripe Dashboard success URL + customer email receipts + `invoice_creation`. The single remaining release-blocker is [todo.md](todo.md) P0 §2 - one live test-mode purchase (`4242 4242 4242 4242`) that exercises the full chain: Stripe redirect to `success.html?session_id=cs_test_...`, in-page Download button surfaces within ~5s, Stripe receipt email arrives, Resend download email arrives, then a Stripe test refund that revokes the original signed link on next click. See [DEPLOY.md](DEPLOY.md) for the post-deploy checklist.
 
 ## [Unreleased] - Secure paid PDF fulfillment
 

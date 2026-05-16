@@ -16,8 +16,15 @@ for (const viewport of viewports) {
       await expect(page.locator('#operationsCenter')).toBeVisible();
       await expect(page.locator('#opsOutput')).toBeVisible();
       await expect(page.locator('#pdf-guides')).toBeVisible();
-      await expect(page.locator('[data-product="beginners-pdf"]')).toHaveAttribute('href', /buy\.stripe\.com/);
-      await expect(page.locator('[data-product="advanced-pdf"]')).toHaveAttribute('href', /buy\.stripe\.com/);
+      // Stripe hrefs are hydrated from config/sot.json#commerce.stripePaymentLinks by generator.js
+      await expect.poll(
+        () => page.locator('[data-product="beginners-pdf"]').getAttribute('href'),
+        { timeout: 5000 }
+      ).toMatch(/buy\.stripe\.com/);
+      await expect.poll(
+        () => page.locator('[data-product="advanced-pdf"]').getAttribute('href'),
+        { timeout: 5000 }
+      ).toMatch(/buy\.stripe\.com/);
 
       const beginnersCover = page.locator('.pdf-guide-card .pdf-guide-card-cover img').first();
       await expect(beginnersCover).toHaveAttribute('src', /\/assets\/pdf-covers\/beginners\.png/);
@@ -28,7 +35,7 @@ for (const viewport of viewports) {
       await expect(page.locator('.pdf-guide-card .pdf-guide-license').first()).toContainText('Classroom license');
       await expect(page.locator('.pdf-guide-card .pdf-guide-refund').first()).toContainText('14-day no-questions refund');
       await expect(page.locator('.pdf-guide-card .pdf-guide-trust').first()).toContainText('Stripe checkout');
-      await expect(page.locator('.pdf-guide-card .pdf-guide-promise').first()).toContainText('Instant delivery');
+      await expect(page.locator('.pdf-guide-card .pdf-guide-promise [data-commerce-delivery-promise]').first()).not.toBeEmpty();
 
       await page.click('[data-mode="ASSESSMENT"]');
       await expect(page.locator('[data-mode="ASSESSMENT"]')).toHaveClass(/is-active/);

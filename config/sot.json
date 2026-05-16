@@ -181,6 +181,50 @@
       ]
     }
   },
+  "commerce": {
+    "allowPlaceholderCheckout": false,
+    "stripePaymentLinks": {
+      "beginners": "https://buy.stripe.com/eVq28r8e88Rf6pC4dGfjG04",
+      "advanced": "https://buy.stripe.com/28E8wPamgd7v15i11ufjG05"
+    },
+    "pricing": {
+      "beginners": { "now": "$4.99", "was": "$9.99" },
+      "advanced": { "now": "$9.99", "was": "$19.99" }
+    },
+    "compareStrip": {
+      "pdLabel": "Typical single-session PD",
+      "pdValue": "often $100+",
+      "vsLabel": "vs",
+      "beginnersLabel": "Beginners guide",
+      "advancedLabel": "Advanced guide",
+      "caption": "Classroom-ready in a week. Re-readable. Yours to print and use across every section you teach.",
+      "sourceNote": "Estimate; replace with cited figure when available."
+    },
+    "deliveryPromise": "Usually within a minute: Stripe receipt plus a separate download email. The success page also shows a one-click download. Link valid 7 days \u2014 ask us to resend anytime.",
+    "pilotMeta": "Shaped with pilot feedback from US K\u201312 teachers across grade bands and content areas.",
+    "testimonialsNote": "Quotes paraphrased from pilot feedback during private beta. Names withheld at request; school identifiers redacted.",
+    "testimonials": [
+      {
+        "quote": "The prompt formula is the part I keep coming back to for Sunday planning.",
+        "cite": "Pilot teacher",
+        "meta": "Grade 5 \u00b7 Midwest US"
+      },
+      {
+        "quote": "The 7-point verification checklist alone changed how my team uses AI. We stopped pasting outputs straight to students.",
+        "cite": "Pilot teacher",
+        "meta": "Middle school ELA \u00b7 Northeast US"
+      },
+      {
+        "quote": "Used the Advanced guide as the spine of a half-day PD session. The rubric and rollout playbook saved me from building from scratch.",
+        "cite": "Pilot instructional coach",
+        "meta": "HS science \u00b7 West Coast US"
+      }
+    ]
+  },
+  "legal": {
+    "operatorLine": "\u00a9 2026 Tomas Staniulis. Educational tool. All rights reserved.",
+    "entityNote": "LEGAL_REVIEW: replace with counsel-approved entity name, state, and country before paid ads."
+  },
   "buyerFaq": [
     {
       "id": "buyer-faq-multi-classroom",

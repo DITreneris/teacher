@@ -6,6 +6,8 @@ Priorities use the same scale as the implementation plan: **P0** blocks the rele
 
 This file is intentionally not registered in [docs/INDEX.md](docs/INDEX.md) and not enforced by `tests/docs-hygiene.test.js`; it is operator scratch-space.
 
+Promotion gates and the 30-day X calendar live in [docs/marketing_plan.md](docs/marketing_plan.md).
+
 ---
 
 ## P0 - Release blockers
@@ -16,19 +18,20 @@ Without this, `success.html` never runs and the new post-purchase flow is dark.
 
 For **both** Beginners ($4.99) and Advanced ($9.99) Payment Links, in the Stripe Dashboard:
 
-- [ ] **Set the success URL** under "After payment" -> "Don't show confirmation page" -> "Redirect customers to your website":
+- [x] **Set the success URL** under "After payment" -> "Don't show confirmation page" -> "Redirect customers to your website":
   ```
   https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}
   ```
   The literal `{CHECKOUT_SESSION_ID}` is the Stripe template variable and **must** stay un-substituted in the field.
 
-- [ ] **Enable customer email receipts** under Settings -> Customer emails -> Successful payments -> ON. The card copy in [index.html](index.html) and the Resend email body in [api/_lib/fulfillment.js](api/_lib/fulfillment.js) both promise "two emails" - this is the second one.
+- [x] **Enable customer email receipts** under Settings -> Customer emails -> Successful payments -> ON. The card copy in [index.html](index.html) and the Resend email body in [api/_lib/fulfillment.js](api/_lib/fulfillment.js) both promise "two emails" - this is the second one.
 
-- [ ] *(Optional)* Enable `invoice_creation` on each Payment Link if you also want a downloadable invoice PDF in addition to the receipt.
+- [x] *(Optional)* Enable `invoice_creation` on each Payment Link if you also want a downloadable invoice PDF in addition to the receipt.
 
-- [ ] Replace the two placeholders in [index.html](index.html) with the real Payment Link URLs:
-  - `https://buy.stripe.com/YOUR_BEGINNERS_PDF_LINK`
-  - `https://buy.stripe.com/YOUR_ADVANCED_PDF_LINK`
+- [x] Paste the real Payment Link URLs into [config/sot.json](config/sot.json) `commerce.stripePaymentLinks`:
+  - `commerce.stripePaymentLinks.beginners` -> `https://buy.stripe.com/eVq28r8e88Rf6pC4dGfjG04`
+  - `commerce.stripePaymentLinks.advanced` -> `https://buy.stripe.com/28E8wPamgd7v15i11ufjG05`
+- [x] Flip `commerce.allowPlaceholderCheckout` to `false` in [config/sot.json](config/sot.json). `tests/structure.test.js` now enforces live `https://buy.stripe.com/...` URLs (publish gate green: 146 / 146). [index.html](index.html) does not hardcode the URLs - `generator.js` `initCommerce()` injects them at runtime.
 
 ### 2. Smoke-test end-to-end in Stripe test mode
 

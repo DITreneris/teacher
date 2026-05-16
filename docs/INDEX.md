@@ -16,6 +16,10 @@ The single documentation navigation hub after `README.md`.
 - [AGENTS.md](../AGENTS.md) - role-based work and quality rules.
 - [CHANGELOG.md](../CHANGELOG.md) - release notes.
 
+## Active go-to-market
+
+- [marketing_plan.md](marketing_plan.md) - US promotion readiness, X/Twitter plan, compliance gates, 30-day calendar; cross-links [DEPLOY.md](../DEPLOY.md) and operator release blockers (see plan §10).
+
 ## Active legal pages
 
 - [privacy.html](../privacy.html) - US Privacy Policy.
