@@ -26,6 +26,10 @@ Desktop.ini
 # Jei reikia lokalių juodraščių – naudok atskirą sufiksą ir ignoruok čia.
 *.local.md
 
+# ─── Large NCES extracts (use outreach repo data/nces_raw/) ───
+schools.csv
+ccd_schools.csv
+
 # ─── Temporary & build ───
 *.tmp
 *.temp
