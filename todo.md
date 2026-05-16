@@ -1,6 +1,6 @@
 # TODO - Buyer confidence on paid PDF cards
 
-Living list of follow-ups for the `[Unreleased] - Buyer confidence on paid PDF cards` release in [CHANGELOG.md](CHANGELOG.md).
+Living list of follow-ups for release **[1.1.0] - Buyer confidence, mobile PDF UX & design system 2.0** in [CHANGELOG.md](CHANGELOG.md).
 
 Priorities use the same scale as the implementation plan: **P0** blocks the release, **P1** ships in the same release window if time allows, **P2** is post-launch polish.
 
@@ -90,6 +90,10 @@ PNG works today (PNG is in `vercel.json`'s long-cache rule). Adding `<picture>` 
 
 ## P2 - Post-launch polish
 
+### 5b. Manual mobile Stripe E2E (operator)
+
+After deploy of v1.1.0, run [todo.md](todo.md) P0 §2 on a real phone (Safari iOS + Chrome Android): tap PDF CTA, complete test card, confirm `success.html` download + email.
+
 ### 6. Real usage counter
 
 The pilot meta line currently says "Shaped with pilot feedback from US K-12 teachers across grade bands and content areas" because we deliberately did not fabricate a usage count.
@@ -113,4 +117,4 @@ Local files under `api/_private/pdfs/` are named `Beginners_PromptAnatomy.app.pd
 
 ## Done in this release
 
-For reference, the buyer-confidence work that has already shipped against the plan is documented in [CHANGELOG.md](CHANGELOG.md) under `[Unreleased] - Buyer confidence on paid PDF cards`. The companion implementation plan is `c:\Users\tomas\.cursor\plans\buyer_confidence_pdf_cards_7b95a2ed.plan.md`.
+For reference, shipped buyer-confidence work is documented in [CHANGELOG.md](CHANGELOG.md) under **[1.1.0] - Buyer confidence, mobile PDF UX & design system 2.0**. Agent/Cursor rules: `.cursor/rules/*.mdc` + [AGENTS.md](AGENTS.md) (synced with v1.1.0).

@@ -79,4 +79,4 @@ When the content changes, follow this loop:
 2. Run the export procedure for the affected file only.
 3. Replace the previous PDF in your private storage.
 4. Note the change under `[Unreleased]` in [../../CHANGELOG.md](../../CHANGELOG.md).
-5. If front-of-house copy (UI cards, prices, titles) changes, update [../../index.html](../../index.html) and [../../tests/structure.test.js](../../tests/structure.test.js) and re-run `npm test`, `npm run test:smoke`, `npm run test:a11y`, and `npm run test:e2e` per [../../AGENTS.md](../../AGENTS.md).
+5. If front-of-house copy (UI cards, prices, titles, compare strip, testimonials) changes, update [`config/sot.json`](../../config/sot.json) (`commerce`, `pdfGuides` as needed). `generator.js` hydrates [index.html](../../index.html) at runtime. Re-run quality gates per [../../AGENTS.md](../../AGENTS.md): `npm test`, and for UX changes `npm run test:smoke`, `npm run test:a11y`, `npm run test:e2e`.

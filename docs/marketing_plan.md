@@ -2,7 +2,7 @@
 
 **Product:** [Classroom Prompt Builder](https://promptanatomy.online/) · **Brand:** Prompt Anatomy  
 **Last updated:** May 16, 2026  
-**Status:** Partially ready — free-tool promotion after P0 ops; paid ads after live checkout + proof.
+**Status:** Partially ready — live Stripe checkout shipped (v1.1.0); free-tool X promotion after P0 ops (test-mode E2E); paid ads after Gate B proof.
 
 This plan is the canonical go-to-market reference for US promotion. It is tied to release blockers in [todo.md](../todo.md) (operator scratch, not indexed) and deployment steps in [DEPLOY.md](../DEPLOY.md). Legal pages: [privacy.html](../privacy.html), [terms.html](../terms.html).
 
@@ -29,10 +29,10 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | Question | Answer |
 |----------|--------|
 | Ready for US promotion? | **Partially** |
-| Biggest blocker | Stripe Payment Link placeholders in `index.html` + no live E2E purchase proof ([todo.md](../todo.md) P0) |
-| Promote free tool on X now? | **After P0** (1 week ops) — legal/trust base is strong |
-| Run paid X ads for PDFs? | **No** until checkout live, E2E pass, and substantiated social proof |
-| Highest-ROI next move | Ship live Stripe → 30s lesson-mode screen recording → new X account → drive to **free builder only** |
+| Biggest blocker | Vercel fulfillment env completeness + test-mode E2E + refund path ([todo.md](../todo.md) P0 §1b–§2); Payment Link `metadata.product` recommended |
+| Promote free tool on X now? | **After P0 ops** (test-mode purchase + refund documented) — legal/trust base is strong; live checkout verified (CHANGELOG Stage 6c) |
+| Run paid X ads for PDFs? | **No** until Gate B (organic sales or analytics proof + permissioned testimonial) |
+| Highest-ROI next move | Close P0 §2 test-mode E2E → 30s lesson-mode screen recording → new X account → drive to **free builder only** |
 
 ### Readiness scores (1–10)
 
@@ -40,11 +40,11 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 |------|-------|------|
 | Positioning clarity | 8 | Teacher ICP clear in hero and schema |
 | US buyer relevance (teachers) | 9 | |
-| Trust signals | 6 | Undermined by placeholder checkout + anonymous pilots |
-| Pricing / checkout | 5 | Prices shown; links not live |
+| Trust signals | 7 | Live checkout; pilot quotes still anonymous |
+| Pricing / checkout | 8 | Live `buy.stripe.com` in SOT; one live sale verified (Stage 6c) |
 | Proof | 5 | Honest pilot disclosure; needs attributable quotes |
 | Free CTA / conversion logic | 8 | |
-| Paid CTA / conversion logic | 4 | Blocked by Stripe placeholders |
+| Paid CTA / conversion logic | 7 | Live links + publish gate; ops E2E still open |
 | X profile readiness | 2 | No verified handle / `twitter:site` yet |
 
 ---
@@ -53,8 +53,8 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 
 ### Gate A — Free organic X (minimum)
 
-- [ ] [todo.md](../todo.md) P0: paste live Stripe URLs into [`config/sot.json`](../config/sot.json) `commerce.stripePaymentLinks` and flip `commerce.allowPlaceholderCheckout` to `false`. `npm test` enforces this publish gate (no `YOUR_` placeholders, must match `https://buy.stripe.com/`).
-- [ ] [todo.md](../todo.md) P0: one successful test purchase + refund path documented in [DEPLOY.md](../DEPLOY.md)
+- [x] [todo.md](../todo.md) P0 §1: live Stripe URLs in [`config/sot.json`](../config/sot.json) `commerce.stripePaymentLinks` and `commerce.allowPlaceholderCheckout: false` (CHANGELOG Stage 5; publish gate in `npm test`)
+- [ ] [todo.md](../todo.md) P0 §2: one successful **test-mode** purchase + refund path documented in [DEPLOY.md](../DEPLOY.md)
 - [ ] X account created, bio + link to `https://promptanatomy.online`
 - [ ] Pinned post: 30s demo of lesson mode (no hype claims)
 - [ ] UTM on all X links: `?utm_source=twitter&utm_medium=organic&utm_campaign=cpb`
@@ -62,9 +62,10 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 ### Gate B — Paid PDF promotion
 
 - [ ] Gate A complete
+- [x] Mobile PDF storefront audited and hardened (DS 2.0.0 — [`docs/design-system-audit_2026-05.md`](design-system-audit_2026-05.md), `tests/e2e/mobile-pdf-commerce.spec.js`, 320 / 375 px)
 - [ ] 3+ organic PDF sales OR 50+ weekly free-tool sessions (Vercel Analytics)
 - [ ] At least 1 permissioned testimonial with name (see [todo.md](../todo.md) P1)
-- [ ] `$149` compare strip sourced or softened ([todo.md](../todo.md) P1)
+- [ ] Compare strip PD figure fully sourced ([todo.md](../todo.md) P1; SOT already uses audit-safe `often $100+`, not `~ $149`)
 - [ ] Footer: legal entity / operator line added (counsel-approved copy)
 - [ ] `twitter:site` meta in `index.html` once handle is verified
 
@@ -252,6 +253,7 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | [CHANGELOG.md](../CHANGELOG.md) | Shipped buyer-confidence features |
 | [llms.txt](../llms.txt) | Machine-readable product brief for AI/search |
 | [AGENTS.md](../AGENTS.md) | Stage-gate roles; Orchestrator owns promotion priority |
+| [memo_pdf.md](../memo_pdf.md) | Fulfillment ops runbook (operator; not in INDEX hygiene list) |
 
 ---
 

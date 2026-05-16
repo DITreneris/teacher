@@ -1,28 +1,9 @@
-# Cursor rules - Classroom Prompt Builder (US MVP)
+# Deprecated — use .cursor/rules/*.mdc and AGENTS.md
 
-## Projektas
-- Statinė HTML aplikacija (`index.html` + `privacy.html` + `terms.html`).
-- Pagrindinė logika: `generator.js` (generatorius) ir `copy.js` (kopijavimas).
-- Stiliai: `style.css` (įskaitant dark mode).
+Canonical Cursor rules for this repo:
 
-## Kalba ir tonas (vartotojui matomas tekstas)
-- Kreipinys: **Tu**.
-- Tekstas: **lakoniškai**, mažiau yra geriau.
+- `.cursor/rules/cpb-core.mdc` (always apply)
+- `.cursor/rules/cpb-pdf-commerce.mdc`
+- `.cursor/rules/cpb-fulfillment.mdc`
 
-## Saugumas
-- Nekomituoti jokių secretų / raktų / tokenų.
-- Production kode: **be `console.log`** ir be jautrių duomenų log’inimo.
-
-## Kokybė
-- A11y: semantika, `aria-*` tik kur reikia, aiškus `:focus-visible`.
-- Kopijavimas: turi veikti ir su `navigator.clipboard`, ir su fallback.
-
-## Prieš merge / deploy
-- `npm test` praeina
-- Jei keistas UX/flow: `npm run test:smoke` ir `npm run test:a11y`
-- Jei keistas kritinis srautas: `npm run test:e2e`
-
-## Dokumentacija
-- Aktyvios dokumentacijos tiesos saltinis: `docs/INDEX.md`.
-- Jei keiti UX / flow / funkcijas: atnaujink tik aktyvius failus, nurodytus `docs/INDEX.md`.
-- Neversk atnaujinti archyviniu failu, jei jie nebuvo grazinti i aktyvia zona.
+Agent roles and quality gates: `AGENTS.md`

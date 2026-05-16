@@ -15,6 +15,8 @@ The single documentation navigation hub after `README.md`.
 - [DEPLOY.md](../DEPLOY.md) - deployment for humans (Vercel, DNS) and robots (sitemap, robots.txt).
 - [AGENTS.md](../AGENTS.md) - role-based work and quality rules.
 - [CHANGELOG.md](../CHANGELOG.md) - release notes.
+- [STYLEGUIDE.md](STYLEGUIDE.md) - Design System 2.0.0 (tokens, components, mobile rules).
+- [design-system-audit_2026-05.md](design-system-audit_2026-05.md) - Mobile & DS audit matrix (May 2026).
 
 ## Active go-to-market
 
@@ -46,6 +48,7 @@ The single documentation navigation hub after `README.md`.
 - [api/download.js](../api/download.js) - long-lived (7-day) signed download endpoint, used by the email link.
 - [api/download-link.js](../api/download-link.js) - JSON endpoint returning a short-lived (15-min) in-page download URL by Stripe Checkout Session ID; used by `success.html`.
 - [api/_lib/fulfillment.js](../api/_lib/fulfillment.js)
+- [api/fulfillment-health.js](../api/fulfillment-health.js) - GET operator probe for Production env, Redis, and Blob PDF config.
 - [assets/pdf-covers/beginners.png](../assets/pdf-covers/beginners.png) - public web cover for the Beginners PDF guide card.
 - [assets/pdf-covers/advanced.png](../assets/pdf-covers/advanced.png) - public web cover for the Advanced PDF guide card.
 - [assets/pdf-covers/beginners-p2.png](../assets/pdf-covers/beginners-p2.png), `-p3.png`, `-p4.png` - PREVIEW-watermarked sample pages 2-4 of the Beginners guide, rendered by `scripts/verify-pdf-cover.js --preview` and shown inside the public "Preview 3 pages" lightbox.
@@ -65,6 +68,14 @@ The single documentation navigation hub after `README.md`.
 - [tests/structure.test.js](../tests/structure.test.js)
 - [tests/e2e/core-flow.spec.js](../tests/e2e/core-flow.spec.js)
 - [tests/e2e/smoke.spec.js](../tests/e2e/smoke.spec.js)
+- [tests/e2e/mobile-pdf-commerce.spec.js](../tests/e2e/mobile-pdf-commerce.spec.js)
+
+## Operator runbooks (navigation only — not active docs for hygiene)
+
+Listed here for agent/operator discovery; not part of the lean active-doc set above.
+
+- [memo_pdf.md](../memo_pdf.md) - Stripe + PDF fulfillment deployment memo (EN).
+- P0/P1 release blockers: operator scratch file at repo root (not linked here per docs-hygiene).
 
 ## Archive
 

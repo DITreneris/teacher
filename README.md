@@ -7,7 +7,7 @@ A free, single-page AI prompt builder for K-12 teachers. Pick a mode, fill in a 
 | **Repository** | [github.com/DITreneris/teacher](https://github.com/DITreneris/teacher) |
 | **Production** | [promptanatomy.online](https://promptanatomy.online/) |
 | **Parent brand** | [promptanatomy.app](https://www.promptanatomy.app/) |
-| **Status** | US MVP (v1.0.1) |
+| **Status** | US MVP (v1.1.0) |
 
 ## Quick start
 
@@ -35,10 +35,14 @@ Open [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 The paid guide flow uses Stripe Payment Links for checkout and Vercel API routes for fulfillment:
 
 - `api/stripe-webhook.js` verifies Stripe webhook signatures and sends the buyer a signed download link.
-- `api/download.js` validates the signed token and streams the PDF from private storage.
+- `api/download.js` validates the signed token and streams the PDF from private storage (7-day email link).
+- `api/download-link.js` returns a short-lived in-page download URL for `success.html` after checkout.
+- `api/fulfillment-health.js` — Production env / Redis / Blob probe for operators.
+- `success.html` — post-purchase page; polls `/api/download-link` until the webhook completes.
+- Commerce URLs and copy live in `config/sot.json` (`commerce`); see [AGENTS.md](AGENTS.md) and `.cursor/rules/`.
 - PDF binaries must not be committed to the public site root. Use private object storage through `PDF_BEGINNERS_SOURCE_URL` and `PDF_ADVANCED_SOURCE_URL`.
 
-Full checklist → **[DEPLOY.md](DEPLOY.md)**
+Full checklist → **[DEPLOY.md](DEPLOY.md)** · Fulfillment runbook → **[memo_pdf.md](memo_pdf.md)**
 
 ```bash
 git remote add origin https://github.com/DITreneris/teacher.git

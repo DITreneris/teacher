@@ -37,6 +37,30 @@ function assert(condition, message) {
   return true;
 }
 
+/** Read PNG width/height from IHDR (sync, no sharp in hot path). */
+function readPngDimensions(filePath) {
+  const buf = fs.readFileSync(filePath);
+  if (buf.length < 24 || buf.toString('ascii', 1, 4) !== 'PNG') {
+    return null;
+  }
+  return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+}
+
+function extractBuyerFaqJsonLd(html) {
+  const match = html.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
+  if (!match) return null;
+  try {
+    const data = JSON.parse(match[1]);
+    const graph = data['@graph'];
+    if (!Array.isArray(graph)) return null;
+    return graph.find(function (node) {
+      return node['@id'] === 'https://promptanatomy.online/#buyer-faq';
+    });
+  } catch (_e) {
+    return null;
+  }
+}
+
 function run() {
   let passed = 0;
   let failed = 0;
@@ -139,6 +163,30 @@ function run() {
   if (assert(html.includes('id="pdf-guides-faq"') && html.includes('data-buyer-faq-list'), 'Buyer FAQ section + populate hook present')) passed++;
   else failed++;
   if (assert(html.includes('"@id": "https://promptanatomy.online/#buyer-faq"') && html.includes('"name": "Can I use this guide in more than one of my classrooms?"'), 'Buyer FAQ JSON-LD entry present with first question')) passed++;
+  else failed++;
+
+  let buyerFaqJsonLdSync = false;
+  try {
+    const sotForFaq = JSON.parse(readFile(SOT_PATH));
+    const buyerFaqNode = extractBuyerFaqJsonLd(html);
+    const sotBuyerFaq = sotForFaq.buyerFaq;
+    if (buyerFaqNode && Array.isArray(sotBuyerFaq) && Array.isArray(buyerFaqNode.mainEntity)) {
+      buyerFaqJsonLdSync =
+        buyerFaqNode.mainEntity.length === sotBuyerFaq.length &&
+        sotBuyerFaq.every(function (item, index) {
+          const entity = buyerFaqNode.mainEntity[index];
+          return (
+            entity &&
+            entity.name === item.q &&
+            entity.acceptedAnswer &&
+            entity.acceptedAnswer.text === item.a
+          );
+        });
+    }
+  } catch (_e) {
+    buyerFaqJsonLdSync = false;
+  }
+  if (assert(buyerFaqJsonLdSync, 'Buyer FAQ JSON-LD matches config/sot.json#buyerFaq')) passed++;
   else failed++;
   if (assert(html.includes('id="lostLinkMailto"') && html.includes('mailto:info@promptanatomy.app?subject=Resend'), 'Lost-your-link footer mailto link present')) passed++;
   else failed++;
@@ -312,6 +360,12 @@ function run() {
   else failed++;
   if (assert(html.includes('property="og:image:width"') && html.includes('property="og:image:height"'), 'Open Graph image dimensions present')) passed++;
   else failed++;
+  if (assert(html.includes('property="og:image:type"') && html.includes('content="image/png"'), 'Open Graph image type present')) passed++;
+  else failed++;
+  if (assert(html.includes('"screenshot": "https://promptanatomy.online/og-image.png"'), 'JSON-LD SoftwareApplication screenshot')) passed++;
+  else failed++;
+  if (assert(html.includes('"countriesSupported": "US"'), 'JSON-LD SoftwareApplication countriesSupported US')) passed++;
+  else failed++;
   if (assert(html.includes('name="robots"') && html.includes('index, follow'), 'Meta robots index, follow')) passed++;
   else failed++;
   if (assert(html.includes('rel="sitemap"'), 'Sitemap link in head')) passed++;
@@ -405,6 +459,12 @@ function run() {
 
   const ogImage = path.join(__dirname, '..', 'og-image.png');
   if (assert(fs.existsSync(ogImage), 'og-image.png exists at repo root')) passed++;
+  else failed++;
+  const OG_MAX_BYTES = 300 * 1024;
+  if (assert(fs.statSync(ogImage).size <= OG_MAX_BYTES, 'og-image.png is at most 300 KB')) passed++;
+  else failed++;
+  const ogDims = readPngDimensions(ogImage);
+  if (assert(ogDims && ogDims.width === 1200 && ogDims.height === 630, 'og-image.png is 1200x630')) passed++;
   else failed++;
 
   const appleTouch = path.join(__dirname, '..', 'apple-touch-icon.png');
@@ -524,6 +584,48 @@ function run() {
 
   // --- CSS variables ---
   if (assert(styleFile && styleFile.includes('--primary: #0F2A44'), 'CSS variable --primary: #0F2A44')) passed++;
+  else failed++;
+
+  // --- Mobile PDF commerce CSS guards (regression) ---
+  if (
+    assert(
+      styleFile &&
+        /@media\s*\(max-width:\s*480px\)/.test(styleFile) &&
+        /\.pdf-compare-strip-row[\s\S]*flex-direction:\s*column/.test(styleFile) &&
+        /\.pdf-preview-dialog-pages[\s\S]*scroll-snap-type:\s*x mandatory/.test(styleFile) &&
+        /\.pdf-guides-grid\s*\{\s*order:\s*2/.test(styleFile),
+      'style.css has mobile rules for PDF compare strip, preview dialog, and cards-first order'
+    )
+  ) passed++;
+  else failed++;
+
+  // --- SOT theme.light matches canonical CSS tokens ---
+  let sotThemeSync = false;
+  try {
+    const sotJson = JSON.parse(sotFile);
+    const light = sotJson.theme && sotJson.theme.light;
+    const expected = {
+      '--primary': '#0F2A44',
+      '--accent-gold': '#F5C518',
+      '--surface-0': '#F4F7FB',
+      '--surface-1': '#FFFFFF',
+      '--border': '#E6ECF2',
+      '--text': '#1C2B3A'
+    };
+    sotThemeSync =
+      light &&
+      Object.keys(expected).every(function (key) {
+        return String(light[key]).toLowerCase() === expected[key].toLowerCase();
+      }) &&
+      sotJson.colors &&
+      sotJson.colors.deepBlue === '#0F2A44' &&
+      sotJson.colors.primaryYellow === '#F5C518' &&
+      sotJson.colors.textSecondary === '#6B7A8C' &&
+      styleFile.includes('--text-light: #6B7A8C');
+  } catch (_e) {
+    sotThemeSync = false;
+  }
+  if (assert(sotThemeSync, 'config/sot.json#theme.light aligns with style.css brand tokens')) passed++;
   else failed++;
 
   console.log('\n---');

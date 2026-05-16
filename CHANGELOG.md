@@ -2,7 +2,27 @@
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased] - Buyer confidence on paid PDF cards
+## [Unreleased]
+
+### Added
+- `scripts/optimize-social-images.js` and `npm run optimize:social` (sharp): compress `og-image.png` and `apple-touch-icon.png` for social/OS previews.
+- `.cursor/rules/cpb-core.mdc` (always apply), `cpb-pdf-commerce.mdc`, and `cpb-fulfillment.mdc`: Cursor rules aligned with v1.1.0 (en-US product copy, SOT commerce, DS 2.0 mobile gates, fulfillment same-domain rule, quality-gate summary).
+- `.cursor/skills/pdf-fulfillment/SKILL.md`: repo-local skill for Stripe webhook / env / domain-mismatch diagnostics (checklist from [memo_pdf.md](memo_pdf.md)).
+
+### Changed
+- SEO/GEO P2 (US): `og-image.png` compressed to &lt; 300 KB; `og:image:type` meta; `SoftwareApplication` JSON-LD `screenshot` + `countriesSupported: US`; `sitemap.xml` `lastmod` 2026-05-16; [DEPLOY.md](DEPLOY.md) post-deploy checklist (GSC, Bing, social debuggers, Rich Results). CSP stays Report-Only per operator choice.
+- `tests/structure.test.js`: OG file size/dimensions, `og:image:type`, buyer FAQ JSON-LD sync with `config/sot.json#buyerFaq`.
+- Community primary CTA (Telegram) aligned to DS 2.0 gold tokens (`--cta-bg` / `--cta-text`); legacy green removed. `.community-actions` flex wrapper; mobile stack rules at 480px.
+- `.cursorrules`: deprecated pointer to `.cursor/rules/*.mdc` and [AGENTS.md](AGENTS.md) (replaces outdated static-HTML-only and Lithuanian „Tu“ tone guidance).
+- [AGENTS.md](AGENTS.md): **Commerce / Ops** role; quality-gate table by change type (including `npm run test:mixed` as CI truth); operator runbooks (`memo_pdf.md`, [todo.md](todo.md), [DEPLOY.md](DEPLOY.md)); Content role en-US + SOT commerce safety.
+- [docs/marketing_plan.md](docs/marketing_plan.md): §2 readiness scores and blockers updated for live Stripe (Stage 5–6c); Gate A SOT/publish gate marked done; §10 links `memo_pdf.md`.
+- [docs/INDEX.md](docs/INDEX.md): `api/fulfillment-health.js`; operator runbooks navigation (`memo_pdf.md`; release blockers at repo root per docs-hygiene).
+- [llms.txt](llms.txt): `success.html`, paid PDF flow, `config/sot.json` commerce, same-host fulfillment limitation.
+- [README.md](README.md): `success.html`, `api/download-link.js`, `api/fulfillment-health.js`, SOT commerce note, link to [memo_pdf.md](memo_pdf.md).
+- [docs/pdf-source/README.md](docs/pdf-source/README.md): front-of-house copy edits via `config/sot.json` instead of hardcoding [index.html](index.html).
+- [todo.md](todo.md): release references **[1.1.0]**; agent rules sync note in Done section.
+
+## [1.1.0] - 2026-05-17 - Buyer confidence, mobile PDF UX & design system 2.0
 
 The `pdf-guides` section turns from text-only cards into a buyer-confident SaaS storefront block. The fulfillment pipeline (Stripe webhook + signed HMAC tokens + Resend email + Redis idempotency) is unchanged; this iteration is purely buyer-facing and ships in three stages within the same release window.
 
@@ -100,6 +120,20 @@ Buyers could pay via Stripe Payment Link but receive no PDF and see `success.htm
 - `DEPLOY.md`: Payment Link metadata `product=beginners|advanced`; troubleshooting checklist for failed fulfillment + event replay.
 - `todo.md` P0 §1b: Vercel fulfillment env checklist.
 
+### Stage 6c - Live production purchase verified (2026-05-16)
+
+First end-to-end live purchase on **promptanatomy.online** after fulfillment env + deploy hardening (`9a84ddd`).
+
+#### Verified
+- **Live checkout** ($4.99 Beginners PDF via Payment Link `plink_1TXdozGYF93wS2KabE5nEKfw`): Stripe redirect to `success.html?session_id=cs_live_a1GWQ6J4J87WC3zNf9ChGyMoU4VgeP7S1Ybdmbhyy9lIj4F4bOUM6DtzEg`; product mapped via `amount_total` `499` cents (`metadata` empty).
+- **Webhook** `checkout.session.completed` on `https://promptanatomy.online/api/stripe-webhook`: manual Stripe **Resend** of event `evt_1TXg79GYF93wS2Kahle9jaUe` returned **HTTP 200** `{ "received": true, "fulfillment": "fulfilled" }` (2026-05-16 ~14:52 EEST) after correcting Vercel Production `STRIPE_SECRET_KEY` (earlier 500s: missing `PDF_*` / token env, then Stripe SDK `sessions.retrieve` connection error while `whsec_` signature verification still passed).
+- **Ops probe**: `GET /api/fulfillment-health` → `{ "ok": true, "missing": [], "redis": "ok", "blobConfigured": true }`.
+- Fulfillment stack confirmed on Production: Upstash Redis, Vercel Blob PDF sources, Resend (`info@promptanatomy.app`), signed download tokens.
+
+#### Notes (follow-up, non-blocking)
+- First webhook attempts at purchase time failed until env keys were aligned; buyers need a working first delivery without manual Resend — monitor Stripe webhook delivery on the next live sale.
+- Add Payment Link metadata `product=beginners|advanced` so fulfillment does not rely on amount fallback alone.
+
 ### Stage 6 - Stripe PDF CTA checkout fix (production hotfix)
 
 Stage 4 moved Stripe `href`s to SOT-only hydration; until `fetch('config/sot.json')` finished, both PDF CTAs kept `href="#pdf-guides"`, so clicks scrolled in-page instead of opening Stripe Checkout. `initCommerce()` also ran after `initializeApp()`, so any init error could skip link hydration entirely.
@@ -115,13 +149,36 @@ Stage 4 moved Stripe `href`s to SOT-only hydration; until `fetch('config/sot.jso
 - `docs/marketing_plan.md`: canonical US go-to-market plan (readiness scores, promotion gates A/B/C, compliance reference, X content playbook, 30-day calendar, risk register). Linked from `README.md` and `AGENTS.md` (Orchestrator).
 
 ### Verified (last full pass, all stages stacked)
-- `npm test`: 148 / 148 structural assertions pass (`copy.js` `activeSectionId` is a pre-existing eslint warning, unrelated). Publish gate is enforced: "Publish gate: live buy.stripe.com URLs (no YOUR_ placeholders)" plus static Stripe href fallbacks on both PDF CTAs.
+- `npm test`: 156 / 156 structural assertions pass (`copy.js` `activeSectionId` is a pre-existing eslint warning, unrelated). Publish gate is enforced: "Publish gate: live buy.stripe.com URLs (no YOUR_ placeholders)" plus static Stripe href fallbacks on both PDF CTAs; `api/fulfillment-health.js` and fulfillment env validation covered.
 - `npm run test:smoke`: 9 / 9 across 320, 375, 768 viewports (Stripe-href poll + delivery-promise hook covered).
 - `npm run test:e2e`: 11 / 11 (success-page polling + preview-dialog focus restore included).
 - `npm run test:a11y`: pa11y reports "No issues found" on `/`, `/privacy.html`, `/terms.html`, and the post-purchase success page (cleanUrl form `/success?session_id=...`).
 
-### Pre-release blocker (live E2E, no code) - remaining after Stage 5
-- P0 §1 is fully done: SOT URLs + publish gate (Stage 5), Stripe Dashboard success URL + customer email receipts + `invoice_creation`. The single remaining release-blocker is [todo.md](todo.md) P0 §2 - one live test-mode purchase (`4242 4242 4242 4242`) that exercises the full chain: Stripe redirect to `success.html?session_id=cs_test_...`, in-page Download button surfaces within ~5s, Stripe receipt email arrives, Resend download email arrives, then a Stripe test refund that revokes the original signed link on next click. See [DEPLOY.md](DEPLOY.md) for the post-deploy checklist.
+### Mobile PDF commerce UX & design system 2.0
+
+#### Added
+- [`docs/STYLEGUIDE.md`](docs/STYLEGUIDE.md) — Design System 2.0.0 (EN): brand tokens, PDF commerce component catalog, mandatory mobile rules.
+- [`docs/design-system-audit_2026-05.md`](docs/design-system-audit_2026-05.md) — mobile audit matrix and P0/P1 backlog.
+- [`tests/e2e/mobile-pdf-commerce.spec.js`](tests/e2e/mobile-pdf-commerce.spec.js) — Playwright guards at 320 / 375 px: section overflow, cover + CTA visibility, preview dialog, TOC, dark theme, success-page poll.
+
+#### Changed
+- [`style.css`](style.css): mobile PDF commerce — flex `order` puts product cards before compare strip and testimonials (≤768px); smaller centered covers (168px / 140px @360); compare strip column stack; trust 2×2 grid; preview dialog `100dvh` + horizontal scroll-snap sample pages @480px; buyer FAQ / author panel / success-page padding and full-width CTAs.
+- [`style.css`](style.css): `--text-light` aligned to SOT `textSecondary` (`#6B7A8C`).
+- [`package.json`](package.json): `test:e2e` runs all files under `tests/e2e/` (core-flow + mobile-pdf-commerce).
+- [`docs/INDEX.md`](docs/INDEX.md), [`AGENTS.md`](AGENTS.md): register STYLEGUIDE, audit doc, and DS mobile component gate.
+
+#### Fixed
+- Legal pages: `.legal-meta` uses `--text-muted` so pa11y WCAG2AA passes after `--text-light` SOT alignment.
+
+#### Tests
+- [`tests/structure.test.js`](tests/structure.test.js): asserts mobile `@media` rules for PDF compare/preview/cards-first order; `sot.json#theme.light` sync with CSS brand tokens (158 assertions).
+- `npm run test:e2e`: 30 / 30 (core-flow + mobile-pdf-commerce @ 320 / 375 px).
+- `npm run test:a11y`: zero issues on `/`, `/privacy.html`, `/terms.html`, `/success?session_id=...`.
+
+### Pre-release blocker (live E2E, no code) - remaining after Stage 6c
+- P0 §1 is fully done: SOT URLs + publish gate (Stage 5), Stripe Dashboard success URL + customer email receipts + `invoice_creation`, Vercel fulfillment env + live webhook **fulfilled** (Stage 6c, 2026-05-16).
+- **Done (live):** one real $4.99 purchase + manual webhook Resend → `fulfillment: fulfilled` on `.online` (see Stage 6c). Confirm in your inbox: Resend download email + in-page download on `success.html` for that session.
+- **Still recommended:** [todo.md](todo.md) P0 §2 test-mode purchase (`4242…`) with refund + link-revoke check; one **new** live sale without manual Resend to prove first-attempt webhook delivery; Payment Link metadata `product=beginners|advanced`.
 
 ## [Unreleased] - Secure paid PDF fulfillment
 

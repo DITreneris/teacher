@@ -19,6 +19,14 @@
 - Home: https://promptanatomy.online/
 - Privacy Policy: https://promptanatomy.online/privacy.html
 - Terms of Use: https://promptanatomy.online/terms.html
+- Post-purchase: https://promptanatomy.online/success.html (polls /api/download-link after Stripe redirect)
+
+## Paid PDF flow
+
+- Checkout: Stripe Payment Links (URLs in config/sot.json commerce.stripePaymentLinks)
+- Fulfillment: POST /api/stripe-webhook → Redis + Resend email with 7-day signed link
+- In-page download: success.html polls GET /api/download-link?session_id=... then GET /api/download
+- Commerce copy and pricing: single source in config/sot.json (hydrated to index.html at runtime)
 
 ## Modes
 
@@ -42,6 +50,7 @@
 - Output quality depends on the third-party AI tool used.
 - The Service does not store or transmit student records.
 - PDF guide availability depends on successful payment and email delivery.
+- Fulfillment requires the same production domain for Payment Link success URL, Stripe webhook, and Vercel env (redirect and webhook must not point at different hosts).
 
 ## Optional reads
 

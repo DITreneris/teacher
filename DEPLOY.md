@@ -58,6 +58,14 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 - [ ] Stripe customer email receipts are enabled
 - [ ] Test purchase opens `success.html`, shows a one-click Download button within ~5 seconds, and sends a separate Resend email with a signed `/api/download?t=...` link
 - [ ] Submit sitemap in [Google Search Console](https://search.google.com/search-console)
+- [ ] [Bing Webmaster Tools](https://www.bing.com/webmasters) — add site, submit `https://promptanatomy.online/sitemap.xml`
+- [ ] Google Search Console — URL Inspection for `https://promptanatomy.online/` (request indexing after SEO metadata deploy)
+- [ ] Social preview sanity (after `og-image.png` deploy):
+  - [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) — Scrape Again for `https://promptanatomy.online/`
+  - [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/)
+  - X — verify large image card on a draft post or third-party OG tester
+- [ ] [Google Rich Results Test](https://search.google.com/test/rich-results) — `SoftwareApplication` + both `FAQPage` entities on home URL
+- [ ] CSP remains `Content-Security-Policy-Report-Only` until one week of clean production reports; then promote to enforcing `Content-Security-Policy` in `vercel.json` (see [todo.md](todo.md) §7)
 
 ---
 
@@ -71,7 +79,7 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 | `llms.txt` | `/llms.txt` | Concise, machine-readable product brief for AI engines (operator, contact, pricing, paid PDF guides, audience, modes, limitations). |
 | `.well-known/security.txt` | `/.well-known/security.txt` | RFC 9116 security contact. |
 | `manifest.webmanifest` | `/manifest.webmanifest` | Web app manifest for browser / OS install hints. |
-| `og-image.png` | `/og-image.png` | 1200 x 630 social preview. Served with `Cross-Origin-Resource-Policy: cross-origin` so Facebook / LinkedIn / X / Slack can embed it. |
+| `og-image.png` | `/og-image.png` | 1200 x 630 social preview (target &lt; 300 KB; run `npm run optimize:social` after edits). Served with `Cross-Origin-Resource-Policy: cross-origin` so Facebook / LinkedIn / X / Slack can embed it. |
 | `apple-touch-icon.png` | `/apple-touch-icon.png` | 180 x 180 home-screen icon. |
 | `404.html` | served by Vercel for unmatched routes | Branded 404 with `noindex, follow`. |
 | Canonical | `<link rel="canonical">` on each HTML page | Always `https://promptanatomy.online/...`. |
