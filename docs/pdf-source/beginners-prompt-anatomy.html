@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Beginners - Prompt Anatomy - www.promptanatomy.app</title>
+    <meta name="description" content="A practical 12-page beginner guide to AI-assisted teaching for U.S. K-12 educators. By Prompt Anatomy.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pdf-print.css">
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE 1 - COVER
+     ============================================================ -->
+<section class="page cover">
+    <div>
+        <div class="cover-eyebrow">Prompt Anatomy - Beginner Edition</div>
+        <h1 class="cover-title">AI-Assisted Teaching<br>Foundations</h1>
+        <p class="cover-subtitle">A practical beginner guide for U.S. K-12 teachers. Build classroom-ready prompts for ChatGPT, Claude, and Gemini in minutes - safely and with confidence.</p>
+    </div>
+
+    <div>
+        <div class="cover-positioning">
+            <strong style="color:#F5C518;">Read this first.</strong>
+            AI is a planning assistant, not a replacement for your judgment. This guide gives you safe, repeatable prompt patterns. You stay in charge of every classroom decision.
+        </div>
+
+        <div class="cover-meta">
+            <strong>Audience:</strong> K-12 classroom teachers new to AI.<br>
+            <strong>Length:</strong> 12 pages. <strong>Version:</strong> 1.0 - May 2026.<br>
+            <strong>Format:</strong> Copy-paste prompts, checklists, and ready-to-use templates.
+        </div>
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 1</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 2 - HOW TO USE + 5-MIN AI SAFETY START
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>How to use this guide</span>
+        <span class="page-eyebrow-tag">Start here</span>
+    </div>
+
+    <h2>Read in 10 minutes. Use the same day.</h2>
+    <p class="lead">Every page is one job. Find the section that matches what you need to do this week, copy the prompt, change the bracketed fields, and check the output before using it with students.</p>
+
+    <h3>What you will learn</h3>
+    <ul>
+        <li><strong>The Simple Prompt Formula</strong> - one structure that works across subjects.</li>
+        <li><strong>Ready-to-use prompts</strong> for lessons, assessments, tasks, and feedback.</li>
+        <li><strong>A verification checklist</strong> so AI output is safe and accurate.</li>
+        <li><strong>A "use this tomorrow" workflow</strong> you can adopt right away.</li>
+    </ul>
+
+    <h2 class="gap-top">5-minute AI safety start</h2>
+
+    <div class="callout callout-warn">
+        <strong>The teacher-in-the-loop rule</strong>
+        AI drafts. You decide. Every output must be reviewed before it reaches a student.
+    </div>
+
+    <h3>Do not enter student personal information</h3>
+    <p>Public AI tools like ChatGPT, Claude, and Gemini are not approved school systems. Never paste student names, IDs, grades, IEP details, behavior notes, contact info, or anything that identifies a child. Use general non-identifying context only.</p>
+
+    <h3>Always verify the output</h3>
+    <p>AI can sound confident and still be wrong. Check facts, math, reading levels, citations, and any historical or scientific claims before classroom use.</p>
+
+    <h3>Follow your school and district policy</h3>
+    <p>Rules differ by district, state, and program. Before you use AI for grading, parent communication, or anything student-facing, check your local AI policy and FERPA expectations.</p>
+
+    <div class="callout callout-danger">
+        <strong>Not for high-stakes decisions</strong>
+        Do not use AI output alone for final grades, retention, special education determinations, discipline, or college recommendations.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 2</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 3 - SIMPLE PROMPT FORMULA
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 1 - The Simple Prompt Formula</span>
+        <span class="page-eyebrow-tag">Core skill</span>
+    </div>
+
+    <h2>Six fields. One reliable prompt.</h2>
+    <p>Most weak prompts skip context. Strong prompts give the AI a role, a clear task, your classroom context, the output format you want, your constraints, and a quality check. Use this every time.</p>
+
+    <table>
+        <thead>
+            <tr><th style="width:28mm;">Field</th><th>What to include</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Role</strong></td><td>Who the AI is acting as. Example: an experienced Grade 5 math teaching assistant.</td></tr>
+            <tr><td><strong>Task</strong></td><td>What you want it to produce. Lesson, quiz, exit ticket, feedback, etc.</td></tr>
+            <tr><td><strong>Context</strong></td><td>Grade, topic, learning goal, time available, class needs - without student personal data.</td></tr>
+            <tr><td><strong>Output</strong></td><td>The exact shape you want: sections, length, bullets, table, rubric.</td></tr>
+            <tr><td><strong>Constraints</strong></td><td>Age-appropriate, classroom materials only, no outside tools, vocabulary level.</td></tr>
+            <tr><td><strong>Quality check</strong></td><td>Ask the AI to flag anything you should verify before teaching.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Bad vs good</h3>
+    <div class="compare">
+        <div class="col col-bad">
+            <div class="col-title">Bad prompt</div>
+            Make a lesson about fractions.
+        </div>
+        <div class="col col-good">
+            <div class="col-title">Good prompt</div>
+            Role: You are an experienced Grade 5 math teaching assistant. Task: Create a 45-minute lesson on adding unlike fractions. Context: Students know equivalent fractions but struggle with common denominators. Output: Objective, warm-up, instruction, guided practice, exit ticket. Constraints: No outside materials. Quality check: Flag anything I should verify.
+        </div>
+    </div>
+
+    <h3>Teacher prompt checklist</h3>
+    <ul class="check-list">
+        <li>I included a Role.</li>
+        <li>I named the Task clearly.</li>
+        <li>I added grade, topic, and goal.</li>
+        <li>I described the Output format I want.</li>
+        <li>I listed Constraints my classroom requires.</li>
+        <li>I asked for a Quality check.</li>
+        <li>I did not enter any student personal data.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 3</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 4 - 10 READY-TO-USE TEACHER PROMPTS
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 2 - 10 ready-to-use prompts</span>
+        <span class="page-eyebrow-tag">Copy and paste</span>
+    </div>
+
+    <h2>The 10 highest-value prompts for K-12 teachers</h2>
+    <p class="muted">Replace text in brackets. Verify the output before use.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width:45mm;">Use when</th>
+                <th>Prompt (paste and edit the brackets)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>1. Plan a lesson</strong></td><td>Create a [duration] lesson for Grade [N] on [topic]. Goal: [goal]. Include objective, warm-up, instruction, practice, exit ticket. Flag anything I should verify.</td></tr>
+            <tr><td><strong>2. Build a quiz</strong></td><td>Create a [N]-question quiz for Grade [N] on [topic]: 6 multiple choice with answer key, 2 short answer with scoring criteria. Reading level: grade-appropriate.</td></tr>
+            <tr><td><strong>3. Write an exit ticket</strong></td><td>Write 3 exit-ticket questions for Grade [N] checking understanding of [concept]. Each should reveal a different misconception.</td></tr>
+            <tr><td><strong>4. Differentiate a task</strong></td><td>Create three versions of the same task for [topic]: support, core, and stretch. Keep the same learning goal. Provide scaffolds for support and extension thinking for stretch.</td></tr>
+            <tr><td><strong>5. Make a rubric</strong></td><td>Create a 4-level rubric for Grade [N] on [task]. Criteria: accuracy, evidence, clarity. Use student-friendly language.</td></tr>
+            <tr><td><strong>6. Draft feedback</strong></td><td>Rewrite this teacher comment to be specific, kind, and actionable for a Grade [N] student: "[paste your draft]".</td></tr>
+            <tr><td><strong>7. Simplify reading</strong></td><td>Rewrite this passage at a Grade [N] reading level without changing the meaning. Keep key vocabulary with a one-line definition: "[paste passage]".</td></tr>
+            <tr><td><strong>8. Generate examples</strong></td><td>Give me 5 grade-[N] examples that show [concept]. Include 1 non-example with a brief reason it does not fit.</td></tr>
+            <tr><td><strong>9. Build a slide outline</strong></td><td>Create a [N]-slide outline for Grade [N] on [topic]. For each slide: title, 2-3 bullets, one visual idea. Add one reflection question at the end.</td></tr>
+            <tr><td><strong>10. Reflect on a lesson</strong></td><td>I taught [lesson]. Outcome: [what happened]. Suggest 3 things to repeat, 3 to change, and one adjustment for next time.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 4</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 5 - LESSON PLANNING PROMPT PACK
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 3 - Lesson planning prompts</span>
+        <span class="page-eyebrow-tag">Plan in 5 min</span>
+    </div>
+
+    <h2>Lesson planning pack</h2>
+    <p>Three lesson templates: a 30-minute mini-lesson, a 45-minute full lesson, and a differentiated lesson. Replace the brackets, run the prompt, then verify and revise.</p>
+
+    <h3>30-minute mini-lesson</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are an experienced Grade [N] [subject] teaching assistant.
+<span class="label">Task:</span> Build a 30-minute mini-lesson on [topic].
+<span class="label">Context:</span> Students [what they know / need]. Time: 30 minutes.
+<span class="label">Output:</span> Objective, 5-min warm-up, 10-min instruction, 10-min practice, 5-min exit ticket, and a 1-line teacher reminder.
+<span class="label">Constraints:</span> Classroom materials only. No outside tools.
+<span class="label">Quality check:</span> Flag any facts I should verify before teaching.
+    </div>
+
+    <h3>45-minute full lesson</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are an experienced Grade [N] [subject] teaching assistant.
+<span class="label">Task:</span> Build a 45-minute lesson on [topic] with learning goal: [goal].
+<span class="label">Context:</span> Mixed-readiness class. Vocabulary support needed for [topic].
+<span class="label">Output:</span> Objective, warm-up, vocabulary preview, direct instruction, guided practice, independent task, exit ticket, teacher checklist.
+<span class="label">Constraints:</span> Grade-appropriate reading level. Include one misconception check.
+<span class="label">Quality check:</span> Flag any unfamiliar terms students may not understand.
+    </div>
+
+    <h3>Differentiated lesson (one objective, three pathways)</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are a differentiated instruction assistant.
+<span class="label">Task:</span> Build a lesson on [topic] for Grade [N] with one shared objective and three pathways.
+<span class="label">Context:</span> Some students need vocabulary and step-by-step support. Some are ready for extension.
+<span class="label">Output:</span> Shared objective, warm-up, support pathway with scaffolds, core pathway, stretch pathway with extension thinking, and a single exit ticket that works for all three.
+<span class="label">Constraints:</span> Same objective, different supports. No labels on the student handout.
+<span class="label">Quality check:</span> Flag any pathway that drifts from the shared objective.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 5</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 6 - ASSESSMENT & EXIT TICKETS
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 4 - Assessment and exit tickets</span>
+        <span class="page-eyebrow-tag">Check learning</span>
+    </div>
+
+    <h2>Build quick, aligned assessments</h2>
+    <p>Match every assessment item to the lesson objective. AI is great for drafting items and rubrics; you check alignment, fairness, and the answer key.</p>
+
+    <h3>Quick quiz prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are an assessment design assistant.
+<span class="label">Task:</span> Build a 10-question quiz for Grade [N] on [topic], aligned to objective: [objective].
+<span class="label">Output:</span> 7 multiple choice (4 options, 1 correct), 2 short answer, 1 open-ended. Include an answer key and short scoring criteria for the open items.
+<span class="label">Constraints:</span> Grade-appropriate language. Avoid trick questions. Distractors should reflect common misconceptions.
+<span class="label">Quality check:</span> Flag any item that does not align to the objective.
+    </div>
+
+    <h3>Exit ticket prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are an exit-ticket designer.
+<span class="label">Task:</span> Write 3 exit-ticket questions for Grade [N] checking understanding of [concept].
+<span class="label">Output:</span> Three short questions, each designed to surface a different specific misconception. Include the misconception each one targets.
+<span class="label">Constraints:</span> 5 minutes or less to complete. No graded points.
+<span class="label">Quality check:</span> Note what next-day reteach is needed if students miss each item.
+    </div>
+
+    <h3>Simple rubric template</h3>
+    <table>
+        <thead>
+            <tr><th>Criterion</th><th>4 - Strong</th><th>3 - Proficient</th><th>2 - Developing</th><th>1 - Beginning</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Accuracy</strong></td><td>Complete and correct</td><td>Mostly correct</td><td>Partly correct</td><td>Limited</td></tr>
+            <tr><td><strong>Evidence</strong></td><td>Strong evidence</td><td>Some evidence</td><td>Minimal evidence</td><td>No clear evidence</td></tr>
+            <tr><td><strong>Explanation</strong></td><td>Clear reasoning</td><td>Mostly clear</td><td>Unclear</td><td>Missing</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout callout-warn no-break">
+        <strong>Always verify the answer key.</strong>
+        AI can produce plausible-but-wrong answers, especially for math, science, and history. Solve each item yourself or check with a trusted source before printing.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 6</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 7 - DIFFERENTIATION
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 5 - Differentiation prompts</span>
+        <span class="page-eyebrow-tag">Reach more students</span>
+    </div>
+
+    <h2>One objective, three pathways</h2>
+    <p>AI is most useful when you need fast variations - support, core, and stretch - that still hit the same learning goal.</p>
+
+    <h3>Three-level task prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are a differentiation assistant.
+<span class="label">Task:</span> Generate three versions of the same task on [topic] for Grade [N].
+<span class="label">Output:</span> Support version with sentence frames and step-by-step hints, core version for whole class, stretch version with one extension question that pushes higher-order thinking.
+<span class="label">Constraints:</span> Same objective and time limit across all three. No labels visible on student copies.
+<span class="label">Quality check:</span> Verify all three pathways measure the same objective.
+    </div>
+
+    <h3>Reading-level adjustment prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are a reading-level adjustment assistant.
+<span class="label">Task:</span> Rewrite the passage below at a Grade [N] reading level without changing meaning.
+<span class="label">Output:</span> Rewritten passage, glossary of 3-5 key terms with one-line definitions, and 2 comprehension questions.
+<span class="label">Constraints:</span> Keep proper nouns and key academic vocabulary; explain them inline.
+<span class="label">Passage:</span> [paste passage]
+    </div>
+
+    <h3>Multilingual learner support prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are a support assistant for multilingual learners.
+<span class="label">Task:</span> Create a vocabulary pre-teach for [topic] in Grade [N].
+<span class="label">Output:</span> 6 key terms with kid-friendly definitions, example sentences, and a simple visual cue idea for each.
+<span class="label">Constraints:</span> Plain English. No idioms. No cultural assumptions.
+    </div>
+
+    <div class="callout callout-warn no-break">
+        <strong>Privacy reminder.</strong>
+        Do not paste IEPs, 504 plans, disability labels, or student names. Use general phrasing like "some students need vocabulary support" or "a few students need extension."
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 7</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 8 - FEEDBACK
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 6 - Feedback prompts</span>
+        <span class="page-eyebrow-tag">Faster, clearer</span>
+    </div>
+
+    <h2>Write better feedback in less time</h2>
+    <p>AI is good at turning vague comments into specific, kind, actionable feedback. You still own the judgment - never paste student work that includes names or identifiers.</p>
+
+    <h3>Feedback rewrite prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are a feedback writing assistant for K-12 teachers.
+<span class="label">Task:</span> Rewrite the teacher comment below to be specific, kind, and actionable for a Grade [N] student.
+<span class="label">Output:</span> One short paragraph using the pattern: strength, next step, suggestion. Plain language.
+<span class="label">Constraints:</span> No labels, no judgment of the student as a person, no academic jargon.
+<span class="label">Draft:</span> [paste your draft feedback - no student name]
+    </div>
+
+    <h3>Student-friendly feedback template</h3>
+    <div class="prompt-block prompt-block-light">
+You did well with [specific strength].
+Your next step is [specific improvement].
+Try [one concrete action]. I will look for this in your next [task].
+    </div>
+
+    <h3>Whole-class feedback prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are a whole-class feedback assistant.
+<span class="label">Task:</span> Based on these patterns I observed, draft whole-class feedback I can read aloud at the start of the next lesson.
+<span class="label">Patterns:</span> [describe 2-3 patterns - e.g., "many students wrote strong claims but weak evidence"]
+<span class="label">Output:</span> Two strengths to celebrate, one shared next step, and one quick re-teach idea.
+<span class="label">Constraints:</span> No student names. No comparisons between students.
+    </div>
+
+    <h3>Feedback quality checklist</h3>
+    <ul class="check-list">
+        <li>Specific - it points to something in the work.</li>
+        <li>Actionable - the student knows what to do next.</li>
+        <li>Kind - it respects the student as a learner.</li>
+        <li>Aligned - it ties back to the lesson objective.</li>
+        <li>Bias-free - it judges the work, not the person.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 8</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 9 - AI OUTPUT VERIFICATION CHECKLIST
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 7 - AI output verification</span>
+        <span class="page-eyebrow-tag">Print and tape this</span>
+    </div>
+
+    <h2>Before you use AI output with students</h2>
+    <p>Print this page. Tape it next to your planning workspace. Run every AI output through these checks before it reaches a student.</p>
+
+    <h3>The 7-point verification checklist</h3>
+    <ul class="check-list">
+        <li><strong>Accurate.</strong> I solved or looked up every fact, calculation, or claim.</li>
+        <li><strong>Aligned.</strong> The content matches my learning objective for this lesson.</li>
+        <li><strong>Age-appropriate.</strong> Reading level, examples, and references fit the grade.</li>
+        <li><strong>Bias-aware.</strong> I checked for cultural, racial, gender, and stereotype risks.</li>
+        <li><strong>Private.</strong> No student personal data was put into the AI tool.</li>
+        <li><strong>Policy-compliant.</strong> This use is allowed under my school and district AI policy.</li>
+        <li><strong>Teacher-approved.</strong> I reviewed and edited the final version before printing.</li>
+    </ul>
+
+    <h3>Red flags - revise or discard</h3>
+    <ul>
+        <li>Confident-sounding facts you cannot verify.</li>
+        <li>Citations, URLs, or sources that do not exist.</li>
+        <li>Math answers that you did not check yourself.</li>
+        <li>Historical claims with specific dates, names, or quotes you have not verified.</li>
+        <li>Generic examples that ignore your class context.</li>
+        <li>Content that stereotypes any group of students.</li>
+    </ul>
+
+    <h3>If something is wrong</h3>
+    <div class="callout">
+        <strong>Three-step fix.</strong>
+        <ol style="margin:1.5mm 0 0 0;">
+            <li>Tell the AI exactly what is wrong and ask it to revise.</li>
+            <li>Re-check the revision against this checklist.</li>
+            <li>If two revisions do not fix it, write that part yourself.</li>
+        </ol>
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 9</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 10 - GLOSSARY + BEGINNER MISTAKES
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 8 - Quick glossary and beginner mistakes</span>
+        <span class="page-eyebrow-tag">Reference</span>
+    </div>
+
+    <h2>Plain-English AI glossary</h2>
+
+    <dl class="kv">
+        <dt>Generative AI</dt><dd>Software that produces text, images, or other content from a prompt and learned patterns.</dd>
+        <dt>Prompt</dt><dd>The instruction you give the AI. Better context yields better output.</dd>
+        <dt>Hallucination</dt><dd>When AI invents facts, sources, or quotes that look real but are not.</dd>
+        <dt>Bias</dt><dd>Unfair patterns in AI output that reflect uneven training data.</dd>
+        <dt>Context window</dt><dd>How much text the AI can hold in mind at once.</dd>
+        <dt>Token</dt><dd>A small chunk of text the AI processes. Roughly one short word.</dd>
+        <dt>Temperature</dt><dd>How creative or predictable the output is. You will rarely need to change this.</dd>
+        <dt>Fine-tuning</dt><dd>Training a model further on specific examples. Not needed for teachers.</dd>
+        <dt>Verification</dt><dd>Your check that the output is accurate, age-appropriate, and aligned.</dd>
+        <dt>PII</dt><dd>Personally identifiable information. Never put student PII into AI tools.</dd>
+    </dl>
+
+    <h2 class="gap-top">Common beginner mistakes</h2>
+    <table>
+        <thead><tr><th style="width:48mm;">Mistake</th><th>Why it hurts</th><th>Fix</th></tr></thead>
+        <tbody>
+            <tr><td>Asking vague questions</td><td>You get vague output.</td><td>Use the Simple Prompt Formula.</td></tr>
+            <tr><td>Skipping grade and goal</td><td>Output misses the mark.</td><td>Always include grade and learning goal.</td></tr>
+            <tr><td>Trusting the first answer</td><td>Hidden errors slip through.</td><td>Run the 7-point verification.</td></tr>
+            <tr><td>Pasting student data</td><td>Privacy and policy risk.</td><td>Use general non-identifying context.</td></tr>
+            <tr><td>Using AI for final grades</td><td>High-stakes harm risk.</td><td>Keep AI for drafting only.</td></tr>
+            <tr><td>Copy-paste without edit</td><td>Output sounds generic.</td><td>Revise with your classroom voice.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 10</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 11 - USE THIS TOMORROW WORKFLOW
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 9 - Use this tomorrow</span>
+        <span class="page-eyebrow-tag">5-step routine</span>
+    </div>
+
+    <h2>The 5-step teacher AI routine</h2>
+    <p>Use this every time you plan a lesson, write feedback, or build a quick assessment with AI.</p>
+
+    <div class="workflow">
+        <div class="step">
+            <div class="step-num">1</div>
+            <h4>Define</h4>
+            <div class="step-body">Pick the job: lesson, quiz, exit ticket, differentiation, or feedback. Write the objective.</div>
+        </div>
+        <div class="arrow">&rarr;</div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <h4>Prompt</h4>
+            <div class="step-body">Use the Simple Prompt Formula. Add grade, goal, and output format.</div>
+        </div>
+        <div class="arrow">&rarr;</div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <h4>Verify</h4>
+            <div class="step-body">Run the 7-point checklist. Solve, look up, and edit.</div>
+        </div>
+        <div class="arrow">&rarr;</div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <h4>Adapt</h4>
+            <div class="step-body">Add your classroom voice, names of activities, and timing.</div>
+        </div>
+        <div class="arrow">&rarr;</div>
+        <div class="step">
+            <div class="step-num">5</div>
+            <h4>Teach</h4>
+            <div class="step-body">Use it. Note what worked. Ask AI to suggest one tweak for next time.</div>
+        </div>
+    </div>
+
+    <h3>Tomorrow morning template</h3>
+    <div class="prompt-block prompt-block-light">
+<strong>Today I will use AI to:</strong> [pick one job]
+<strong>The objective is:</strong> [single sentence]
+<strong>My grade and class context (no PII):</strong> [grade, brief context]
+<strong>My output format:</strong> [shape and length]
+<strong>My quality check:</strong> [what I will verify]
+    </div>
+
+    <h3>10 key takeaways</h3>
+    <ol>
+        <li>AI is a drafting assistant, not a teacher replacement.</li>
+        <li>Better context produces better output.</li>
+        <li>Always review AI content before use.</li>
+        <li>Never enter student personal data.</li>
+        <li>Start with the learning objective.</li>
+        <li>Match every assessment to the objective.</li>
+        <li>Use AI to differentiate quickly across three levels.</li>
+        <li>Ask AI for rubrics and quality checklists.</li>
+        <li>Check school and district policy before classroom use.</li>
+        <li>Your professional judgment is the final check.</li>
+    </ol>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 11</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 12 - SOURCE NOTES + APPENDIX
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Appendix - Source notes and next steps</span>
+        <span class="page-eyebrow-tag">Further reading</span>
+    </div>
+
+    <h2>Where these ideas come from</h2>
+    <p>This guide synthesizes practical patterns from well-known instructional design and AI-literacy work. We adapt, we do not copy. Always check the original sources for full context before professional use.</p>
+
+    <h3>Reference and inspiration sources</h3>
+    <table>
+        <thead><tr><th style="width:55mm;">Source</th><th>What it informed</th></tr></thead>
+        <tbody>
+            <tr><td>Microsoft, Prompts for Education (MIT)</td><td>Role-based prompt patterns, responsible-AI framing.</td></tr>
+            <tr><td>Microsoft, Generative AI for Beginners (MIT)</td><td>Sequenced lesson structure and prompt engineering basics.</td></tr>
+            <tr><td>ENCCS Instructor Training (CC BY 4.0)</td><td>Backward design, learning objectives, formative assessment.</td></tr>
+            <tr><td>U.S. Department of Education guidance on AI in K-12</td><td>Teacher-in-the-loop framing and verification stance.</td></tr>
+            <tr><td>CAST UDL framework</td><td>Differentiation pathways and access-first design.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Next steps</h3>
+    <ul>
+        <li>Try one prompt this week from Chapter 2.</li>
+        <li>Add the verification checklist to your lesson-prep folder.</li>
+        <li>Share what works with one teaching partner.</li>
+        <li>When ready, move on to the Advanced edition for methodology, audits, and PD planning.</li>
+    </ul>
+
+    <h3>Use the free Classroom Prompt Builder</h3>
+    <p>Build classroom-ready prompts in your browser. No account, no signup. Works with ChatGPT, Claude, and Gemini.</p>
+    <p><strong><a href="https://promptanatomy.online">promptanatomy.online</a></strong> - by Prompt Anatomy.</p>
+
+    <h3>Disclaimer</h3>
+    <p class="tiny">This guide is for educational planning. AI outputs you generate from these prompts may be inaccurate, incomplete, biased, or out of date. You must verify every output before classroom use. This guide is not legal, district policy, or compliance advice. Check your local school, district, state, and federal policies before implementation.</p>
+
+    <h3>Contact</h3>
+    <p>Questions or feedback: <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
+    <p class="tiny">(c) 2026 Prompt Anatomy. Educational tool. All rights reserved.</p>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Beginners Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 12</span>
+    </div>
+</section>
+
+</body>
+</html>

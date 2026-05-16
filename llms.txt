@@ -1,6 +1,6 @@
 # Classroom Prompt Builder
 
-> Free, no-account web app that helps US K-12 teachers build classroom-ready AI prompts for ChatGPT, Claude, and Gemini across five modes: lesson plans, assessments, tasks, presentations, and teaching strategy.
+> Free, no-account web app that helps US K-12 teachers build classroom-ready AI prompts for ChatGPT, Claude, and Gemini across five modes: lesson plans, assessments, tasks, presentations, and teaching strategy. Optional paid PDF guides are available separately.
 
 ## Key facts
 
@@ -10,9 +10,9 @@
 - Repository: https://github.com/DITreneris/teacher
 - Contact: info@promptanatomy.app
 - License: site content all-rights-reserved; prompts produced by users belong to those users
-- Pricing: free, no purchases, no subscriptions, no account
+- Pricing: prompt builder is free; optional PDF guides are one-time purchases ($4.99 Beginners - Prompt Anatomy, previously $9.99; $9.99 Advanced - Prompt Anatomy, previously $19.99); no subscription; no account
 - Audience: US K-12 teachers
-- Data: no personal data collected; localStorage only; cookieless aggregate analytics when enabled by the hosting platform
+- Data: no personal information collected through the prompt-building workflow; localStorage only; optional PDF purchases use Stripe checkout, Resend transactional email, and signed download links; cookieless aggregate analytics when enabled by the hosting platform
 
 ## Canonical pages
 
@@ -31,8 +31,9 @@
 ## Trust and safety
 
 - No student PII collected by the Service
-- FERPA-friendly stance documented in Privacy Policy section 5
+- FERPA-aware privacy posture documented in Privacy Policy section 5
 - Responsible AI disclaimer in Terms of Use section 3: AI outputs must be verified and are not for high-stakes decisions
+- Optional paid PDFs are delivered through secure, expiring download links after Stripe payment
 
 ## Limitations
 
@@ -40,6 +41,7 @@
 - Users must paste prompts into ChatGPT, Claude, or Gemini themselves.
 - Output quality depends on the third-party AI tool used.
 - The Service does not store or transmit student records.
+- PDF guide availability depends on successful payment and email delivery.
 
 ## Optional reads
 

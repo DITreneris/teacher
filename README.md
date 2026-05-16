@@ -1,6 +1,6 @@
 # Classroom Prompt Builder
 
-A free, single-page AI prompt builder for K-12 teachers. Pick a mode, fill in a few fields, and copy a ready-made prompt for ChatGPT, Claude, or Gemini.
+A free, single-page AI prompt builder for K-12 teachers. Pick a mode, fill in a few fields, and copy a ready-made prompt for ChatGPT, Claude, or Gemini. Optional paid PDF guides are sold separately through Stripe-hosted checkout and delivered by secure email links.
 
 | | |
 |---|---|
@@ -25,9 +25,17 @@ Open [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 
 ## Deployment (summary)
 
-**Hosting:** Vercel, static root, no build command.  
+**Hosting:** Vercel, static root plus serverless API routes, no build command.  
 **Config:** [`vercel.json`](vercel.json)  
 **SEO for crawlers:** [`robots.txt`](robots.txt), [`sitemap.xml`](sitemap.xml), [`humans.txt`](humans.txt)
+
+## Paid PDF fulfillment
+
+The paid guide flow uses Stripe Payment Links for checkout and Vercel API routes for fulfillment:
+
+- `api/stripe-webhook.js` verifies Stripe webhook signatures and sends the buyer a signed download link.
+- `api/download.js` validates the signed token and streams the PDF from private storage.
+- PDF binaries must not be committed to the public site root. Use private object storage through `PDF_BEGINNERS_SOURCE_URL` and `PDF_ADVANCED_SOURCE_URL`.
 
 Full checklist → **[DEPLOY.md](DEPLOY.md)**
 

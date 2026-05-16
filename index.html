@@ -71,7 +71,7 @@
                 "applicationSubCategory": "AI Prompt Builder",
                 "operatingSystem": "Any (web browser)",
                 "url": "https://promptanatomy.online/",
-                "description": "Free, no-account web tool that helps US K-12 teachers generate classroom-ready AI prompts for ChatGPT, Claude, and Gemini across five modes: lesson plans, assessments, tasks, presentations, and teaching strategy.",
+                "description": "Free, no-account web tool that helps US K-12 teachers generate classroom-ready AI prompts for ChatGPT, Claude, and Gemini across five modes: lesson plans, assessments, tasks, presentations, and teaching strategy. Optional paid PDF guides are available separately.",
                 "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
                 "featureList": [
                     "Lesson plan prompt builder",
@@ -95,7 +95,7 @@
                         "name": "Is Classroom Prompt Builder free?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes. The tool is free, requires no account, and accepts no payments."
+                            "text": "Yes. The prompt builder is free and requires no account. Optional downloadable PDF guides are sold separately."
                         }
                     },
                     {
@@ -192,7 +192,7 @@
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-tasks" aria-selected="false" aria-controls="form-tasks" data-mode="TASKS">
                     <span class="mode-tab-label">TASKS</span>
-                    <span class="mode-tab-desc">Class and homework</span>
+                    <span class="mode-tab-desc">Classwork and homework</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-presentation" aria-selected="false" aria-controls="form-presentation" data-mode="PRESENTATION">
                     <span class="mode-tab-label">PRESENTATION</span>
@@ -200,7 +200,7 @@
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-strategy" aria-selected="false" aria-controls="form-strategy" data-mode="STRATEGY">
                     <span class="mode-tab-label">STRATEGY</span>
-                    <span class="mode-tab-desc">Method and priorities</span>
+                    <span class="mode-tab-desc">Teaching methods and priorities</span>
                 </button>
             </div>
 
@@ -448,6 +448,61 @@
             </div>
         </section>
 
+        <!-- PDF GUIDES -->
+        <section class="pdf-guides" id="pdf-guides" aria-labelledby="pdf-guides-title">
+            <div class="pdf-guides-header">
+                <span class="eyebrow">Optional PDF guides</span>
+                <h2 id="pdf-guides-title">Download classroom-ready AI prompt guides</h2>
+                <p>Keep using the builder for free, or buy a focused PDF guide for offline planning, training sessions, and quick reference.</p>
+            </div>
+
+            <div class="pdf-guides-grid">
+                <article class="pdf-guide-card" aria-labelledby="pdf-guide-beginners-title">
+                    <div class="pdf-guide-card-top">
+                        <span class="pdf-guide-badge">Best for first steps</span>
+                        <i data-lucide="file-text" class="icon icon--lg" aria-hidden="true"></i>
+                    </div>
+                    <h3 id="pdf-guide-beginners-title">Beginners &mdash; Prompt Anatomy</h3>
+                    <p class="pdf-guide-desc">A 12-page practical guide for teachers new to AI. Clear prompt patterns, classroom examples, and a simple verification workflow.</p>
+                    <div class="pdf-guide-price" aria-label="Beginners &mdash; Prompt Anatomy price">
+                        <span class="pdf-guide-price-now">$4.99</span>
+                        <span class="pdf-guide-price-was">was $9.99</span>
+                    </div>
+                    <ul class="pdf-guide-points">
+                        <li>The Simple Prompt Formula and 10 ready-to-use prompts</li>
+                        <li>Lesson, assessment, differentiation, and feedback packs</li>
+                        <li>7-point AI output verification checklist</li>
+                    </ul>
+                    <a href="https://buy.stripe.com/YOUR_BEGINNERS_PDF_LINK" class="pdf-guide-cta" target="_blank" rel="noopener noreferrer" data-product="beginners-pdf" aria-label="Buy and download Beginners &mdash; Prompt Anatomy for $4.99">
+                        Download PDF for $4.99
+                    </a>
+                    <p class="pdf-guide-note">Secure checkout by Stripe. The download link is emailed after payment.</p>
+                </article>
+
+                <article class="pdf-guide-card pdf-guide-card--featured" aria-labelledby="pdf-guide-advanced-title">
+                    <div class="pdf-guide-card-top">
+                        <span class="pdf-guide-badge">For trainers and leads</span>
+                        <i data-lucide="graduation-cap" class="icon icon--lg" aria-hidden="true"></i>
+                    </div>
+                    <h3 id="pdf-guide-advanced-title">Advanced &mdash; Prompt Anatomy</h3>
+                    <p class="pdf-guide-desc">A 24-page methodologist&rsquo;s guide for curriculum leads, instructional coaches, and PD trainers. Frameworks, audit rubrics, PD models, and rollout playbooks.</p>
+                    <div class="pdf-guide-price" aria-label="Advanced &mdash; Prompt Anatomy price">
+                        <span class="pdf-guide-price-now">$9.99</span>
+                        <span class="pdf-guide-price-was">was $19.99</span>
+                    </div>
+                    <ul class="pdf-guide-points">
+                        <li>Bloom, DOK, UDL, and backward-design prompt systems</li>
+                        <li>Curriculum audit, lesson review, and prompt quality rubrics</li>
+                        <li>PD models, school rollout playbook, and case studies</li>
+                    </ul>
+                    <a href="https://buy.stripe.com/YOUR_ADVANCED_PDF_LINK" class="pdf-guide-cta" target="_blank" rel="noopener noreferrer" data-product="advanced-pdf" aria-label="Buy and download Advanced &mdash; Prompt Anatomy for $9.99">
+                        Download PDF for $9.99
+                    </a>
+                    <p class="pdf-guide-note">Secure checkout by Stripe. The download link is emailed after payment.</p>
+                </article>
+            </div>
+        </section>
+
         <!-- LIBRARY -->
         <section class="library-section" id="library">
             <h2 class="collapsible-heading">
@@ -472,7 +527,7 @@
                 <button class="collapsible-toggle" id="rulesToggle" type="button" aria-expanded="false" aria-controls="rulesBody">
                     <span class="step-badge" aria-hidden="true">5</span>
                     <span class="collapsible-title">Lesson quality principles</span>
-                    <span class="collapsible-value">Built-in decision rules &mdash; every prompt follows these principles.</span>
+                    <span class="collapsible-value">Built-in decision rules &mdash; prompts are designed around these principles.</span>
                     <i data-lucide="chevron-down" class="icon icon--sm collapsible-chevron" aria-hidden="true"></i>
                 </button>
             </h2>

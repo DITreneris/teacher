@@ -2,9 +2,85 @@
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased] - Secure paid PDF fulfillment
+
+Production-ready paid PDF delivery for two optional guides while preserving the free, no-account prompt-builder workflow.
+
+### Added
+- `index.html` and `style.css`: optional paid PDF guide section with two Stripe checkout CTAs, sale pricing, and responsive product-card styling.
+- `api/stripe-webhook.js`, `api/download.js`, and `api/_lib/fulfillment.js`: Stripe webhook fulfillment, Upstash Redis-backed token records, signed download links, Resend email delivery, and protected PDF streaming.
+- `api/_private/pdfs/README.md`: private PDF source guidance for local testing and production object-storage setup.
+- Runtime dependencies for secure fulfillment: `stripe`, `resend`, and `@upstash/redis`.
+- `docs/pdf-source/` authoring folder with publication-ready HTML and CSS source for the two paid PDF guides. No new dependencies; pipeline is hand-built HTML/CSS + browser Save-as-PDF.
+  - `docs/pdf-source/beginners-prompt-anatomy.html` - 12-page Beginner guide titled "AI-Assisted Teaching Foundations". Sections: cover, AI safety start, Simple Prompt Formula, 10 ready-to-use teacher prompts, lesson packs (30 / 45 min / differentiated), assessment and exit-ticket packs, differentiation packs, feedback packs, 7-point AI output verification checklist, glossary and beginner mistakes, "use this tomorrow" 5-step workflow, and source appendix.
+  - `docs/pdf-source/advanced-prompt-anatomy.html` - 24-page Advanced guide titled "AI-Enhanced Instructional Design". Sections: cover, executive overview, instructional design foundations table, Bloom and DOK quick reference, methodologist master prompt, backward design pipeline, UDL prompt system, differentiation transformations (DOK 1 to DOK 4), curriculum audit framework with scoring 1-4, lesson review rubric, prompt quality rubric, 90-min / half-day / full-day / 4-week PD models, coaching model and adoption ladder, 6-phase school rollout, QA and governance workflow, risk register, readiness and observation checklists, 90-day implementation roadmap, and three composite case studies (elementary, high school department, district PD rollout) plus source/license appendix.
+  - `docs/pdf-source/pdf-print.css` - shared print stylesheet aligned to brand tokens from `config/sot.json` (deep blue `#0F2A44`, gold `#F5C518`, soft blue `#2F6FED`). `@page { size: Letter; margin: 0 }`. Each `.page` is exactly `279.4mm` tall (Letter height) with `overflow: hidden` so Chrome cannot auto-paginate sections that exceed one printed page. Fixed `.brand-footer` on every page shows `Prompt Anatomy ... www.promptanatomy.app ... Page N`.
+  - `docs/pdf-source/README.md` - export procedure (Chrome / Edge Save-as-PDF with margins None, background graphics ON, headers/footers OFF), canonical filenames (`Beginners_PromptAnatomy.app.pdf`, `Advanced_PromptAnatomy.app.pdf`), private storage routing via `PDF_BEGINNERS_SOURCE_URL` / `PDF_ADVANCED_SOURCE_URL`, and a troubleshooting table.
+- `scripts/export-pdfs.js` - Playwright-based PDF generator. Loads each HTML via `file://`, waits for fonts (`document.fonts.ready`), emulates `print` media, then `page.pdf({ format: 'Letter', printBackground: true, preferCSSPageSize: true, margin: 0 })`. Writes to `api/_private/pdfs/`, counts pages from the PDF stream, and reports pass/fail vs the expected 12 / 24. Uses the existing `@playwright/test` dev dependency; no new packages.
+- `scripts/check-overflow.js` - Playwright-based overflow auditor. For each `.page` section it temporarily clears `overflow:hidden` and `height`, measures `scrollHeight`, and flags any section whose natural content height would exceed `279.4mm`. Confirms zero clipping risk after typography compaction.
+- `scripts/verify-pdf-cover.js` - renders the first page of each generated PDF using `pdfjs-dist` (fetched from CDN at runtime, no install) to confirm the cover background actually printed. Outputs `scripts/pdf-cover-beginners.png` and `scripts/pdf-cover-advanced.png` as visual evidence.
+- `scripts/preview-cover.js` - debug helper that screenshots the cover at print emulation directly from the HTML.
+
+### Changed
+- `terms.html`, `privacy.html`, `llms.txt`, `README.md`, `DEPLOY.md`, and `package.json`: clarified that the prompt builder remains free while optional paid PDF guides are sold separately.
+- `docs/INDEX.md` and `humans.txt`: documented the new Vercel serverless API surface.
+- `vercel.json`: added no-store headers for API routes.
+- `.eslintrc.json`: added Node overrides for Vercel API functions and for `scripts/**/*.js` (PDF authoring helpers run via `node`, so `require`, `__dirname`, `process`, and console output are expected).
+- `.gitignore`: excludes local paid PDF binaries under `api/_private/pdfs/*.pdf`, and the local PNG previews written by `scripts/verify-pdf-cover.js` and `scripts/preview-cover.js` under `scripts/*.png`.
+- `tests/structure.test.js` and `tests/e2e/smoke.spec.js`: added coverage for paid PDF cards, pricing, legal copy, and secure fulfillment route presence.
+- `index.html` product card titles and aria-labels renamed for brand consistency: `Beginners PDF Guide` -> `Beginners - Prompt Anatomy`; `Advanced Educators PDF Guide` -> `Advanced - Prompt Anatomy`. Card descriptions updated to mention 12-page and 24-page formats and the actual sections. `data-product="beginners-pdf"`, `data-product="advanced-pdf"`, and the Stripe placeholder URLs are intentionally unchanged to keep environment variable keys and webhook handlers stable.
+- `tests/structure.test.js`: assertions for the two PDF cards updated to match the new brand-consistent titles.
+- `llms.txt`: pricing line uses the new product names.
+- `docs/INDEX.md`: added a new "Active PDF authoring source" section that lists the `docs/pdf-source/` folder and its three files.
+- `docs/pdf-source/pdf-print.css`: cover-page contrast and PDF-engine compatibility:
+  - Body text raised from light gray (`#A4B2C3`, `#E8EEF6`) to pure `#FFFFFF`. Subtitle, "Read this first" callout body, audience/length/format meta block, and cover footer all now render at full white contrast on the dark navy background.
+  - Field labels (`Audience:`, `Length:`, `Version:`, `Format:`, `Read this first`, `Strategic positioning`) recolored to brand gold `#F5C518` to keep visual hierarchy.
+  - Footer divider line on the cover now uses subtle gold `rgba(245,197,24,0.45)` instead of muted white.
+  - `.cover` background hardened: explicit solid `background-color: #0F2A44` first, then layered `background-image: linear-gradient(...)` on top, plus `-webkit-print-color-adjust: exact !important`. Some PDF viewers strip CSS gradients during render; the solid color guarantees the dark navy ground stays under the white text in every viewer (verified by rasterizing the generated PDFs through `pdfjs-dist` and inspecting the cover page).
+- `docs/pdf-source/pdf-print.css`: typography compacted so each section fits in exactly one Letter page without Chrome auto-paginating:
+  - Body 10.5pt -> 9.5pt; line-height 1.45 -> 1.35.
+  - h2 18pt -> 15pt, h3 13pt -> 11pt, h4 11pt -> 10pt.
+  - Tables 9.5pt -> 8.5pt, cell padding 2.5mm -> 2mm with explicit `line-height: 1.3`.
+  - Prompt blocks 9pt -> 8pt, padding 4mm -> 3mm.
+  - Page padding `18mm 18mm 22mm 18mm` -> `14mm 16mm 18mm 16mm`; brand footer offsets from `8mm` -> `6mm`.
+  - Workflow step boxes, key-value lists, callouts, lead paragraphs, and check-list bullets all tightened proportionally.
+- `docs/pdf-source/pdf-print.css`: `.page` and `.cover` switched from `min-height: 279.4mm` to exact `height: 279.4mm` plus `overflow: hidden`. With `min-height`, any section taller than one Letter page caused Chrome's print engine to flow the overflow into a second page, producing 17 / 31 pages instead of 12 / 24. The exact-height + clip approach guarantees one section = one printed page, with the overflow auditor confirming all 36 sections still fit within the bounds (largest delta -4.5mm of headroom on Advanced p4 Bloom/DOK).
+
+### Deployment notes
+- Replace placeholder Stripe Payment Link URLs in `index.html` before production launch.
+- Required production services: Stripe Payment Links, Stripe webhook, Resend, Upstash Redis, and private PDF source URLs.
+- Required webhook events: `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+- PDF binaries can be produced two ways. Both write to `api/_private/pdfs/` which is gitignored.
+  - Automated (recommended): `node scripts/export-pdfs.js` from the repo root. Uses Playwright's bundled Chromium; takes ~25 seconds; reports page counts.
+  - Manual: serve the repo with `npx serve . -l 3000`, open `docs/pdf-source/*.html` in Chrome / Edge, `Ctrl+P`, Save as PDF with margins None, headers/footers OFF, background graphics ON. See `docs/pdf-source/README.md`.
+- Production uploads must go to private object storage referenced by `PDF_BEGINNERS_SOURCE_URL` and `PDF_ADVANCED_SOURCE_URL` (per `api/_private/pdfs/README.md`); the `api/_private/pdfs/` folder is for local testing only.
+
+### Verified
+- `npm test`: pass; 101/101 structural checks, zero lint errors, one pre-existing `copy.js` unused-variable warning.
+- `npm run test:smoke`: 9/9 pass.
+- `npm run test:a11y`: zero pa11y issues on `index.html`, `privacy.html`, `terms.html` after the card-title rename.
+- `npm run test:e2e`: 8/8 pass.
+- `npm audit --omit=dev`: 0 production vulnerabilities.
+- `node scripts/export-pdfs.js`: Beginner = 12 pages (530.7 KB), Advanced = 24 pages (643.0 KB) - exact match.
+- `node scripts/check-overflow.js`: all 36 sections fit within `279.4mm`; no clipping. Tightest sections: Advanced p4 Bloom/DOK (274.9mm, -4.5mm headroom), Advanced p9 Curriculum Audit (263.0mm), Advanced p24 Case study + appendix (253.2mm), Beginner p12 Appendix (231.5mm).
+- `node scripts/verify-pdf-cover.js`: rasterized first page of each generated PDF; confirmed dark navy background, white title and body text, gold accent labels, and visible brand footer in both covers.
+
 ## [1.1.0] - 2026-05-15 - Technical SEO, GEO, and ads-compliance hardening
 
 Three-phase technical hardening for US ad approval, search engine indexability, and AI search visibility. All changes are metadata, configuration, schema, security headers, and crawler-facing files. No frontend redesign. The only new visible assets are `og-image.png` and `apple-touch-icon.png`, which surface in social previews, search snippets, and OS home screens, not in the live page UI.
+
+### US K-12 copy polish
+
+#### Changed
+- `index.html`: tightened visible mode and rules copy for a more native US K-12 teacher audience (`Classwork and homework`, `Teaching methods and priorities`, and softer lesson-quality framing).
+- `config/sot.json` and `generator.js`: aligned dynamic mode labels, fallback labels, quality rules, and teaching-strategy template language (`instructional moves`, `prevention steps`).
+- `privacy.html` and `llms.txt`: softened broad privacy and FERPA-adjacent wording while preserving the no-account, local-storage-only trust posture.
+
+#### Verified
+- `npm test`: pass with the pre-existing `copy.js` unused-variable warning and zero errors.
+- `npm run test:smoke`: 9/9 pass.
+- `npm run test:a11y`: zero pa11y issues.
+- `npm run test:e2e`: 8/8 pass.
 
 ### Phase 1 - P0 promotion readiness
 
@@ -115,7 +191,7 @@ First English-language release. Targets US K-12 teachers under the Prompt Anatom
 - Telegram community CTA -> `https://t.me/prompt_anatomy`.
 
 #### Trust and legal
-- `privacy.html` - US Privacy Policy (no personal data, localStorage disclosure, Vercel Analytics, FERPA-friendly stance, no student PII statement). Uses `style.css` design tokens.
+- `privacy.html` - US Privacy Policy (prompt-workflow privacy disclosure, localStorage disclosure, Vercel Analytics, FERPA-aware privacy posture, no student PII statement). Uses `style.css` design tokens.
 - `terms.html` - Terms of Use with a prominent Responsible AI callout: verify AI outputs, not for high-stakes decisions, no warranty. Uses `style.css` design tokens.
 - Footer links to Privacy and Terms on every page.
 

@@ -10,6 +10,6 @@ Built for US K-12 teachers who use ChatGPT, Claude, or Gemini in the classroom.
 
 /* SITE */
 Language: English (en-US)
-Stack: Static HTML, CSS, vanilla JavaScript
+Stack: Static HTML, CSS, vanilla JavaScript, Vercel serverless functions
 Hosting: Vercel
 Analytics: Vercel Analytics (aggregate, cookieless)

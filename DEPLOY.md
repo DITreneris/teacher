@@ -2,7 +2,7 @@
 
 **Canonical repository:** [github.com/DITreneris/teacher](https://github.com/DITreneris/teacher)  
 **Production URL:** [promptanatomy.online](https://promptanatomy.online/)  
-**Hosting:** Vercel (static, no build step)  
+**Hosting:** Vercel (static files + serverless API routes, no build step)  
 **Parent brand:** [promptanatomy.app](https://www.promptanatomy.app/)
 
 ---
@@ -52,6 +52,9 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 - [ ] https://promptanatomy.online/robots.txt is reachable
 - [ ] https://promptanatomy.online/sitemap.xml is reachable
 - [ ] Copy prompt → toast “Prompt copied.”
+- [ ] PDF guide buttons open the correct Stripe Payment Links
+- [ ] Stripe webhook endpoint is configured: `https://promptanatomy.online/api/stripe-webhook`
+- [ ] Test purchase sends an email with a signed `/api/download?t=...` link
 - [ ] Submit sitemap in [Google Search Console](https://search.google.com/search-console)
 
 ---
@@ -63,7 +66,7 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 | `robots.txt` | `/robots.txt` | Explicit policy for citation bots (OAI-SearchBot, ChatGPT-User, PerplexityBot, Google-Extended, Bingbot, ClaudeBot, Applebot, ...) and training bots (GPTBot, CCBot, anthropic-ai, Bytespider, Diffbot, Amazonbot, cohere-ai); points to sitemap. Stance: allow all. Review quarterly. |
 | `sitemap.xml` | `/sitemap.xml` | Lists `/`, `/privacy.html`, `/terms.html`; declares the Google image extension and references `og-image.png`. |
 | `humans.txt` | `/humans.txt` | Human-readable site credits. |
-| `llms.txt` | `/llms.txt` | Concise, machine-readable product brief for AI engines (operator, contact, pricing, audience, modes, limitations). |
+| `llms.txt` | `/llms.txt` | Concise, machine-readable product brief for AI engines (operator, contact, pricing, paid PDF guides, audience, modes, limitations). |
 | `.well-known/security.txt` | `/.well-known/security.txt` | RFC 9116 security contact. |
 | `manifest.webmanifest` | `/manifest.webmanifest` | Web app manifest for browser / OS install hints. |
 | `og-image.png` | `/og-image.png` | 1200 x 630 social preview. Served with `Cross-Origin-Resource-Policy: cross-origin` so Facebook / LinkedIn / X / Slack can embed it. |
@@ -85,9 +88,44 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 | File | Role |
 |------|------|
 | [`vercel.json`](vercel.json) | Security headers, cache rules |
+| [`api/stripe-webhook.js`](api/stripe-webhook.js) | Stripe webhook fulfillment endpoint |
+| [`api/download.js`](api/download.js) | Token-validated PDF download endpoint |
 | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Runs `npm run test:mixed` on push/PR |
 
-No environment variables are required for MVP.
+## Environment variables
+
+Set these in Vercel Project Settings → Environment Variables. Do not commit secrets.
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `STRIPE_SECRET_KEY` | Yes | Stripe API key used by the webhook to retrieve Checkout Sessions. |
+| `STRIPE_WEBHOOK_SECRET` | Yes | Verifies events from `https://promptanatomy.online/api/stripe-webhook`. |
+| `STRIPE_PRICE_BEGINNERS_PDF` | Yes | Stripe Price ID for the `$4.99` Beginners PDF Guide. |
+| `STRIPE_PRICE_ADVANCED_PDF` | Yes | Stripe Price ID for the `$9.99` Advanced Educators PDF Guide. |
+| `DOWNLOAD_TOKEN_SECRET` | Yes | HMAC secret for signed download links. Use a long random value. |
+| `RESEND_API_KEY` | Yes | Sends transactional PDF delivery emails. |
+| `FULFILLMENT_FROM_EMAIL` | Yes | Verified sender, for example `Prompt Anatomy <downloads@promptanatomy.online>`. |
+| `UPSTASH_REDIS_REST_URL` | Yes | Redis REST URL for fulfillment records and active download tokens. |
+| `UPSTASH_REDIS_REST_TOKEN` | Yes | Redis REST token. Legacy `KV_REST_API_*` and `VERCEL_KV_REST_API_*` names are also supported. |
+| `SITE_URL` | Recommended | Canonical site URL used in emailed download links. Use `https://promptanatomy.online`. |
+| `PDF_BEGINNERS_SOURCE_URL` | Production | Private storage URL for the Beginners PDF. |
+| `PDF_ADVANCED_SOURCE_URL` | Production | Private storage URL for the Advanced Educators PDF. |
+| `PDF_SOURCE_AUTH_TOKEN` | If needed | Bearer token for private PDF source fetches. |
+| `PDF_SOURCE_AUTH_HEADER` | If needed | Custom private-source auth header in `Header-Name: value` format. |
+| `DOWNLOAD_TOKEN_TTL_SECONDS` | Optional | Defaults to 7 days. |
+| `FULFILLMENT_STATE_TTL_SECONDS` | Optional | Defaults to 90 days. |
+
+### Stripe setup
+
+1. Create two Stripe Products / Prices: Beginners PDF Guide (`$4.99`) and Advanced Educators PDF Guide (`$9.99`).
+2. Create one Payment Link per product and paste those URLs into the PDF buttons in `index.html`.
+3. Add a live webhook endpoint for `https://promptanatomy.online/api/stripe-webhook`.
+4. Subscribe to `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+5. Use Stripe CLI locally to forward events when testing webhook changes.
+
+### PDF storage
+
+Production PDFs should live in private object storage and be fetched server-side through `PDF_BEGINNERS_SOURCE_URL` and `PDF_ADVANCED_SOURCE_URL`. The public site root must not contain paid PDF binaries. Local-only PDF files can be placed in `api/_private/pdfs/`, but `*.pdf` files in that folder are ignored by git.
 
 ---
 

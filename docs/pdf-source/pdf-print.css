@@ -1,0 +1,633 @@
+/* Prompt Anatomy - PDF print stylesheet.
+   Used by Beginners_PromptAnatomy.app.pdf and Advanced_PromptAnatomy.app.pdf.
+   Pipeline: browser Save-as-PDF (Chrome, Letter, margins None, headers/footers OFF, background graphics ON).
+   Brand tokens mirror config/sot.json colors and theme.light. */
+
+@page {
+    size: Letter;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+    color: #1C2B3A;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.35;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+/* ===== Page shell =====
+   Each .page is one printed page. 8.5x11 in = 215.9 x 279.4 mm.
+   We use exact height + overflow:hidden to prevent Chrome from auto-paginating
+   when content is slightly too tall. Inner padding leaves room for the fixed
+   brand footer. */
+.page {
+    width: 215.9mm;
+    height: 279.4mm;
+    padding: 14mm 16mm 18mm 16mm;
+    position: relative;
+    break-after: page;
+    page-break-after: always;
+    overflow: hidden;
+}
+
+.page:last-of-type {
+    break-after: auto;
+    page-break-after: auto;
+}
+
+/* ===== Brand footer (every page) ===== */
+.brand-footer {
+    position: absolute;
+    bottom: 6mm;
+    left: 16mm;
+    right: 16mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8pt;
+    color: #6B7A8C;
+    border-top: 1px solid #E6ECF2;
+    padding-top: 2.5mm;
+}
+
+.brand-footer-left {
+    font-weight: 600;
+    color: #0F2A44;
+    letter-spacing: 0.02em;
+}
+
+.brand-footer-right {
+    color: #6B7A8C;
+}
+
+.brand-footer-url {
+    color: #2F6FED;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ===== Typography ===== */
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    color: #0F2A44;
+    margin: 0 0 4mm 0;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+h2 {
+    font-size: 15pt;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 3mm;
+}
+
+h3 {
+    font-size: 11pt;
+    font-weight: 700;
+    margin-top: 3.5mm;
+    margin-bottom: 1.5mm;
+}
+
+h4 {
+    font-size: 10pt;
+    font-weight: 700;
+    margin-top: 3mm;
+    margin-bottom: 1mm;
+}
+
+p {
+    margin: 0 0 2.5mm 0;
+}
+
+a {
+    color: #2F6FED;
+    text-decoration: none;
+}
+
+strong {
+    color: #0F2A44;
+}
+
+ul,
+ol {
+    margin: 0 0 2.5mm 0;
+    padding-left: 5mm;
+}
+
+li {
+    margin-bottom: 1mm;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #E6ECF2;
+    margin: 3mm 0;
+}
+
+/* ===== Page header strip ===== */
+.page-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 8pt;
+    color: #6B7A8C;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid #E6ECF2;
+    padding-bottom: 1.5mm;
+    margin-bottom: 4mm;
+    font-weight: 600;
+}
+
+.page-eyebrow-tag {
+    background: #F5C518;
+    color: #0F2A44;
+    padding: 0.6mm 2mm;
+    border-radius: 1.2mm;
+    font-size: 8pt;
+}
+
+/* ===== Cover page =====
+   IMPORTANT: solid background-color first (some PDF renderers drop CSS gradients).
+   The gradient is layered on top as a visual enhancement; if it is skipped during
+   print, the page still renders as a dark navy block so white text stays readable. */
+.cover {
+    background-color: #0F2A44;
+    background-image: linear-gradient(160deg, #0F2A44 0%, #142F4D 60%, #0B2238 100%);
+    color: #FFFFFF;
+    padding: 26mm 20mm 20mm 20mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 279.4mm;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+.cover h1,
+.cover h2 {
+    color: #FFFFFF;
+}
+
+.cover .cover-eyebrow {
+    color: #F5C518;
+    font-weight: 700;
+    font-size: 10pt;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.cover .cover-title {
+    font-size: 32pt;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-top: 10mm;
+}
+
+.cover .cover-subtitle {
+    color: #FFFFFF;
+    font-size: 14pt;
+    font-weight: 500;
+    margin-top: 6mm;
+    line-height: 1.4;
+}
+
+.cover .cover-meta {
+    color: #FFFFFF;
+    font-size: 11pt;
+    line-height: 1.6;
+    margin-top: 14mm;
+}
+
+.cover .cover-meta strong {
+    color: #F5C518;
+    font-weight: 700;
+}
+
+.cover .cover-positioning {
+    background: rgba(255, 255, 255, 0.10);
+    border-left: 3px solid #F5C518;
+    padding: 5mm 6mm;
+    margin-top: 12mm;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #FFFFFF;
+}
+
+.cover .cover-positioning strong {
+    color: #F5C518;
+}
+
+.cover .brand-footer {
+    color: #FFFFFF;
+    border-top: 1px solid rgba(245, 197, 24, 0.45);
+}
+
+.cover .brand-footer-left {
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.cover .brand-footer-right {
+    color: #FFFFFF;
+}
+
+.cover .brand-footer-url {
+    color: #F5C518;
+    font-weight: 700;
+}
+
+/* ===== Callouts ===== */
+.callout {
+    background: #F4F7FB;
+    border-left: 3px solid #2F6FED;
+    padding: 3mm 4mm;
+    border-radius: 0 1.5mm 1.5mm 0;
+    margin: 0 0 3mm 0;
+}
+
+.callout-warn {
+    background: #FFF7E0;
+    border-left-color: #F5C518;
+}
+
+.callout-danger {
+    background: #FFF1EC;
+    border-left-color: #D6422E;
+}
+
+.callout-success {
+    background: #ECF5EE;
+    border-left-color: #2F8C4C;
+}
+
+.callout strong {
+    display: block;
+    margin-bottom: 1mm;
+    color: #0F2A44;
+}
+
+/* ===== Prompt block ===== */
+.prompt-block {
+    background: #0F2A44;
+    color: #E8EEF6;
+    padding: 3mm 4mm;
+    border-radius: 1.5mm;
+    margin: 0 0 3mm 0;
+    font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+    font-size: 8pt;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.prompt-block .label {
+    color: #F5C518;
+    font-weight: 700;
+}
+
+.prompt-block-light {
+    background: #F4F7FB;
+    color: #1C2B3A;
+    border: 1px solid #E6ECF2;
+}
+
+.prompt-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8.5pt;
+    color: #6B7A8C;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin-bottom: 1mm;
+}
+
+.prompt-tag {
+    background: #F5C518;
+    color: #0F2A44;
+    padding: 0.4mm 2mm;
+    border-radius: 1mm;
+    font-size: 7.5pt;
+}
+
+/* ===== Tables ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 3mm 0;
+    font-size: 8.5pt;
+    break-inside: avoid;
+}
+
+th {
+    background: #0F2A44;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 2mm 2.5mm;
+    font-weight: 600;
+    font-size: 8.5pt;
+}
+
+td {
+    border: 1px solid #E6ECF2;
+    padding: 2mm 2.5mm;
+    vertical-align: top;
+    line-height: 1.3;
+}
+
+tr:nth-child(even) td {
+    background: #F4F7FB;
+}
+
+/* ===== Checklists ===== */
+.check-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 3mm 0;
+}
+
+.check-list li {
+    padding-left: 6mm;
+    position: relative;
+    margin-bottom: 1mm;
+}
+
+.check-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6mm;
+    width: 3.5mm;
+    height: 3.5mm;
+    border: 1.2px solid #2F6FED;
+    border-radius: 0.6mm;
+    background: #FFFFFF;
+}
+
+/* ===== Numbered cards ===== */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3mm;
+    margin: 0 0 4mm 0;
+}
+
+.card {
+    flex: 1 1 calc(50% - 3mm);
+    border: 1px solid #E6ECF2;
+    border-radius: 1.5mm;
+    padding: 3.5mm 4mm;
+    background: #FFFFFF;
+    break-inside: avoid;
+}
+
+.card-num {
+    display: inline-block;
+    background: #F5C518;
+    color: #0F2A44;
+    font-weight: 700;
+    width: 6mm;
+    height: 6mm;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 6mm;
+    font-size: 9pt;
+    margin-right: 2mm;
+}
+
+.card h4 {
+    display: inline-block;
+    margin: 0;
+}
+
+.card-body {
+    margin-top: 2mm;
+    font-size: 9.5pt;
+    color: #1C2B3A;
+}
+
+/* ===== Bad vs Good comparison ===== */
+.compare {
+    display: flex;
+    gap: 3mm;
+    margin: 0 0 4mm 0;
+}
+
+.compare .col {
+    flex: 1;
+    padding: 3.5mm 4mm;
+    border-radius: 1.5mm;
+    font-size: 9pt;
+    line-height: 1.45;
+}
+
+.compare .col-bad {
+    background: #FFF1EC;
+    border: 1px solid #F5C9BD;
+}
+
+.compare .col-good {
+    background: #ECF5EE;
+    border: 1px solid #B7DCC1;
+}
+
+.compare .col-title {
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5mm;
+}
+
+.compare .col-bad .col-title {
+    color: #B33A21;
+}
+
+.compare .col-good .col-title {
+    color: #2F8C4C;
+}
+
+/* ===== Small text ===== */
+.muted {
+    color: #6B7A8C;
+    font-size: 9pt;
+}
+
+.tiny {
+    font-size: 8pt;
+    color: #6B7A8C;
+}
+
+.lead {
+    font-size: 10.5pt;
+    color: #0F2A44;
+    line-height: 1.4;
+    margin-bottom: 3.5mm;
+}
+
+/* ===== Workflow diagram ===== */
+.workflow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5mm;
+    margin: 0 0 4mm 0;
+    align-items: stretch;
+}
+
+.workflow .step {
+    flex: 1;
+    background: #F4F7FB;
+    border: 1px solid #E6ECF2;
+    border-top: 3px solid #2F6FED;
+    border-radius: 1.5mm;
+    padding: 2.5mm;
+    font-size: 8pt;
+    line-height: 1.3;
+    position: relative;
+}
+
+.workflow .step-num {
+    font-weight: 800;
+    color: #F5C518;
+    font-size: 11pt;
+    line-height: 1;
+}
+
+.workflow .step h4 {
+    margin: 0.8mm 0 0.8mm 0;
+    font-size: 9pt;
+}
+
+.workflow .step-body {
+    color: #1C2B3A;
+}
+
+.workflow .arrow {
+    flex: 0 0 3mm;
+    align-self: center;
+    color: #2F6FED;
+    font-size: 12pt;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* ===== Two-column body ===== */
+.two-col {
+    column-count: 2;
+    column-gap: 8mm;
+    font-size: 9.5pt;
+}
+
+.two-col li,
+.two-col p {
+    break-inside: avoid;
+}
+
+/* ===== Section badges ===== */
+.section-tag {
+    display: inline-block;
+    background: #2F6FED;
+    color: #FFFFFF;
+    padding: 0.6mm 2.5mm;
+    border-radius: 1mm;
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.section-tag-gold {
+    background: #F5C518;
+    color: #0F2A44;
+}
+
+/* ===== Utilities ===== */
+.no-break {
+    break-inside: avoid;
+}
+
+.gap-top {
+    margin-top: 5mm;
+}
+
+.gap-top-sm {
+    margin-top: 3mm;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.gap-3 {
+    gap: 3mm;
+}
+
+.gap-5 {
+    gap: 5mm;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.kv {
+    display: grid;
+    grid-template-columns: 32mm 1fr;
+    column-gap: 4mm;
+    row-gap: 1.2mm;
+    margin-bottom: 3mm;
+    font-size: 8.5pt;
+}
+
+.kv dt {
+    font-weight: 700;
+    color: #0F2A44;
+}
+
+.kv dd {
+    margin: 0;
+    color: #1C2B3A;
+}
+
+/* ===== Screen preview (when viewing the HTML in browser before printing) ===== */
+@media screen {
+    body {
+        background: #ECEEF2;
+        padding: 8mm 0;
+    }
+
+    .page {
+        margin: 0 auto 8mm auto;
+        box-shadow: 0 2px 12px rgba(15, 42, 68, 0.15);
+        background: #FFFFFF;
+    }
+}

@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced - Prompt Anatomy - www.promptanatomy.app</title>
+    <meta name="description" content="A practical 24-page advanced guide for methodologists, instructional designers, and curriculum leaders. AI-enhanced instructional design, taxonomy-aligned prompts, audit rubrics, PD models, and implementation playbooks. By Prompt Anatomy.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pdf-print.css">
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE 1 - COVER
+     ============================================================ -->
+<section class="page cover">
+    <div>
+        <div class="cover-eyebrow">Prompt Anatomy - Advanced Edition</div>
+        <h1 class="cover-title">AI-Enhanced<br>Instructional Design</h1>
+        <p class="cover-subtitle">A methodologist's guide to pedagogy, taxonomy, and teacher implementation. Frameworks, audit rubrics, PD blueprints, and rollout playbooks - ready for U.S. schools and districts.</p>
+    </div>
+
+    <div>
+        <div class="cover-positioning">
+            <strong style="color:#F5C518;">Strategic positioning.</strong>
+            Pedagogy first. AI second. This guide does not chase the latest model. It gives you durable systems for designing, auditing, training, and scaling AI-supported instruction without losing the integrity of your curriculum.
+        </div>
+
+        <div class="cover-meta">
+            <strong>Audience:</strong> Methodologists, instructional designers, curriculum leads, PD trainers, education consultants, and school innovation leads.<br>
+            <strong>Length:</strong> 24 pages. <strong>Version:</strong> 1.0 - May 2026.<br>
+            <strong>Format:</strong> Frameworks, master prompts, rubrics, PD models, and case studies.
+        </div>
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 1</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 2 - EXECUTIVE OVERVIEW
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Executive overview</span>
+        <span class="page-eyebrow-tag">Read first</span>
+    </div>
+
+    <h2>Pedagogy first. AI second.</h2>
+    <p class="lead">AI accelerates drafting, variation, sequencing, and feedback cycles. Without learning objectives, taxonomy alignment, and human governance, AI mostly produces attractive but shallow materials. This guide is built so AI strengthens your existing instructional design system, not the other way around.</p>
+
+    <h3>Why AI changes instructional design workflows</h3>
+    <ul>
+        <li>Lesson and assessment drafts compress from hours to minutes.</li>
+        <li>Differentiated variants of the same task become trivial to produce.</li>
+        <li>Rubrics, exemplars, and misconception checks can be generated on demand.</li>
+        <li>Teachers gain time - if and only if the artifacts are reviewable and standards-aligned.</li>
+    </ul>
+
+    <h3>Why pedagogy must come before tools</h3>
+    <ul>
+        <li>Without a clear objective, AI optimizes for plausible-looking content.</li>
+        <li>Without assessment alignment, "engaging" lessons drift away from evidence of learning.</li>
+        <li>Without taxonomy guidance, AI defaults to recall-level tasks.</li>
+        <li>Without UDL, AI tends to produce one pathway and label it as "the lesson."</li>
+    </ul>
+
+    <h3>Why taxonomy improves AI output quality</h3>
+    <p>When prompts name the cognitive demand explicitly - Bloom level, DOK level, or SOLO stage - AI output shifts from generic to instructionally meaningful. Taxonomy is not decoration. It is a quality lever.</p>
+
+    <h3>Why teacher adoption fails without implementation structure</h3>
+    <ul>
+        <li>Tool training without workflow integration creates short-lived enthusiasm.</li>
+        <li>Policy ambiguity stalls adoption faster than any technical issue.</li>
+        <li>Without QA rubrics, AI-supported materials accumulate quiet inconsistencies.</li>
+        <li>Coaching beats one-off PD by a wide margin.</li>
+    </ul>
+
+    <div class="callout">
+        <strong>How to use this guide.</strong>
+        Read Chapter 1 for foundations. Use Chapter 2 as your prompt system. Use Chapter 3 for audit and quality. Use Chapter 4 for PD design. Use Chapter 5 for school rollout. Use Chapter 6 for governance. Use Chapter 7 case studies as conversation starters with stakeholders.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 2</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 3 - INSTRUCTIONAL DESIGN FOUNDATIONS
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 1.1 - Instructional design foundations</span>
+        <span class="page-eyebrow-tag">Framework map</span>
+    </div>
+
+    <h2>Six frameworks - when to use each</h2>
+    <p>Each framework solves a different problem. Use them in combination, not in competition.</p>
+
+    <table>
+        <thead>
+            <tr><th style="width:32mm;">Framework</th><th style="width:55mm;">Best at</th><th>Use when</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Backward Design</strong></td><td>Aligning desired results, evidence, and instruction.</td><td>Designing or auditing any unit or course.</td></tr>
+            <tr><td><strong>Bloom's Taxonomy</strong></td><td>Naming cognitive action with action verbs.</td><td>Writing objectives, varying task difficulty intentionally.</td></tr>
+            <tr><td><strong>Webb's DOK</strong></td><td>Describing cognitive complexity.</td><td>Auditing assessments and tasks for depth, not just topic coverage.</td></tr>
+            <tr><td><strong>UDL</strong></td><td>Removing access barriers.</td><td>Designing engagement, representation, and action/expression options up front.</td></tr>
+            <tr><td><strong>SOLO Taxonomy</strong></td><td>Describing increasing structural complexity of understanding.</td><td>Designing rubrics and progressions of understanding.</td></tr>
+            <tr><td><strong>Competency-based</strong></td><td>Defining observable mastery.</td><td>Programs that need evidence of mastery beyond seat time.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Common misuses</h3>
+    <ul>
+        <li><strong>Treating Bloom as difficulty.</strong> Bloom describes cognitive type, not how hard a question is to answer.</li>
+        <li><strong>Confusing DOK with verbs.</strong> A task is DOK 3 because of the thinking required, not because it uses the word "analyze."</li>
+        <li><strong>Adding UDL as decoration.</strong> UDL must shape design from the start, not arrive as accommodations after the fact.</li>
+        <li><strong>Writing rubrics after misaligned tasks.</strong> Score the wrong thing well and it is still wrong.</li>
+        <li><strong>Asking AI for "engaging lessons"</strong> before defining evidence of learning.</li>
+    </ul>
+
+    <div class="callout callout-warn">
+        <strong>Methodologist rule.</strong>
+        Never adopt a framework just to look rigorous. Adopt one because it answers a question your team is actually trying to answer.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 3</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 4 - BLOOM + DOK QUICK REFERENCE
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 1.2 - Bloom and DOK quick reference</span>
+        <span class="page-eyebrow-tag">Action verbs and prompts</span>
+    </div>
+
+    <h2>Bloom + DOK quick reference</h2>
+
+    <h3>Bloom's revised taxonomy - verbs and AI prompt pattern</h3>
+    <table>
+        <thead>
+            <tr><th style="width:24mm;">Level</th><th style="width:50mm;">Action verbs</th><th>AI prompt pattern</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Remember</strong></td><td>list, define, label, recall</td><td>Generate retrieval items that surface specific factual gaps.</td></tr>
+            <tr><td><strong>Understand</strong></td><td>explain, summarize, compare</td><td>Ask for student-friendly explanations and one common misconception each.</td></tr>
+            <tr><td><strong>Apply</strong></td><td>use, demonstrate, solve</td><td>Generate scenario-based tasks where students apply a procedure to new data.</td></tr>
+            <tr><td><strong>Analyze</strong></td><td>compare, contrast, examine</td><td>Generate two-source comparisons and ask students to surface patterns.</td></tr>
+            <tr><td><strong>Evaluate</strong></td><td>judge, critique, defend</td><td>Generate claims, evidence sets, and an evaluation rubric for student use.</td></tr>
+            <tr><td><strong>Create</strong></td><td>design, construct, plan</td><td>Generate constraints and success criteria for an original student artifact.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Webb's Depth of Knowledge - what each level requires</h3>
+    <table>
+        <thead>
+            <tr><th style="width:22mm;">DOK</th><th>Cognitive demand</th><th style="width:62mm;">Sample task</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>DOK 1</strong></td><td>Recall facts or follow a routine procedure.</td><td>Identify the main idea of a paragraph.</td></tr>
+            <tr><td><strong>DOK 2</strong></td><td>Use a skill with conceptual understanding.</td><td>Summarize the main idea with two supporting details.</td></tr>
+            <tr><td><strong>DOK 3</strong></td><td>Reason, plan, justify with evidence.</td><td>Explain how two pieces of evidence support different interpretations.</td></tr>
+            <tr><td><strong>DOK 4</strong></td><td>Extended thinking across sources and time.</td><td>Build an evidence-based argument from multiple texts and contexts.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>The same topic - transformed across levels</h3>
+    <div class="callout">
+        <strong>Topic: photosynthesis (Grade 7 science).</strong><br>
+        <strong>Bloom Remember:</strong> List the stages of photosynthesis.<br>
+        <strong>Bloom Understand:</strong> Explain how light energy becomes chemical energy in your own words.<br>
+        <strong>Bloom Apply:</strong> Predict what happens to plant growth if a key input is reduced.<br>
+        <strong>Bloom Analyze:</strong> Compare two plants in different conditions and account for the differences.<br>
+        <strong>Bloom Evaluate:</strong> Decide which model best explains a given observation.<br>
+        <strong>Bloom Create:</strong> Design an investigation that demonstrates one stage of the process.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 4</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 5 - MASTER PROMPT TEMPLATE
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 2.1 - Master prompt template</span>
+        <span class="page-eyebrow-tag">Methodologist prompt</span>
+    </div>
+
+    <h2>The methodologist's master prompt</h2>
+    <p>This template is the single prompt structure you can extend into every instructional design conversation with AI. It mirrors backward design, names cognitive demand, and forces explicit success criteria.</p>
+
+    <div class="prompt-block">
+<span class="label">Role:</span> You are an instructional design assistant supporting U.S. K-12 curriculum work. You serve a methodologist, not a teacher.
+<span class="label">Goal:</span> [Design / improve / audit] instructional materials for [unit / lesson / assessment].
+<span class="label">Learner profile:</span> Grade [N], subject [subject], readiness [brief], language needs [brief], accessibility needs [brief]. No student PII.
+<span class="label">Framework:</span> Use [Backward Design / Bloom / DOK / UDL / SOLO / competency]. Name the cognitive demand explicitly.
+<span class="label">Learning objective:</span> [single observable statement aligned to standard]
+<span class="label">Cognitive demand:</span> [Bloom level and DOK level]
+<span class="label">Evidence of learning:</span> [what students will produce that proves the objective is met]
+<span class="label">Assessment type:</span> [formative / summative / performance]
+<span class="label">Constraints:</span> [time, resources, materials, language level, accessibility]
+<span class="label">Output format:</span> [exact shape: sections, tables, rubric, length]
+<span class="label">Quality criteria:</span> Each output element must align to the objective. Include misconception checks. Use UDL multiple-means principles. Flag every claim that needs human verification.
+<span class="label">Ask before assuming:</span> List the assumptions you are making and ask up to 3 clarifying questions before producing the final output.
+    </div>
+
+    <h3>How to extend the master prompt</h3>
+    <ul>
+        <li><strong>For a unit plan:</strong> add "Sequence of 6 lessons with formative checkpoints."</li>
+        <li><strong>For a rubric:</strong> add "Generate a 4-level rubric with descriptors using SOLO complexity language."</li>
+        <li><strong>For PD design:</strong> add "Produce facilitator notes, time blocks, and an evaluation method."</li>
+        <li><strong>For an audit:</strong> add "Score this material against the audit rubric in Chapter 3."</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 5</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 6 - BACKWARD DESIGN PROMPT SYSTEM
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 2.2 - Backward design prompt system</span>
+        <span class="page-eyebrow-tag">UbD pipeline</span>
+    </div>
+
+    <h2>From desired results to learning plan</h2>
+    <p>Backward design has three stages: identify desired results, determine acceptable evidence, plan learning experiences. Use these three prompts in sequence. Do not let AI skip Stage 2.</p>
+
+    <h3>Stage 1 - Desired results</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are an instructional design assistant using Wiggins and McTighe's Understanding by Design.
+<span class="label">Task:</span> Draft the desired-results section for a Grade [N] [subject] unit on [topic].
+<span class="label">Output:</span> Enduring understanding (1 sentence), essential questions (3), knowledge students will acquire (5 items), skills students will develop (5 items), and the standard(s) this addresses.
+<span class="label">Quality check:</span> Each item must be defensible and assessable.
+    </div>
+
+    <h3>Stage 2 - Evidence of learning</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> Same as Stage 1.
+<span class="label">Task:</span> Define acceptable evidence for the desired results from Stage 1.
+<span class="label">Output:</span> One performance task using the GRASPS pattern (Goal, Role, Audience, Situation, Product, Standards), plus 3 supporting assessments and a rubric outline with criteria.
+<span class="label">Quality check:</span> Each piece of evidence must directly correspond to an item from Stage 1.
+    </div>
+
+    <h3>Stage 3 - Learning plan</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> Same as Stage 1.
+<span class="label">Task:</span> Build a learning plan using the WHERETO framework (Where headed, Hook, Equip, Rethink, Evaluate, Tailor, Organize).
+<span class="label">Output:</span> A sequence of [N] lessons mapped to each WHERETO element, with one formative checkpoint per lesson.
+<span class="label">Quality check:</span> Every lesson must move evidence forward.
+    </div>
+
+    <div class="callout callout-warn">
+        <strong>Anti-pattern.</strong>
+        Skipping Stage 2 is the most common UbD failure with or without AI. Lessons get built before evidence is defined and the result is engaging-but-misaligned material. Stop and run Stage 2 explicitly.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 6</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 7 - UDL PROMPT SYSTEM
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 2.3 - UDL prompt system</span>
+        <span class="page-eyebrow-tag">Access-first design</span>
+    </div>
+
+    <h2>Universal Design for Learning - by design, not by accommodation</h2>
+    <p>UDL has three principles: multiple means of engagement, representation, and action/expression. Use these three prompts when designing the lesson itself, not as bolt-ons.</p>
+
+    <h3>Engagement prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are a UDL design assistant.
+<span class="label">Task:</span> For a Grade [N] lesson on [topic], generate three engagement options that recruit interest, sustain effort, and support self-regulation.
+<span class="label">Output:</span> Three options labeled by purpose, each with a concrete classroom activity and a why-it-works note.
+<span class="label">Constraints:</span> Same learning objective across all three. No labels visible on student handouts.
+    </div>
+
+    <h3>Representation prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> Same as above.
+<span class="label">Task:</span> For the same lesson, generate three representations of the core content.
+<span class="label">Output:</span> A textual explanation, a visual or diagrammatic representation, and a real-world example. Add brief notes about vocabulary support.
+<span class="label">Constraints:</span> All three representations must teach the same concept at the same cognitive level.
+    </div>
+
+    <h3>Action and expression prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> Same as above.
+<span class="label">Task:</span> For the same lesson, design three ways students can demonstrate learning.
+<span class="label">Output:</span> A written option, a verbal or performance option, and a visual or modeled option. Provide aligned rubric criteria that work across all three.
+<span class="label">Constraints:</span> Same rubric, same objective, equivalent rigor across modes.
+    </div>
+
+    <div class="callout">
+        <strong>UDL audit tip.</strong>
+        If your lesson has only one engagement, one representation, and one expression option, you have a single-pathway lesson - not a UDL lesson. Use these three prompts to expand before printing materials.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 7</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 8 - DIFFERENTIATION TRANSFORMATION
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 2.4 - Differentiation transformations</span>
+        <span class="page-eyebrow-tag">Lift cognitive demand</span>
+    </div>
+
+    <h2>Transform low-level tasks into higher-order tasks</h2>
+    <p>Most existing materials sit at DOK 1-2. AI is highly effective at lifting tasks to DOK 3-4 - if you ask it explicitly. Use the transformation prompt below.</p>
+
+    <h3>The transformation prompt</h3>
+    <div class="prompt-block">
+<span class="label">Role:</span> You are an instructional design transformation assistant.
+<span class="label">Task:</span> Take the low-level task below and produce three transformations that raise cognitive demand without changing the topic.
+<span class="label">Output:</span> The original task, then DOK 2, DOK 3, and DOK 4 versions. For each, name the cognitive shift and the Bloom level. Include a one-line rubric criterion.
+<span class="label">Constraints:</span> Keep the topic and approximate time. Do not add new content; lift the thinking.
+<span class="label">Original task:</span> [paste current task]
+    </div>
+
+    <h3>Worked example - Grade 8 ELA</h3>
+    <table>
+        <thead><tr><th style="width:26mm;">Level</th><th style="width:55mm;">Cognitive shift</th><th>Task</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Original</strong></td><td>Recall</td><td>List three character traits of the protagonist.</td></tr>
+            <tr><td><strong>DOK 2</strong></td><td>Skill with conceptual understanding</td><td>Choose three traits and cite one piece of textual evidence for each.</td></tr>
+            <tr><td><strong>DOK 3</strong></td><td>Reasoning with evidence</td><td>Argue which trait most drives the character's central conflict, using two pieces of evidence.</td></tr>
+            <tr><td><strong>DOK 4</strong></td><td>Extended thinking across sources</td><td>Compare the protagonist to a real or historical figure. Build an evidence-based claim about how trait-driven conflict shapes outcomes in both lives.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout callout-warn">
+        <strong>Avoid verb-only "rigor."</strong>
+        Asking students to "analyze" a list does not produce DOK 3 thinking. The transformation must change the cognitive work, not just the verb.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 8</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 9 - CURRICULUM AUDIT CHECKLIST
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 3.1 - Curriculum audit framework</span>
+        <span class="page-eyebrow-tag">Scoring 1-4</span>
+    </div>
+
+    <h2>Curriculum and lesson audit</h2>
+    <p>Use this framework when reviewing AI-generated or teacher-created materials. Score each dimension from 1 to 4, then apply the improvement protocol.</p>
+
+    <table>
+        <thead>
+            <tr><th style="width:38mm;">Dimension</th><th>What to look for</th><th style="width:14mm;">Score</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Objective clarity</strong></td><td>One observable statement, aligned to a standard.</td><td>__</td></tr>
+            <tr><td><strong>Taxonomy alignment</strong></td><td>Bloom and DOK levels match the objective.</td><td>__</td></tr>
+            <tr><td><strong>Assessment alignment</strong></td><td>Every item measures the stated objective.</td><td>__</td></tr>
+            <tr><td><strong>Cognitive depth</strong></td><td>Tasks operate at the intended DOK level.</td><td>__</td></tr>
+            <tr><td><strong>Student engagement</strong></td><td>Multiple means of engagement present by design.</td><td>__</td></tr>
+            <tr><td><strong>Accessibility</strong></td><td>Reading level, formatting, and supports work for the intended learners.</td><td>__</td></tr>
+            <tr><td><strong>Differentiation</strong></td><td>Support, core, and stretch pathways with the same objective.</td><td>__</td></tr>
+            <tr><td><strong>Safety</strong></td><td>No student PII; AI claims are verified.</td><td>__</td></tr>
+            <tr><td><strong>Bias</strong></td><td>Examples and language avoid stereotype and exclusion.</td><td>__</td></tr>
+            <tr><td><strong>Teacher usability</strong></td><td>Materials are classroom-ready without major rewriting.</td><td>__</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Scoring guide</h3>
+    <div class="callout">
+        <strong>4 - Strong and ready</strong> for classroom use as is.<br>
+        <strong>3 - Usable with minor revision.</strong><br>
+        <strong>2 - Needs revision before classroom use.</strong><br>
+        <strong>1 - Not ready</strong>; redesign required.
+    </div>
+
+    <h3>Red flags - automatically score 1</h3>
+    <ul>
+        <li>No measurable objective stated.</li>
+        <li>Activity is fun but unrelated to the stated objective.</li>
+        <li>Assessment tests recall when the objective requires analysis or evaluation.</li>
+        <li>AI output includes facts, sources, or quotes that cannot be verified.</li>
+        <li>Student PII appears in any artifact.</li>
+        <li>Materials assume one learning pathway and call it universal.</li>
+        <li>Rubric criteria are vague or unconnected to the work.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 9</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 10 - LESSON REVIEW RUBRIC
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 3.2 - Lesson review rubric</span>
+        <span class="page-eyebrow-tag">Printable</span>
+    </div>
+
+    <h2>AI-supported lesson review rubric</h2>
+    <p>Use this one-page rubric to review any AI-supported lesson before classroom use. Print and use during planning blocks or PLC review.</p>
+
+    <table>
+        <thead>
+            <tr><th style="width:36mm;">Criterion</th><th>4 - Strong</th><th>3 - Proficient</th><th>2 - Developing</th><th>1 - Beginning</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Objective</strong></td><td>Observable, aligned, single focus.</td><td>Mostly observable.</td><td>Vague.</td><td>Missing.</td></tr>
+            <tr><td><strong>Alignment</strong></td><td>Tasks and assessment match objective.</td><td>Mostly aligned.</td><td>Partial alignment.</td><td>Misaligned.</td></tr>
+            <tr><td><strong>Cognitive demand</strong></td><td>Hits intended DOK and Bloom levels.</td><td>Close to intended levels.</td><td>Below intended levels.</td><td>Recall only.</td></tr>
+            <tr><td><strong>UDL</strong></td><td>Three options for engagement, representation, expression.</td><td>Two options each.</td><td>One option each.</td><td>Single pathway.</td></tr>
+            <tr><td><strong>Differentiation</strong></td><td>Support, core, stretch with same objective.</td><td>Two pathways.</td><td>Vague differentiation.</td><td>None.</td></tr>
+            <tr><td><strong>Assessment</strong></td><td>Formative checkpoint and aligned summative.</td><td>Formative or summative.</td><td>One item, weak alignment.</td><td>Missing.</td></tr>
+            <tr><td><strong>Verification</strong></td><td>All AI claims checked.</td><td>Most checked.</td><td>Spot checks only.</td><td>Not checked.</td></tr>
+            <tr><td><strong>Safety</strong></td><td>No PII, policy-compliant.</td><td>Mostly compliant.</td><td>Edge cases unclear.</td><td>Non-compliant.</td></tr>
+            <tr><td><strong>Usability</strong></td><td>Classroom-ready with minimal edit.</td><td>Light edit needed.</td><td>Moderate rewrite.</td><td>Heavy rewrite.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Improvement protocol</h3>
+    <ol>
+        <li>Identify the weakest dimension.</li>
+        <li>Rewrite objective or assessment first - everything else hangs on those.</li>
+        <li>Lift or lower cognitive demand intentionally to match the objective.</li>
+        <li>Add UDL options or differentiation pathways.</li>
+        <li>Add an explicit teacher verification step before classroom use.</li>
+        <li>Re-score before publishing or sharing.</li>
+    </ol>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 10</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 11 - PROMPT QUALITY RUBRIC
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 3.3 - Prompt quality rubric</span>
+        <span class="page-eyebrow-tag">Printable</span>
+    </div>
+
+    <h2>Prompt quality rubric</h2>
+    <p>Score the prompt itself, not only the output. A weak prompt cannot reliably produce strong instructional content even with a strong model.</p>
+
+    <table>
+        <thead>
+            <tr><th style="width:34mm;">Criterion</th><th>4 - Strong</th><th>3 - Proficient</th><th>2 - Developing</th><th>1 - Beginning</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Role clarity</strong></td><td>Role names a relevant expert with scope.</td><td>Role named.</td><td>Vague role.</td><td>No role.</td></tr>
+            <tr><td><strong>Task specificity</strong></td><td>Task is concrete, bounded, and educational.</td><td>Task is clear.</td><td>Task is broad.</td><td>Task is missing or vague.</td></tr>
+            <tr><td><strong>Learner profile</strong></td><td>Grade, readiness, language, accessibility.</td><td>Grade and one factor.</td><td>Grade only.</td><td>No profile.</td></tr>
+            <tr><td><strong>Framework</strong></td><td>Names Bloom, DOK, UDL, or SOLO with intent.</td><td>Names one framework.</td><td>Uses framework verbs only.</td><td>No framework.</td></tr>
+            <tr><td><strong>Objective</strong></td><td>Single observable statement.</td><td>Mostly observable.</td><td>Implied.</td><td>Missing.</td></tr>
+            <tr><td><strong>Output format</strong></td><td>Exact shape with length and parts.</td><td>Shape named.</td><td>Format unclear.</td><td>Missing.</td></tr>
+            <tr><td><strong>Constraints</strong></td><td>Time, materials, language, accessibility.</td><td>Two constraints.</td><td>One constraint.</td><td>None.</td></tr>
+            <tr><td><strong>Quality criteria</strong></td><td>Alignment, depth, verification, bias.</td><td>Two criteria.</td><td>One criterion.</td><td>None.</td></tr>
+            <tr><td><strong>Privacy</strong></td><td>No PII; explicit constraint.</td><td>No PII; implicit.</td><td>Edge cases unclear.</td><td>PII present or risked.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout callout-warn">
+        <strong>Use this rubric on AI-generated prompts too.</strong>
+        AI-suggested prompts often look polished but are missing learner profile, framework, and quality criteria. Score before adopting.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 11</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 12 - PD WORKSHOP 90-MINUTE
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 4.1 - PD model: 90-minute workshop</span>
+        <span class="page-eyebrow-tag">Pilot session</span>
+    </div>
+
+    <h2>90-minute workshop - "Your first safe prompt"</h2>
+    <dl class="kv">
+        <dt>Goal</dt><dd>Each teacher leaves with one classroom-ready prompt verified for safety and alignment.</dd>
+        <dt>Audience</dt><dd>Teachers new to AI. 8 to 24 participants.</dd>
+        <dt>Output</dt><dd>One prompt per teacher; one shared artifact bank.</dd>
+        <dt>Evaluation</dt><dd>Exit ticket plus artifact review against the prompt quality rubric.</dd>
+    </dl>
+
+    <h3>Agenda</h3>
+    <table>
+        <thead><tr><th style="width:18mm;">Time</th><th style="width:42mm;">Block</th><th>Activity</th></tr></thead>
+        <tbody>
+            <tr><td>0:00</td><td>Frame</td><td>Why pedagogy first. Teacher-in-the-loop principle. School policy reminder.</td></tr>
+            <tr><td>0:10</td><td>AI basics</td><td>What AI is, what it is not. Hallucination, bias, PII risks.</td></tr>
+            <tr><td>0:25</td><td>Prompt formula</td><td>Role, Task, Context, Output, Constraints, Quality check.</td></tr>
+            <tr><td>0:45</td><td>Build</td><td>Each teacher drafts one prompt aligned to a real upcoming lesson.</td></tr>
+            <tr><td>1:05</td><td>Peer review</td><td>Pairs use the prompt quality rubric and exchange feedback.</td></tr>
+            <tr><td>1:20</td><td>Verify</td><td>Run AI output; apply the 7-point verification checklist.</td></tr>
+            <tr><td>1:30</td><td>Close</td><td>Exit ticket: what will you use this week and what do you still need?</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Trainer notes</h3>
+    <ul>
+        <li>Pre-share district AI policy excerpts so the policy reminder takes 60 seconds.</li>
+        <li>Have at least one realistic "AI got it wrong" example ready - it builds healthy skepticism faster than lectures.</li>
+        <li>Collect prompts to seed a shared bank; this multiplies value beyond the session.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 12</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 13 - PD WORKSHOP HALF-DAY
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 4.2 - PD model: half-day workshop</span>
+        <span class="page-eyebrow-tag">Mini unit packet</span>
+    </div>
+
+    <h2>Half-day workshop - "Lesson, assessment, differentiation"</h2>
+    <dl class="kv">
+        <dt>Goal</dt><dd>Each teacher leaves with a mini unit packet: one lesson, one aligned assessment, and three differentiation pathways.</dd>
+        <dt>Audience</dt><dd>Teachers who completed the 90-minute workshop or have prior safe-use experience.</dd>
+        <dt>Output</dt><dd>Rubric-scored mini unit packet.</dd>
+        <dt>Evaluation</dt><dd>Lesson review rubric scoring on completed packets.</dd>
+    </dl>
+
+    <h3>Agenda</h3>
+    <table>
+        <thead><tr><th style="width:18mm;">Time</th><th style="width:42mm;">Block</th><th>Activity</th></tr></thead>
+        <tbody>
+            <tr><td>0:00</td><td>Frame</td><td>Backward design refresher. Why evidence before activities.</td></tr>
+            <tr><td>0:20</td><td>Objective lab</td><td>Each teacher writes one observable objective aligned to a standard.</td></tr>
+            <tr><td>0:45</td><td>Evidence lab</td><td>Define formative checkpoint and a summative assessment with a rubric outline.</td></tr>
+            <tr><td>1:25</td><td>Break</td><td>15-minute break.</td></tr>
+            <tr><td>1:40</td><td>Lesson lab</td><td>Use the lesson planning master prompt; generate, verify, edit.</td></tr>
+            <tr><td>2:30</td><td>Differentiation lab</td><td>Run the three-level transformation prompt; verify same objective across pathways.</td></tr>
+            <tr><td>3:10</td><td>Peer review</td><td>Score artifacts with the lesson review rubric.</td></tr>
+            <tr><td>3:45</td><td>Close</td><td>Commitments and exit ticket.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Pitfalls to anticipate</h3>
+    <ul>
+        <li>Teachers want to start from the lesson, not the objective. Hold the line.</li>
+        <li>"AI did it for me" - require teachers to articulate their changes during peer review.</li>
+        <li>One pathway gets called "the lesson" and the other two become afterthoughts. Insist on shared rubric and single objective.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 13</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 14 - PD WORKSHOP FULL-DAY
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 4.3 - PD model: full-day training</span>
+        <span class="page-eyebrow-tag">Department workflow</span>
+    </div>
+
+    <h2>Full-day training - "Department AI workflow"</h2>
+    <dl class="kv">
+        <dt>Goal</dt><dd>A department or grade-level team leaves with a shared, repeatable AI-assisted planning workflow and a shared prompt bank.</dd>
+        <dt>Audience</dt><dd>Whole department or grade team. 6 to 20 participants.</dd>
+        <dt>Output</dt><dd>Team workflow document, shared prompt bank, and audit-scored sample materials.</dd>
+        <dt>Evaluation</dt><dd>Pre/post confidence survey and artifact quality scores.</dd>
+    </dl>
+
+    <h3>Agenda</h3>
+    <table>
+        <thead><tr><th style="width:18mm;">Time</th><th style="width:42mm;">Block</th><th>Activity</th></tr></thead>
+        <tbody>
+            <tr><td>0:00</td><td>Open</td><td>Norms, policy alignment, team readiness survey.</td></tr>
+            <tr><td>0:30</td><td>Foundations</td><td>Backward design, Bloom, DOK, UDL review. Common misuses.</td></tr>
+            <tr><td>1:30</td><td>Master prompt</td><td>Walk through the methodologist master prompt. Teams adapt for their content.</td></tr>
+            <tr><td>2:15</td><td>Lunch</td><td>45 minutes.</td></tr>
+            <tr><td>3:00</td><td>Team design</td><td>Teams produce one unit packet (objective, evidence, learning plan, rubric).</td></tr>
+            <tr><td>4:30</td><td>Calibration</td><td>Score each other's packets using the audit framework. Discuss disagreements.</td></tr>
+            <tr><td>5:30</td><td>Workflow doc</td><td>Teams draft a shared workflow and prompt bank policy.</td></tr>
+            <tr><td>6:30</td><td>Close</td><td>Commitments, next-step coaching plan, exit survey.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Artifacts produced</h3>
+    <ul>
+        <li>Team workflow document - who prompts, who reviews, where prompts live.</li>
+        <li>Shared prompt bank - vetted prompts with version notes.</li>
+        <li>Audit scoring sheet - team-level baseline before classroom rollout.</li>
+        <li>Coaching calendar - one observation cycle per teacher in the next four weeks.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 14</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 15 - PD WORKSHOP 4-WEEK
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 4.4 - PD model: 4-week implementation</span>
+        <span class="page-eyebrow-tag">Adoption arc</span>
+    </div>
+
+    <h2>4-week implementation arc</h2>
+    <p>One-day PD does not change practice. This 4-week arc is the minimum durable adoption pattern we recommend. Pair each week with one coaching touchpoint per teacher.</p>
+
+    <table>
+        <thead><tr><th style="width:22mm;">Week</th><th style="width:46mm;">Focus</th><th>Teacher output</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Week 1</strong></td><td>Safe use and prompt basics.</td><td>One verified prompt and one verification log.</td></tr>
+            <tr><td><strong>Week 2</strong></td><td>Objectives and assessment alignment.</td><td>One aligned objective + formative checkpoint pair.</td></tr>
+            <tr><td><strong>Week 3</strong></td><td>Differentiation and UDL.</td><td>One lesson with three pathways and matching rubric.</td></tr>
+            <tr><td><strong>Week 4</strong></td><td>Peer review and evidence of impact.</td><td>Rubric-scored artifact and short reflection.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Coaching pattern (per teacher, per week)</h3>
+    <ol>
+        <li><strong>Plan together (15 min).</strong> Pick the lesson, decide the AI move.</li>
+        <li><strong>Build (asynchronous, 30 min).</strong> Teacher drafts with AI; coach is available.</li>
+        <li><strong>Review (15 min).</strong> Score with the lesson review rubric.</li>
+        <li><strong>Teach.</strong> Teacher delivers the lesson.</li>
+        <li><strong>Debrief (15 min).</strong> What worked, one shift for next time.</li>
+    </ol>
+
+    <h3>Trainer evaluation methods</h3>
+    <ul>
+        <li>Pre/post teacher confidence survey (5 Likert items).</li>
+        <li>Artifact quality - count of artifacts scoring 3 or 4 on the rubric.</li>
+        <li>Adoption depth - rolling count of teachers active in the prompt bank.</li>
+        <li>Safety - zero privacy incidents reported across the month.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 15</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 16 - COACHING + ADOPTION LADDER
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 4.5 - Coaching and adoption ladder</span>
+        <span class="page-eyebrow-tag">Sustained change</span>
+    </div>
+
+    <h2>Coaching model</h2>
+    <p>Coaching is the multiplier on top of every PD model. Without coaching, AI adoption peaks at the workshop and decays within weeks.</p>
+
+    <table>
+        <thead><tr><th style="width:32mm;">Coaching move</th><th>Trigger</th><th>Outcome</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Co-design</strong></td><td>Teacher is starting a new unit.</td><td>Aligned objective and prompt agreed up front.</td></tr>
+            <tr><td><strong>Review</strong></td><td>Teacher generated AI artifact.</td><td>Rubric-based feedback before classroom use.</td></tr>
+            <tr><td><strong>Observe</strong></td><td>Teacher delivered the lesson.</td><td>Notes on intended vs actual cognitive demand.</td></tr>
+            <tr><td><strong>Reflect</strong></td><td>After observation.</td><td>One change for the next iteration.</td></tr>
+            <tr><td><strong>Scale</strong></td><td>Pattern works across two units.</td><td>Shared with department; added to prompt bank.</td></tr>
+        </tbody>
+    </table>
+
+    <h2 class="gap-top">Adoption ladder</h2>
+    <p>Use the ladder to plan PD targets per teacher. Most teachers progress one rung per cycle, not three.</p>
+
+    <div class="workflow">
+        <div class="step"><div class="step-num">1</div><h4>Awareness</h4><div class="step-body">Knows what AI is and is not.</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="step"><div class="step-num">2</div><h4>Safe productivity</h4><div class="step-body">Uses AI personally with safety habits.</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="step"><div class="step-num">3</div><h4>Lesson drafting</h4><div class="step-body">Drafts and verifies lesson materials.</div></div>
+    </div>
+    <div class="workflow gap-top-sm">
+        <div class="step"><div class="step-num">4</div><h4>Assessment support</h4><div class="step-body">Aligned assessments and rubrics.</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="step"><div class="step-num">5</div><h4>Team workflow</h4><div class="step-body">Contributes to shared prompt bank and review.</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="step"><div class="step-num">6</div><h4>Curriculum-level</h4><div class="step-body">Designs units; mentors peers; informs policy.</div></div>
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 16</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 17 - SCHOOL ROLLOUT (6 PHASES)
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 5 - School rollout system</span>
+        <span class="page-eyebrow-tag">6 phases</span>
+    </div>
+
+    <h2>From discovery to evaluation</h2>
+    <p>Use this six-phase model when introducing AI into a school or department. Skipping phases reliably produces policy confusion and inconsistent use.</p>
+
+    <table>
+        <thead><tr><th style="width:28mm;">Phase</th><th>Activities</th><th style="width:32mm;">Artifacts</th><th style="width:24mm;">Owner</th></tr></thead>
+        <tbody>
+            <tr><td><strong>1. Discovery</strong></td><td>Teacher needs scan, current tool inventory, risk surface.</td><td>Needs report, risk list.</td><td>Instructional lead.</td></tr>
+            <tr><td><strong>2. Policy alignment</strong></td><td>Map district rules, FERPA expectations, vendor reviews, approved tools.</td><td>AI use guide, approved tools list.</td><td>Admin + IT.</td></tr>
+            <tr><td><strong>3. Pilot</strong></td><td>Small group of teachers; bounded use cases; rapid feedback.</td><td>Pilot scope, artifact samples.</td><td>Coach + pilot team.</td></tr>
+            <tr><td><strong>4. Teacher training</strong></td><td>90-min or half-day workshop; coaching plan.</td><td>PD materials, prompt bank.</td><td>Trainer + coach.</td></tr>
+            <tr><td><strong>5. Classroom implementation</strong></td><td>Teacher-reviewed use; weekly check-ins.</td><td>Lesson artifacts, observation notes.</td><td>Teachers + coach.</td></tr>
+            <tr><td><strong>6. Evaluation and iteration</strong></td><td>Evidence review; refine workflow; expand or stop.</td><td>Impact report; updated workflow.</td><td>Instructional lead.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Success metrics</h3>
+    <ul>
+        <li>Time saved per teacher per week on planning.</li>
+        <li>Artifact quality - share scoring 3 or 4 on the lesson review rubric.</li>
+        <li>Alignment scores trend up over the cycle.</li>
+        <li>Teacher confidence rises from pre to post.</li>
+        <li>Zero privacy incidents.</li>
+        <li>Coaching observations show intended cognitive demand actually delivered.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 17</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 18 - QA + GOVERNANCE
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 6.1 - QA and governance</span>
+        <span class="page-eyebrow-tag">Human in the loop</span>
+    </div>
+
+    <h2>Human validation workflow</h2>
+    <p>Every AI-supported artifact that reaches a student should pass through this workflow. Build it into your team norms, not into individual willpower.</p>
+
+    <div class="workflow">
+        <div class="step"><div class="step-num">1</div><h4>Generate</h4><div class="step-body">Use the master prompt with framework named.</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="step"><div class="step-num">2</div><h4>Fact check</h4><div class="step-body">Verify claims, math, citations, dates, quotes.</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="step"><div class="step-num">3</div><h4>Align</h4><div class="step-body">Confirm task-objective-assessment alignment.</div></div>
+    </div>
+    <div class="workflow gap-top-sm">
+        <div class="step"><div class="step-num">4</div><h4>Access</h4><div class="step-body">Apply UDL check and reading-level review.</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="step"><div class="step-num">5</div><h4>Privacy</h4><div class="step-body">Confirm no PII; check policy compliance.</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="step"><div class="step-num">6</div><h4>Approve</h4><div class="step-body">Teacher signature; log version in shared bank.</div></div>
+    </div>
+
+    <h3>Governance rules</h3>
+    <ul>
+        <li>No student PII in any public AI tool.</li>
+        <li>Teacher validates every output before classroom use.</li>
+        <li>AI is never the sole basis for grading, retention, discipline, special education determinations, or college recommendations.</li>
+        <li>District policy is checked before each new use case is launched.</li>
+        <li>Bias and hallucination checks are required for any student-facing content.</li>
+        <li>Versioned documentation is retained for shared curriculum assets.</li>
+    </ul>
+
+    <div class="callout callout-warn">
+        <strong>Governance is a system, not a slogan.</strong>
+        Make the workflow the path of least resistance. If verification takes longer than reuse, teachers will quietly drop it.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 18</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 19 - RISK REGISTER
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 6.2 - Risk register</span>
+        <span class="page-eyebrow-tag">Printable</span>
+    </div>
+
+    <h2>AI risk register template</h2>
+    <p>Use this register at the start of any rollout. Review quarterly. Owners must be named individuals, not roles.</p>
+
+    <table>
+        <thead>
+            <tr><th style="width:36mm;">Risk</th><th>Impact</th><th>Likelihood</th><th>Mitigation</th><th style="width:22mm;">Owner</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Student PII leak</strong></td><td>High - privacy and policy violation.</td><td>Medium without training.</td><td>No-PII rule; default to general context; periodic spot checks.</td><td>Privacy officer.</td></tr>
+            <tr><td><strong>Hallucinated facts</strong></td><td>High in classroom material.</td><td>Medium.</td><td>Verification checklist; teacher signature; flag-and-revise protocol.</td><td>Instructional lead.</td></tr>
+            <tr><td><strong>Bias in examples</strong></td><td>High - student harm and trust.</td><td>Medium.</td><td>Bias review in QA workflow; diverse examples baseline.</td><td>DEI lead.</td></tr>
+            <tr><td><strong>Academic integrity</strong></td><td>Medium-high.</td><td>High among students.</td><td>Clear AI use policy for students; classroom norms; assessment redesign.</td><td>Department head.</td></tr>
+            <tr><td><strong>Equity of access</strong></td><td>Medium-high.</td><td>Medium.</td><td>School-provided tools and supports; offline alternatives.</td><td>Tech director.</td></tr>
+            <tr><td><strong>Over-reliance</strong></td><td>Medium.</td><td>Medium.</td><td>Coaching emphasizes editing and judgment; rubrics score teacher revision quality.</td><td>Coach.</td></tr>
+            <tr><td><strong>Policy ambiguity</strong></td><td>Medium.</td><td>High in early rollout.</td><td>Single AI use guide; quick decision tree for edge cases.</td><td>Admin lead.</td></tr>
+            <tr><td><strong>Vendor changes</strong></td><td>Medium.</td><td>Medium.</td><td>Tool-agnostic prompts; quarterly review of approved tools list.</td><td>IT.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 19</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 20 - READINESS + OBSERVATION CHECKLISTS
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 6.3 - Readiness and observation</span>
+        <span class="page-eyebrow-tag">Printable</span>
+    </div>
+
+    <h2>Teacher readiness checklist</h2>
+    <p>Use before assigning AI-supported instructional tasks to a teacher. Score yes/no.</p>
+
+    <ul class="check-list">
+        <li>The teacher can write an observable learning objective without AI help.</li>
+        <li>The teacher can describe the difference between Bloom and DOK in their own words.</li>
+        <li>The teacher knows the district AI policy and what it allows.</li>
+        <li>The teacher follows the no-PII rule in practice.</li>
+        <li>The teacher runs the 7-point verification on AI output.</li>
+        <li>The teacher can edit AI output rather than copy and paste.</li>
+        <li>The teacher knows when to escalate a question to a coach or admin.</li>
+    </ul>
+
+    <h2 class="gap-top">Observation checklist</h2>
+    <p>Use during a coaching observation. Score each item Observed / Partial / Not Observed.</p>
+
+    <table>
+        <thead><tr><th style="width:62mm;">Look-for</th><th>Notes</th></tr></thead>
+        <tbody>
+            <tr><td>Objective is visible and used to anchor instruction.</td><td>__</td></tr>
+            <tr><td>Tasks operate at the intended Bloom / DOK level.</td><td>__</td></tr>
+            <tr><td>Multiple representations of the content appear.</td><td>__</td></tr>
+            <tr><td>Multiple ways to demonstrate learning are offered.</td><td>__</td></tr>
+            <tr><td>Formative checks reveal misconceptions in real time.</td><td>__</td></tr>
+            <tr><td>Teacher edits and personalizes AI-generated materials.</td><td>__</td></tr>
+            <tr><td>No student PII is referenced inside any AI tool.</td><td>__</td></tr>
+            <tr><td>Teacher closes the lesson with a reflection or exit ticket.</td><td>__</td></tr>
+        </tbody>
+    </table>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 20</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 21 - IMPLEMENTATION ROADMAP
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 6.4 - Implementation roadmap</span>
+        <span class="page-eyebrow-tag">Printable template</span>
+    </div>
+
+    <h2>90-day AI implementation roadmap</h2>
+    <p>A school-level template you can adapt and share. Three 30-day blocks. Each block has goals, artifacts, and success criteria.</p>
+
+    <table>
+        <thead><tr><th style="width:26mm;">Block</th><th>Goals</th><th style="width:50mm;">Artifacts</th><th style="width:30mm;">Success</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Days 1-30<br>Foundations</strong></td>
+                <td>Policy alignment, tool selection, coach identification, baseline survey.</td>
+                <td>AI use guide, approved tools list, baseline confidence survey, coach roster.</td>
+                <td>Policy published, baseline collected.</td>
+            </tr>
+            <tr>
+                <td><strong>Days 31-60<br>Pilot</strong></td>
+                <td>Train and coach 6-12 teachers. Begin shared prompt bank.</td>
+                <td>PD materials, prompt bank v1, pilot lesson artifacts, coaching logs.</td>
+                <td>Pilot teachers active; first artifacts score 3+ on lesson review rubric.</td>
+            </tr>
+            <tr>
+                <td><strong>Days 61-90<br>Expand</strong></td>
+                <td>Open to whole department or school. Continue coaching.</td>
+                <td>Post survey, impact report, revised workflow, governance update.</td>
+                <td>Adoption depth steady; zero privacy incidents; usable workflow document.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Decision gates between blocks</h3>
+    <ul>
+        <li><strong>Gate 1 - Foundations to Pilot:</strong> Policy and tools approved. Coaches identified. Baseline collected.</li>
+        <li><strong>Gate 2 - Pilot to Expand:</strong> Two-thirds of pilot artifacts score 3 or 4. Zero privacy incidents. Workflow draft exists.</li>
+        <li><strong>Gate 3 - Expand to Sustain:</strong> Adoption depth holds for three weeks. Governance update accepted.</li>
+    </ul>
+
+    <div class="callout">
+        <strong>Adapt, do not import.</strong>
+        Every school context is different. Use this roadmap as a scaffold. Replace any item that does not match your reality.
+    </div>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 21</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 22 - CASE STUDY 1 ELEMENTARY
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 7.1 - Case study: elementary adoption</span>
+        <span class="page-eyebrow-tag">Composite scenario</span>
+    </div>
+
+    <h2>Case study 1 - Grade 4 team adoption</h2>
+    <p class="muted">This is a composite scenario built from common adoption patterns. Use it as a conversation starter with stakeholders.</p>
+
+    <h3>Context</h3>
+    <p>A K-5 elementary school with a six-teacher Grade 4 team. Mixed comfort with technology. Limited prep time. District has just approved use of one general-purpose AI tool.</p>
+
+    <h3>Problem</h3>
+    <p>Teachers are creating exit tickets and vocabulary supports inconsistently. Some students get rich vocabulary pre-teaching; others get none. Planning time is the bottleneck.</p>
+
+    <h3>AI-supported solution</h3>
+    <ul>
+        <li>Adopt the methodologist master prompt for vocabulary pre-teach and exit tickets.</li>
+        <li>Run a 90-minute workshop followed by a 4-week implementation arc.</li>
+        <li>Coach observes one Grade 4 lesson per teacher in week 3.</li>
+        <li>All prompts pass through the prompt quality rubric before joining the team bank.</li>
+    </ul>
+
+    <h3>Risks anticipated</h3>
+    <ul>
+        <li>Over-reliance on AI vocabulary lists without teacher edits.</li>
+        <li>Uneven prompt quality across the team.</li>
+        <li>Privacy edge cases when describing student needs.</li>
+    </ul>
+
+    <h3>Outcome indicators</h3>
+    <ul>
+        <li>Faster planning - measured by self-report at week 2 and week 4.</li>
+        <li>Vocabulary pre-teach now present in every Grade 4 lesson packet.</li>
+        <li>Exit-ticket-based reteach decisions made by all six teachers.</li>
+        <li>Zero privacy incidents.</li>
+    </ul>
+
+    <h3>Artifacts created</h3>
+    <ul>
+        <li>Grade 4 prompt bank (vocabulary, exit tickets, scaffolds).</li>
+        <li>Lesson review rubric scoring log.</li>
+        <li>Coaching notes per teacher.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 22</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 23 - CASE STUDY 2 HIGH SCHOOL
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 7.2 - Case study: high school department</span>
+        <span class="page-eyebrow-tag">Composite scenario</span>
+    </div>
+
+    <h2>Case study 2 - High school biology department</h2>
+    <p class="muted">Composite scenario. Adapt to your context.</p>
+
+    <h3>Context</h3>
+    <p>An eight-teacher biology department serving grades 9-12. The team has noticed that unit assessments lean heavily on recall. They want to lift cognitive demand without rewriting everything from scratch.</p>
+
+    <h3>Problem</h3>
+    <p>Assessments and tasks largely sit at DOK 1-2. Students do well on recall but struggle on inference, explanation, and evidence-based argument. Time to redesign is scarce.</p>
+
+    <h3>AI-supported solution</h3>
+    <ul>
+        <li>Use the differentiation transformation prompt to lift existing tasks to DOK 3 and DOK 4.</li>
+        <li>Build a shared misconception checklist for the unit.</li>
+        <li>Calibrate scoring with the lesson review rubric during a half-day PD.</li>
+        <li>Pair each teacher with a peer reviewer for the first three weeks.</li>
+    </ul>
+
+    <h3>Risks anticipated</h3>
+    <ul>
+        <li>AI-generated science explanations that sound correct but are inaccurate.</li>
+        <li>Misconception lists that miss known student errors specific to local context.</li>
+        <li>Rigor inflation - tasks that look harder without actually testing deeper thinking.</li>
+    </ul>
+
+    <h3>Outcome indicators</h3>
+    <ul>
+        <li>Share of unit assessment items at DOK 3+ rises from baseline.</li>
+        <li>Peer review identifies and fixes a number of misalignment issues per teacher.</li>
+        <li>Teachers report higher-quality student discussion in observations.</li>
+        <li>Department leader sees fewer last-minute material changes mid-unit.</li>
+    </ul>
+
+    <h3>Artifacts created</h3>
+    <ul>
+        <li>Transformed task bank by unit.</li>
+        <li>Shared misconception checklist.</li>
+        <li>Peer review log.</li>
+        <li>Updated unit pacing guide with DOK targets per assessment.</li>
+    </ul>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 23</span>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE 24 - CASE STUDY 3 DISTRICT + APPENDIX
+     ============================================================ -->
+<section class="page">
+    <div class="page-eyebrow">
+        <span>Chapter 7.3 + Appendix</span>
+        <span class="page-eyebrow-tag">District + sources</span>
+    </div>
+
+    <h2>Case study 3 - District PD rollout</h2>
+    <p class="muted">Composite scenario. Adapt to your district context.</p>
+
+    <h3>Context</h3>
+    <p>A small district training 20 teachers across three schools as a first cohort, with the intent to scale district-wide the following semester.</p>
+
+    <h3>Solution outline</h3>
+    <ul>
+        <li>Train instructional coaches first using the full-day model.</li>
+        <li>Run 90-minute workshops at each school, followed by 4-week implementation.</li>
+        <li>Publish a single AI use guide aligned to district policy and FERPA expectations.</li>
+        <li>Set up a shared prompt bank with version control and rubric-scored entries.</li>
+    </ul>
+
+    <h3>Risks and mitigations</h3>
+    <ul>
+        <li>Policy confusion - mitigate with a one-page decision tree and a single source of truth.</li>
+        <li>Inconsistent quality - mitigate with rubric calibration sessions monthly.</li>
+        <li>Tool churn - mitigate with tool-agnostic prompts.</li>
+    </ul>
+
+    <h3>Artifacts</h3>
+    <ul>
+        <li>District AI use guide.</li>
+        <li>PD slide deck and facilitator notes.</li>
+        <li>Lesson review rubric and prompt quality rubric.</li>
+        <li>Support calendar - office hours, coaching cycles, calibration meetings.</li>
+    </ul>
+
+    <h2 class="gap-top">Appendix - sources and license notes</h2>
+    <table>
+        <thead><tr><th style="width:60mm;">Source</th><th>License</th><th>Use</th></tr></thead>
+        <tbody>
+            <tr><td>Microsoft - Prompts for Education</td><td>MIT</td><td>Role-based prompt patterns and responsible AI principles.</td></tr>
+            <tr><td>Microsoft - Generative AI for Beginners</td><td>MIT</td><td>Lesson sequencing structure.</td></tr>
+            <tr><td>ENCCS Instructor Training</td><td>CC BY 4.0</td><td>Backward design, formative assessment, misconception design.</td></tr>
+            <tr><td>CAST UDL Framework</td><td>CAST terms</td><td>UDL principles - engagement, representation, action.</td></tr>
+            <tr><td>Wiggins and McTighe, Understanding by Design</td><td>Publisher terms</td><td>Backward design pipeline and GRASPS pattern.</td></tr>
+        </tbody>
+    </table>
+
+    <p class="tiny">This guide synthesizes and adapts publicly available concepts. It is not a substitute for legal, district policy, or compliance advice. Verify any specific claim against the original source before implementation. (c) 2026 Prompt Anatomy. Educational use. All rights reserved.</p>
+
+    <p><strong>Build prompts in your browser at <a href="https://promptanatomy.online">promptanatomy.online</a> - by Prompt Anatomy.</strong></p>
+
+    <div class="brand-footer">
+        <span class="brand-footer-left">Prompt Anatomy - Advanced Edition</span>
+        <span><a class="brand-footer-url" href="https://www.promptanatomy.app">www.promptanatomy.app</a></span>
+        <span class="brand-footer-right">Page 24</span>
+    </div>
+</section>
+
+</body>
+</html>

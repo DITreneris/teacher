@@ -16,6 +16,9 @@ const STYLE_PATH = path.join(__dirname, '..', 'style.css');
 const SOT_PATH = path.join(__dirname, '..', 'config', 'sot.json');
 const GENERATOR_PATH = path.join(__dirname, '..', 'generator.js');
 const COPY_PATH = path.join(__dirname, '..', 'copy.js');
+const WEBHOOK_PATH = path.join(__dirname, '..', 'api', 'stripe-webhook.js');
+const DOWNLOAD_PATH = path.join(__dirname, '..', 'api', 'download.js');
+const FULFILLMENT_PATH = path.join(__dirname, '..', 'api', '_lib', 'fulfillment.js');
 
 function readFile(filePath) {
   try {
@@ -100,6 +103,16 @@ function run() {
   if (assert(html.includes('id="libraryGrid"'), 'Library grid exists')) passed++;
   else failed++;
 
+  // --- Paid PDF guides ---
+  if (assert(html.includes('id="pdf-guides"'), 'Paid PDF guides section exists')) passed++;
+  else failed++;
+  if (assert(html.includes('Beginners &mdash; Prompt Anatomy') && html.includes('$4.99') && html.includes('was $9.99'), 'Beginners - Prompt Anatomy card and pricing exist')) passed++;
+  else failed++;
+  if (assert(html.includes('Advanced &mdash; Prompt Anatomy') && html.includes('$9.99') && html.includes('was $19.99'), 'Advanced - Prompt Anatomy card and pricing exist')) passed++;
+  else failed++;
+  if (assert(html.includes('data-product="beginners-pdf"') && html.includes('data-product="advanced-pdf"'), 'PDF Stripe CTA product markers exist')) passed++;
+  else failed++;
+
   // --- Rules ---
   if (assert(html.includes('id="rules"'), 'Rules section exists')) passed++;
   else failed++;
@@ -156,6 +169,8 @@ function run() {
   if (assert(html.includes('"WebSite"'), 'JSON-LD WebSite entity')) passed++;
   else failed++;
   if (assert(html.includes('"priceCurrency": "USD"'), 'JSON-LD offer in USD')) passed++;
+  else failed++;
+  if (assert(html.includes('Optional downloadable PDF guides are sold separately.'), 'FAQ clarifies optional paid PDFs')) passed++;
   else failed++;
 
   // --- Subresource Integrity ---
@@ -245,6 +260,10 @@ function run() {
   else failed++;
   if (assert(termsHtml && termsHtml.includes('"BreadcrumbList"'), 'terms.html has BreadcrumbList JSON-LD')) passed++;
   else failed++;
+  if (assert(privacyHtml && privacyHtml.includes('Stripe') && privacyHtml.includes('Resend'), 'privacy.html discloses purchase providers')) passed++;
+  else failed++;
+  if (assert(termsHtml && termsHtml.includes('Paid PDF guides') && termsHtml.includes('secure, time-limited download link'), 'terms.html covers paid PDF delivery')) passed++;
+  else failed++;
 
   // --- ARIA ---
   if (assert(html.includes('role="tablist"'), 'Mode tabs have role="tablist"')) passed++;
@@ -278,6 +297,15 @@ function run() {
   else failed++;
   const copyFile = readFile(COPY_PATH);
   if (assert(copyFile !== null && copyFile.length > 0, 'copy.js file exists')) passed++;
+  else failed++;
+  const webhookFile = readFile(WEBHOOK_PATH);
+  if (assert(webhookFile && webhookFile.includes('constructEvent'), 'Stripe webhook verifies signatures')) passed++;
+  else failed++;
+  const downloadFile = readFile(DOWNLOAD_PATH);
+  if (assert(downloadFile && downloadFile.includes('resolveDownload'), 'Download route validates tokens')) passed++;
+  else failed++;
+  const fulfillmentFile = readFile(FULFILLMENT_PATH);
+  if (assert(fulfillmentFile && fulfillmentFile.includes('DOWNLOAD_TOKEN_SECRET') && fulfillmentFile.includes('timingSafeEqual'), 'Fulfillment helper signs download tokens')) passed++;
   else failed++;
 
   // --- Legal pages exist ---

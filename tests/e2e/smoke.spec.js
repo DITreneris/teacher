@@ -15,6 +15,9 @@ for (const viewport of viewports) {
 
       await expect(page.locator('#operationsCenter')).toBeVisible();
       await expect(page.locator('#opsOutput')).toBeVisible();
+      await expect(page.locator('#pdf-guides')).toBeVisible();
+      await expect(page.locator('[data-product="beginners-pdf"]')).toHaveAttribute('href', /buy\.stripe\.com/);
+      await expect(page.locator('[data-product="advanced-pdf"]')).toHaveAttribute('href', /buy\.stripe\.com/);
 
       await page.click('[data-mode="ASSESSMENT"]');
       await expect(page.locator('[data-mode="ASSESSMENT"]')).toHaveClass(/is-active/);

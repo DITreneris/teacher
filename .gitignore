@@ -51,6 +51,14 @@ playwright-report/
 .env.*.local
 *.pem
 
+# ─── Paid PDF binaries ───
+api/_private/pdfs/*.pdf
+
+# ─── PDF authoring debug artifacts ───
+# scripts/verify-pdf-cover.js and scripts/preview-cover.js write PNG previews
+# to scripts/ for local visual checks. Keep them out of the repo.
+scripts/*.png
+
 # ─── Vercel ───
 .vercel/
 

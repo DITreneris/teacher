@@ -46,7 +46,7 @@
     },
     "TASKS": {
       "label": "TASKS",
-      "desc": "Class and homework",
+      "desc": "Classwork and homework",
       "formId": "form-tasks",
       "fields": ["topic", "task_type", "constraints", "question"]
     },
@@ -58,7 +58,7 @@
     },
     "STRATEGY": {
       "label": "STRATEGY",
-      "desc": "Method and priorities",
+      "desc": "Teaching methods and priorities",
       "formId": "form-strategy",
       "fields": ["topic", "goal", "challenges", "question"]
     }
@@ -125,7 +125,7 @@
       "title": "Teaching strategy",
       "desc": "Method and weekly focus",
       "icon": "brain",
-      "prompt": "Role: You are a teaching-strategy assistant. Use the goal and challenges from the form.\nOUTPUT:\n- 3 priority methodological moves.\n- A short weekly activity sequence.\n- Risks and preventive actions.\n- 2-3 progress indicators."
+      "prompt": "Role: You are a teaching-strategy assistant. Use the goal and challenges from the form.\nOUTPUT:\n- 3 priority instructional moves.\n- A short weekly activity sequence.\n- Risks and prevention steps.\n- 2-3 progress indicators."
     },
     {
       "id": "lesson_reflection",
@@ -138,7 +138,7 @@
   "rules": [
     { "text": "Every prompt should lead to a clear, classroom-ready outcome.", "icon": "check-circle" },
     { "text": "Clarity beats complexity: one mode, one goal.", "icon": "check-circle" },
-    { "text": "Every activity must be doable in your classroom.", "icon": "check-circle" },
+    { "text": "Activities should be doable in your classroom.", "icon": "check-circle" },
     { "text": "Define assessment criteria up front.", "icon": "check-circle" },
     { "text": "Presentation mode returns a text outline \u2014 bring it into your slides tool.", "icon": "check-circle" }
   ]

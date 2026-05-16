@@ -1366,6 +1366,168 @@ body.legal {
 }
 
 /* ===== LIBRARY ===== */
+.pdf-guides {
+    margin-bottom: var(--space-24);
+    padding: var(--space-32);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(245, 197, 24, 0.18), transparent 36%),
+        var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-medium);
+}
+
+.pdf-guides-header {
+    max-width: 680px;
+    margin-bottom: var(--space-24);
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: var(--space-8);
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--accent-gold-light);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.pdf-guides h2 {
+    margin-bottom: var(--space-12);
+    color: var(--text);
+    font-size: 28px;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+}
+
+.pdf-guides-header p,
+.pdf-guide-desc,
+.pdf-guide-note {
+    color: var(--text-muted);
+}
+
+.pdf-guides-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-20);
+}
+
+.pdf-guide-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    padding: var(--space-24);
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+}
+
+.pdf-guide-card--featured {
+    border-color: rgba(245, 197, 24, 0.55);
+    box-shadow: 0 14px 32px rgba(15, 42, 68, 0.08);
+}
+
+.pdf-guide-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-12);
+}
+
+.pdf-guide-card-top .icon {
+    color: var(--primary);
+}
+
+.pdf-guide-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 6px 10px;
+    border-radius: var(--r-badge);
+    background: var(--primary-50);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.pdf-guide-card h3 {
+    color: var(--text);
+    font-size: 22px;
+    line-height: var(--leading-tight);
+}
+
+.pdf-guide-desc {
+    font-size: 15px;
+    line-height: var(--leading-relaxed);
+}
+
+.pdf-guide-price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+}
+
+.pdf-guide-price-now {
+    color: var(--primary);
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.pdf-guide-price-was {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: line-through;
+}
+
+.pdf-guide-points {
+    display: grid;
+    gap: var(--space-8);
+    margin-left: var(--space-20);
+    color: var(--text);
+    font-size: 14px;
+}
+
+.pdf-guide-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    min-height: 48px;
+    padding: 14px 20px;
+    border-radius: var(--r-btn);
+    background: var(--cta-bg);
+    color: var(--cta-text);
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: var(--shadow-card);
+    transition: background var(--duration-normal) var(--ease-out), transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.pdf-guide-cta:hover {
+    background: var(--cta-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.pdf-guide-cta:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.pdf-guide-note {
+    font-size: 12px;
+    line-height: 1.45;
+}
+
 .library-section {
     margin-bottom: var(--space-24);
 }
@@ -1914,6 +2076,31 @@ body.legal {
     border-color: var(--border-subtle);
 }
 
+[data-theme="dark"] .pdf-guides,
+[data-theme="dark"] .pdf-guide-card {
+    background: var(--surface-1);
+    border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .pdf-guide-card--featured {
+    border-color: rgba(245, 197, 24, 0.45);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
+}
+
+[data-theme="dark"] .eyebrow {
+    background: rgba(245, 197, 24, 0.14);
+    color: var(--accent-gold);
+}
+
+[data-theme="dark"] .pdf-guide-badge {
+    background: var(--surface-2);
+    color: var(--primary-200);
+}
+
+[data-theme="dark"] .pdf-guide-price-now {
+    color: var(--accent-gold);
+}
+
 [data-theme="dark"] .community-cta-primary {
     background: var(--green);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
@@ -2207,6 +2394,9 @@ body.legal {
     .ops-output-copy { margin-left: auto; }
     .ops-sessions-actions { width: 100%; justify-content: flex-start; }
     .library-grid { grid-template-columns: 1fr; }
+    .pdf-guides { padding: var(--space-24); }
+    .pdf-guides h2 { font-size: 24px; }
+    .pdf-guides-grid { grid-template-columns: 1fr; }
     .ops-center { padding: var(--space-20); }
     .session-item-load { opacity: 0.82; }
     .toast { left: calc(16px + var(--safe-left)); right: calc(16px + var(--safe-right)); bottom: calc(16px + var(--safe-bottom)); }
@@ -2258,6 +2448,10 @@ body.legal {
     .collapsible-value { word-break: break-word; overflow-wrap: break-word; min-width: 0; }
     .ops-output-footer p { font-size: 13px; }
     .session-btn { width: 100%; justify-content: center; }
+    .pdf-guides { padding: var(--space-20) var(--space-16); }
+    .pdf-guide-card { padding: var(--space-20); }
+    .pdf-guide-price-now { font-size: 28px; }
+    .pdf-guide-cta { width: 100%; }
     .community { padding: 24px 16px; }
     .community h2 { font-size: 20px; }
     .toast { font-size: 14px; padding: 14px 18px; left: calc(12px + var(--safe-left)); right: calc(12px + var(--safe-right)); bottom: calc(12px + var(--safe-bottom)); }

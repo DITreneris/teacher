@@ -21,12 +21,22 @@ The single documentation navigation hub after `README.md`.
 - [privacy.html](../privacy.html) - US Privacy Policy.
 - [terms.html](../terms.html) - Terms of Use + Responsible AI disclaimer.
 
+## Active PDF authoring source
+
+- [pdf-source/](pdf-source/) - HTML and CSS source for the paid PDF guides; export via browser Save-as-PDF per [pdf-source/README.md](pdf-source/README.md).
+- [pdf-source/beginners-prompt-anatomy.html](pdf-source/beginners-prompt-anatomy.html) - 12-page Beginner guide source.
+- [pdf-source/advanced-prompt-anatomy.html](pdf-source/advanced-prompt-anatomy.html) - 24-page Advanced guide source.
+- [pdf-source/pdf-print.css](pdf-source/pdf-print.css) - shared print stylesheet for both guides.
+
 ## Code navigation
 
 - [index.html](../index.html)
 - [404.html](../404.html)
 - [generator.js](../generator.js)
 - [copy.js](../copy.js)
+- [api/stripe-webhook.js](../api/stripe-webhook.js)
+- [api/download.js](../api/download.js)
+- [api/_lib/fulfillment.js](../api/_lib/fulfillment.js)
 - [style.css](../style.css)
 - [config/sot.json](../config/sot.json)
 - [vercel.json](../vercel.json)
