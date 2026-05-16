@@ -7,6 +7,7 @@ const { Redis } = require('@upstash/redis');
 const { Resend } = require('resend');
 
 const DOWNLOAD_TOKEN_TTL_SECONDS = Number(process.env.DOWNLOAD_TOKEN_TTL_SECONDS || 60 * 60 * 24 * 7);
+const IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS = Number(process.env.IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS || 60 * 15);
 const REDIS_STATE_TTL_SECONDS = Number(process.env.FULFILLMENT_STATE_TTL_SECONDS || 60 * 60 * 24 * 90);
 
 const PRODUCTS = {
@@ -110,13 +111,14 @@ function signEncodedPayload(encodedPayload) {
   return crypto.createHmac('sha256', secret).update(encodedPayload).digest('base64url');
 }
 
-function createDownloadToken(sessionId, productId) {
+function createDownloadToken(sessionId, productId, ttlSeconds) {
+  const ttl = Number.isFinite(ttlSeconds) && ttlSeconds > 0 ? ttlSeconds : DOWNLOAD_TOKEN_TTL_SECONDS;
   const payload = {
     v: 1,
     sid: sessionId,
     product: productId,
     jti: crypto.randomBytes(18).toString('base64url'),
-    exp: Math.floor(Date.now() / 1000) + DOWNLOAD_TOKEN_TTL_SECONDS
+    exp: Math.floor(Date.now() / 1000) + ttl
   };
 
   const encodedPayload = base64url(JSON.stringify(payload));
@@ -124,6 +126,16 @@ function createDownloadToken(sessionId, productId) {
     token: `${encodedPayload}.${signEncodedPayload(encodedPayload)}`,
     payload
   };
+}
+
+function maskEmail(email) {
+  if (!email || typeof email !== 'string') return '';
+  const atIndex = email.indexOf('@');
+  if (atIndex <= 0 || atIndex === email.length - 1) return email;
+  const local = email.slice(0, atIndex);
+  const domain = email.slice(atIndex + 1);
+  if (local.length === 1) return `${local[0]}***@${domain}`;
+  return `${local[0]}***${local[local.length - 1]}@${domain}`;
 }
 
 function verifyDownloadToken(token) {
@@ -245,7 +257,13 @@ function buildEmailText(product, downloadUrl) {
     `Download link: ${downloadUrl}`,
     '',
     `This secure link expires in ${Math.round(DOWNLOAD_TOKEN_TTL_SECONDS / 86400)} days.`,
-    'If you need help, reply to this email or contact info@promptanatomy.app.',
+    'You also received a Stripe receipt under separate cover.',
+    '',
+    'Classroom license: use in your own classroom and share within your immediate teaching team.',
+    'Do not redistribute as-is. Full license: https://promptanatomy.online/terms.html#paid-pdf-license',
+    '',
+    '14-day no-questions refund: just reply to this email or to your Stripe receipt.',
+    'If you need help, contact info@promptanatomy.app.',
     '',
     'Prompt Anatomy'
   ].join('\n');
@@ -255,11 +273,14 @@ function buildEmailHtml(product, downloadUrl) {
   return [
     '<div style="font-family:Inter,Arial,sans-serif;line-height:1.6;color:#1C2B3A">',
     `<h1 style="font-size:22px">Your ${product.name}</h1>`,
-    `<p>Thank you for your purchase. Use the button below to download your PDF.</p>`,
+    '<p>Thank you for your purchase. Use the button below to download your PDF.</p>',
     `<p><a href="${downloadUrl}" style="display:inline-block;background:#F5C518;color:#0F2A44;padding:12px 18px;border-radius:10px;font-weight:700;text-decoration:none">Download PDF</a></p>`,
-    `<p>This secure link expires in ${Math.round(DOWNLOAD_TOKEN_TTL_SECONDS / 86400)} days.</p>`,
-    '<p>If you need help, reply to this email or contact <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a>.</p>',
-    '<p>Prompt Anatomy</p>',
+    `<p style="color:#5A6B7B;font-size:14px">This secure link expires in ${Math.round(DOWNLOAD_TOKEN_TTL_SECONDS / 86400)} days. You also received a Stripe receipt under separate cover.</p>`,
+    '<hr style="border:none;border-top:1px solid #E1E8EF;margin:24px 0">',
+    '<p style="font-size:14px"><strong>Classroom license.</strong> Use in your own classroom and share within your immediate teaching team. Do not redistribute as-is. <a href="https://promptanatomy.online/terms.html#paid-pdf-license" style="color:#0F2A44">Full license</a>.</p>',
+    '<p style="font-size:14px"><strong>14-day no-questions refund.</strong> Just reply to this email or to your Stripe receipt. We approve the refund and revoke this link.</p>',
+    '<p style="font-size:14px">Need help? Contact <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a>.</p>',
+    '<p style="margin-top:24px">Prompt Anatomy</p>',
     '</div>'
   ].join('');
 }
@@ -305,7 +326,7 @@ async function fulfillCheckoutSession(stripe, sessionId, origin) {
     const product = getProductFromSession(session);
     await assertProductAssetAvailable(product);
     const email = getCustomerEmail(session);
-    const token = createDownloadToken(session.id, product.id);
+    const token = createDownloadToken(session.id, product.id, DOWNLOAD_TOKEN_TTL_SECONDS);
     const downloadUrl = buildDownloadUrl(token.token, origin);
     const now = new Date().toISOString();
 
@@ -361,9 +382,59 @@ async function resolveDownload(token) {
   return { product, fulfillment };
 }
 
+/**
+ * Re-mint a short-lived (15-minute) download token for an already-fulfilled
+ * Stripe Checkout Session. Used by the in-page success flow so the buyer can
+ * click "Download" right after redirect, without waiting for the email.
+ *
+ * Returns one of:
+ *   { status: 'ready', downloadUrl, expiresAt, maskedEmail, productId }
+ *   { status: 'processing' } - webhook has not yet completed
+ *   throws Error - session id is unknown / fulfillment record missing
+ */
+async function getDownloadUrlBySessionId(sessionId, origin) {
+  if (!sessionId || typeof sessionId !== 'string') {
+    throw new Error('Missing session id.');
+  }
+
+  const fulfillment = await redisGetJson(`fulfillment:${sessionId}`);
+  if (!fulfillment) {
+    throw new Error('Unknown checkout session.');
+  }
+  if (fulfillment.status !== 'fulfilled') {
+    return { status: 'processing' };
+  }
+
+  const product = getProductById(fulfillment.productId);
+  if (!product) {
+    throw new Error('Unknown PDF product on fulfillment record.');
+  }
+
+  const token = createDownloadToken(sessionId, product.id, IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS);
+  await redisSetJson(`download-token:${token.payload.jti}`, {
+    sessionId,
+    productId: product.id,
+    email: fulfillment.email,
+    createdAt: new Date().toISOString(),
+    expiresAt: new Date(token.payload.exp * 1000).toISOString(),
+    inPage: true
+  }, IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS);
+
+  return {
+    status: 'ready',
+    downloadUrl: buildDownloadUrl(token.token, origin),
+    expiresAt: new Date(token.payload.exp * 1000).toISOString(),
+    maskedEmail: maskEmail(fulfillment.email),
+    productId: product.id,
+    productName: product.name
+  };
+}
+
 module.exports = {
   PRODUCTS,
   fulfillCheckoutSession,
   loadProductPdf,
-  resolveDownload
+  resolveDownload,
+  getDownloadUrlBySessionId,
+  maskEmail
 };

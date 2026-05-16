@@ -54,7 +54,9 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 - [ ] Copy prompt → toast “Prompt copied.”
 - [ ] PDF guide buttons open the correct Stripe Payment Links
 - [ ] Stripe webhook endpoint is configured: `https://promptanatomy.online/api/stripe-webhook`
-- [ ] Test purchase sends an email with a signed `/api/download?t=...` link
+- [ ] Stripe Payment Links redirect to `https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}`
+- [ ] Stripe customer email receipts are enabled
+- [ ] Test purchase opens `success.html`, shows a one-click Download button within ~5 seconds, and sends a separate Resend email with a signed `/api/download?t=...` link
 - [ ] Submit sitemap in [Google Search Console](https://search.google.com/search-console)
 
 ---
@@ -89,7 +91,9 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 |------|------|
 | [`vercel.json`](vercel.json) | Security headers, cache rules |
 | [`api/stripe-webhook.js`](api/stripe-webhook.js) | Stripe webhook fulfillment endpoint |
-| [`api/download.js`](api/download.js) | Token-validated PDF download endpoint |
+| [`api/download.js`](api/download.js) | Token-validated PDF download endpoint (long-lived email link) |
+| [`api/download-link.js`](api/download-link.js) | Returns a short-lived (15 min) in-page download URL by Stripe Checkout Session ID; powers `success.html` |
+| [`success.html`](success.html) | Post-purchase success page; polls `/api/download-link` until the webhook has finished, then shows a one-click download |
 | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Runs `npm run test:mixed` on push/PR |
 
 ## Environment variables
@@ -112,16 +116,23 @@ Set these in Vercel Project Settings → Environment Variables. Do not commit se
 | `PDF_ADVANCED_SOURCE_URL` | Production | Private storage URL for the Advanced Educators PDF. |
 | `PDF_SOURCE_AUTH_TOKEN` | If needed | Bearer token for private PDF source fetches. |
 | `PDF_SOURCE_AUTH_HEADER` | If needed | Custom private-source auth header in `Header-Name: value` format. |
-| `DOWNLOAD_TOKEN_TTL_SECONDS` | Optional | Defaults to 7 days. |
+| `DOWNLOAD_TOKEN_TTL_SECONDS` | Optional | Defaults to 7 days (long-lived email download link). |
+| `IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS` | Optional | Defaults to 15 minutes (short-lived in-page download link surfaced on `success.html`). |
 | `FULFILLMENT_STATE_TTL_SECONDS` | Optional | Defaults to 90 days. |
 
 ### Stripe setup
 
 1. Create two Stripe Products / Prices: Beginners PDF Guide (`$4.99`) and Advanced Educators PDF Guide (`$9.99`).
 2. Create one Payment Link per product and paste those URLs into the PDF buttons in `index.html`.
-3. Add a live webhook endpoint for `https://promptanatomy.online/api/stripe-webhook`.
-4. Subscribe to `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
-5. Use Stripe CLI locally to forward events when testing webhook changes.
+3. **Set the success URL** on each Payment Link (Stripe Dashboard → Payment Link → After payment → "Don't show confirmation page → Redirect customers to your website") to:
+   ```
+   https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}
+   ```
+   The `{CHECKOUT_SESSION_ID}` literal is replaced by Stripe with the real session id and consumed by `success.html`.
+4. **Enable Stripe receipts** for both products (Stripe Dashboard → Settings → Customer emails → Successful payments → ON). Optionally enable invoice creation on the Payment Link if you want a paid invoice PDF in addition to the receipt.
+5. Add a live webhook endpoint for `https://promptanatomy.online/api/stripe-webhook`.
+6. Subscribe to `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+7. Use Stripe CLI locally to forward events when testing webhook changes.
 
 ### PDF storage
 

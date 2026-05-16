@@ -141,5 +141,71 @@
     { "text": "Activities should be doable in your classroom.", "icon": "check-circle" },
     { "text": "Define assessment criteria up front.", "icon": "check-circle" },
     { "text": "Presentation mode returns a text outline \u2014 bring it into your slides tool.", "icon": "check-circle" }
+  ],
+  "pdfGuides": {
+    "beginners": {
+      "label": "Beginners \u2014 AI-Assisted Teaching Foundations",
+      "chapters": [
+        "5-minute AI safety start: teacher-in-the-loop rules",
+        "The Simple Prompt Formula",
+        "10 ready-to-use teacher prompts (lesson, assessment, feedback)",
+        "Lesson packs: 30-min, 45-min, and differentiated",
+        "Assessment and exit-ticket packs",
+        "Differentiation packs (support, core, stretch)",
+        "Feedback packs (whole-class, individual, conferencing)",
+        "7-point AI output verification checklist",
+        "Glossary and beginner mistakes to avoid",
+        "Use this tomorrow: 5-step adoption workflow",
+        "Source appendix"
+      ]
+    },
+    "advanced": {
+      "label": "Advanced \u2014 AI-Enhanced Instructional Design",
+      "chapters": [
+        "Executive overview for curriculum leads",
+        "Instructional design foundations table",
+        "Bloom and DOK quick reference",
+        "Methodologist master prompt",
+        "Backward design pipeline (UbD)",
+        "UDL prompt system",
+        "Differentiation transformations (DOK 1 to DOK 4)",
+        "Curriculum audit framework with 1\u20134 scoring rubric",
+        "Lesson review rubric and prompt quality rubric",
+        "PD models: 90-min, half-day, full-day, 4-week",
+        "Coaching model and adoption ladder",
+        "6-phase school rollout playbook",
+        "QA, governance, risk register, and observation checklists",
+        "90-day implementation roadmap",
+        "Three composite case studies (elementary, HS dept, district)",
+        "Source and license appendix"
+      ]
+    }
+  },
+  "buyerFaq": [
+    {
+      "id": "buyer-faq-multi-classroom",
+      "q": "Can I use this guide in more than one of my classrooms?",
+      "a": "Yes. The Classroom License covers all classes you personally teach. Use the same prompts and templates across every section you teach this year and next."
+    },
+    {
+      "id": "buyer-faq-share-team",
+      "q": "Can I share it with my co-teacher or department?",
+      "a": "Privately, yes. The Classroom License lets you share the file with your immediate teaching team (co-teacher, instructional coach, mentor, department head) at the same school. School-wide and district-wide licenses are available on request via info@promptanatomy.app."
+    },
+    {
+      "id": "buyer-faq-print-students",
+      "q": "Can I print copies for my students?",
+      "a": "Yes. You can print individual prompts, checklists, and templates for your own students and your own classroom use. Do not redistribute the full PDF."
+    },
+    {
+      "id": "buyer-faq-lost-email",
+      "q": "What if I lose the download email?",
+      "a": "Email info@promptanatomy.app from the address you used to buy and we will resend the link. The original link is valid for 7 days; we re-issue a fresh signed link any time you ask."
+    },
+    {
+      "id": "buyer-faq-not-satisfied",
+      "q": "What if I am not satisfied?",
+      "a": "Reply to your Stripe receipt within 14 days for a no-questions refund. We approve the refund through Stripe and revoke the download link, no follow-up survey."
+    }
   ]
 }

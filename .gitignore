@@ -56,8 +56,11 @@ api/_private/pdfs/*.pdf
 
 # ─── PDF authoring debug artifacts ───
 # scripts/verify-pdf-cover.js and scripts/preview-cover.js write PNG previews
-# to scripts/ for local visual checks. Keep them out of the repo.
-scripts/*.png
+# to scripts/ for local visual checks. Keep these QA artifacts out of the repo
+# (the published web covers live in assets/pdf-covers/, which IS tracked).
+scripts/cover-preview.png
+scripts/pdf-cover-*.png
+scripts/sample-page-*.png
 
 # ─── Vercel ───
 .vercel/

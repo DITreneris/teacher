@@ -19,7 +19,11 @@ The single documentation navigation hub after `README.md`.
 ## Active legal pages
 
 - [privacy.html](../privacy.html) - US Privacy Policy.
-- [terms.html](../terms.html) - Terms of Use + Responsible AI disclaimer.
+- [terms.html](../terms.html) - Terms of Use + Responsible AI disclaimer + Classroom License (`#paid-pdf-license`) + 14-day refund clause.
+
+## Active post-purchase flow
+
+- [success.html](../success.html) - Post-purchase confirmation page; polls `/api/download-link` until the Stripe webhook has finished, then surfaces a one-click download button + masked email + license / refund recap.
 
 ## Active PDF authoring source
 
@@ -35,8 +39,13 @@ The single documentation navigation hub after `README.md`.
 - [generator.js](../generator.js)
 - [copy.js](../copy.js)
 - [api/stripe-webhook.js](../api/stripe-webhook.js)
-- [api/download.js](../api/download.js)
+- [api/download.js](../api/download.js) - long-lived (7-day) signed download endpoint, used by the email link.
+- [api/download-link.js](../api/download-link.js) - JSON endpoint returning a short-lived (15-min) in-page download URL by Stripe Checkout Session ID; used by `success.html`.
 - [api/_lib/fulfillment.js](../api/_lib/fulfillment.js)
+- [assets/pdf-covers/beginners.png](../assets/pdf-covers/beginners.png) - public web cover for the Beginners PDF guide card.
+- [assets/pdf-covers/advanced.png](../assets/pdf-covers/advanced.png) - public web cover for the Advanced PDF guide card.
+- [assets/pdf-covers/beginners-p2.png](../assets/pdf-covers/beginners-p2.png), `-p3.png`, `-p4.png` - PREVIEW-watermarked sample pages 2-4 of the Beginners guide, rendered by `scripts/verify-pdf-cover.js --preview` and shown inside the public "Preview 3 pages" lightbox.
+- [assets/pdf-covers/advanced-p2.png](../assets/pdf-covers/advanced-p2.png), `-p3.png`, `-p4.png` - PREVIEW-watermarked sample pages 2-4 of the Advanced guide.
 - [style.css](../style.css)
 - [config/sot.json](../config/sot.json)
 - [vercel.json](../vercel.json)

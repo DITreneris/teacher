@@ -113,6 +113,102 @@ function run() {
   if (assert(html.includes('data-product="beginners-pdf"') && html.includes('data-product="advanced-pdf"'), 'PDF Stripe CTA product markers exist')) passed++;
   else failed++;
 
+  // --- Paid PDF guides: buyer confidence layer ---
+  if (assert(html.includes('/assets/pdf-covers/beginners.png') && html.includes('width="734"') && html.includes('height="950"'), 'Beginners cover image is wired with explicit dimensions')) passed++;
+  else failed++;
+  if (assert(html.includes('/assets/pdf-covers/advanced.png'), 'Advanced cover image is wired')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-guide-card-cover"') && /alt="Cover of [^"]+"/.test(html), 'Cover figures expose non-empty alt text')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-guide-specs"') && html.includes('12 pages') && html.includes('24 pages'), 'Specs row lists length for both guides')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-guide-license"') && html.includes('Classroom license') && html.includes('terms.html#paid-pdf-license'), 'Classroom license line links to terms anchor')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-guide-refund"') && html.includes('14-day no-questions refund'), '14-day refund badge sits beside the CTA')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-guide-trust"') && html.includes('Stripe checkout') && html.includes('Apple Pay') && html.includes('256-bit SSL'), 'Trust row lists Stripe, card brands, Apple Pay, and SSL')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-guide-promise"') && html.includes('Instant delivery') && html.includes('under 60 seconds') && html.includes('7 days'), 'Instant-delivery promise is shown under the CTA')) passed++;
+  else failed++;
+  if (assert(html.includes('data-preview-trigger="beginners"') && html.includes('data-preview-trigger="advanced"'), 'Preview-3-pages buttons exist for both guides')) passed++;
+  else failed++;
+  if (assert(html.includes('id="pdfPreviewDialog"') && html.includes('aria-labelledby="pdfPreviewTitle"') && html.includes('id="pdfPreviewClose"'), 'Preview lightbox <dialog> with labelled title and close button is present')) passed++;
+  else failed++;
+  if (assert(html.includes('data-toc="beginners"') && html.includes('data-toc="advanced"') && html.includes('data-toc-list="beginners"'), 'Whats inside TOC accordion exists for both guides with data-toc-list hooks')) passed++;
+  else failed++;
+  if (assert(html.includes('id="pdf-guides-faq"') && html.includes('data-buyer-faq-list'), 'Buyer FAQ section + populate hook present')) passed++;
+  else failed++;
+  if (assert(html.includes('"@id": "https://promptanatomy.online/#buyer-faq"') && html.includes('"name": "Can I use this guide in more than one of my classrooms?"'), 'Buyer FAQ JSON-LD entry present with first question')) passed++;
+  else failed++;
+  if (assert(html.includes('id="lostLinkMailto"') && html.includes('mailto:info@promptanatomy.app?subject=Resend'), 'Lost-your-link footer mailto link present')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-testimonials"') && (html.match(/class="pdf-testimonial"/g) || []).length === 3, 'Three pilot testimonial cards rendered')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-compare-strip"') && html.includes('~ $149') && html.includes('$4.99') && html.includes('$9.99'), 'Compare strip lists PD workshop vs PDF guide prices')) passed++;
+  else failed++;
+  if (assert(html.includes('class="pdf-author-panel"') && html.includes('Published by Prompt Anatomy') && html.includes('promptanatomy.app'), 'Author panel block present')) passed++;
+  else failed++;
+
+  let sotPdfGuides = null;
+  try { sotPdfGuides = JSON.parse(readFile(SOT_PATH) || '{}'); } catch (_e) { sotPdfGuides = null; }
+  if (assert(
+    sotPdfGuides &&
+    sotPdfGuides.pdfGuides &&
+    sotPdfGuides.pdfGuides.beginners &&
+    Array.isArray(sotPdfGuides.pdfGuides.beginners.chapters) &&
+    sotPdfGuides.pdfGuides.beginners.chapters.length >= 8 &&
+    sotPdfGuides.pdfGuides.advanced &&
+    Array.isArray(sotPdfGuides.pdfGuides.advanced.chapters) &&
+    sotPdfGuides.pdfGuides.advanced.chapters.length >= 8,
+    'config/sot.json#pdfGuides exposes chapter lists for both guides'
+  )) passed++;
+  else failed++;
+  if (assert(
+    sotPdfGuides &&
+    Array.isArray(sotPdfGuides.buyerFaq) &&
+    sotPdfGuides.buyerFaq.length === 5 &&
+    sotPdfGuides.buyerFaq.every(function (item) { return item.id && item.q && item.a; }),
+    'config/sot.json#buyerFaq has 5 well-formed buyer questions'
+  )) passed++;
+  else failed++;
+
+  const beginnersCoverPath = path.join(__dirname, '..', 'assets', 'pdf-covers', 'beginners.png');
+  if (assert(fs.existsSync(beginnersCoverPath), 'assets/pdf-covers/beginners.png exists')) passed++;
+  else failed++;
+  const advancedCoverPath = path.join(__dirname, '..', 'assets', 'pdf-covers', 'advanced.png');
+  if (assert(fs.existsSync(advancedCoverPath), 'assets/pdf-covers/advanced.png exists')) passed++;
+  else failed++;
+  for (const productKey of ['beginners', 'advanced']) {
+    for (const pageNum of [2, 3, 4]) {
+      const samplePath = path.join(__dirname, '..', 'assets', 'pdf-covers', `${productKey}-p${pageNum}.png`);
+      if (assert(fs.existsSync(samplePath), `assets/pdf-covers/${productKey}-p${pageNum}.png exists (sample preview)`)) passed++;
+      else failed++;
+    }
+  }
+
+  // --- Success page (post-purchase) ---
+  const successHtml = readFile(path.join(__dirname, '..', 'success.html'));
+  if (assert(successHtml && successHtml.includes('lang="en-US"') && successHtml.includes('noindex'), 'success.html exists, en-US, noindex')) passed++;
+  else failed++;
+  if (assert(successHtml && successHtml.includes('id="successState"') && successHtml.includes('aria-live="polite"'), 'success.html has live region for state updates')) passed++;
+  else failed++;
+  if (assert(successHtml && successHtml.includes('/api/download-link?session_id='), 'success.html polls /api/download-link')) passed++;
+  else failed++;
+  if (assert(successHtml && successHtml.includes('terms.html#paid-pdf-license') && successHtml.includes('14-day no-questions refund'), 'success.html repeats license + refund')) passed++;
+  else failed++;
+  if (assert(successHtml && successHtml.includes('cs_(?:test|live)_'), 'success.html validates Stripe session id format client-side')) passed++;
+  else failed++;
+
+  // --- /api/download-link endpoint ---
+  const downloadLinkPath = path.join(__dirname, '..', 'api', 'download-link.js');
+  const downloadLinkSrc = readFile(downloadLinkPath);
+  if (assert(downloadLinkSrc && downloadLinkSrc.includes('getDownloadUrlBySessionId'), 'api/download-link.js wires getDownloadUrlBySessionId')) passed++;
+  else failed++;
+  if (assert(downloadLinkSrc && downloadLinkSrc.includes('STRIPE_SESSION_ID_PATTERN'), 'api/download-link.js validates session id format')) passed++;
+  else failed++;
+  if (assert(downloadLinkSrc && downloadLinkSrc.includes("'private, no-store'"), 'api/download-link.js sets Cache-Control: private, no-store')) passed++;
+  else failed++;
+
   // --- Rules ---
   if (assert(html.includes('id="rules"'), 'Rules section exists')) passed++;
   else failed++;
@@ -264,6 +360,10 @@ function run() {
   else failed++;
   if (assert(termsHtml && termsHtml.includes('Paid PDF guides') && termsHtml.includes('secure, time-limited download link'), 'terms.html covers paid PDF delivery')) passed++;
   else failed++;
+  if (assert(termsHtml && termsHtml.includes('id="paid-pdf-license"') && termsHtml.includes('Classroom License'), 'terms.html has #paid-pdf-license anchor with Classroom License')) passed++;
+  else failed++;
+  if (assert(termsHtml && termsHtml.includes('14-day no-questions refund'), 'terms.html surfaces the 14-day refund clause')) passed++;
+  else failed++;
 
   // --- ARIA ---
   if (assert(html.includes('role="tablist"'), 'Mode tabs have role="tablist"')) passed++;
@@ -306,6 +406,8 @@ function run() {
   else failed++;
   const fulfillmentFile = readFile(FULFILLMENT_PATH);
   if (assert(fulfillmentFile && fulfillmentFile.includes('DOWNLOAD_TOKEN_SECRET') && fulfillmentFile.includes('timingSafeEqual'), 'Fulfillment helper signs download tokens')) passed++;
+  else failed++;
+  if (assert(fulfillmentFile && fulfillmentFile.includes('getDownloadUrlBySessionId') && fulfillmentFile.includes('IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS') && fulfillmentFile.includes('maskEmail'), 'Fulfillment helper exposes in-page download URL helper + email masking')) passed++;
   else failed++;
 
   // --- Legal pages exist ---

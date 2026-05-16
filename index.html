@@ -123,6 +123,53 @@
                         }
                     }
                 ]
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://promptanatomy.online/#buyer-faq",
+                "about": { "@id": "https://promptanatomy.online/#pdf-guides" },
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Can I use this guide in more than one of my classrooms?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. The Classroom License covers all classes you personally teach. Use the same prompts and templates across every section you teach this year and next."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I share it with my co-teacher or department?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Privately, yes. The Classroom License lets you share the file with your immediate teaching team (co-teacher, instructional coach, mentor, department head) at the same school. School-wide and district-wide licenses are available on request via info@promptanatomy.app."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I print copies for my students?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. You can print individual prompts, checklists, and templates for your own students and your own classroom use. Do not redistribute the full PDF."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What if I lose the download email?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Email info@promptanatomy.app from the address you used to buy and we will resend the link. The original link is valid for 7 days; we re-issue a fresh signed link any time you ask."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What if I am not satisfied?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Reply to your Stripe receipt within 14 days for a no-questions refund. We approve the refund through Stripe and revoke the download link, no follow-up survey."
+                        }
+                    }
+                ]
             }
         ]
     }
@@ -449,20 +496,77 @@
         </section>
 
         <!-- PDF GUIDES -->
-        <section class="pdf-guides" id="pdf-guides" aria-labelledby="pdf-guides-title">
+        <section class="pdf-guides" id="pdf-guides" aria-labelledby="pdf-guides-title" itemscope itemtype="https://schema.org/ItemList">
             <div class="pdf-guides-header">
                 <span class="eyebrow">Optional PDF guides</span>
                 <h2 id="pdf-guides-title">Download classroom-ready AI prompt guides</h2>
                 <p>Keep using the builder for free, or buy a focused PDF guide for offline planning, training sessions, and quick reference.</p>
             </div>
 
+            <p class="pdf-guides-pilot-meta" aria-label="Pilot context">
+                <i data-lucide="users" class="icon icon--sm" aria-hidden="true"></i>
+                <span>Shaped with pilot feedback from US K&ndash;12 teachers across grade bands and content areas.</span>
+            </p>
+
+            <ul class="pdf-testimonials" aria-label="Pilot teacher feedback">
+                <li class="pdf-testimonial">
+                    <blockquote>
+                        <p>&ldquo;Cut my Sunday lesson planning from about four hours to under an hour. The prompt formula is the part I keep coming back to.&rdquo;</p>
+                    </blockquote>
+                    <footer><cite>Pilot teacher</cite> &middot; Grade 5 &middot; Midwest US</footer>
+                </li>
+                <li class="pdf-testimonial">
+                    <blockquote>
+                        <p>&ldquo;The 7-point verification checklist alone changed how my team uses AI. We stopped pasting outputs straight to students.&rdquo;</p>
+                    </blockquote>
+                    <footer><cite>Pilot teacher</cite> &middot; Middle school ELA &middot; Northeast US</footer>
+                </li>
+                <li class="pdf-testimonial">
+                    <blockquote>
+                        <p>&ldquo;Used the Advanced guide as the spine of a half-day PD session. The rubric and rollout playbook saved me from building from scratch.&rdquo;</p>
+                    </blockquote>
+                    <footer><cite>Pilot instructional coach</cite> &middot; HS science &middot; West Coast US</footer>
+                </li>
+            </ul>
+            <p class="pdf-testimonials-note">Quotes paraphrased from pilot feedback during private beta. Names withheld at request; school identifiers redacted.</p>
+
+            <div class="pdf-compare-strip" role="note">
+                <div class="pdf-compare-strip-row">
+                    <span class="pdf-compare-pill">
+                        <span class="pdf-compare-pill-label">One PD workshop</span>
+                        <span class="pdf-compare-pill-value">~ $149</span>
+                    </span>
+                    <span class="pdf-compare-strip-vs" aria-hidden="true">vs</span>
+                    <span class="pdf-compare-pill pdf-compare-pill--accent">
+                        <span class="pdf-compare-pill-label">Beginners guide</span>
+                        <span class="pdf-compare-pill-value">$4.99</span>
+                    </span>
+                    <span class="pdf-compare-pill pdf-compare-pill--accent">
+                        <span class="pdf-compare-pill-label">Advanced guide</span>
+                        <span class="pdf-compare-pill-value">$9.99</span>
+                    </span>
+                </div>
+                <p class="pdf-compare-strip-caption">Classroom-ready in a week. Re-readable. Yours to print and use across every section you teach.</p>
+            </div>
+
             <div class="pdf-guides-grid">
                 <article class="pdf-guide-card" aria-labelledby="pdf-guide-beginners-title">
+                    <figure class="pdf-guide-card-cover">
+                        <img src="/assets/pdf-covers/beginners.png"
+                             alt="Cover of AI-Assisted Teaching Foundations &mdash; 12-page beginner guide for K-12 teachers"
+                             width="734" height="950" loading="lazy" decoding="async">
+                    </figure>
                     <div class="pdf-guide-card-top">
                         <span class="pdf-guide-badge">Best for first steps</span>
                         <i data-lucide="file-text" class="icon icon--lg" aria-hidden="true"></i>
                     </div>
                     <h3 id="pdf-guide-beginners-title">Beginners &mdash; Prompt Anatomy</h3>
+                    <ul class="pdf-guide-specs" aria-label="Beginners guide specifications">
+                        <li><span class="pdf-guide-spec-key">Length</span><span class="pdf-guide-spec-val">12 pages</span></li>
+                        <li><span class="pdf-guide-spec-key">Format</span><span class="pdf-guide-spec-val">PDF</span></li>
+                        <li><span class="pdf-guide-spec-key">Updated</span><span class="pdf-guide-spec-val">May 2026</span></li>
+                        <li><span class="pdf-guide-spec-key">Language</span><span class="pdf-guide-spec-val">English</span></li>
+                    </ul>
                     <p class="pdf-guide-desc">A 12-page practical guide for teachers new to AI. Clear prompt patterns, classroom examples, and a simple verification workflow.</p>
                     <div class="pdf-guide-price" aria-label="Beginners &mdash; Prompt Anatomy price">
                         <span class="pdf-guide-price-now">$4.99</span>
@@ -473,18 +577,63 @@
                         <li>Lesson, assessment, differentiation, and feedback packs</li>
                         <li>7-point AI output verification checklist</li>
                     </ul>
+                    <details class="pdf-guide-toc" data-toc="beginners">
+                        <summary>
+                            <i data-lucide="list" class="icon icon--sm" aria-hidden="true"></i>
+                            <span>What&rsquo;s inside</span>
+                            <span class="pdf-guide-toc-count" data-toc-count="beginners">11 sections</span>
+                            <i data-lucide="chevron-down" class="icon icon--sm pdf-guide-toc-chevron" aria-hidden="true"></i>
+                        </summary>
+                        <ol class="pdf-guide-toc-list" data-toc-list="beginners">
+                            <!-- Populated by generator.js from config/sot.json#pdfGuides.beginners.chapters -->
+                        </ol>
+                    </details>
+                    <p class="pdf-guide-preview-trigger">
+                        <button type="button" class="pdf-guide-preview-btn" data-preview-trigger="beginners">
+                            <i data-lucide="eye" class="icon icon--sm" aria-hidden="true"></i>
+                            <span>Preview 3 pages</span>
+                        </button>
+                    </p>
+                    <p class="pdf-guide-license">
+                        <i data-lucide="shield-check" class="icon icon--sm" aria-hidden="true"></i>
+                        <span><strong>Classroom license.</strong> Use in your own classroom and share within your immediate teaching team. Do not redistribute as-is. <a href="terms.html#paid-pdf-license">Full license</a>.</span>
+                    </p>
                     <a href="https://buy.stripe.com/YOUR_BEGINNERS_PDF_LINK" class="pdf-guide-cta" target="_blank" rel="noopener noreferrer" data-product="beginners-pdf" aria-label="Buy and download Beginners &mdash; Prompt Anatomy for $4.99">
                         Download PDF for $4.99
                     </a>
-                    <p class="pdf-guide-note">Secure checkout by Stripe. The download link is emailed after payment.</p>
+                    <ul class="pdf-guide-trust" aria-label="Payment and security">
+                        <li><i data-lucide="shield-check" class="icon icon--sm" aria-hidden="true"></i><span>Stripe checkout</span></li>
+                        <li><i data-lucide="credit-card" class="icon icon--sm" aria-hidden="true"></i><span>Visa &middot; Mastercard &middot; Amex</span></li>
+                        <li><i data-lucide="apple" class="icon icon--sm" aria-hidden="true"></i><span>Apple Pay</span></li>
+                        <li><i data-lucide="lock" class="icon icon--sm" aria-hidden="true"></i><span>256-bit SSL</span></li>
+                    </ul>
+                    <p class="pdf-guide-refund">
+                        <i data-lucide="badge-check" class="icon icon--sm" aria-hidden="true"></i>
+                        <span><strong>14-day no-questions refund.</strong> Just reply to your receipt email.</span>
+                    </p>
+                    <p class="pdf-guide-promise">
+                        <i data-lucide="zap" class="icon icon--sm" aria-hidden="true"></i>
+                        <span><strong>Instant delivery.</strong> Receipt email plus a separate download email arrive in under 60 seconds. The success page also shows a one-click download. Link is valid for 7 days &mdash; ask us to resend any time.</span>
+                    </p>
                 </article>
 
                 <article class="pdf-guide-card pdf-guide-card--featured" aria-labelledby="pdf-guide-advanced-title">
+                    <figure class="pdf-guide-card-cover">
+                        <img src="/assets/pdf-covers/advanced.png"
+                             alt="Cover of AI-Enhanced Instructional Design &mdash; 24-page advanced guide for curriculum leads and PD trainers"
+                             width="734" height="950" loading="lazy" decoding="async">
+                    </figure>
                     <div class="pdf-guide-card-top">
                         <span class="pdf-guide-badge">For trainers and leads</span>
                         <i data-lucide="graduation-cap" class="icon icon--lg" aria-hidden="true"></i>
                     </div>
                     <h3 id="pdf-guide-advanced-title">Advanced &mdash; Prompt Anatomy</h3>
+                    <ul class="pdf-guide-specs" aria-label="Advanced guide specifications">
+                        <li><span class="pdf-guide-spec-key">Length</span><span class="pdf-guide-spec-val">24 pages</span></li>
+                        <li><span class="pdf-guide-spec-key">Format</span><span class="pdf-guide-spec-val">PDF</span></li>
+                        <li><span class="pdf-guide-spec-key">Updated</span><span class="pdf-guide-spec-val">May 2026</span></li>
+                        <li><span class="pdf-guide-spec-key">Language</span><span class="pdf-guide-spec-val">English</span></li>
+                    </ul>
                     <p class="pdf-guide-desc">A 24-page methodologist&rsquo;s guide for curriculum leads, instructional coaches, and PD trainers. Frameworks, audit rubrics, PD models, and rollout playbooks.</p>
                     <div class="pdf-guide-price" aria-label="Advanced &mdash; Prompt Anatomy price">
                         <span class="pdf-guide-price-now">$9.99</span>
@@ -495,13 +644,73 @@
                         <li>Curriculum audit, lesson review, and prompt quality rubrics</li>
                         <li>PD models, school rollout playbook, and case studies</li>
                     </ul>
+                    <details class="pdf-guide-toc" data-toc="advanced">
+                        <summary>
+                            <i data-lucide="list" class="icon icon--sm" aria-hidden="true"></i>
+                            <span>What&rsquo;s inside</span>
+                            <span class="pdf-guide-toc-count" data-toc-count="advanced">16 sections</span>
+                            <i data-lucide="chevron-down" class="icon icon--sm pdf-guide-toc-chevron" aria-hidden="true"></i>
+                        </summary>
+                        <ol class="pdf-guide-toc-list" data-toc-list="advanced">
+                            <!-- Populated by generator.js from config/sot.json#pdfGuides.advanced.chapters -->
+                        </ol>
+                    </details>
+                    <p class="pdf-guide-preview-trigger">
+                        <button type="button" class="pdf-guide-preview-btn" data-preview-trigger="advanced">
+                            <i data-lucide="eye" class="icon icon--sm" aria-hidden="true"></i>
+                            <span>Preview 3 pages</span>
+                        </button>
+                    </p>
+                    <p class="pdf-guide-license">
+                        <i data-lucide="shield-check" class="icon icon--sm" aria-hidden="true"></i>
+                        <span><strong>Classroom license.</strong> Use in your own classroom and share within your immediate teaching team. Do not redistribute as-is. <a href="terms.html#paid-pdf-license">Full license</a>.</span>
+                    </p>
                     <a href="https://buy.stripe.com/YOUR_ADVANCED_PDF_LINK" class="pdf-guide-cta" target="_blank" rel="noopener noreferrer" data-product="advanced-pdf" aria-label="Buy and download Advanced &mdash; Prompt Anatomy for $9.99">
                         Download PDF for $9.99
                     </a>
-                    <p class="pdf-guide-note">Secure checkout by Stripe. The download link is emailed after payment.</p>
+                    <ul class="pdf-guide-trust" aria-label="Payment and security">
+                        <li><i data-lucide="shield-check" class="icon icon--sm" aria-hidden="true"></i><span>Stripe checkout</span></li>
+                        <li><i data-lucide="credit-card" class="icon icon--sm" aria-hidden="true"></i><span>Visa &middot; Mastercard &middot; Amex</span></li>
+                        <li><i data-lucide="apple" class="icon icon--sm" aria-hidden="true"></i><span>Apple Pay</span></li>
+                        <li><i data-lucide="lock" class="icon icon--sm" aria-hidden="true"></i><span>256-bit SSL</span></li>
+                    </ul>
+                    <p class="pdf-guide-refund">
+                        <i data-lucide="badge-check" class="icon icon--sm" aria-hidden="true"></i>
+                        <span><strong>14-day no-questions refund.</strong> Just reply to your receipt email.</span>
+                    </p>
+                    <p class="pdf-guide-promise">
+                        <i data-lucide="zap" class="icon icon--sm" aria-hidden="true"></i>
+                        <span><strong>Instant delivery.</strong> Receipt email plus a separate download email arrive in under 60 seconds. The success page also shows a one-click download. Link is valid for 7 days &mdash; ask us to resend any time.</span>
+                    </p>
                 </article>
             </div>
         </section>
+
+        <!-- BUYER FAQ (PDF guides) -->
+        <section class="buyer-faq" id="pdf-guides-faq" aria-labelledby="pdf-guides-faq-title">
+            <h2 id="pdf-guides-faq-title">Buyer FAQ</h2>
+            <p class="buyer-faq-lead">Five questions teachers ask before buying a Prompt Anatomy PDF.</p>
+            <ul class="buyer-faq-list" data-buyer-faq-list>
+                <!-- Populated by generator.js from config/sot.json#buyerFaq -->
+            </ul>
+        </section>
+
+        <!-- AUTHOR PANEL -->
+        <aside class="pdf-author-panel" aria-labelledby="pdf-author-title">
+            <div class="pdf-author-mark" aria-hidden="true">
+                <i data-lucide="command" class="icon icon--md"></i>
+            </div>
+            <div class="pdf-author-body">
+                <h3 id="pdf-author-title">Published by Prompt Anatomy</h3>
+                <p>The same team that built the free Classroom Prompt Builder. We design responsible-AI tools and PD materials for US K&ndash;12 teachers, with a teacher-in-the-loop rule on every page.</p>
+                <p class="pdf-author-link">
+                    <a href="https://www.promptanatomy.app/" target="_blank" rel="noopener noreferrer">
+                        promptanatomy.app
+                        <i data-lucide="external-link" class="icon icon--sm" aria-hidden="true"></i>
+                    </a>
+                </p>
+            </div>
+        </aside>
 
         <!-- LIBRARY -->
         <section class="library-section" id="library">
@@ -557,6 +766,11 @@
                 <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="zap" class="icon icon--sm"></i></span> 5 modes</span>
                 <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="layers" class="icon icon--sm"></i></span> Grades 1&ndash;12</span>
             </div>
+            <p class="footer-lost-link">
+                <i data-lucide="life-buoy" class="icon icon--sm" aria-hidden="true"></i>
+                Bought a PDF and lost the email?
+                <a href="mailto:info@promptanatomy.app?subject=Resend%20my%20Prompt%20Anatomy%20PDF%20link&amp;body=Hi%20Prompt%20Anatomy%2C%0A%0APlease%20resend%20my%20download%20link.%0A%0AOrder%20email%3A%20%5Byour%20purchase%20email%5D%0AGuide%3A%20%5BBeginners%20%2F%20Advanced%5D%0AStripe%20receipt%20%23%20%28optional%29%3A%20%5Bcs_test_%20or%20cs_live_%E2%80%A6%5D%0A%0AThank%20you." id="lostLinkMailto">Email us a resend</a>.
+            </p>
             <div class="copyright">
                 <p>&copy; 2026 Tomas Staniulis. Educational tool. All rights reserved. <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a></p>
             </div>
@@ -564,6 +778,22 @@
 
         </main>
     </div>
+
+    <dialog id="pdfPreviewDialog" class="pdf-preview-dialog" aria-labelledby="pdfPreviewTitle">
+        <div class="pdf-preview-dialog-header">
+            <h3 id="pdfPreviewTitle" class="pdf-preview-dialog-title">Preview pages</h3>
+            <button type="button" class="pdf-preview-dialog-close" id="pdfPreviewClose" aria-label="Close preview">
+                <i data-lucide="x" class="icon icon--md" aria-hidden="true"></i>
+            </button>
+        </div>
+        <p class="pdf-preview-dialog-note">Sample pages from the paid guide. Watermarked. The full PDF is delivered after purchase.</p>
+        <div class="pdf-preview-dialog-pages" id="pdfPreviewPages" role="list">
+            <!-- Filled by generator.js based on data-preview-trigger -->
+        </div>
+        <div class="pdf-preview-dialog-footer">
+            <a href="#pdf-guides" class="pdf-preview-dialog-back" id="pdfPreviewBack">Back to guides</a>
+        </div>
+    </dialog>
 
     <textarea class="hidden" id="hiddenTextarea" aria-label="Hidden field for copying text" aria-hidden="true"></textarea>
 

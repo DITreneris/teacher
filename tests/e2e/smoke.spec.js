@@ -19,6 +19,17 @@ for (const viewport of viewports) {
       await expect(page.locator('[data-product="beginners-pdf"]')).toHaveAttribute('href', /buy\.stripe\.com/);
       await expect(page.locator('[data-product="advanced-pdf"]')).toHaveAttribute('href', /buy\.stripe\.com/);
 
+      const beginnersCover = page.locator('.pdf-guide-card .pdf-guide-card-cover img').first();
+      await expect(beginnersCover).toHaveAttribute('src', /\/assets\/pdf-covers\/beginners\.png/);
+      await expect(beginnersCover).toHaveAttribute('alt', /^Cover of /);
+      await beginnersCover.scrollIntoViewIfNeeded();
+      await expect.poll(async () => beginnersCover.evaluate((img) => img.complete && img.naturalWidth || 0)).toBeGreaterThan(100);
+
+      await expect(page.locator('.pdf-guide-card .pdf-guide-license').first()).toContainText('Classroom license');
+      await expect(page.locator('.pdf-guide-card .pdf-guide-refund').first()).toContainText('14-day no-questions refund');
+      await expect(page.locator('.pdf-guide-card .pdf-guide-trust').first()).toContainText('Stripe checkout');
+      await expect(page.locator('.pdf-guide-card .pdf-guide-promise').first()).toContainText('Instant delivery');
+
       await page.click('[data-mode="ASSESSMENT"]');
       await expect(page.locator('[data-mode="ASSESSMENT"]')).toHaveClass(/is-active/);
       await expect(page.locator('#form-assessment')).toBeVisible();

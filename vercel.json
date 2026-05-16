@@ -81,7 +81,7 @@
       ]
     },
     {
-      "source": "/(index|privacy|terms|404)\\.html",
+      "source": "/(index|privacy|terms|success|404)\\.html",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]

@@ -2,6 +2,79 @@
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased] - Buyer confidence on paid PDF cards
+
+The `pdf-guides` section turns from text-only cards into a buyer-confident SaaS storefront block. The fulfillment pipeline (Stripe webhook + signed HMAC tokens + Resend email + Redis idempotency) is unchanged; this iteration is purely buyer-facing and ships in three stages within the same release window.
+
+### Stage 1 - P0 trust foundation
+
+Real product visual, explicit license, 14-day refund, trust row, instant-delivery promise, and a working post-purchase page.
+
+#### Added
+- `assets/pdf-covers/beginners.png` and `assets/pdf-covers/advanced.png`: real PDF cover thumbnails (Letter ratio 734 x 950) published from the previously local-only QA artifacts in `scripts/`. Loaded with explicit `width`/`height` (no CLS), descriptive `alt`, `loading="lazy"`, and a subtle perspective tilt that flattens on hover/focus.
+- `index.html` PDF cards now render: cover figure, specs row (`Length / Format / Updated / Language`), explicit Classroom License line linking to `terms.html#paid-pdf-license`, 14-day no-questions refund badge beside the CTA, trust row (Stripe + Visa/Mastercard/Amex + Apple Pay + 256-bit SSL via Lucide icons), and an instant-delivery promise covering the receipt email + download email + 60-second window + 7-day link validity.
+- `success.html`: post-purchase confirmation page (noindex, en-US). Polls `/api/download-link?session_id=...` until the Stripe webhook has finished, then surfaces a one-click in-page Download button, masked email, and a recap of the Classroom License + 14-day refund. Accessible live region (`aria-live="polite"`), reduced-motion-friendly spinner, error states for invalid session ids and network failures.
+- `api/download-link.js`: GET endpoint that returns a short-lived (15-minute) signed download URL by Stripe Checkout Session ID, plus the masked customer email. Validates the session id format (`/^cs_(?:test|live)_[A-Za-z0-9]{20,}$/`), sets `Cache-Control: private, no-store`, returns 202 while the webhook is still processing, 404 for unknown sessions.
+- `api/_lib/fulfillment.js`: `getDownloadUrlBySessionId(sessionId, origin)` and `maskEmail(email)` helpers; new `IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS` (default 15 min) so the in-page link is short-lived without affecting the long-lived 7-day email link.
+- `terms.html` section 8a "Paid PDF guides - Classroom license" with `id="paid-pdf-license"` anchor: explicit permitted uses (own classroom, immediate teaching team, printing for students, adapting with attribution) and prohibited uses (resale, public file-sharing, school/district-wide use under a single license, AI training).
+- `terms.html` section 8 now states the 14-day no-questions refund policy with a clear contact path; preserves the existing case-by-case clause for outside the 14-day window and the consumer-protection-law clause.
+- `style.css`: `.pdf-guide-card-cover`, `.pdf-guide-specs`, `.pdf-guide-license`, `.pdf-guide-refund`, `.pdf-guide-trust`, `.pdf-guide-promise`, plus dark-mode counterparts and a mobile rule that caps cover width at 220px and centers it.
+- `style.css`: `.success-page` block (cover card, status text, spinner with `prefers-reduced-motion` opt-out, ok/error variants, dark-mode mirror).
+- `tests/structure.test.js`: 18 new assertions covering cover images, specs row, license/refund/trust/promise blocks, `success.html` structure, `api/download-link.js` validation, and the new fulfillment helpers.
+- `tests/e2e/smoke.spec.js`: cover image load, alt text, license/refund/trust/promise visibility on every viewport.
+- `tests/e2e/core-flow.spec.js`: success-page in-page download flow with mocked `/api/download-link` (202 -> 200 transition), and invalid-session-id rejection without polling.
+
+#### Changed
+- `api/_lib/fulfillment.js` `createDownloadToken(sessionId, productId, ttlSeconds?)` now takes an optional TTL so both the long-lived (7-day, email) and short-lived (15-minute, in-page) tokens flow through the same signed-payload path.
+- `api/_lib/fulfillment.js` Resend email body now mentions the Stripe receipt under separate cover, repeats the Classroom License link, and surfaces the 14-day refund clause directly above the support contact.
+- `vercel.json`: `success.html` joins `index/privacy/terms/404` in the no-cache HTML route so post-purchase content cannot be served stale.
+- `package.json`: `lint:html` and `test:a11y` scripts include `success.html` (a11y check uses the cleanUrl form `/success?session_id=...` because the dev `serve` static server defaults to `cleanUrls: true`).
+- `DEPLOY.md`: post-deploy checklist now verifies the Stripe Payment Link `success_url`, the Stripe customer-receipt setting, and that `success.html` shows a one-click Download within ~5 seconds of redirect; environment-variables table documents `IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS`.
+- `.gitignore`: tightened `scripts/*.png` exclusion to specific filenames so the new `assets/pdf-covers/*` paths are tracked and any future PNGs in `scripts/` are not silently ignored.
+- `terms.html` Last updated bumped to May 16, 2026.
+
+### Stage 2 - P1 preview and assurance
+
+Watermarked sample-page lightbox, "What's inside" accordion, buyer FAQ block with parallel `FAQPage` JSON-LD, and a "Lost your link?" support escape hatch.
+
+#### Added
+- `scripts/verify-pdf-cover.js --preview`: optional flag that renders pages 2-4 of each guide via pdf.js + Playwright, overlays a tiled diagonal "PREVIEW" watermark via canvas, and writes the results to `assets/pdf-covers/<id>-p<n>.png`. The default no-flag invocation still emits the QA-only cover screenshot to `scripts/` (gitignored). Skips guides whose PDF source is missing instead of failing.
+- `assets/pdf-covers/beginners-p2..p4.png` and `assets/pdf-covers/advanced-p2..p4.png`: six watermarked sample pages now shipped as web assets, consumed by the "Preview 3 pages" lightbox.
+- `index.html` "Preview 3 pages" buttons on each card and a shared `<dialog id="pdfPreviewDialog">` lightbox with sticky header, scrollable thumbnails, focus trap (native `<dialog>`), Esc-to-close, click-outside-to-close, and focus restore back to the trigger. JS lives in `generator.js` (`initPdfPreviewDialog`).
+- `index.html` "What's inside" accordion (`<details>`) on each card; chapter lists pulled from `config/sot.json#pdfGuides.{beginners,advanced}.chapters` (11 sections for Beginners, 16 for Advanced) so the source of truth is one JSON file.
+- `index.html` "Buyer FAQ" section (5 questions) between the cards and the Library section, populated from `config/sot.json#buyerFaq`. Each FAQ item is a native `<details>` element. A second `FAQPage` JSON-LD entry mirrors the same questions for search engines.
+- `index.html` footer "Lost your link?" mailto link with prefilled subject + body templating in the email address, guide, and Stripe receipt id fields.
+- `config/sot.json`: `pdfGuides` (chapter lists) and `buyerFaq` (5 buyer questions with stable ids) sections so future copy edits live in one JSON file.
+- `style.css`: `.pdf-guide-preview-btn`, `.pdf-preview-dialog*`, `.pdf-guide-toc*`, `.buyer-faq*`, `.footer-lost-link`, plus dark-mode mirrors for each.
+- `tests/e2e/core-flow.spec.js`: "preview dialog opens, loads watermarked sample pages, and restores focus on close" - clicks the Beginners trigger, asserts 3 sample-page images render with PREVIEW alt text, presses Esc to close, and asserts focus returns to the trigger button.
+
+#### Changed
+- `index.html` `<section id="pdf-guides">` now carries `itemscope itemtype="https://schema.org/ItemList"` so the buyer FAQ `about` ref can link to it cleanly.
+
+### Stage 3 - P2 social authority
+
+Pilot testimonials with honest provenance, compare strip vs the typical PD-workshop alternative, and an author panel.
+
+#### Added
+- `index.html` social-proof block above the cards: 3 honestly-labeled pilot testimonials (paraphrased with names/schools withheld, footnote disclosure inline), a pilot context badge, a "vs PD workshop" compare strip pricing each guide against a typical ~$149 PD, and a closing "Published by Prompt Anatomy" author panel beneath the buyer FAQ.
+- `style.css`: `.pdf-testimonials*`, `.pdf-compare-strip*`, `.pdf-author-panel*`, plus dark-mode mirrors.
+- `tests/structure.test.js`: 12 additional assertions covering the preview triggers + dialog, TOC accordions, buyer FAQ block + JSON-LD entry, footer mailto, three testimonial cards, compare strip prices, author panel, and the `config/sot.json#pdfGuides` / `#buyerFaq` schemas.
+
+#### Changed
+- `tests/e2e/smoke.spec.js`: cover-image natural-width assertion now scrolls the figure into view first and polls until `naturalWidth > 100`, because the new social-proof block above the cards pushes the cover below the initial viewport on 320 / 375 widths where `loading="lazy"` defers it.
+
+### Docs delta (all three stages)
+- `docs/INDEX.md`: registers `success.html`, `api/download-link.js`, both cover PNGs, and the six watermarked sample-page PNGs.
+
+### Verified (last full pass, all stages stacked)
+- `npm test`: 139 / 139 structural assertions pass (`copy.js` `activeSectionId` is a pre-existing eslint warning, unrelated).
+- `npm run test:smoke`: 9 / 9 across 320, 375, 768 viewports.
+- `npm run test:e2e`: 11 / 11 (success-page polling + preview-dialog focus restore included).
+- `npm run test:a11y`: pa11y reports "No issues found" on `/`, `/privacy.html`, `/terms.html`, and the post-purchase success page (cleanUrl form `/success?session_id=...`).
+
+### Pre-release blocker (Stripe Dashboard, no code)
+- Each Stripe Payment Link must redirect to `https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}` and have customer email receipts ON. See [todo.md](todo.md) P0.
+
 ## [Unreleased] - Secure paid PDF fulfillment
 
 Production-ready paid PDF delivery for two optional guides while preserving the free, no-account prompt-builder workflow.

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Thank you &mdash; your PDF is on its way | Prompt Anatomy</title>
+    <meta name="description" content="Thank you for your purchase. Your Prompt Anatomy PDF guide is ready to download.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#0F2A44">
+    <link rel="canonical" href="https://promptanatomy.online/success.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" href="favicon.svg" color="#0F2A44">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="legal">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <main id="main-content" class="legal-page success-page">
+        <a href="index.html" class="legal-back" aria-label="Back to Classroom Prompt Builder">&larr; Back to Classroom Prompt Builder</a>
+
+        <h1>Thank you &mdash; your PDF is on its way.</h1>
+        <p class="legal-meta">Order confirmed via Stripe.</p>
+
+        <section class="success-card" aria-live="polite" aria-atomic="true">
+            <div id="successState" data-state="loading">
+                <p class="success-status" id="successStatusText">Preparing your secure download&hellip;</p>
+                <div class="success-spinner" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <section class="success-meta" aria-label="Order details">
+            <p><strong>Two emails are on the way:</strong></p>
+            <ul>
+                <li>A <strong>Stripe receipt</strong> for your records.</li>
+                <li>A <strong>Prompt Anatomy download email</strong> with a secure link valid for 7 days.</li>
+            </ul>
+            <p>If neither arrives within a few minutes, check your spam folder, then write to <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a> from your purchase email address.</p>
+        </section>
+
+        <section class="success-meta" aria-label="License and refund">
+            <p><strong>Classroom license.</strong> Use the guide in your own classroom and share within your immediate teaching team. Do not redistribute as-is. <a href="terms.html#paid-pdf-license">Read the full license</a>.</p>
+            <p><strong>14-day no-questions refund.</strong> Reply to your Stripe receipt or email <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a> from your purchase address.</p>
+        </section>
+
+        <p class="success-back-cta">
+            <a href="index.html" class="cta-button">Continue building prompts</a>
+        </p>
+
+        <div class="legal-foot">
+            <p><a href="index.html">&larr; Back to Classroom Prompt Builder</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a></p>
+        </div>
+    </main>
+
+    <script>
+    (function () {
+        'use strict';
+
+        var STRIPE_SESSION_PATTERN = /^cs_(?:test|live)_[A-Za-z0-9]{20,}$/;
+        var POLL_INTERVAL_MS = 2000;
+        var POLL_TIMEOUT_MS = 60000;
+
+        var stateEl = document.getElementById('successState');
+        var statusTextEl = document.getElementById('successStatusText');
+
+        function setState(state, html) {
+            stateEl.setAttribute('data-state', state);
+            stateEl.innerHTML = html;
+        }
+
+        function getSessionId() {
+            try {
+                var params = new URLSearchParams(window.location.search);
+                var sid = params.get('session_id');
+                return sid && STRIPE_SESSION_PATTERN.test(sid) ? sid : '';
+            } catch (_e) {
+                return '';
+            }
+        }
+
+        function escapeHtml(text) {
+            return String(text == null ? '' : text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderReady(payload) {
+            var safeName = escapeHtml(payload.productName || 'Your PDF guide');
+            var safeUrl = escapeHtml(payload.downloadUrl);
+            var safeEmail = escapeHtml(payload.maskedEmail || '');
+            var emailLine = safeEmail
+                ? '<p class="success-email">A copy of the link was also sent to <strong>' + safeEmail + '</strong>.</p>'
+                : '';
+            setState('ready',
+                '<p class="success-status success-status--ok">Ready. ' + safeName + ' is unlocked for you.</p>' +
+                '<p class="success-cta-wrap"><a class="pdf-guide-cta" href="' + safeUrl + '" id="successDownloadBtn" rel="noopener noreferrer">Download PDF</a></p>' +
+                emailLine +
+                '<p class="success-fineprint">This in-page link expires in 15 minutes. Use the email link for any later download.</p>'
+            );
+        }
+
+        function renderError(message) {
+            setState('error',
+                '<p class="success-status success-status--err">' + escapeHtml(message) + '</p>' +
+                '<p>If your payment went through, the email link is the safest way to download. ' +
+                'If neither arrives, write to <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a> from your purchase email address.</p>'
+            );
+        }
+
+        function poll(sessionId, deadline) {
+            fetch('/api/download-link?session_id=' + encodeURIComponent(sessionId), {
+                credentials: 'omit',
+                cache: 'no-store',
+                headers: { 'Accept': 'application/json' }
+            }).then(function (response) {
+                return response.json().then(function (body) { return { status: response.status, body: body }; });
+            }).then(function (result) {
+                if (result.status === 200 && result.body && result.body.status === 'ready') {
+                    renderReady(result.body);
+                    return;
+                }
+                if (result.status === 202 && result.body && result.body.status === 'processing') {
+                    if (Date.now() < deadline) {
+                        statusTextEl.textContent = 'Confirming payment with Stripe\u2026';
+                        window.setTimeout(function () { poll(sessionId, deadline); }, POLL_INTERVAL_MS);
+                        return;
+                    }
+                    renderError('Still confirming your payment. Use the link in your email; it usually arrives within a minute.');
+                    return;
+                }
+                if (result.status === 404) {
+                    renderError('We could not find this checkout session. Use the link in your email instead.');
+                    return;
+                }
+                renderError('Something went wrong while preparing your download.');
+            }).catch(function () {
+                if (Date.now() < deadline) {
+                    window.setTimeout(function () { poll(sessionId, deadline); }, POLL_INTERVAL_MS);
+                    return;
+                }
+                renderError('Network error while preparing your download.');
+            });
+        }
+
+        var sessionId = getSessionId();
+        if (!sessionId) {
+            renderError('Missing or invalid checkout session id in this URL. The download link in your email is the safest way to retrieve your PDF.');
+            return;
+        }
+
+        poll(sessionId, Date.now() + POLL_TIMEOUT_MS);
+    })();
+    </script>
+</body>
+</html>

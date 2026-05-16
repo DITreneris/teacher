@@ -985,11 +985,162 @@
         updateOutput();
     }
 
+    var PDF_PREVIEW_DEFS = {
+        beginners: {
+            title: 'Preview &mdash; Beginners: AI-Assisted Teaching Foundations',
+            altPrefix: 'Beginners guide',
+            pages: [2, 3, 4]
+        },
+        advanced: {
+            title: 'Preview &mdash; Advanced: AI-Enhanced Instructional Design',
+            altPrefix: 'Advanced guide',
+            pages: [2, 3, 4]
+        }
+    };
+
+    function escapeHtmlText(text) {
+        return String(text == null ? '' : text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function initPdfGuideTocs(config) {
+        if (!config || !config.pdfGuides || typeof config.pdfGuides !== 'object') return;
+        Object.keys(config.pdfGuides).forEach(function (key) {
+            var def = config.pdfGuides[key];
+            if (!def || !Array.isArray(def.chapters)) return;
+            var list = document.querySelector('[data-toc-list="' + key + '"]');
+            var countEl = document.querySelector('[data-toc-count="' + key + '"]');
+            if (countEl) {
+                countEl.textContent = def.chapters.length + ' sections';
+            }
+            if (!list) return;
+            var html = '';
+            for (var i = 0; i < def.chapters.length; i += 1) {
+                html += '<li>' + escapeHtmlText(def.chapters[i]) + '</li>';
+            }
+            list.innerHTML = html;
+        });
+    }
+
+    function initBuyerFaq(config) {
+        if (!config || !Array.isArray(config.buyerFaq)) return;
+        var list = document.querySelector('[data-buyer-faq-list]');
+        if (!list) return;
+        var html = '';
+        for (var i = 0; i < config.buyerFaq.length; i += 1) {
+            var item = config.buyerFaq[i];
+            if (!item || !item.q || !item.a) continue;
+            var detailsId = item.id ? ' id="' + escapeHtmlText(item.id) + '"' : '';
+            html +=
+                '<li class="buyer-faq-item">' +
+                '<details class="buyer-faq-details"' + detailsId + '>' +
+                '<summary><span>' + escapeHtmlText(item.q) + '</span>' +
+                '<i data-lucide="chevron-down" class="icon icon--sm buyer-faq-chevron" aria-hidden="true"></i>' +
+                '</summary>' +
+                '<p>' + escapeHtmlText(item.a) + '</p>' +
+                '</details>' +
+                '</li>';
+        }
+        list.innerHTML = html;
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
+    }
+
+    function initPdfPreviewDialog() {
+        var dialog = document.getElementById('pdfPreviewDialog');
+        if (!dialog || typeof dialog.showModal !== 'function') return;
+        var titleEl = document.getElementById('pdfPreviewTitle');
+        var pagesEl = document.getElementById('pdfPreviewPages');
+        var closeBtn = document.getElementById('pdfPreviewClose');
+        var backLink = document.getElementById('pdfPreviewBack');
+        if (!titleEl || !pagesEl || !closeBtn) return;
+
+        var triggers = document.querySelectorAll('[data-preview-trigger]');
+        if (!triggers.length) return;
+
+        var lastTrigger = null;
+
+        function renderPages(productKey) {
+            var def = PDF_PREVIEW_DEFS[productKey];
+            if (!def) return;
+            titleEl.innerHTML = def.title;
+            var html = '';
+            for (var i = 0; i < def.pages.length; i += 1) {
+                var pageNum = def.pages[i];
+                html +=
+                    '<figure class="pdf-preview-page" role="listitem">' +
+                    '<img src="/assets/pdf-covers/' + productKey + '-p' + pageNum + '.png"' +
+                    ' alt="' + def.altPrefix + ', sample page ' + pageNum + ' (PREVIEW watermark)"' +
+                    ' loading="lazy" decoding="async" width="734" height="950">' +
+                    '<figcaption>Page ' + pageNum + '</figcaption>' +
+                    '</figure>';
+            }
+            pagesEl.innerHTML = html;
+        }
+
+        function openFor(triggerEl) {
+            var productKey = triggerEl.getAttribute('data-preview-trigger');
+            if (!PDF_PREVIEW_DEFS[productKey]) return;
+            renderPages(productKey);
+            lastTrigger = triggerEl;
+            dialog.showModal();
+            window.requestAnimationFrame(function () {
+                if (typeof closeBtn.focus === 'function') closeBtn.focus();
+            });
+        }
+
+        function closeDialog() {
+            if (dialog.open) dialog.close();
+        }
+
+        for (var t = 0; t < triggers.length; t += 1) {
+            (function (el) {
+                el.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    openFor(el);
+                });
+            })(triggers[t]);
+        }
+
+        closeBtn.addEventListener('click', function () { closeDialog(); });
+        if (backLink) {
+            backLink.addEventListener('click', function () { closeDialog(); });
+        }
+
+        dialog.addEventListener('click', function (event) {
+            var rect = dialog.getBoundingClientRect();
+            if (
+                event.clientX < rect.left ||
+                event.clientX > rect.right ||
+                event.clientY < rect.top ||
+                event.clientY > rect.bottom
+            ) {
+                closeDialog();
+            }
+        });
+
+        dialog.addEventListener('close', function () {
+            if (lastTrigger && typeof lastTrigger.focus === 'function') {
+                lastTrigger.focus();
+            }
+            lastTrigger = null;
+            pagesEl.innerHTML = '';
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         loadSotConfig().then(function (config) {
             assignSotConfig(config);
             initFormData();
             initializeApp();
+            initPdfPreviewDialog();
+            initPdfGuideTocs(config);
+            initBuyerFaq(config);
         });
     });
 })();
