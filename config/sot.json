@@ -223,7 +223,17 @@
   },
   "legal": {
     "operatorLine": "\u00a9 2026 Tomas Staniulis. Educational tool. All rights reserved.",
-    "entityNote": "LEGAL_REVIEW: replace with counsel-approved entity name, state, and country before paid ads."
+    "entityNote": "LEGAL_REVIEW: replace with counsel-approved entity name, state, and country before paid ads.",
+    "address": {
+      "name": "Prompt Anatomy",
+      "street1": "1311 Park St",
+      "street2": "Unit #654",
+      "locality": "Alameda",
+      "region": "CA",
+      "postalCode": "94501",
+      "country": "US",
+      "countryName": "United States"
+    }
   },
   "buyerFaq": [
     {

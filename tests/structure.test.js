@@ -285,6 +285,43 @@ function run() {
   if (assert(html.includes('data-legal-operator-line'), 'Footer exposes data-legal-operator-line hook')) passed++;
   else failed++;
 
+  // --- Legal business address (CAN-SPAM / SEO / crawlers) ---
+  const legalAddress = sotPdfGuides && sotPdfGuides.legal && sotPdfGuides.legal.address;
+  if (assert(
+    legalAddress &&
+    typeof legalAddress === 'object' &&
+    typeof legalAddress.street1 === 'string' && legalAddress.street1.length > 0 &&
+    typeof legalAddress.locality === 'string' && legalAddress.locality.length > 0 &&
+    typeof legalAddress.region === 'string' && legalAddress.region.length > 0 &&
+    typeof legalAddress.postalCode === 'string' && legalAddress.postalCode.length > 0 &&
+    typeof legalAddress.country === 'string' && legalAddress.country.length > 0,
+    'config/sot.json#legal.address has street1/locality/region/postalCode/country'
+  )) passed++;
+  else failed++;
+
+  // Footer renders a semantic <address> with crawler-friendly microdata + statically baked values
+  if (assert(
+    /<address[^>]*class="footer-address"[^>]*data-legal-address[^>]*itemtype="https:\/\/schema\.org\/PostalAddress"[\s\S]*?<\/address>/i.test(html),
+    'Footer has semantic <address class="footer-address"> with schema.org PostalAddress microdata'
+  )) passed++;
+  else failed++;
+
+  if (assert(
+    html.includes('1311 Park St, Unit #654') &&
+    html.includes('Alameda') &&
+    html.includes('CA') &&
+    html.includes('94501'),
+    'Footer address is statically rendered (Alameda, CA 94501) for robots and crawlers'
+  )) passed++;
+  else failed++;
+
+  // Organization JSON-LD must include the same PostalAddress so search crawlers pick it up
+  if (assert(
+    /"@type":\s*"Organization"[\s\S]*?"address":\s*\{[\s\S]*?"@type":\s*"PostalAddress"[\s\S]*?"streetAddress":\s*"1311 Park St, Unit #654"[\s\S]*?"addressLocality":\s*"Alameda"[\s\S]*?"addressRegion":\s*"CA"[\s\S]*?"postalCode":\s*"94501"[\s\S]*?"addressCountry":\s*"US"/.test(html),
+    'Organization JSON-LD includes PostalAddress (1311 Park St, Unit #654, Alameda, CA 94501, US)'
+  )) passed++;
+  else failed++;
+
   const beginnersCoverPath = path.join(__dirname, '..', 'assets', 'pdf-covers', 'beginners.png');
   if (assert(fs.existsSync(beginnersCoverPath), 'assets/pdf-covers/beginners.png exists')) passed++;
   else failed++;
@@ -505,6 +542,27 @@ function run() {
   if (assert(termsHtml && termsHtml.includes('id="paid-pdf-license"') && termsHtml.includes('Classroom License'), 'terms.html has #paid-pdf-license anchor with Classroom License')) passed++;
   else failed++;
   if (assert(termsHtml && termsHtml.includes('14-day no-questions refund'), 'terms.html surfaces the 14-day refund clause')) passed++;
+  else failed++;
+
+  // Legal pages must also surface the business postal address (CAN-SPAM / consumer info)
+  if (assert(
+    privacyHtml &&
+    privacyHtml.includes('1311 Park St, Unit #654') &&
+    privacyHtml.includes('Alameda') &&
+    privacyHtml.includes('94501') &&
+    /<address[^>]*class="legal-address"/i.test(privacyHtml),
+    'privacy.html Contact section includes business address (1311 Park St, Unit #654, Alameda, CA 94501)'
+  )) passed++;
+  else failed++;
+
+  if (assert(
+    termsHtml &&
+    termsHtml.includes('1311 Park St, Unit #654') &&
+    termsHtml.includes('Alameda') &&
+    termsHtml.includes('94501') &&
+    /<address[^>]*class="legal-address"/i.test(termsHtml),
+    'terms.html Contact section includes business address (1311 Park St, Unit #654, Alameda, CA 94501)'
+  )) passed++;
   else failed++;
 
   // --- ARIA ---
