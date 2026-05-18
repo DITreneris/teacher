@@ -63,7 +63,8 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 - [ ] Social preview sanity (after `og-image.png` deploy):
   - [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) — Scrape Again for `https://promptanatomy.online/`
   - [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/)
-  - X — verify large image card on a draft post or third-party OG tester
+  - [Twitter Card Validator](https://cards-dev.twitter.com/validator) — verify `summary_large_image` renders the new headline + brand row without clipping
+  - Slack / Discord — paste the URL, verify the navy preview thumbnail (no broken glyph in upper-left, URL fully visible in lower-left)
 - [ ] [Google Rich Results Test](https://search.google.com/test/rich-results) — `SoftwareApplication` + both `FAQPage` entities on home URL
 - [ ] CSP remains `Content-Security-Policy-Report-Only` until one week of clean production reports; then promote to enforcing `Content-Security-Policy` in `vercel.json` (see [todo.md](todo.md) §7)
 
@@ -79,7 +80,7 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 | `llms.txt` | `/llms.txt` | Concise, machine-readable product brief for AI engines (operator, contact, pricing, paid PDF guides, audience, modes, limitations). |
 | `.well-known/security.txt` | `/.well-known/security.txt` | RFC 9116 security contact. |
 | `manifest.webmanifest` | `/manifest.webmanifest` | Web app manifest for browser / OS install hints. |
-| `og-image.png` | `/og-image.png` | 1200 x 630 social preview (target &lt; 300 KB; run `npm run optimize:social` after edits). Served with `Cross-Origin-Resource-Policy: cross-origin` so Facebook / LinkedIn / X / Slack can embed it. |
+| `og-image.png` | `/og-image.png` | 1200 x 630 social preview (target &lt; 300 KB). Canonical generator: `npm run generate:og` (Satori + sharp, hydrated from `config/sot.json` brand colors + a static minimal layout). `npm run build:social` runs the generator then `optimize:social` as a size-budget safety net. Regenerate after any change to `sot.colors.deepBlue`, `primaryYellow`, the brand wordmark, or `scripts/generate-og-image.js`. Served with `Cross-Origin-Resource-Policy: cross-origin` so Facebook / LinkedIn / X / Slack can embed it. |
 | `apple-touch-icon.png` | `/apple-touch-icon.png` | 180 x 180 home-screen icon. |
 | `404.html` | served by Vercel for unmatched routes | Branded 404 with `noindex, follow`. |
 | Canonical | `<link rel="canonical">` on each HTML page | Always `https://promptanatomy.online/...`. |
@@ -187,6 +188,14 @@ npm run test:smoke
 npm run test:e2e
 npm run test:a11y
 ```
+
+If `config/sot.json#colors` (deepBlue / primaryYellow) or the OG layout in `scripts/generate-og-image.js` changed in this commit, also run:
+
+```bash
+npm run build:social
+```
+
+and commit the regenerated `og-image.png`. The static structure tests enforce 1200x630 + ≤300 KB but do not auto-regenerate.
 
 ---
 

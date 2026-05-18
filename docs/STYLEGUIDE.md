@@ -88,6 +88,37 @@ See [`design-system-audit_2026-05.md`](design-system-audit_2026-05.md) for audit
 
 ---
 
+## Hero progress model
+
+| Width | Progress UI |
+|-------|-------------|
+| ≤768px (mobile) | `.header .header-steps` is **hidden**. The ops-center `.step-badge` ("1") together with the in-section `.journey-next-link` ("View generated prompt") is the canonical mobile progress. |
+| 769–1024px (tablet) | `.header-steps` visible as the desktop pill row; connectors softened (`rgba(255,255,255,0.55)`); `.hero-prompt-card` still hidden. |
+| ≥1025px (desktop) | Full grid: `.hero-content` left, `.hero-prompt-card` right (`width: clamp(260px, 22vw, 300px)`, glass + float). |
+
+`.header-steps` DOM stays present at every width so anchor links remain crawlable and keyboard-reachable on tablet+.
+
+Cache hint: bump `index.html` `<link rel="stylesheet" href="style.css?v=X.Y.Z">` whenever hero/layout CSS changes so returning mobile visitors do not see stale styles.
+
+---
+
+## Social preview (OG image)
+
+| Aspect | Rule |
+|--------|------|
+| Source of truth | `scripts/generate-og-image.js` (Satori + sharp); regenerate with `npm run generate:og` or `npm run build:social`. Never hand-edit `og-image.png`. |
+| Spec | 1200x630 PNG, ≤300 KB (enforced by `tests/structure.test.js`). |
+| Safe area | ≥80px padding on every side. Nothing important within the outer 80px ring (mobile thumbnails crop aggressively). |
+| Layout | Four elements only: top-left brand row (icon + wordmark) → H1 (≤3 lines) → gold accent line → bottom-left URL. |
+| Typography | Inter Bold 96px (H1, line-height 1.04, letter-spacing -0.02em); Inter Medium 30–32px (brand wordmark + URL). |
+| Colors | Background `--primary` (`#0F2A44`) + subtle gold radial highlight `rgba(245, 197, 24, 0.16)` top-right. H1 white. Brand wordmark `rgba(255, 255, 255, 0.92)`. Accent + URL `--accent-gold` (`#F5C518`). |
+| Brand naming | Do **not** name AI vendors (ChatGPT, Claude, Gemini) on the OG image. They stay in body copy (`meta name=description`, `og:description`) per `docs/marketing_plan.md` §5; the OG surface is the most amplified and stays vendor-neutral. |
+| Fonts on disk | `assets/fonts/Inter-Bold.woff` + `Inter-Medium.woff` (latin subset, SIL OFL 1.1; license: `assets/fonts/OFL.txt`). Satori's bundled opentype parser supports WOFF but not WOFF2. |
+
+Post-deploy validation: Facebook Sharing Debugger, Twitter Card Validator, LinkedIn Post Inspector (see `DEPLOY.md` §5).
+
+---
+
 ## Community section
 
 | Class | Role | Tokens |

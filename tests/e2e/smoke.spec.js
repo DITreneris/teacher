@@ -60,14 +60,22 @@ for (const viewport of viewports) {
       expect(hasOverflow).toBeFalsy();
     });
 
-    test('mobile journey: journey-next link and step anchors visible', async ({ page }) => {
+    test('mobile journey: journey-next link drives the user to the generated prompt', async ({ page }) => {
       await page.goto('/');
+      // On mobile (≤768px) the hero stepper is intentionally hidden; the canonical
+      // mobile progress is the ops-center step-badge plus the in-page journey-next-link.
+      await expect(page.locator('.header .header-steps')).toBeHidden();
       await expect(page.locator('#journeyNextWrap')).toBeVisible();
       await expect(page.locator('#journeyNextLink')).toHaveAttribute('href', '#opsOutputSection');
-      await expect(page.locator('.header-step[href="#opsForm"]')).toBeVisible();
-      await expect(page.locator('.header-step[href="#opsOutputSection"]')).toBeVisible();
-      await page.click('a[href="#opsOutputSection"]');
+      await page.click('#journeyNextLink');
       await expect(page.locator('#opsOutputSection')).toBeInViewport({ timeout: 3000 });
+    });
+
+    test('ops-center header sits above the fold on mobile', async ({ page }) => {
+      await page.goto('/');
+      // After removing the hero stepper, the Lesson workflow center header should be
+      // reachable without scrolling so the user immediately sees where to start.
+      await expect(page.locator('.ops-center-header')).toBeInViewport({ ratio: 0.4, timeout: 3000 });
     });
   });
 }

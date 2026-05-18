@@ -516,6 +516,17 @@ function run() {
   if (assert(ogDims && ogDims.width === 1200 && ogDims.height === 630, 'og-image.png is 1200x630')) passed++;
   else failed++;
 
+  const ogGen = path.join(__dirname, '..', 'scripts', 'generate-og-image.js');
+  if (assert(fs.existsSync(ogGen), 'scripts/generate-og-image.js exists (Satori-driven OG generator)')) passed++;
+  else failed++;
+  const interBold = path.join(__dirname, '..', 'assets', 'fonts', 'Inter-Bold.woff');
+  const interMedium = path.join(__dirname, '..', 'assets', 'fonts', 'Inter-Medium.woff');
+  if (assert(fs.existsSync(interBold) && fs.existsSync(interMedium), 'Inter font buffers (Bold + Medium WOFF) present for OG generator')) passed++;
+  else failed++;
+  const ofl = path.join(__dirname, '..', 'assets', 'fonts', 'OFL.txt');
+  if (assert(fs.existsSync(ofl), 'assets/fonts/OFL.txt SIL Open Font License present')) passed++;
+  else failed++;
+
   const appleTouch = path.join(__dirname, '..', 'apple-touch-icon.png');
   if (assert(fs.existsSync(appleTouch), 'apple-touch-icon.png exists at repo root')) passed++;
   else failed++;
@@ -576,7 +587,7 @@ function run() {
   else failed++;
 
   // --- Module files ---
-  if (assert(html.includes('href="style.css"'), 'Link to style.css')) passed++;
+  if (assert(/href="style\.css(?:\?[^"]*)?"/.test(html), 'Link to style.css')) passed++;
   else failed++;
   if (assert(/src="generator\.js(?:\?[^"]*)?"/.test(html), 'Script src generator.js')) passed++;
   if (assert(fs.existsSync(path.join(__dirname, '..', 'analytics.js')), 'analytics.js exists')) passed++;

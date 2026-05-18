@@ -65,6 +65,9 @@ test.describe('core first-run flows', () => {
     await expect(rulesToggle).toHaveAttribute('aria-expanded', 'true');
     await expect(libraryToggle).toHaveAttribute('aria-expanded', 'false');
 
+    // The hero stepper is hidden on mobile (≤768px); switch to a desktop viewport
+    // to exercise the .header-step link that is only surfaced for tablet+ users.
+    await page.setViewportSize({ width: 1280, height: 900 });
     await page.click('.header-step[href="#library"]');
     await expect(libraryToggle).toHaveAttribute('aria-expanded', 'true');
   });

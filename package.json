@@ -23,6 +23,8 @@
     "check:fulfillment": "node scripts/check-fulfillment-env.js",
     "vendor:analytics": "node scripts/vendor-vercel-analytics.js",
     "optimize:social": "node scripts/optimize-social-images.js",
+    "generate:og": "node scripts/generate-og-image.js",
+    "build:social": "npm run generate:og && npm run optimize:social",
     "postinstall": "node scripts/vendor-vercel-analytics.js"
   },
   "devDependencies": {
@@ -31,14 +33,15 @@
     "eslint": "^8.57.0",
     "html-validator-cli": "^7.0.0",
     "pa11y": "^6.2.3",
-    "sharp": "^0.34.2",
+    "satori": "^0.26.0",
     "serve": "^14.2.1",
+    "sharp": "^0.34.2",
     "start-server-and-test": "^2.0.11",
     "wait-on": "^8.0.1"
   },
   "dependencies": {
-    "@vercel/analytics": "^2.0.1",
     "@upstash/redis": "^1.38.0",
+    "@vercel/analytics": "^2.0.1",
     "resend": "^6.12.3",
     "stripe": "^22.1.1"
   }

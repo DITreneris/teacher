@@ -85,4 +85,17 @@ test.describe('hero prompt card (decorative)', () => {
     expect(styles.borderRadius).toBeGreaterThanOrEqual(20);
     expect(styles.backdropFilter).toMatch(/blur/i);
   });
+
+  test('desktop: card width stays inside the clamp(260, 22vw, 300) bounds', async ({ page }) => {
+    const widths = [1025, 1280, 1440];
+    for (const width of widths) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+      const cardWidth = await page.locator('.hero-prompt-card').evaluate(
+        (el) => el.getBoundingClientRect().width
+      );
+      expect(cardWidth).toBeGreaterThanOrEqual(259);
+      expect(cardWidth).toBeLessThanOrEqual(301);
+    }
+  });
 });
