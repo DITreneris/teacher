@@ -1,8 +1,8 @@
 # US market & X/Twitter marketing plan
 
 **Product:** [Classroom Prompt Builder](https://promptanatomy.online/) · **Brand:** Prompt Anatomy  
-**Last updated:** May 16, 2026  
-**Status:** Partially ready — live Stripe checkout shipped (v1.1.0); free-tool X promotion after P0 ops (test-mode E2E); paid ads after Gate B proof.
+**Last updated:** May 20, 2026  
+**Status:** Partially ready — live Stripe checkout + fulfillment verified (2026-05-19); free-tool X promotion unblocked (Gate A ops); paid ads after Gate B proof.
 
 This plan is the canonical go-to-market reference for US promotion. It is tied to release blockers in [todo.md](../todo.md) (operator scratch, not indexed) and deployment steps in [DEPLOY.md](../DEPLOY.md). Legal pages: [privacy.html](../privacy.html), [terms.html](../terms.html).
 
@@ -29,10 +29,10 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | Question | Answer |
 |----------|--------|
 | Ready for US promotion? | **Partially** |
-| Biggest blocker | Vercel fulfillment env completeness + test-mode E2E + refund path ([todo.md](../todo.md) P0 §1b–§2); Payment Link `metadata.product` recommended |
-| Promote free tool on X now? | **After P0 ops** (test-mode purchase + refund documented) — legal/trust base is strong; live checkout verified (CHANGELOG Stage 6c) |
+| Biggest blocker | X account + demo content ([todo.md](../todo.md) Gate A); permissioned testimonials (Gate B) |
+| Promote free tool on X now? | **Yes** (ops E2E done — [todo.md](../todo.md) P0 §1b–§2 verified 2026-05-19) |
 | Run paid X ads for PDFs? | **No** until Gate B (organic sales or analytics proof + permissioned testimonial) |
-| Highest-ROI next move | Close P0 §2 test-mode E2E → 30s lesson-mode screen recording → new X account → drive to **free builder only** |
+| Highest-ROI next move | 30s lesson-mode screen recording → X account + UTM → **free builder**; parallel: Resend outreach metrics (hold TX50d) |
 
 ### Readiness scores (1–10)
 
@@ -44,7 +44,7 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | Pricing / checkout | 8 | Live `buy.stripe.com` in SOT; one live sale verified (Stage 6c) |
 | Proof | 5 | Honest pilot disclosure; needs attributable quotes |
 | Free CTA / conversion logic | 8 | |
-| Paid CTA / conversion logic | 7 | Live links + publish gate; ops E2E still open |
+| Paid CTA / conversion logic | 8 | Live links + fulfillment E2E verified |
 | X profile readiness | 2 | No verified handle / `twitter:site` yet |
 
 ---
@@ -54,7 +54,7 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 ### Gate A — Free organic X (minimum)
 
 - [x] [todo.md](../todo.md) P0 §1: live Stripe URLs in [`config/sot.json`](../config/sot.json) `commerce.stripePaymentLinks` and `commerce.allowPlaceholderCheckout: false` (CHANGELOG Stage 5; publish gate in `npm test`)
-- [ ] [todo.md](../todo.md) P0 §2: one successful **test-mode** purchase + refund path documented in [DEPLOY.md](../DEPLOY.md)
+- [x] [todo.md](../todo.md) P0 §2: purchase + fulfillment path verified (2026-05-19; live + test)
 - [ ] X account created, bio + link to `https://promptanatomy.online`
 - [ ] Pinned post: 30s demo of lesson mode (no hype claims)
 - [ ] UTM on all X links: `?utm_source=twitter&utm_medium=organic&utm_campaign=cpb`
@@ -87,7 +87,7 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | Terms + AI disclaimer + license + refund | ✅ `terms.html` | Required |
 | Cookie banner | Not required today (no cookies; Vercel Analytics cookieless per privacy §7) | Required if ad pixels added |
 | Contact | ✅ `info@promptanatomy.app` | Required |
-| Legal entity on site | ⚠️ Footer: individual copyright only | Required before paid ads |
+| Legal entity on site | ⚠️ Postal address is live; counsel-approved entity name still pending | Required before paid ads |
 | Testimonials in ads | ⚠️ Anonymous / paraphrased | Substantiate or exclude from paid creative |
 | X ad policy (digital goods + education) | Test with small budget | Required before scale |
 
@@ -185,13 +185,13 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 
 | Day | Action |
 |-----|--------|
-| 1–2 | Complete [todo.md](../todo.md) P0 Stripe Payment Links + `index.html` URLs |
-| 3 | Live test purchase + refund per [DEPLOY.md](../DEPLOY.md) |
-| 4 | Footer legal/operator line (counsel) |
-| 5 | Soften or source compare-strip `$149`; tighten testimonial copy for ads |
+| 1–2 | ✅ Stripe Payment Links + SOT publish gate complete; static `index.html` Stripe fallbacks present |
+| 3 | ✅ Live/test purchase and fulfillment path verified per [DEPLOY.md](../DEPLOY.md) / [todo.md](../todo.md) P0 |
+| 4 | Footer legal/operator line review (counsel-approved entity name still pending) |
+| 5 | Keep qualified compare-strip copy (`often $100+`) unless a sourced exact figure is added; tighten testimonial copy for ads |
 | 6–7 | Create X profile, bio, UTM link, pin demo post |
 
-**Exit criteria:** 1 successful live purchase; 0 broken PDF CTAs.
+**Exit criteria:** 1 successful live purchase; 0 broken PDF CTAs. Completed for ops E2E on 2026-05-19; continue with X profile/demo work.
 
 ### Week 2 — Positioning & CTA test
 
@@ -234,10 +234,10 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 
 | Risk | Severity | Fix |
 |------|----------|-----|
-| Placeholder Stripe URLs | High | [todo.md](../todo.md) P0 |
-| Webhook / email failure | High | E2E test + monitor |
+| Stripe URL drift across SOT / HTML fallback / JS defaults | Medium | `npm test` publish gate + `rg "buy.stripe.com"` after any Payment Link rotation |
+| Webhook / email failure | High | Same-domain webhook, `/api/fulfillment-health`, `npm run check:fulfillment`, E2E test + monitor |
 | FTC-style testimonial claims | Medium | Named permission or remove from ads |
-| Unsourced $149 comparison | Medium | Source or reword |
+| Unsourced exact-dollar PD comparison | Medium | Keep `often $100+` or source any exact figure |
 | Wrong audience (non-teachers) | High | Keep X copy teacher-specific |
 | AI hype backlash | Medium | Verification + no-PII messaging |
 | Retargeting without consent | Medium | Defer pixels until counsel |
@@ -261,5 +261,5 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 
 - Update **Last updated** when gates, scores, or channel tactics change.
 - After X handle is live: note handle in §6 and track meta tag task in [CHANGELOG.md](../CHANGELOG.md).
-- When [todo.md](../todo.md) P0 is done, check Gate A boxes and bump readiness scores in §2.
+- When release gates or fulfillment env requirements change, update [todo.md](../todo.md), [DEPLOY.md](../DEPLOY.md), and `.cursor/rules/cpb-fulfillment.mdc` together.
 - Commerce / social-proof copy lives in [`config/sot.json`](../config/sot.json) under `commerce` (Stripe links, pricing, compare strip, delivery promise, testimonials). Edit there - `generator.js` `initCommerce()` hydrates [`index.html`](../index.html) at runtime; the publish gate in `tests/structure.test.js` enforces no `YOUR_` placeholder when `allowPlaceholderCheckout: false`.

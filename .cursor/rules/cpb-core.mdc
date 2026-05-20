@@ -1,0 +1,61 @@
+---
+description: Classroom Prompt Builder — project map, en-US copy, SOT, docs, quality gates
+alwaysApply: true
+---
+
+# Classroom Prompt Builder (US MVP v1.1.2)
+
+## Product
+
+- **Site:** https://promptanatomy.online — free K–12 prompt builder + optional paid PDF guides ($4.99 / $9.99).
+- **Stack:** static root (no build step) + Vercel serverless `api/*`.
+- **Core files:** `index.html`, `success.html`, `privacy.html`, `terms.html`, `generator.js`, `copy.js`, `style.css`, `config/sot.json`.
+
+## Repo boundary
+
+- This repo is the **Vercel product + PDF fulfillment** repo: `promptanatomy.online`, Stripe checkout, Upstash Redis, Vercel Blob, transactional Resend, and `api/**`.
+- School outreach is a separate sibling repo: `..\cpb-school-outreach` (Railway, Supabase Postgres, contact enrichment, campaign sending, marketing Resend on `news.promptanatomy.online`).
+- Do **not** add outreach logic to Vercel `api/**`, Stripe fulfillment, Upstash, Blob, product env, or transactional email paths.
+- For outreach tasks, work in `..\cpb-school-outreach` and follow its own `AGENTS.md` / Cursor rules.
+
+## User-facing language
+
+- All product copy is **en-US** (`lang="en-US"`). Teacher-friendly, concrete, concise.
+- Do **not** use Lithuanian „Tu“ or informal LT tone in UI, legal, or email copy.
+
+## Agent workflow
+
+- Roles and stage-gate: [`AGENTS.md`](../../AGENTS.md).
+- Internal agent docs may stay Lithuanian; **product** copy stays English.
+
+## Documentation
+
+- Active docs only via [`docs/INDEX.md`](../../docs/INDEX.md).
+- Operator scratch (not INDEX, not archived): [`todo.md`](../../todo.md), [`memo_pdf.md`](../../memo_pdf.md).
+
+## Single source of truth (SOT)
+
+- [`config/sot.json`](../../config/sot.json) — modes, theme, `commerce`, `pdfGuides`, `buyerFaq`, `legal`.
+- Commerce copy and Stripe URLs: `config/sot.json#commerce` — hydrate via `data-commerce-*` / `data-stripe-cta` hooks in `index.html`, not hardcoded marketing strings.
+
+## Security
+
+- Never commit secrets (`.env`, API keys, tokens).
+- Production API: no sensitive data in logs; avoid `console.log` in shipped paths.
+
+## Quality gates (summary)
+
+| Change | Run |
+|--------|-----|
+| Any code/docs | `npm test` |
+| UX / HTML interactions | `npm run test:smoke`, `npm run test:a11y` |
+| Forms, sessions, copy, modes | `npm run test:e2e` (core-flow) |
+| PDF commerce CSS / layout | `npm run test:e2e` (includes mobile-pdf-commerce) |
+| Fulfillment `api/**` | `npm test`; recommend `npm run check:fulfillment` before deploy |
+
+**CI truth:** `.github/workflows/ci.yml` runs `npm run test:mixed` — match or exceed locally before PR.
+
+## Specialized rules
+
+- PDF commerce UI: `.cursor/rules/cpb-pdf-commerce.mdc`
+- Stripe fulfillment: `.cursor/rules/cpb-fulfillment.mdc`

@@ -9,21 +9,36 @@
     <meta name="googlebot" content="index, follow">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://promptanatomy.online/sitemap.xml">
     <link rel="canonical" href="https://promptanatomy.online/privacy.html">
+    <link rel="alternate" hreflang="en-us" href="https://promptanatomy.online/privacy.html">
+    <link rel="alternate" hreflang="x-default" href="https://promptanatomy.online/privacy.html">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="mask-icon" href="favicon.svg" color="#0F2A44">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.1.2">
+    <link rel="preload" href="/assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://promptanatomy.online/" },
-            { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://promptanatomy.online/privacy.html" }
+        "@graph": [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://promptanatomy.online/" },
+                    { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://promptanatomy.online/privacy.html" }
+                ]
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://promptanatomy.online/privacy.html#webpage",
+                "url": "https://promptanatomy.online/privacy.html",
+                "name": "Privacy Policy",
+                "inLanguage": "en-US",
+                "isPartOf": { "@id": "https://promptanatomy.online/#website" },
+                "dateModified": "2026-05-15",
+                "primaryImageOfPage": "https://promptanatomy.online/og-image.png"
+            }
         ]
     }
     </script>
@@ -64,7 +79,7 @@
         <p>The Service is intended for use by teachers, not by children. We do not knowingly collect any data from children under 13.</p>
 
         <h2>7. Cookies</h2>
-        <p>The Service does not set cookies. Vercel Analytics, when enabled by the hosting project, is cookieless. Some third-party fonts (Google Fonts) are loaded for display purposes; please consult Google&rsquo;s privacy policy for details.</p>
+        <p>The Service does not set cookies. Vercel Analytics, when enabled by the hosting project, is cookieless. Site fonts are served from this domain as self-hosted static assets; no Google Fonts request is made by the shipped public pages.</p>
 
         <h2>8. Third-party AI tools</h2>
         <p>The Service provides buttons that open ChatGPT, Claude, and Gemini in a new tab. Once you leave the Service, the privacy policy of the destination tool applies.</p>

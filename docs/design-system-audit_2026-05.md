@@ -1,6 +1,6 @@
 # Design system & mobile audit — May 2026
 
-**Product:** Classroom Prompt Builder v1.1.0  
+**Product:** Classroom Prompt Builder v1.1.2  
 **Scope:** Full site + PDF commerce block (`#pdf-guides`)  
 **Baseline:** `npm test` 156/156 pass (2026-05-17)
 
@@ -33,9 +33,11 @@ After the PDF storefront expansion (covers, compare strip, testimonials, preview
 
 ## P0 / P1 / P2 backlog (post-1.1.0)
 
-- **P1:** Sticky mini-CTA when main PDF CTA scrolls off-screen
-- **P1:** WebP covers (`todo.md` §5)
+- ~~**P1:** Sticky mini-CTA when main PDF CTA scrolls off-screen~~ — shipped in v1.1.2 (`pdf-sticky-cta`, mobile-only, `IntersectionObserver`).
+- ~~**P1:** WebP covers (`todo.md` §5)~~ — shipped in v1.1.2 (`<picture>` + `scripts/optimize-pdf-covers.js`; ~70-80% size reduction).
 - **P2:** Playwright visual regression screenshots for `#pdf-guides` @ 320px
+
+See [`.cursor/plans/ds_p0-p3_micro-improvements_b250ea79.plan.md`](../.cursor/plans/ds_p0-p3_micro-improvements_b250ea79.plan.md) for the full v1.1.2 / v1.2.0 design-system rollout (color-scheme, prefers-contrast, content-visibility, Product JSON-LD, self-hosted fonts, color-mix tokens, clamp typography, container queries, dialog @starting-style, light-dark seed) and [`todo.md`](../todo.md) §9 for the deferred P3 follow-ups (full light-dark migration + Lucide sprite).
 
 ## Quality gates (release)
 

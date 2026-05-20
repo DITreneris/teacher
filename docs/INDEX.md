@@ -21,6 +21,7 @@ The single documentation navigation hub after `README.md`.
 ## Active go-to-market
 
 - [marketing_plan.md](marketing_plan.md) - US promotion readiness, X/Twitter plan, compliance gates, 30-day calendar; cross-links [DEPLOY.md](../DEPLOY.md) and operator release blockers (see plan §10).
+- [outreach_experience_memo_2026-05-17.md](outreach_experience_memo_2026-05-17.md) - school outreach bot experience memo: separate Railway/Supabase outreach stack, contact enrichment lessons, current acquisition status, pivot strategy, and agent/operator guidance.
 
 ## Active legal pages
 

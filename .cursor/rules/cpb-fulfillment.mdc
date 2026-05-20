@@ -1,0 +1,61 @@
+---
+description: Stripe webhook, fulfillment env, same-domain rule, health probe, diagnostics
+globs: api/**,.env.example,DEPLOY.md,memo_pdf.md,scripts/check-fulfillment-env.js,scripts/upload-pdfs-to-blob.js
+alwaysApply: false
+---
+
+# Paid PDF fulfillment (Stripe + Vercel)
+
+## API routes
+
+| Route | Role |
+|-------|------|
+| `api/stripe-webhook.js` | Verify signature → `fulfillCheckoutSession()` |
+| `api/_lib/fulfillment.js` | Redis state, Resend email, signed tokens, PDF fetch |
+| `api/download.js` | Long-lived (7-day) signed PDF — email link |
+| `api/download-link.js` | Short-lived (15-min) URL by `session_id` — `success.html` poll |
+| `api/fulfillment-health.js` | Production env + Redis / Stripe / Blob config probe |
+
+## Golden rule (same production host)
+
+Payment Link **success URL**, Stripe **webhook URL**, Upstash Redis, and Vercel **Production env** must all target the **same** buyer-facing domain (e.g. `promptanatomy.online`).
+
+**Anti-pattern:** webhook on `promptanatomy.app` while buyers land on `promptanatomy.online` → webhook returns 200 but `success.html` shows “session not found”. See [`todo.md`](../../todo.md) §1b and [`memo_pdf.md`](../../memo_pdf.md).
+
+## Environment (all or nothing)
+
+Required set, shared by `api/_lib/fulfillment.js`, `/api/fulfillment-health`, `scripts/check-fulfillment-env.js`, and `DEPLOY.md`: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_*_PDF`, Upstash URL/token, `DOWNLOAD_TOKEN_SECRET`, `RESEND_API_KEY`, `FULFILLMENT_FROM_EMAIL`, `PDF_*_SOURCE_URL`, `BLOB_READ_WRITE_TOKEN`, `SITE_URL`.
+
+Checklists: [`memo_pdf.md`](../../memo_pdf.md) §3, [`DEPLOY.md`](../../DEPLOY.md).
+
+`STRIPE_SECRET_KEY` must work for `sessions.retrieve` — signature verification alone is insufficient.
+
+## Product mapping (priority)
+
+1. Payment Link `metadata.product` = `beginners` | `advanced`
+2. `STRIPE_PRICE_*` env ids
+3. `amount_total` fallback (499 / 999 cents)
+
+Do not rely on amount alone in production.
+
+## Diagnostics
+
+- `GET /api/fulfillment-health` → `{ ok, missing, redis, blobConfigured, stripeConfigured, priceMappingConfigured, siteUrlConfigured }`
+- Webhook 500 responses include `detail` for Stripe Dashboard
+- After env fix: **replay** `checkout.session.completed` in Stripe (do not re-charge buyer)
+
+## Before deploy / after incident
+
+```bash
+npm test
+npm run check:fulfillment   # local Redis + optional checks
+```
+
+Production: DEPLOY post-deploy checklist + [`todo.md`](../../todo.md) P0 §2 (test-mode purchase + refund).
+
+## Tests
+
+- Structure asserts: fulfillment helpers, health route, env validation hooks
+- E2E: success-page poll with mocked `/api/download-link` in [`tests/e2e/core-flow.spec.js`](../../tests/e2e/core-flow.spec.js)
+
+Do not change fulfillment without running `npm test`; recommend full `test:mixed` before release.

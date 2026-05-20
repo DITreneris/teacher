@@ -191,6 +191,24 @@
       "beginners": { "now": "$4.99", "was": "$9.99" },
       "advanced": { "now": "$9.99", "was": "$19.99" }
     },
+    "products": {
+      "beginners": {
+        "name": "Beginners \u2014 Prompt Anatomy",
+        "image": "/assets/pdf-covers/beginners.png",
+        "price": "4.99",
+        "currency": "USD",
+        "sku": "beginners-pdf",
+        "category": "Educational eBook"
+      },
+      "advanced": {
+        "name": "Advanced \u2014 Prompt Anatomy",
+        "image": "/assets/pdf-covers/advanced.png",
+        "price": "9.99",
+        "currency": "USD",
+        "sku": "advanced-pdf",
+        "category": "Educational eBook"
+      }
+    },
     "compareStrip": {
       "pdLabel": "Typical single-session PD",
       "pdValue": "often $100+",

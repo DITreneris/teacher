@@ -120,9 +120,10 @@ Set these in Vercel Project Settings → Environment Variables. Do not commit se
 | `FULFILLMENT_FROM_EMAIL` | Yes | Verified sender, for example `Prompt Anatomy <downloads@promptanatomy.online>`. |
 | `UPSTASH_REDIS_REST_URL` | Yes | Redis REST URL for fulfillment records and active download tokens. |
 | `UPSTASH_REDIS_REST_TOKEN` | Yes | Redis REST token. Legacy `KV_REST_API_*` and `VERCEL_KV_REST_API_*` names are also supported. |
-| `SITE_URL` | Recommended | Canonical site URL used in emailed download links. Use `https://promptanatomy.online`. |
-| `PDF_BEGINNERS_SOURCE_URL` | Production | Private storage URL for the Beginners PDF. |
-| `PDF_ADVANCED_SOURCE_URL` | Production | Private storage URL for the Advanced Educators PDF. |
+| `SITE_URL` | Yes | Canonical site URL used in emailed download links. Use `https://promptanatomy.online`. |
+| `PDF_BEGINNERS_SOURCE_URL` | Yes | Private storage URL for the Beginners PDF. |
+| `PDF_ADVANCED_SOURCE_URL` | Yes | Private storage URL for the Advanced Educators PDF. |
+| `BLOB_READ_WRITE_TOKEN` | Yes | Required for server-side reads from private Vercel Blob PDF URLs. |
 | `PDF_SOURCE_AUTH_TOKEN` | If needed | Bearer token for private PDF source fetches. |
 | `PDF_SOURCE_AUTH_HEADER` | If needed | Custom private-source auth header in `Header-Name: value` format. |
 | `DOWNLOAD_TOKEN_TTL_SECONDS` | Optional | Defaults to 7 days (long-lived email download link). |
@@ -132,7 +133,7 @@ Set these in Vercel Project Settings → Environment Variables. Do not commit se
 ### Stripe setup
 
 1. Create two Stripe Products / Prices: Beginners PDF Guide (`$4.99`) and Advanced Educators PDF Guide (`$9.99`).
-2. Create one Payment Link per product and paste those URLs into [`config/sot.json`](config/sot.json) under `commerce.stripePaymentLinks.beginners` / `.advanced`. Then flip `commerce.allowPlaceholderCheckout` to `false` so `npm test` enforces the publish gate (no `YOUR_` placeholders, must match `https://buy.stripe.com/`). The PDF CTA `href`s in `index.html` are hydrated from SOT at runtime by `generator.js` `initCommerce()`; no HTML edit is required.
+2. Create one Payment Link per product and paste those URLs into [`config/sot.json`](config/sot.json) under `commerce.stripePaymentLinks.beginners` / `.advanced`. Then flip `commerce.allowPlaceholderCheckout` to `false` so `npm test` enforces the publish gate (no `YOUR_` placeholders, must match `https://buy.stripe.com/`). `index.html` keeps static `buy.stripe.com` `href` fallbacks for no-JS and pre-hydration checkout; `generator.js` `initCommerce()` re-hydrates those CTAs from SOT at runtime.
    - On **each** Payment Link, add **Metadata**: key `product`, value `beginners` or `advanced` (Stripe Dashboard → Payment Link → Additional options → Metadata). This is the most reliable product mapping for fulfillment.
    - Copy each Payment Link's **Price ID** (`price_...`) into Vercel as `STRIPE_PRICE_BEGINNERS_PDF` / `STRIPE_PRICE_ADVANCED_PDF`. If these env vars are missing or point at a different Price than the Payment Link uses, the webhook cannot match the product unless metadata or the `$4.99` / `$9.99` amount fallback applies.
 3. **Set the success URL** on each Payment Link (Stripe Dashboard → Payment Link → After payment → "Don't show confirmation page → Redirect customers to your website") to:
@@ -171,7 +172,7 @@ This means the Stripe webhook never wrote `fulfillment:cs_...` to **promptanatom
 **First check:** Stripe → Webhooks → which URL received `checkout.session.completed`? If it is `promptanatomy.app` (or any host other than `promptanatomy.online`), add a second endpoint for `https://promptanatomy.online/api/stripe-webhook`, paste its signing secret into the **promptanatomy.online** Vercel env as `STRIPE_WEBHOOK_SECRET`, then **Resend** the event to the `.online` endpoint.
 
 1. **Stripe Dashboard → Developers → Webhooks** → your `https://promptanatomy.online/api/stripe-webhook` endpoint → open the `checkout.session.completed` event. Read the response body (`fulfillment` or `detail` field) and HTTP status. A `200` with only `{ "received": true }` and no `fulfillment` field on the **wrong host** does not help `.online`.
-2. **Vercel → Project → Settings → Environment Variables** (Production): confirm all of `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_BEGINNERS_PDF`, `STRIPE_PRICE_ADVANCED_PDF`, `DOWNLOAD_TOKEN_SECRET`, `RESEND_API_KEY`, `FULFILLMENT_FROM_EMAIL`, `UPSTASH_REDIS_REST_*`, `PDF_BEGINNERS_SOURCE_URL`, `PDF_ADVANCED_SOURCE_URL` are set. `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` must be **live** keys if the Payment Link is live (not test).
+2. **Vercel → Project → Settings → Environment Variables** (Production): confirm all of `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_BEGINNERS_PDF`, `STRIPE_PRICE_ADVANCED_PDF`, `DOWNLOAD_TOKEN_SECRET`, `RESEND_API_KEY`, `FULFILLMENT_FROM_EMAIL`, `UPSTASH_REDIS_REST_*`, `PDF_BEGINNERS_SOURCE_URL`, `PDF_ADVANCED_SOURCE_URL`, `BLOB_READ_WRITE_TOKEN`, and `SITE_URL=https://promptanatomy.online` are set. `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` must be **live** keys if the Payment Link is live (not test).
 3. **Payment Link metadata**: each link should have `product` = `beginners` or `advanced`.
 4. **Resend**: domain/sender `FULFILLMENT_FROM_EMAIL` must be verified; check Resend dashboard for bounces.
 5. After fixing env/metadata, **Replay** the event in Stripe (Webhooks → event → Resend). Or run locally: `stripe events resend evt_...`.
@@ -183,10 +184,22 @@ This means the Stripe webhook never wrote `fulfillment:cs_...` to **promptanatom
 
 ```bash
 npm ci
+npm run test:mixed
+```
+
+Equivalent explicit local gates:
+
+```bash
 npm test
 npm run test:smoke
 npm run test:e2e
 npm run test:a11y
+```
+
+For fulfillment/API changes, also run:
+
+```bash
+npm run check:fulfillment
 ```
 
 If `config/sot.json#colors` (deepBlue / primaryYellow) or the OG layout in `scripts/generate-og-image.js` changed in this commit, also run:
@@ -196,6 +209,14 @@ npm run build:social
 ```
 
 and commit the regenerated `og-image.png`. The static structure tests enforce 1200x630 + ≤300 KB but do not auto-regenerate.
+
+If `index.html`, `privacy.html`, or `terms.html` changed in this commit, also run:
+
+```bash
+npm run sitemap:update
+```
+
+and commit the regenerated `sitemap.xml` (and bumped `index.html` `dateModified`). The script is idempotent — re-running with no file mtime changes is a no-op.
 
 ---
 

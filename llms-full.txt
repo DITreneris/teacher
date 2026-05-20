@@ -1,0 +1,263 @@
+# Classroom Prompt Builder - Full content for AI ingestion
+
+> Site: https://promptanatomy.online/
+> Audience: US K-12 teachers
+> Edition: US Edition
+> Last updated: 2026-05-20
+> Operator: Prompt Anatomy
+> Contact: info@promptanatomy.app
+> Source repository: https://github.com/DITreneris/teacher
+
+This file is a single plaintext concatenation of the homepage product content, FAQ entries, buyer FAQ for paid PDF guides, PDF guide tables of contents, and short summaries of the Privacy Policy and Terms of Use. It exists so AI engines can ingest the full canonical content in one fetch instead of crawling multiple HTML pages. The shorter index file is at https://promptanatomy.online/llms.txt.
+
+================================================================================
+SECTION 1 - HERO AND PRODUCT POSITIONING
+================================================================================
+
+Product name: Classroom Prompt Builder
+Brand: Prompt Anatomy
+Positioning: Classroom-ready AI prompts for K-12 teachers. By Prompt Anatomy.
+
+Hero subtitle: Classroom-ready AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.
+
+Primary call to action: Build a lesson prompt
+Secondary call to action: Browse templates
+
+The Service is a free, browser-based prompt-building utility. It does not call any AI API. It produces text prompts that the teacher copies and pastes into ChatGPT, Claude, or Gemini.
+
+Workflow at a glance (4 steps):
+1. Pick a mode - choose LESSON, ASSESSMENT, TASKS, PRESENTATION, or STRATEGY.
+2. Fill the form - pick a grade (1 to 12), enter topic, goal, and constraints.
+3. Copy the result - the generated prompt updates live as you type.
+4. Save the session - up to five sessions are stored in browser localStorage for reuse.
+
+================================================================================
+SECTION 2 - FIVE MODES
+================================================================================
+
+LESSON - Full lesson plan
+  Fields: topic, duration, goal, context, question
+  Output: lesson flow with intro, main activities, reflection; 3 activities with timing; 5 discussion questions; one hands-on task with assessment criteria.
+
+ASSESSMENT - Knowledge check
+  Fields: topic, format, difficulty, question
+  Output: multiple-choice questions (4 options, 1 correct) scaled to grade and difficulty; open-ended questions on understanding and application; clear answer key; short scoring criteria.
+
+TASKS - Classwork and homework, differentiated
+  Fields: topic, task_type, constraints, question
+  Output: support-level task with scaffolding hint; core task for the whole class; stretch task for advanced students; assessment criteria per level.
+
+PRESENTATION - Slide outline
+  Fields: topic, slides, style, question
+  Output: numbered slide outline; per slide a goal, 2 to 3 bullets, one visual idea; smooth transitions; one reflection question for students.
+
+STRATEGY - Teaching method and weekly priorities
+  Fields: topic, goal, challenges, question
+  Output: 3 priority instructional moves; short weekly activity sequence; risks and prevention steps; 2 to 3 progress indicators.
+
+Lesson quality principles built into the prompts:
+- Every prompt should lead to a clear, classroom-ready outcome.
+- Clarity beats complexity: one mode, one goal.
+- Activities should be doable in your classroom.
+- Define assessment criteria up front.
+- Presentation mode returns a text outline; bring it into your slides tool.
+
+================================================================================
+SECTION 3 - HOMEPAGE FAQ
+================================================================================
+
+Q: Is Classroom Prompt Builder free?
+A: Yes. The prompt builder is free and requires no account. Optional downloadable PDF guides are sold separately.
+
+Q: Which AI tools does it work with?
+A: It generates prompts that you can paste into ChatGPT, Claude, or Gemini. The tool itself does not call any AI API.
+
+Q: Does it collect student data?
+A: No. The Service does not collect personal information or student PII. Theme preference, grade selection, and up to five saved sessions are stored only in the browser's localStorage.
+
+Q: Who is it for?
+A: US K-12 teachers planning lessons, assessments, tasks, presentations, or instructional strategy.
+
+================================================================================
+SECTION 4 - OPTIONAL PAID PDF GUIDES
+================================================================================
+
+The prompt builder is free. Two optional PDF guides are sold separately as one-time digital purchases through Stripe. There is no subscription and no account.
+
+GUIDE 1 - Beginners - Prompt Anatomy
+  Length: 12 pages
+  Format: PDF
+  Updated: May 2026
+  Language: English
+  Price: $4.99 (was $9.99)
+  Audience: teachers new to AI in the classroom
+  Description: A 12-page practical guide for teachers new to AI. Clear prompt patterns, classroom examples, and a simple verification workflow.
+  Key points:
+    - The Simple Prompt Formula and 10 ready-to-use prompts
+    - Lesson, assessment, differentiation, and feedback packs
+    - 7-point AI output verification checklist
+  Table of contents:
+    1. 5-minute AI safety start: teacher-in-the-loop rules
+    2. The Simple Prompt Formula
+    3. 10 ready-to-use teacher prompts (lesson, assessment, feedback)
+    4. Lesson packs: 30-min, 45-min, and differentiated
+    5. Assessment and exit-ticket packs
+    6. Differentiation packs (support, core, stretch)
+    7. Feedback packs (whole-class, individual, conferencing)
+    8. 7-point AI output verification checklist
+    9. Glossary and beginner mistakes to avoid
+    10. Use this tomorrow: 5-step adoption workflow
+    11. Source appendix
+
+GUIDE 2 - Advanced - Prompt Anatomy
+  Length: 24 pages
+  Format: PDF
+  Updated: May 2026
+  Language: English
+  Price: $9.99 (was $19.99)
+  Audience: curriculum leads, instructional coaches, PD trainers
+  Description: A 24-page methodologist's guide for curriculum leads, instructional coaches, and PD trainers. Frameworks, audit rubrics, PD models, and rollout playbooks.
+  Key points:
+    - Bloom, DOK, UDL, and backward-design prompt systems
+    - Curriculum audit, lesson review, and prompt quality rubrics
+    - PD models, school rollout playbook, and case studies
+  Table of contents:
+    1. Executive overview for curriculum leads
+    2. Instructional design foundations table
+    3. Bloom and DOK quick reference
+    4. Methodologist master prompt
+    5. Backward design pipeline (UbD)
+    6. UDL prompt system
+    7. Differentiation transformations (DOK 1 to DOK 4)
+    8. Curriculum audit framework with 1 to 4 scoring rubric
+    9. Lesson review rubric and prompt quality rubric
+    10. PD models: 90-min, half-day, full-day, 4-week
+    11. Coaching model and adoption ladder
+    12. 6-phase school rollout playbook
+    13. QA, governance, risk register, and observation checklists
+    14. 90-day implementation roadmap
+    15. Three composite case studies (elementary, HS dept, district)
+    16. Source and license appendix
+
+Pricing comparison strip on homepage: typical single-session PD often costs $100 or more; the Beginners guide is $4.99 and the Advanced guide is $9.99. The PD value figure is an estimate; replace with cited figure when available.
+
+Delivery promise: Usually within a minute, the buyer receives a Stripe receipt plus a separate download email. The success page also shows a one-click download. The signed link is valid for 7 days; the team will resend a fresh link any time the buyer asks.
+
+Trust row: Stripe checkout, Visa / Mastercard / Amex, Apple Pay, 256-bit SSL.
+
+================================================================================
+SECTION 5 - BUYER FAQ (PDF GUIDES)
+================================================================================
+
+Q: Can I use this guide in more than one of my classrooms?
+A: Yes. The Classroom License covers all classes you personally teach. Use the same prompts and templates across every section you teach this year and next.
+
+Q: Can I share it with my co-teacher or department?
+A: Privately, yes. The Classroom License lets you share the file with your immediate teaching team (co-teacher, instructional coach, mentor, department head) at the same school. School-wide and district-wide licenses are available on request via info@promptanatomy.app.
+
+Q: Can I print copies for my students?
+A: Yes. You can print individual prompts, checklists, and templates for your own students and your own classroom use. Do not redistribute the full PDF.
+
+Q: What if I lose the download email?
+A: Email info@promptanatomy.app from the address you used to buy and we will resend the link. The original link is valid for 7 days; we re-issue a fresh signed link any time you ask.
+
+Q: What if I am not satisfied?
+A: Reply to your Stripe receipt within 14 days for a no-questions refund. We approve the refund through Stripe and revoke the download link, no follow-up survey.
+
+================================================================================
+SECTION 6 - PILOT TESTIMONIALS (PARAPHRASED)
+================================================================================
+
+Quotes paraphrased from pilot feedback during private beta. Names withheld at request; school identifiers redacted.
+
+- "The prompt formula is the part I keep coming back to for Sunday planning." Pilot teacher, Grade 5, Midwest US.
+- "The 7-point verification checklist alone changed how my team uses AI. We stopped pasting outputs straight to students." Pilot teacher, Middle school ELA, Northeast US.
+- "Used the Advanced guide as the spine of a half-day PD session. The rubric and rollout playbook saved me from building from scratch." Pilot instructional coach, HS science, West Coast US.
+
+================================================================================
+SECTION 7 - PRIVACY POLICY SUMMARY
+================================================================================
+
+Last updated: May 15, 2026.
+
+What is collected: nothing through the prompt-building workflow itself. There are no signup forms, no accounts, no email collection, and no data sent to product servers from the prompt builder. If a teacher buys an optional PDF, Stripe collects payment information during checkout and shares limited purchase details (checkout session ID, purchased product, buyer email) used only to send the secure download link, support, and prevent duplicate fulfillment.
+
+What stays on device: theme preference (light or dark), grade level selection, and up to five most recent saved prompt sessions. Stored in the browser's localStorage on the user's device only. Clearing browser data removes this information; the operator cannot read, recover, or access it.
+
+Analytics: Vercel Web Analytics on public pages via a small analytics.js module. Aggregate, non-identifying page-view metrics only. No cookies. No persistent IP collection. No cross-site profiles.
+
+Student data: the Service is designed for teacher use. The Service does not knowingly collect student personally identifiable information (PII). Teachers should not enter student names, IDs, contact information, grades, or other identifying details into the form fields.
+
+FERPA posture: because the Service does not collect, store, or transmit student records to product servers, it is not designed to function as a school official under FERPA. The Service is a stateless prompt-building utility. Districts that wish to adopt the Service should review their own data-governance policies and ensure teachers follow guidance about what content to put into AI tools.
+
+Children: the Service is intended for use by teachers, not by children. The operator does not knowingly collect any data from children under 13.
+
+Cookies: the Service does not set cookies. Vercel Analytics, when enabled by the hosting project, is cookieless.
+
+Third-party AI tools: the Service provides buttons that open ChatGPT, Claude, and Gemini in a new tab. Once the teacher leaves the Service, the destination tool's privacy policy applies.
+
+Payment and email providers: optional PDF purchases are processed by Stripe. Transactional delivery emails are sent through Resend. Full payment-card numbers are not stored on product servers.
+
+Full text: https://promptanatomy.online/privacy.html
+
+================================================================================
+SECTION 8 - TERMS OF USE SUMMARY
+================================================================================
+
+Last updated: May 16, 2026.
+
+What the Service is: a free, browser-based prompt-building utility for K-12 teachers. It produces text prompts that the teacher copies and pastes into third-party AI tools such as ChatGPT, Claude, and Gemini. The Service itself does not produce AI-generated content. The prompt builder is free. Optional paid PDF guides may be offered separately as downloadable digital products.
+
+Acceptable use: educational planning, lesson design, assessment design, professional practice. The Service may not be used to generate prompts intended to harass, discriminate against, or harm students, colleagues, or anyone else. Reverse-engineering, scraping, and disruption are prohibited.
+
+Responsible AI disclaimer: the Service helps draft prompts. It does not produce verified educational content. Outputs generated by ChatGPT, Claude, Gemini, or any other AI tool may be inaccurate, incomplete, biased, or out of date. Teachers must review and verify any AI output before using it in the classroom. The Service is not a substitute for professional judgment, accredited curriculum, formal assessment, or standards-aligned review. Do not use AI output as the sole basis for high-stakes decisions such as final grades, promotion, retention, special-education determinations, disciplinary actions, or college recommendations.
+
+No warranty: the Service is provided "as is" and "as available," without warranty of any kind, express or implied.
+
+Paid PDF guides - Classroom License: each paid PDF guide is licensed to the named purchaser under a non-exclusive, non-transferable, non-sublicensable Classroom License.
+
+Permitted uses:
+- Use the guide for personal lesson planning, assessment design, professional learning, and classroom delivery.
+- Share the guide privately with the immediate teaching team (co-teachers, mentor, instructional coach, department head) at the same school, for internal use only.
+- Print copies of individual prompts, checklists, or templates for your own students and your own classroom use.
+- Adapt prompts and templates from the guide into your own lesson materials with attribution "Based on Prompt Anatomy."
+
+Prohibited uses:
+- Reselling, sublicensing, or redistributing the guide as-is, in part or in whole.
+- Posting the guide (or any substantial portion) on public file-sharing services, public LMS, public Drive folders, public websites, or social media.
+- Distributing the guide across an entire school, district, or organization under a single purchase. School-wide and district-wide licenses are available on request via info@promptanatomy.app.
+- Using the guide to train, fine-tune, or evaluate any AI model.
+
+Refund policy: 14-day no-questions refund. Reply to the Stripe receipt or write to info@promptanatomy.app from the purchase email address. Outside the 14-day window, refunds are still handled case by case for duplicate purchases, failed delivery, or clear technical problems.
+
+Full text: https://promptanatomy.online/terms.html
+
+================================================================================
+SECTION 9 - LIMITATIONS AND BOUNDARIES
+================================================================================
+
+- The Service does NOT call any AI API. It only constructs the prompt text.
+- Users must paste prompts into ChatGPT, Claude, or Gemini themselves.
+- Output quality depends on the third-party AI tool used.
+- The Service does not store or transmit student records.
+- PDF guide availability depends on successful payment and email delivery.
+- Fulfillment requires the same production domain for Stripe Payment Link success URL, Stripe webhook, and Vercel env (redirect and webhook must not point at different hosts).
+
+================================================================================
+SECTION 10 - BUSINESS DETAILS
+================================================================================
+
+Operator: Prompt Anatomy
+Product name: Classroom Prompt Builder
+Site: https://promptanatomy.online/
+Parent brand: https://www.promptanatomy.app/
+Repository: https://github.com/DITreneris/teacher
+Telegram community: https://t.me/prompt_anatomy
+Contact: info@promptanatomy.app
+Security contact: https://promptanatomy.online/.well-known/security.txt
+
+Business address (CAN-SPAM compliant):
+Prompt Anatomy
+1311 Park St, Unit #654
+Alameda, CA 94501
+United States

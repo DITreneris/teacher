@@ -1,6 +1,6 @@
 # Classroom Prompt Builder — Styleguide (Design System 2.0.0)
 
-**Version:** Design System 2.0.0 (product release 1.1.0)  
+**Version:** Design System 2.0.0 (product release 1.1.2)
 **Last updated:** May 2026  
 **Locale:** en-US  
 **Implementation:** [`style.css`](../style.css) + [`config/sot.json`](../config/sot.json)
@@ -40,7 +40,7 @@ CTA pair: `--cta-bg` `#F5C518` on `--cta-text` `#0F2A44`.
 
 ## Typography
 
-- **Family:** Inter (Google Fonts), system fallback.
+- **Family:** self-hosted Inter, system fallback.
 - **Body:** 16px, `line-height: 1.6`.
 - **Headings:** tight leading (`--leading-tight`), negative letter-spacing on h1/h2.
 
@@ -137,6 +137,35 @@ Mobile (≤480px): `.community-actions` stacks CTAs full-width (`max-width: 280p
 Paid guide HTML uses [`pdf-source/pdf-print.css`](pdf-source/pdf-print.css). Brand hex must match this guide and `config/sot.json`.
 
 ---
+
+## Color tokens & browser floor (DS 2.0.1)
+
+The brand palette is hex (sRGB) in [`config/sot.json#colors`](../config/sot.json) and `style.css` `:root`. A few core tokens (`--text`, `--text-light`, `--border`, `--surface-0`, `--surface-1`, `--output-bg`) ship a paired `light-dark()` declaration alongside the static hex so a future PR can drop the `[data-theme="dark"]` block. Hover derivatives (`--primary-hover`, `--cta-hover`, `--accent-gold-hover`) ship a paired `color-mix(in oklch, ...)` declaration with a static hex fallback.
+
+OKLCH equivalents for reference (perceptually uniform, useful when adding new tones):
+
+| Token | sRGB | OKLCH (approx) |
+|-------|------|----------------|
+| `--primary` | `#0F2A44` | `oklch(0.244 0.046 250)` |
+| `--accent-gold` | `#F5C518` | `oklch(0.835 0.165 88)` |
+| `--surface-0` | `#F4F7FB` | `oklch(0.969 0.008 250)` |
+| `--text` | `#1C2B3A` | `oklch(0.270 0.034 251)` |
+
+Browser floor: `light-dark()` and `color-mix(in oklch, ...)` require Safari 17.5+ and Chrome 119+ (Jul 2024). Older browsers fall back to the first (hex) declaration of each token, so behavior is unchanged.
+
+## Cascade layers (DS 2.0.1)
+
+`style.css` declares the layer order once at the top:
+
+```css
+@layer reset, tokens, base, components, theme, utilities;
+```
+
+Today most rules are **unlayered** (they keep higher specificity than any future layered rule); new sections may opt in by wrapping in `@layer components { ... }` or `@layer theme { ... }`. Wrapping the whole `[data-theme="dark"]` block in isolation is **not safe** — it must move at the same time as the components it overrides (P3 follow-up).
+
+## Self-hosted fonts (DS 2.0.1)
+
+`Inter` (400-800) and `JetBrains Mono` (500/600) ship as latin WOFF2 in [`assets/fonts/`](../assets/fonts/) (SIL OFL 1.1). All shipped HTML preloads `Inter-Regular.woff2` + `Inter-Bold.woff2`; no Google Fonts CDN. Adding a new weight: drop the WOFF2 in `assets/fonts/`, add a matching `@font-face` block at the top of `style.css`, run `npm test`.
 
 ## Quality gates
 

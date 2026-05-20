@@ -115,6 +115,24 @@
                 beginners: { now: '$4.99', was: '$9.99' },
                 advanced: { now: '$9.99', was: '$19.99' }
             },
+            products: {
+                beginners: {
+                    name: 'Beginners \u2014 Prompt Anatomy',
+                    image: '/assets/pdf-covers/beginners.png',
+                    price: '4.99',
+                    currency: 'USD',
+                    sku: 'beginners-pdf',
+                    category: 'Educational eBook'
+                },
+                advanced: {
+                    name: 'Advanced \u2014 Prompt Anatomy',
+                    image: '/assets/pdf-covers/advanced.png',
+                    price: '9.99',
+                    currency: 'USD',
+                    sku: 'advanced-pdf',
+                    category: 'Educational eBook'
+                }
+            },
             compareStrip: {
                 pdLabel: 'Typical single-session PD',
                 pdValue: 'often $100+',
@@ -1150,6 +1168,142 @@
         }
     }
 
+    /* Sticky mobile CTA: shows the visible card's CTA once both in-card CTAs scroll out. */
+    function initPdfStickyCta() {
+        if (typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function') return;
+
+        var bar = document.getElementById('pdfStickyCta');
+        var link = document.getElementById('pdfStickyCtaLink');
+        var label = document.getElementById('pdfStickyCtaLabel');
+        var ctas = document.querySelectorAll('.pdf-guide-cta');
+        if (!bar || !link || !label || ctas.length === 0) return;
+
+        var mql = window.matchMedia('(max-width: 768px)');
+        if (!mql.matches) return;
+
+        var dialog = document.getElementById('pdfPreviewDialog');
+        var visibleCount = 0;
+
+        function syncFromCta(cta) {
+            if (!cta) return;
+            var href = cta.getAttribute('href');
+            if (href) link.setAttribute('href', href);
+            var stripeKey = cta.getAttribute('data-stripe-cta');
+            link.setAttribute('data-stripe-cta', stripeKey || '');
+            var aria = cta.getAttribute('aria-label');
+            if (aria) link.setAttribute('aria-label', aria);
+            var text = (cta.textContent || '').trim();
+            if (text) label.textContent = text;
+        }
+
+        function show() {
+            if (dialog && dialog.hasAttribute('open')) return;
+            bar.hidden = false;
+            window.requestAnimationFrame(function () {
+                bar.classList.add('is-visible');
+            });
+        }
+
+        function hide() {
+            bar.classList.remove('is-visible');
+            window.setTimeout(function () {
+                if (!bar.classList.contains('is-visible')) bar.hidden = true;
+            }, 250);
+        }
+
+        syncFromCta(ctas[0]);
+
+        var observer = new window.IntersectionObserver(function (entries) {
+            for (var i = 0; i < entries.length; i += 1) {
+                var entry = entries[i];
+                var wasVisible = entry.target.dataset.stickyVisible === '1';
+                if (entry.isIntersecting && !wasVisible) {
+                    visibleCount += 1;
+                    entry.target.dataset.stickyVisible = '1';
+                    syncFromCta(entry.target);
+                } else if (!entry.isIntersecting && wasVisible) {
+                    visibleCount = Math.max(0, visibleCount - 1);
+                    entry.target.dataset.stickyVisible = '0';
+                }
+            }
+            if (visibleCount > 0) hide();
+            else show();
+        }, { rootMargin: '0px 0px -120px 0px', threshold: 0.01 });
+
+        for (var i = 0; i < ctas.length; i += 1) observer.observe(ctas[i]);
+
+        if (dialog) {
+            dialog.addEventListener('close', function () {
+                if (visibleCount === 0) show();
+            });
+            var origShow = dialog.showModal && dialog.showModal.bind(dialog);
+            if (origShow) {
+                dialog.showModal = function () {
+                    hide();
+                    return origShow();
+                };
+            }
+        }
+
+        if (typeof mql.addEventListener === 'function') {
+            mql.addEventListener('change', function (e) {
+                if (!e.matches) {
+                    bar.classList.remove('is-visible');
+                    bar.hidden = true;
+                }
+            });
+        }
+    }
+
+    /* SOT-driven Product + Offer JSON-LD for SERP rich results. */
+    function initProductJsonLd(config) {
+        var script = document.getElementById('product-jsonld');
+        if (!script) return;
+        if (!config || !config.commerce || typeof config.commerce !== 'object') return;
+        var products = config.commerce.products;
+        if (!products || typeof products !== 'object') return;
+
+        var canonical = 'https://promptanatomy.online/';
+        var canonicalLink = document.querySelector('link[rel="canonical"]');
+        if (canonicalLink && canonicalLink.href) {
+            canonical = canonicalLink.href;
+        }
+        var productUrl = canonical.replace(/#.*$/, '') + '#pdf-guides';
+
+        var graph = [];
+        var keys = ['beginners', 'advanced'];
+        for (var i = 0; i < keys.length; i += 1) {
+            var key = keys[i];
+            var p = products[key];
+            if (!p || !p.name || !p.price) continue;
+            var imageAbs = p.image && /^https?:/.test(p.image) ? p.image : canonical.replace(/\/$/, '') + (p.image || '');
+            graph.push({
+                '@type': 'Product',
+                '@id': canonical + '#product-' + key,
+                name: p.name,
+                image: imageAbs,
+                sku: p.sku || (key + '-pdf'),
+                category: p.category || 'Educational eBook',
+                brand: { '@type': 'Brand', name: 'Prompt Anatomy' },
+                offers: {
+                    '@type': 'Offer',
+                    price: String(p.price),
+                    priceCurrency: p.currency || 'USD',
+                    availability: 'https://schema.org/InStock',
+                    url: productUrl
+                }
+            });
+        }
+
+        if (graph.length === 0) return;
+        var payload = { '@context': 'https://schema.org', '@graph': graph };
+        try {
+            script.textContent = JSON.stringify(payload, null, 2);
+        } catch (_e) {
+            /* leave the static fallback in place */
+        }
+    }
+
     function initBuyerFaq(config) {
         if (!config || !Array.isArray(config.buyerFaq)) return;
         var list = document.querySelector('[data-buyer-faq-list]');
@@ -1261,16 +1415,19 @@
         var bootstrapConfig = cloneJson(DEFAULT_SOT);
         initCommerce(bootstrapConfig);
         initLegal(bootstrapConfig);
+        initProductJsonLd(bootstrapConfig);
 
         loadSotConfig().then(function (config) {
             assignSotConfig(config);
             initFormData();
             initCommerce(config);
             initLegal(config);
+            initProductJsonLd(config);
             initializeApp();
             initPdfPreviewDialog();
             initPdfGuideTocs(config);
             initBuyerFaq(config);
+            initPdfStickyCta();
         });
     });
 })();

@@ -7,7 +7,7 @@ A free, single-page AI prompt builder for K-12 teachers. Pick a mode, fill in a 
 | **Repository** | [github.com/DITreneris/teacher](https://github.com/DITreneris/teacher) |
 | **Production** | [promptanatomy.online](https://promptanatomy.online/) |
 | **Parent brand** | [promptanatomy.app](https://www.promptanatomy.app/) |
-| **Status** | US MVP (v1.1.0) |
+| **Status** | US MVP (v1.1.2) |
 
 ## Quick start
 
@@ -53,8 +53,6 @@ git push -u origin main
 
 ```bash
 npm ci
-npm test
-npm run test:smoke
-npm run test:e2e
-npm run test:a11y
+npm run test:mixed
+npm run check:fulfillment   # fulfillment/API changes
 ```

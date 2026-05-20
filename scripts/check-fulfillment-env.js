@@ -25,13 +25,17 @@ loadDotEnv();
 const REQUIRED = [
   'STRIPE_SECRET_KEY',
   'STRIPE_WEBHOOK_SECRET',
+  'STRIPE_PRICE_BEGINNERS_PDF',
+  'STRIPE_PRICE_ADVANCED_PDF',
   'UPSTASH_REDIS_REST_URL',
   'UPSTASH_REDIS_REST_TOKEN',
   'DOWNLOAD_TOKEN_SECRET',
   'RESEND_API_KEY',
   'FULFILLMENT_FROM_EMAIL',
   'PDF_BEGINNERS_SOURCE_URL',
-  'PDF_ADVANCED_SOURCE_URL'
+  'PDF_ADVANCED_SOURCE_URL',
+  'BLOB_READ_WRITE_TOKEN',
+  'SITE_URL'
 ];
 
 async function main() {
@@ -55,6 +59,14 @@ async function main() {
   console.log('Redis ping:', ping);
 
   console.log('From email:', process.env.FULFILLMENT_FROM_EMAIL);
+  console.log('Site URL:', process.env.SITE_URL);
+  console.log('Blob token:', process.env.BLOB_READ_WRITE_TOKEN ? 'present' : 'missing');
+  console.log(
+    'Stripe price ids:',
+    process.env.STRIPE_PRICE_BEGINNERS_PDF ? 'beginners present' : 'beginners missing',
+    '/',
+    process.env.STRIPE_PRICE_ADVANCED_PDF ? 'advanced present' : 'advanced missing'
+  );
 
   if (process.env.TEST_SEND !== '1') {
     console.log('Resend: skipped (set TEST_SEND=1 to send a test email).');

@@ -142,6 +142,25 @@ function run() {
   else failed++;
   if (assert(html.includes('/assets/pdf-covers/advanced.png'), 'Advanced cover image is wired')) passed++;
   else failed++;
+  if (assert(html.includes('/assets/pdf-covers/beginners.webp') && html.includes('/assets/pdf-covers/advanced.webp'), 'PDF cards offer WebP source siblings via <picture>')) passed++;
+  else failed++;
+  if (assert(/<source type="image\/webp" srcset="\/assets\/pdf-covers\/beginners\.webp">[\s\S]*?fetchpriority="high"/.test(html), 'Beginners cover uses <picture> with fetchpriority="high" on the LCP image')) passed++;
+  else failed++;
+  const webpFiles = [
+    'beginners.webp',
+    'advanced.webp',
+    'beginners-p2.webp',
+    'beginners-p3.webp',
+    'beginners-p4.webp',
+    'advanced-p2.webp',
+    'advanced-p3.webp',
+    'advanced-p4.webp'
+  ];
+  const webpPresent = webpFiles.every(function (name) {
+    return fs.existsSync(path.join(__dirname, '..', 'assets', 'pdf-covers', name));
+  });
+  if (assert(webpPresent, 'assets/pdf-covers/ has WebP siblings for covers and sample pages')) passed++;
+  else failed++;
   if (assert(html.includes('class="pdf-guide-card-cover"') && /alt="Cover of [^"]+"/.test(html), 'Cover figures expose non-empty alt text')) passed++;
   else failed++;
   if (assert(html.includes('class="pdf-guide-specs"') && html.includes('12 pages') && html.includes('24 pages'), 'Specs row lists length for both guides')) passed++;
@@ -442,6 +461,66 @@ function run() {
   if (assert(html.includes('Optional downloadable PDF guides are sold separately.'), 'FAQ clarifies optional paid PDFs')) passed++;
   else failed++;
 
+  // --- Product JSON-LD (paid PDFs, SOT-driven) ---
+  if (assert(html.includes('id="product-jsonld"'), 'Product JSON-LD script tag (#product-jsonld) present')) passed++;
+  else failed++;
+  let productJsonLdHasBoth = false;
+  try {
+    const match = html.match(/<script type="application\/ld\+json" id="product-jsonld">\s*([\s\S]*?)\s*<\/script>/);
+    if (match) {
+      const data = JSON.parse(match[1]);
+      const graph = Array.isArray(data['@graph']) ? data['@graph'] : [];
+      const beginners = graph.find((n) => n && n['@type'] === 'Product' && /Beginners/.test(n.name || ''));
+      const advanced = graph.find((n) => n && n['@type'] === 'Product' && /Advanced/.test(n.name || ''));
+      productJsonLdHasBoth = !!(
+        beginners && beginners.offers && beginners.offers.price === '4.99' && beginners.offers.priceCurrency === 'USD' &&
+        advanced && advanced.offers && advanced.offers.price === '9.99' && advanced.offers.priceCurrency === 'USD'
+      );
+    }
+  } catch (_e) {
+    productJsonLdHasBoth = false;
+  }
+  if (assert(productJsonLdHasBoth, 'Product JSON-LD lists Beginners ($4.99) and Advanced ($9.99) Offers in USD')) passed++;
+  else failed++;
+
+  let productSotSync = false;
+  try {
+    const sotForProducts = JSON.parse(readFile(SOT_PATH));
+    const products = sotForProducts.commerce && sotForProducts.commerce.products;
+    productSotSync = !!(
+      products &&
+      products.beginners && products.beginners.price === '4.99' && products.beginners.currency === 'USD' &&
+      products.advanced && products.advanced.price === '9.99' && products.advanced.currency === 'USD'
+    );
+  } catch (_e) {
+    productSotSync = false;
+  }
+  if (assert(productSotSync, 'config/sot.json#commerce.products exposes both guides with USD prices')) passed++;
+  else failed++;
+
+  // --- Self-hosted fonts (no Google Fonts CDN in shipped HTML) ---
+  if (assert(!html.includes('fonts.googleapis.com') && !html.includes('fonts.gstatic.com'), 'index.html does not load Google Fonts CDN')) passed++;
+  else failed++;
+  if (assert(html.includes('/assets/fonts/Inter-Regular.woff2') && html.includes('/assets/fonts/Inter-Bold.woff2'), 'index.html preloads self-hosted Inter Regular + Bold')) passed++;
+  else failed++;
+  const fontFiles = [
+    'Inter-Regular.woff2',
+    'Inter-Medium.woff2',
+    'Inter-SemiBold.woff2',
+    'Inter-Bold.woff2',
+    'Inter-ExtraBold.woff2',
+    'JetBrainsMono-Medium.woff2',
+    'JetBrainsMono-SemiBold.woff2'
+  ];
+  const fontsPresent = fontFiles.every(function (name) {
+    return fs.existsSync(path.join(__dirname, '..', 'assets', 'fonts', name));
+  });
+  if (assert(fontsPresent, 'assets/fonts/ has the full self-hosted WOFF2 set (Inter 400-800, JetBrains Mono 500/600)')) passed++;
+  else failed++;
+  const styleFileForFonts = readFile(STYLE_PATH);
+  if (assert(styleFileForFonts && /@font-face[^}]+font-family:\s*'Inter'/.test(styleFileForFonts), 'style.css declares @font-face for Inter')) passed++;
+  else failed++;
+
   // --- Subresource Integrity ---
   if (assert(html.includes('integrity="sha384-') && html.includes('crossorigin="anonymous"'), 'Lucide CDN script uses SRI')) passed++;
   else failed++;
@@ -676,6 +755,216 @@ function run() {
         /\.pdf-preview-dialog-pages[\s\S]*scroll-snap-type:\s*x mandatory/.test(styleFile) &&
         /\.pdf-guides-grid\s*\{\s*order:\s*2/.test(styleFile),
       'style.css has mobile rules for PDF compare strip, preview dialog, and cards-first order'
+    )
+  ) passed++;
+  else failed++;
+
+  // --- SEO / GEO / AI crawler additions (2026-05-20) ---
+
+  // D1. llms-full.txt: existence + non-trivial size + 5 modes literally + buyer FAQ
+  const llmsFullTxt = readFile(path.join(__dirname, '..', 'llms-full.txt'));
+  if (assert(llmsFullTxt && llmsFullTxt.length > 4096, 'llms-full.txt exists and is non-trivial (> 4 KB)')) passed++;
+  else failed++;
+  if (
+    assert(
+      llmsFullTxt &&
+        /LESSON[\s\S]+ASSESSMENT[\s\S]+TASKS[\s\S]+PRESENTATION[\s\S]+STRATEGY/.test(llmsFullTxt),
+      'llms-full.txt covers all 5 modes literally'
+    )
+  ) passed++;
+  else failed++;
+  if (
+    assert(
+      llmsFullTxt && /BUYER FAQ/i.test(llmsFullTxt) && /Privacy Policy Summary/i.test(llmsFullTxt),
+      'llms-full.txt includes Buyer FAQ + Privacy Policy summary sections'
+    )
+  ) passed++;
+  else failed++;
+
+  // D2. SoftwareApplication JSON-LD freshness signals
+  if (
+    assert(
+      /"datePublished":\s*"\d{4}-\d{2}-\d{2}"/.test(html) &&
+        /"dateModified":\s*"\d{4}-\d{2}-\d{2}"/.test(html),
+      'index.html SoftwareApplication JSON-LD has datePublished + dateModified'
+    )
+  ) passed++;
+  else failed++;
+
+  // D3. hreflang on indexable HTML pages (en-us + x-default)
+  for (const [pageLabel, pageHtml] of [
+    ['index.html', html],
+    ['privacy.html', readFile(PRIVACY_PATH)],
+    ['terms.html', readFile(TERMS_PATH)]
+  ]) {
+    if (
+      assert(
+        pageHtml &&
+          /<link\s+rel="alternate"\s+hreflang="en-us"/i.test(pageHtml) &&
+          /<link\s+rel="alternate"\s+hreflang="x-default"/i.test(pageHtml),
+        `${pageLabel} declares hreflang en-us + x-default`
+      )
+    ) passed++;
+    else failed++;
+  }
+
+  // D4. vercel.json X-Robots-Tag headers
+  let vercelJson = null;
+  try {
+    vercelJson = JSON.parse(readFile(path.join(__dirname, '..', 'vercel.json')));
+  } catch (_e) {
+    vercelJson = null;
+  }
+  const vercelHeaders = (vercelJson && vercelJson.headers) || [];
+  function findHeaderBlock(source) {
+    return vercelHeaders.find(function (h) { return h && h.source === source; });
+  }
+  function blockHasHeader(block, key, valueRegex) {
+    if (!block || !Array.isArray(block.headers)) return false;
+    return block.headers.some(function (h) {
+      return h && h.key === key && (valueRegex ? valueRegex.test(h.value) : true);
+    });
+  }
+  const apiBlock = findHeaderBlock('/api/(.*)');
+  if (
+    assert(
+      blockHasHeader(apiBlock, 'X-Robots-Tag', /noindex/i),
+      'vercel.json /api/(.*) sets X-Robots-Tag: noindex, nofollow'
+    )
+  ) passed++;
+  else failed++;
+  const ogBlock = findHeaderBlock('/og-image.png');
+  if (
+    assert(
+      blockHasHeader(ogBlock, 'X-Robots-Tag', /^all$/i),
+      'vercel.json /og-image.png sets X-Robots-Tag: all (explicit indexing allow)'
+    )
+  ) passed++;
+  else failed++;
+  const llmsFullBlock = findHeaderBlock('/llms-full.txt');
+  if (
+    assert(
+      blockHasHeader(llmsFullBlock, 'Content-Type', /text\/plain/i),
+      'vercel.json serves /llms-full.txt as text/plain; charset=utf-8'
+    )
+  ) passed++;
+  else failed++;
+
+  // D5. WebPage JSON-LD on legal pages
+  function hasWebPageEntity(pageHtml, urlPath) {
+    if (!pageHtml) return false;
+    const match = pageHtml.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
+    if (!match) return false;
+    try {
+      const data = JSON.parse(match[1]);
+      const graph = Array.isArray(data['@graph']) ? data['@graph'] : [];
+      return graph.some(function (node) {
+        return (
+          node &&
+          node['@type'] === 'WebPage' &&
+          node.url === `https://promptanatomy.online${urlPath}` &&
+          node.isPartOf &&
+          node.isPartOf['@id'] === 'https://promptanatomy.online/#website' &&
+          /^\d{4}-\d{2}-\d{2}$/.test(node.dateModified || '')
+        );
+      });
+    } catch (_e) {
+      return false;
+    }
+  }
+  const privacyHtmlForJsonLd = readFile(PRIVACY_PATH);
+  const termsHtmlForJsonLd = readFile(TERMS_PATH);
+  if (
+    assert(
+      hasWebPageEntity(privacyHtmlForJsonLd, '/privacy.html'),
+      'privacy.html JSON-LD @graph has WebPage entity with isPartOf #website + dateModified'
+    )
+  ) passed++;
+  else failed++;
+  if (
+    assert(
+      hasWebPageEntity(termsHtmlForJsonLd, '/terms.html'),
+      'terms.html JSON-LD @graph has WebPage entity with isPartOf #website + dateModified'
+    )
+  ) passed++;
+  else failed++;
+
+  // D6. HowTo + Person founder + audience.geographicArea on home
+  if (
+    assert(
+      /"@type":\s*"HowTo"/.test(html) && /"@type":\s*"HowToStep"/.test(html),
+      'index.html @graph has HowTo entity with HowToStep children'
+    )
+  ) passed++;
+  else failed++;
+  if (
+    assert(
+      /"founder":\s*\{[\s\S]*?"@type":\s*"Person"[\s\S]*?"name":\s*"Tomas Staniulis"/.test(html),
+      'index.html Organization has Person founder (E-E-A-T)'
+    )
+  ) passed++;
+  else failed++;
+  if (
+    assert(
+      /"geographicArea":\s*\{[\s\S]*?"name":\s*"United States"\s*\}/.test(html) &&
+        /"availableLanguage":\s*"en-US"/.test(html),
+      'SoftwareApplication audience.geographicArea + Organization availableLanguage signal US targeting'
+    )
+  ) passed++;
+  else failed++;
+
+  // D7. robots.txt: 2026 bot policy (auditability) + social unfurlers
+  if (
+    assert(
+      robotsTxt &&
+        /^User-agent:\s*GoogleOther\s*$/m.test(robotsTxt) &&
+        /^User-agent:\s*DuckAssistBot\s*$/m.test(robotsTxt) &&
+        /^User-agent:\s*Claude-User\s*$/m.test(robotsTxt) &&
+        /^User-agent:\s*Mistral-AI\s*$/m.test(robotsTxt),
+      'robots.txt enumerates 2026 AI bots (GoogleOther, DuckAssistBot, Claude-User, Mistral-AI)'
+    )
+  ) passed++;
+  else failed++;
+  if (
+    assert(
+      robotsTxt &&
+        /^User-agent:\s*Twitterbot\s*$/m.test(robotsTxt) &&
+        /^User-agent:\s*facebookexternalhit\s*$/m.test(robotsTxt) &&
+        /^User-agent:\s*LinkedInBot\s*$/m.test(robotsTxt),
+      'robots.txt enumerates social link unfurlers (Twitterbot, facebookexternalhit, LinkedInBot)'
+    )
+  ) passed++;
+  else failed++;
+
+  // D8. scripts/update-sitemap-lastmod.js + npm script
+  const sitemapScript = readFile(path.join(__dirname, '..', 'scripts', 'update-sitemap-lastmod.js'));
+  if (
+    assert(
+      sitemapScript && sitemapScript.includes('updateSitemap') && sitemapScript.includes('updateHomepageJsonLd'),
+      'scripts/update-sitemap-lastmod.js exists and bumps sitemap + JSON-LD dateModified'
+    )
+  ) passed++;
+  else failed++;
+  let pkgJson = null;
+  try {
+    pkgJson = JSON.parse(readFile(path.join(__dirname, '..', 'package.json')));
+  } catch (_e) {
+    pkgJson = null;
+  }
+  if (
+    assert(
+      pkgJson && pkgJson.scripts && pkgJson.scripts['sitemap:update'] === 'node scripts/update-sitemap-lastmod.js',
+      'package.json exposes "sitemap:update" script'
+    )
+  ) passed++;
+  else failed++;
+
+  // D9. llms.txt link bullet spec (llmstxt.org format)
+  if (
+    assert(
+      llmsTxt && /-\s*\[Home\]\(https:\/\/promptanatomy\.online\/\)/.test(llmsTxt) &&
+        /-\s*\[Full content\]\(https:\/\/promptanatomy\.online\/llms-full\.txt\)/.test(llmsTxt),
+      'llms.txt uses llmstxt.org Markdown link bullets and references /llms-full.txt'
     )
   ) passed++;
   else failed++;

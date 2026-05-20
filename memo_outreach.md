@@ -15,7 +15,7 @@ Fulfillment code paths are **change-controlled** while outreach is active: do no
 
 ## Vercel P0 before first outreach send
 
-Complete [todo.md](todo.md) §1b (Production env on `.online`) and §2 (Stripe test-mode E2E + refund). Run locally:
+**Done (2026-05-19):** [todo.md](todo.md) §1b–§2 verified — live fulfillment on `promptanatomy.online`. For regressions, run locally:
 
 ```bash
 npm test
@@ -33,3 +33,23 @@ npm run check:fulfillment   # if Upstash env present locally
 `https://promptanatomy.online/?utm_source=email&utm_medium=outreach&utm_campaign=<slug>`
 
 See [docs/marketing_plan.md](docs/marketing_plan.md) for messaging rules (no unsourced time-savings claims in email body).
+
+## Contact target (2026-05)
+
+Active collection goal: **1000** `ready` contacts (`cpb-outreach enrich-contacts --target 1000`, `check-readiness --target 1000`). Pilot send caps stay on `pilot_50` until operator flips `dry_run`.
+
+## First 500 contacts (minimum pilot pool)
+
+Use official state education directory exports before NCES website scraping. Each
+`ready` contact should have a unique organizational email, role/title context,
+source metadata, syntax/MX verification, and no suppression match.
+
+Recommended source order:
+
+1. Virginia DOE principal contact CSV.
+2. Texas TEA AskTED personnel export.
+3. California CDE School Directory Export.
+4. Minnesota / Ohio official organization-contact extracts where practical.
+5. NCES website scraping only as fallback.
+
+Before live send, run outreach diagnostics and `cpb-outreach check-readiness --slug pilot_50 --target 500`.

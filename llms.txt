@@ -4,11 +4,11 @@
 
 ## Key facts
 
-- Operator: Prompt Anatomy
-- Site: https://promptanatomy.online
-- Parent brand: https://www.promptanatomy.app
-- Repository: https://github.com/DITreneris/teacher
-- Contact: info@promptanatomy.app
+- [Operator](https://www.promptanatomy.app/): Prompt Anatomy
+- [Site](https://promptanatomy.online/): Free Classroom Prompt Builder for US K-12 teachers
+- [Parent brand](https://www.promptanatomy.app/): Prompt Anatomy interactive prompt training platform
+- [Repository](https://github.com/DITreneris/teacher): Open-source product source code on GitHub
+- [Contact](mailto:info@promptanatomy.app): info@promptanatomy.app for support, license, and resends
 - License: site content all-rights-reserved; prompts produced by users belong to those users
 - Pricing: prompt builder is free; optional PDF guides are one-time purchases ($4.99 Beginners - Prompt Anatomy, previously $9.99; $9.99 Advanced - Prompt Anatomy, previously $19.99); no subscription; no account
 - Audience: US K-12 teachers
@@ -16,15 +16,15 @@
 
 ## Canonical pages
 
-- Home: https://promptanatomy.online/
-- Privacy Policy: https://promptanatomy.online/privacy.html
-- Terms of Use: https://promptanatomy.online/terms.html
-- Post-purchase: https://promptanatomy.online/success.html (polls /api/download-link after Stripe redirect)
+- [Home](https://promptanatomy.online/): Free Classroom Prompt Builder for US K-12 teachers
+- [Privacy Policy](https://promptanatomy.online/privacy.html): What we collect, FERPA-aware posture, no student PII
+- [Terms of Use](https://promptanatomy.online/terms.html): Responsible AI disclaimer plus Classroom License for paid PDFs
+- [Post-purchase](https://promptanatomy.online/success.html): Polls /api/download-link after Stripe redirect
 
 ## Paid PDF flow
 
 - Checkout: Stripe Payment Links (URLs in config/sot.json commerce.stripePaymentLinks)
-- Fulfillment: POST /api/stripe-webhook → Redis + Resend email with 7-day signed link
+- Fulfillment: POST /api/stripe-webhook -> Redis + Resend email with 7-day signed link
 - In-page download: success.html polls GET /api/download-link?session_id=... then GET /api/download
 - Commerce copy and pricing: single source in config/sot.json (hydrated to index.html at runtime)
 
@@ -54,6 +54,7 @@
 
 ## Optional reads
 
-- Open Graph image: https://promptanatomy.online/og-image.png
-- Sitemap: https://promptanatomy.online/sitemap.xml
-- Security contact: https://promptanatomy.online/.well-known/security.txt
+- [Full content](https://promptanatomy.online/llms-full.txt): Concatenated plaintext of homepage, FAQ, buyer FAQ, and legal summary
+- [Open Graph image](https://promptanatomy.online/og-image.png): 1200x630 PNG social card
+- [Sitemap](https://promptanatomy.online/sitemap.xml): XML sitemap with image extension
+- [Security contact](https://promptanatomy.online/.well-known/security.txt): RFC 9116 security disclosure contact

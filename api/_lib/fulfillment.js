@@ -37,13 +37,19 @@ let redisClient = null;
 let resendClient = null;
 
 const FULFILLMENT_REQUIRED_ENV = [
+  'STRIPE_SECRET_KEY',
+  'STRIPE_WEBHOOK_SECRET',
+  'STRIPE_PRICE_BEGINNERS_PDF',
+  'STRIPE_PRICE_ADVANCED_PDF',
   'UPSTASH_REDIS_REST_URL',
   'UPSTASH_REDIS_REST_TOKEN',
   'DOWNLOAD_TOKEN_SECRET',
   'RESEND_API_KEY',
   'FULFILLMENT_FROM_EMAIL',
   'PDF_BEGINNERS_SOURCE_URL',
-  'PDF_ADVANCED_SOURCE_URL'
+  'PDF_ADVANCED_SOURCE_URL',
+  'BLOB_READ_WRITE_TOKEN',
+  'SITE_URL'
 ];
 
 function listMissingFulfillmentEnv() {
@@ -67,8 +73,21 @@ function assertFulfillmentConfigured() {
 async function checkFulfillmentHealth() {
   const missing = listMissingFulfillmentEnv();
   const blobConfigured = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  const stripeConfigured = Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_WEBHOOK_SECRET);
+  const priceMappingConfigured = Boolean(
+    process.env.STRIPE_PRICE_BEGINNERS_PDF && process.env.STRIPE_PRICE_ADVANCED_PDF
+  );
+  const siteUrlConfigured = Boolean(process.env.SITE_URL);
   if (missing.length) {
-    return { ok: false, missing, redis: 'skipped', blobConfigured };
+    return {
+      ok: false,
+      missing,
+      redis: 'skipped',
+      blobConfigured,
+      stripeConfigured,
+      priceMappingConfigured,
+      siteUrlConfigured
+    };
   }
 
   try {
@@ -77,7 +96,10 @@ async function checkFulfillmentHealth() {
       ok: ping === 'PONG',
       missing: [],
       redis: ping === 'PONG' ? 'ok' : String(ping),
-      blobConfigured
+      blobConfigured,
+      stripeConfigured,
+      priceMappingConfigured,
+      siteUrlConfigured
     };
   } catch (error) {
     return {
@@ -85,7 +107,10 @@ async function checkFulfillmentHealth() {
       missing: [],
       redis: 'error',
       redisDetail: error && error.message ? String(error.message) : 'Redis ping failed',
-      blobConfigured
+      blobConfigured,
+      stripeConfigured,
+      priceMappingConfigured,
+      siteUrlConfigured
     };
   }
 }

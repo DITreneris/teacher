@@ -1,0 +1,60 @@
+---
+description: PDF storefront UI, SOT commerce, mobile DS rules, initCommerce bootstrap
+globs: index.html,success.html,style.css,generator.js,config/sot.json,assets/pdf-covers/**
+alwaysApply: false
+---
+
+# PDF commerce & storefront UI
+
+## Design system
+
+- Component catalog and tokens: [`docs/STYLEGUIDE.md`](../../docs/STYLEGUIDE.md) (DS 2.0.0).
+- Prefixes: `.pdf-*`, `.ops-*`, `.buyer-faq*`, `.success-page*`.
+
+## Mobile (required before merge)
+
+New `.pdf-*` or `.ops-*` block **must** include `@media (max-width: 480px)` rules:
+
+- No horizontal overflow on section/card
+- Touch targets ≥ 44px
+- Preview dialog: `100dvh`, scroll-snap for sample pages where applicable
+
+Regression: [`tests/e2e/mobile-pdf-commerce.spec.js`](../../tests/e2e/mobile-pdf-commerce.spec.js) at 320 / 375 px.
+
+## SOT & hydration
+
+Edit copy in [`config/sot.json`](../../config/sot.json):
+
+- `#commerce` — Stripe links, pricing, compare strip, delivery promise, testimonials
+- `#pdfGuides` — chapter lists (TOC accordions)
+- `#buyerFaq` — buyer FAQ + JSON-LD mirror
+
+`generator.js`: `initCommerce()`, `initLegal()`, `initPdfGuideTocs()`, `initBuyerFaq()`, `initPdfPreviewDialog()`.
+
+## Bootstrap invariant (do not break)
+
+On `DOMContentLoaded`:
+
+1. `initCommerce(DEFAULT_SOT)` and `initLegal(DEFAULT_SOT)` **synchronously** (before SOT fetch completes).
+2. After `loadSotConfig()`: re-run `initCommerce(config)` **before** `initializeApp()`.
+3. `index.html` PDF CTAs must keep static `https://buy.stripe.com/...` `href` fallbacks (checkout works without JS).
+
+## Copy safety (enforced by `tests/structure.test.js`)
+
+- `commerce.deliveryPromise` — no `under 60 seconds`
+- `commerce.compareStrip.pdValue` — no unsourced `~ $NN` exact PD price
+- Follow [`docs/marketing_plan.md`](../../docs/marketing_plan.md) §4–5, §11
+
+## Publish gate
+
+When `commerce.allowPlaceholderCheckout === false`, `npm test` requires live `https://buy.stripe.com/` URLs with no `YOUR_` placeholders.
+
+## Tests
+
+| Change | Command |
+|--------|---------|
+| UX / interactions | `npm run test:smoke`, `npm run test:a11y` |
+| PDF layout / CSS | `npm run test:e2e` |
+| SOT commerce only | `npm test` (+ smoke for Stripe href poll) |
+
+`success.html` is included in a11y (`/success?session_id=cs_test_...`).

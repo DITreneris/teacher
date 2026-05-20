@@ -20,6 +20,9 @@ Desktop.ini
 
 # ─── Cursor / plans (development) ───
 .cursor/
+!.cursor/
+!.cursor/rules/
+!.cursor/rules/*.mdc
 
 # ─── Docs ───
 # Dokumentacija laikoma repo (README, CHANGELOG, docs/, ir t. t.).

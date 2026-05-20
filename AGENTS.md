@@ -10,6 +10,20 @@ Tikslas: vienareiksmis darbo modelis edukaciniam MVP.
 - **Commerce / Ops** - Stripe Payment Links, success URL, webhook domenas (tas pats host kaip checkout redirect), Vercel Production env, fulfillment mapping, incident replay. Failai: [`DEPLOY.md`](DEPLOY.md), [`memo_pdf.md`](memo_pdf.md), [`config/sot.json`](config/sot.json), `api/stripe-webhook.js`, `api/_lib/fulfillment.js`, `api/fulfillment-health.js`. Verify etape - kartu su QA fulfillment keitimams.
 - **QA** - vykdo kokybės vartus ir pateikia release rekomendaciją.
 
+## Dviejų repo riba / routing
+
+Šis repo yra **Vercel product + PDF fulfillment** repo. Jis valdo `promptanatomy.online`, statinį produktą, Stripe PDF checkout, Upstash Redis, Vercel Blob, transactional Resend ir `api/**` fulfillment kelius.
+
+Outreach sistema yra atskiras sibling repo:
+
+```text
+..\cpb-school-outreach
+```
+
+Outreach repo valdo Railway deploy, Supabase Postgres, kontaktų enrichment, kampanijų siuntimą ir marketing Resend (`news.promptanatomy.online`). Jei užduotis susijusi su school outreach, scraperiais, Supabase kontaktais, campaign workeriais ar marketing email webhookais, agentas turi dirbti `..\cpb-school-outreach`, ne šiame Vercel repo.
+
+Nedėti outreach logikos į `api/**`, Stripe fulfillment, Upstash, Vercel Blob, product env ar transactional email kelius. Sistemų atskyrimas dokumentuotas [`memo_outreach.md`](memo_outreach.md) ir [`docs/outreach_experience_memo_2026-05-17.md`](docs/outreach_experience_memo_2026-05-17.md).
+
 ## Stage-gate darbo seka
 
 1. **Intake (Orchestrator)**  
@@ -33,7 +47,7 @@ Tikslas: vienareiksmis darbo modelis edukaciniam MVP.
 | `.pdf-*` CSS / mobile PDF layout | `npm run test:e2e` (įsk. mobile-pdf-commerce) | — |
 | `api/**` fulfillment | `npm test` | `npm run check:fulfillment` |
 | Tik `commerce` / marketing copy SOT | `npm test` (publish + copy safety) | `npm run test:smoke` |
-| Prieš Production deploy | — | [DEPLOY.md](DEPLOY.md) + [todo.md](todo.md) P0 §1b |
+| Prieš Production deploy | — | [DEPLOY.md](DEPLOY.md) + [todo.md](todo.md) P0 §1b–§2 |
 
 **Cursor rules:** `.cursor/rules/cpb-core.mdc` (visada), `cpb-pdf-commerce.mdc`, `cpb-fulfillment.mdc`.
 
@@ -48,6 +62,8 @@ Tikslas: vienareiksmis darbo modelis edukaciniam MVP.
 Šie failai nėra aktyvūs `docs/INDEX.md` sąraše (docs-hygiene), bet yra operatorių / agentų runbook:
 
 - [`memo_pdf.md`](memo_pdf.md) - fulfillment deployment memo (EN)
+- [`memo_outreach.md`](memo_outreach.md) - outreach split-system memo (Vercel vs Railway, Resend split, UTM, first 500 contacts)
+- [`changelog_outreach.md`](changelog_outreach.md) - separate changelog for school outreach work (sibling repo `..\cpb-school-outreach`); main [CHANGELOG.md](CHANGELOG.md) tracks only Vercel product / PDF / Stripe / marketing / DS
 - [`todo.md`](todo.md) - release blockers ir ops checklist
 - [`DEPLOY.md`](DEPLOY.md) - deploy žmonėms ir robotams
 

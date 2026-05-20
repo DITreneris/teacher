@@ -1,6 +1,6 @@
 {
   "name": "classroom-prompt-builder",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "private": true,
   "description": "Classroom Prompt Builder - a free AI prompt builder for K-12 teachers with optional paid PDF guides. By Prompt Anatomy.",
   "repository": {
@@ -21,8 +21,10 @@
     "pdf:export": "node scripts/export-pdfs.js",
     "pdf:upload-blob": "node scripts/upload-pdfs-to-blob.js",
     "check:fulfillment": "node scripts/check-fulfillment-env.js",
+    "sitemap:update": "node scripts/update-sitemap-lastmod.js",
     "vendor:analytics": "node scripts/vendor-vercel-analytics.js",
     "optimize:social": "node scripts/optimize-social-images.js",
+    "optimize:covers": "node scripts/optimize-pdf-covers.js",
     "generate:og": "node scripts/generate-og-image.js",
     "build:social": "npm run generate:og && npm run optimize:social",
     "postinstall": "node scripts/vendor-vercel-analytics.js"
