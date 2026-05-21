@@ -14,6 +14,7 @@ The single documentation navigation hub after `README.md`.
 - [INDEX.md](INDEX.md) - canonical documentation index.
 - [DEPLOY.md](../DEPLOY.md) - deployment for humans (Vercel, DNS) and robots (sitemap, robots.txt).
 - [AGENTS.md](../AGENTS.md) - role-based work and quality rules.
+- [gold_legacy_standard.md](../gold_legacy_standard.md) - canonical gold baseline for the current repo/site, drift checks, and sister-repo handoff.
 - [CHANGELOG.md](../CHANGELOG.md) - release notes.
 - [STYLEGUIDE.md](STYLEGUIDE.md) - Design System 2.0.0 (tokens, components, mobile rules).
 - [design-system-audit_2026-05.md](design-system-audit_2026-05.md) - Mobile & DS audit matrix (May 2026).
