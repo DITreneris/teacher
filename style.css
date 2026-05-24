@@ -898,19 +898,6 @@ body.legal {
     display: grid;
     grid-template-columns: 7fr 5fr;
     gap: 32px;
-    position: relative;
-}
-
-.ops-layout::after {
-    content: '';
-    position: absolute;
-    top: 4px;
-    bottom: 4px;
-    left: calc(58.333% + 16px);
-    width: 1px;
-    background: #E6EAF3;
-    box-shadow: 6px 0 16px rgba(16, 24, 40, 0.05);
-    pointer-events: none;
 }
 
 /* ===== DYNAMIC FORM ===== */
@@ -3062,11 +3049,6 @@ body.legal {
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
-[data-theme="dark"] .ops-layout::after {
-    background: rgba(47, 111, 237, 0.15);
-    box-shadow: 6px 0 16px rgba(0, 0, 0, 0.22);
-}
-
 [data-theme="dark"] .community {
     background: linear-gradient(135deg, var(--surface-2), rgba(245, 197, 24, 0.08));
     border-color: var(--border-subtle);
@@ -3342,7 +3324,6 @@ body.legal {
     .step-badge { width: 28px; height: 28px; min-width: 28px; font-size: 12px; }
     .cta-button { min-height: 48px; padding: 14px 28px; font-size: 16px; }
     .ops-layout { grid-template-columns: 1fr; gap: var(--space-24); }
-    .ops-layout::after { display: none; }
     .ops-sidebar { position: static; }
     .ops-form-grid { grid-template-columns: 1fr; }
     /* One primary CTA: secondary = ghost */

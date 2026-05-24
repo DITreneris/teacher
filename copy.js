@@ -83,11 +83,9 @@
 
         var scrollSpySectionIds = ['operationsCenter', 'opsForm', 'opsOutputSection', 'library'];
         var scrollSpySections = scrollSpySectionIds.map(function (id) { return document.getElementById(id); }).filter(Boolean);
-        var activeSectionId = scrollSpySectionIds[0];
 
         function setActiveStepBySectionId(sectionId) {
             if (!sectionId) return;
-            activeSectionId = sectionId;
             var steps = document.querySelectorAll('.header-steps .header-step');
             steps.forEach(function (link) {
                 var href = link.getAttribute('href') || '';
