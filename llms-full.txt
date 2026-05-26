@@ -18,7 +18,7 @@ Product name: Classroom Prompt Builder
 Brand: Prompt Anatomy
 Positioning: Classroom-ready AI prompts for K-12 teachers. By Prompt Anatomy.
 
-Hero subtitle: Classroom-ready AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.
+Hero subtitle: Save time on lesson prep. AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.
 
 Primary call to action: Build a lesson prompt
 Secondary call to action: Browse templates
