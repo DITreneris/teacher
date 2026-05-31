@@ -1255,6 +1255,49 @@
         }
     }
 
+    function buildDigitalOfferExtras(currency, merchantListing) {
+        var listing = merchantListing && typeof merchantListing === 'object' ? merchantListing : {};
+        var returnDays = listing.returnPolicyDays || 14;
+        var returnPolicyUrl = listing.returnPolicyUrl || 'https://promptanatomy.online/terms.html';
+        return {
+            shippingDetails: {
+                '@type': 'OfferShippingDetails',
+                shippingRate: {
+                    '@type': 'MonetaryAmount',
+                    value: '0',
+                    currency: currency || 'USD'
+                },
+                shippingDestination: {
+                    '@type': 'DefinedRegion',
+                    addressCountry: 'US'
+                },
+                deliveryTime: {
+                    '@type': 'ShippingDeliveryTime',
+                    handlingTime: {
+                        '@type': 'QuantitativeValue',
+                        minValue: 0,
+                        maxValue: 0,
+                        unitCode: 'DAY'
+                    },
+                    transitTime: {
+                        '@type': 'QuantitativeValue',
+                        minValue: 0,
+                        maxValue: 1,
+                        unitCode: 'DAY'
+                    }
+                }
+            },
+            hasMerchantReturnPolicy: {
+                '@type': 'MerchantReturnPolicy',
+                applicableCountry: 'US',
+                returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+                merchantReturnDays: returnDays,
+                returnFees: 'https://schema.org/FreeReturn',
+                returnPolicyUrl: returnPolicyUrl
+            }
+        };
+    }
+
     /* SOT-driven Product + Offer JSON-LD for SERP rich results. */
     function initProductJsonLd(config) {
         var script = document.getElementById('product-jsonld');
@@ -1269,6 +1312,7 @@
             canonical = canonicalLink.href;
         }
         var productUrl = canonical.replace(/#.*$/, '') + '#pdf-guides';
+        var offerExtras = buildDigitalOfferExtras('USD', config.commerce.merchantListing);
 
         var graph = [];
         var keys = ['beginners', 'advanced'];
@@ -1277,7 +1321,7 @@
             var p = products[key];
             if (!p || !p.name || !p.price) continue;
             var imageAbs = p.image && /^https?:/.test(p.image) ? p.image : canonical.replace(/\/$/, '') + (p.image || '');
-            graph.push({
+            var productNode = {
                 '@type': 'Product',
                 '@id': canonical + '#product-' + key,
                 name: p.name,
@@ -1290,9 +1334,13 @@
                     price: String(p.price),
                     priceCurrency: p.currency || 'USD',
                     availability: 'https://schema.org/InStock',
-                    url: productUrl
+                    url: productUrl,
+                    shippingDetails: offerExtras.shippingDetails,
+                    hasMerchantReturnPolicy: offerExtras.hasMerchantReturnPolicy
                 }
-            });
+            };
+            if (p.description) productNode.description = p.description;
+            graph.push(productNode);
         }
 
         if (graph.length === 0) return;

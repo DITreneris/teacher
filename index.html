@@ -204,6 +204,7 @@
                 "@type": "Product",
                 "@id": "https://promptanatomy.online/#product-beginners",
                 "name": "Beginners \u2014 Prompt Anatomy",
+                "description": "A 12-page practical guide for teachers new to AI. Clear prompt patterns, classroom examples, and a simple verification workflow.",
                 "image": "https://promptanatomy.online/assets/pdf-covers/beginners.png",
                 "sku": "beginners-pdf",
                 "category": "Educational eBook",
@@ -213,13 +214,32 @@
                     "price": "4.99",
                     "priceCurrency": "USD",
                     "availability": "https://schema.org/InStock",
-                    "url": "https://promptanatomy.online/#pdf-guides"
+                    "url": "https://promptanatomy.online/#pdf-guides",
+                    "shippingDetails": {
+                        "@type": "OfferShippingDetails",
+                        "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "USD" },
+                        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "US" },
+                        "deliveryTime": {
+                            "@type": "ShippingDeliveryTime",
+                            "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" },
+                            "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 1, "unitCode": "DAY" }
+                        }
+                    },
+                    "hasMerchantReturnPolicy": {
+                        "@type": "MerchantReturnPolicy",
+                        "applicableCountry": "US",
+                        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+                        "merchantReturnDays": 14,
+                        "returnFees": "https://schema.org/FreeReturn",
+                        "returnPolicyUrl": "https://promptanatomy.online/terms.html"
+                    }
                 }
             },
             {
                 "@type": "Product",
                 "@id": "https://promptanatomy.online/#product-advanced",
                 "name": "Advanced \u2014 Prompt Anatomy",
+                "description": "A 24-page methodologist's guide for curriculum leads, instructional coaches, and PD trainers. Frameworks, audit rubrics, PD models, and rollout playbooks.",
                 "image": "https://promptanatomy.online/assets/pdf-covers/advanced.png",
                 "sku": "advanced-pdf",
                 "category": "Educational eBook",
@@ -229,7 +249,25 @@
                     "price": "9.99",
                     "priceCurrency": "USD",
                     "availability": "https://schema.org/InStock",
-                    "url": "https://promptanatomy.online/#pdf-guides"
+                    "url": "https://promptanatomy.online/#pdf-guides",
+                    "shippingDetails": {
+                        "@type": "OfferShippingDetails",
+                        "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "USD" },
+                        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "US" },
+                        "deliveryTime": {
+                            "@type": "ShippingDeliveryTime",
+                            "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" },
+                            "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 1, "unitCode": "DAY" }
+                        }
+                    },
+                    "hasMerchantReturnPolicy": {
+                        "@type": "MerchantReturnPolicy",
+                        "applicableCountry": "US",
+                        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+                        "merchantReturnDays": 14,
+                        "returnFees": "https://schema.org/FreeReturn",
+                        "returnPolicyUrl": "https://promptanatomy.online/terms.html"
+                    }
                 }
             }
         ]

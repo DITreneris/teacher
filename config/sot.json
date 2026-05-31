@@ -194,6 +194,7 @@
     "products": {
       "beginners": {
         "name": "Beginners \u2014 Prompt Anatomy",
+        "description": "A 12-page practical guide for teachers new to AI. Clear prompt patterns, classroom examples, and a simple verification workflow.",
         "image": "/assets/pdf-covers/beginners.png",
         "price": "4.99",
         "currency": "USD",
@@ -202,12 +203,17 @@
       },
       "advanced": {
         "name": "Advanced \u2014 Prompt Anatomy",
+        "description": "A 24-page methodologist's guide for curriculum leads, instructional coaches, and PD trainers. Frameworks, audit rubrics, PD models, and rollout playbooks.",
         "image": "/assets/pdf-covers/advanced.png",
         "price": "9.99",
         "currency": "USD",
         "sku": "advanced-pdf",
         "category": "Educational eBook"
       }
+    },
+    "merchantListing": {
+      "returnPolicyDays": 14,
+      "returnPolicyUrl": "https://promptanatomy.online/terms.html"
     },
     "compareStrip": {
       "pdLabel": "Typical single-session PD",

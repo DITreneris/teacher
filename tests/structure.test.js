@@ -61,6 +61,17 @@ function extractBuyerFaqJsonLd(html) {
   }
 }
 
+function offerHasMerchantFields(offer) {
+  return !!(
+    offer &&
+    offer.shippingDetails &&
+    offer.shippingDetails['@type'] === 'OfferShippingDetails' &&
+    offer.hasMerchantReturnPolicy &&
+    offer.hasMerchantReturnPolicy['@type'] === 'MerchantReturnPolicy' &&
+    offer.hasMerchantReturnPolicy.merchantReturnDays === 14
+  );
+}
+
 function run() {
   let passed = 0;
   let failed = 0;
@@ -487,6 +498,7 @@ function run() {
   if (assert(html.includes('id="product-jsonld"'), 'Product JSON-LD script tag (#product-jsonld) present')) passed++;
   else failed++;
   let productJsonLdHasBoth = false;
+  let productJsonLdHasMerchantFields = false;
   try {
     const match = html.match(/<script type="application\/ld\+json" id="product-jsonld">\s*([\s\S]*?)\s*<\/script>/);
     if (match) {
@@ -498,11 +510,20 @@ function run() {
         beginners && beginners.offers && beginners.offers.price === '4.99' && beginners.offers.priceCurrency === 'USD' &&
         advanced && advanced.offers && advanced.offers.price === '9.99' && advanced.offers.priceCurrency === 'USD'
       );
+      productJsonLdHasMerchantFields = !!(
+        beginners && beginners.description &&
+        advanced && advanced.description &&
+        offerHasMerchantFields(beginners.offers) &&
+        offerHasMerchantFields(advanced.offers)
+      );
     }
   } catch (_e) {
     productJsonLdHasBoth = false;
+    productJsonLdHasMerchantFields = false;
   }
   if (assert(productJsonLdHasBoth, 'Product JSON-LD lists Beginners ($4.99) and Advanced ($9.99) Offers in USD')) passed++;
+  else failed++;
+  if (assert(productJsonLdHasMerchantFields, 'Product JSON-LD includes description, shippingDetails, and hasMerchantReturnPolicy')) passed++;
   else failed++;
 
   let productSotSync = false;
@@ -511,8 +532,8 @@ function run() {
     const products = sotForProducts.commerce && sotForProducts.commerce.products;
     productSotSync = !!(
       products &&
-      products.beginners && products.beginners.price === '4.99' && products.beginners.currency === 'USD' &&
-      products.advanced && products.advanced.price === '9.99' && products.advanced.currency === 'USD'
+      products.beginners && products.beginners.price === '4.99' && products.beginners.currency === 'USD' && products.beginners.description &&
+      products.advanced && products.advanced.price === '9.99' && products.advanced.currency === 'USD' && products.advanced.description
     );
   } catch (_e) {
     productSotSync = false;
