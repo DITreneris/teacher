@@ -184,6 +184,28 @@ function run() {
   if (assert(html.includes('"@id": "https://promptanatomy.online/#buyer-faq"') && html.includes('"name": "Can I use this guide in more than one of my classrooms?"'), 'Buyer FAQ JSON-LD entry present with first question')) passed++;
   else failed++;
 
+  let faqPageCount = 0;
+  let buyerFaqHasPageName = false;
+  try {
+    const faqMatch = html.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
+    if (faqMatch) {
+      const faqData = JSON.parse(faqMatch[1]);
+      const faqGraph = Array.isArray(faqData['@graph']) ? faqData['@graph'] : [];
+      faqPageCount = faqGraph.filter(function (node) { return node && node['@type'] === 'FAQPage'; }).length;
+      const buyerFaqPage = faqGraph.find(function (node) {
+        return node && node['@type'] === 'FAQPage' && node['@id'] === 'https://promptanatomy.online/#buyer-faq';
+      });
+      buyerFaqHasPageName = !!(buyerFaqPage && buyerFaqPage.name === 'Buyer FAQ');
+    }
+  } catch (_e) {
+    faqPageCount = 0;
+    buyerFaqHasPageName = false;
+  }
+  if (assert(faqPageCount === 1, 'Exactly one FAQPage entity in JSON-LD @graph')) passed++;
+  else failed++;
+  if (assert(buyerFaqHasPageName, 'Buyer FAQPage JSON-LD includes page-level name')) passed++;
+  else failed++;
+
   let buyerFaqJsonLdSync = false;
   try {
     const sotForFaq = JSON.parse(readFile(SOT_PATH));
@@ -458,7 +480,7 @@ function run() {
   else failed++;
   if (assert(html.includes('"priceCurrency": "USD"'), 'JSON-LD offer in USD')) passed++;
   else failed++;
-  if (assert(html.includes('Optional downloadable PDF guides are sold separately.'), 'FAQ clarifies optional paid PDFs')) passed++;
+  if (assert(html.includes('Optional paid PDF guides are available separately.'), 'SoftwareApplication JSON-LD clarifies optional paid PDFs')) passed++;
   else failed++;
 
   // --- Product JSON-LD (paid PDFs, SOT-driven) ---

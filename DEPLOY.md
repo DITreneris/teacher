@@ -65,7 +65,7 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
   - [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/)
   - [Twitter Card Validator](https://cards-dev.twitter.com/validator) — verify `summary_large_image` renders the new headline + brand row without clipping
   - Slack / Discord — paste the URL, verify the navy preview thumbnail (no broken glyph in upper-left, URL fully visible in lower-left)
-- [ ] [Google Rich Results Test](https://search.google.com/test/rich-results) — `SoftwareApplication` + both `FAQPage` entities on home URL
+- [ ] [Google Rich Results Test](https://search.google.com/test/rich-results) — `SoftwareApplication` + `FAQPage` (Buyer FAQ) on home URL
 - [ ] CSP remains `Content-Security-Policy-Report-Only` until one week of clean production reports; then promote to enforcing `Content-Security-Policy` in `vercel.json` (see [todo.md](todo.md) §7)
 
 ---
@@ -222,7 +222,6 @@ and commit the regenerated `sitemap.xml` (and bumped `index.html` `dateModified`
 
 ## What is NOT deployed
 
-- `docs/archive/` — historical docs only
 - `node_modules/`, `test-results/` — dev dependencies
 - `.cursor/`, `.vercel/` — local tooling
 
