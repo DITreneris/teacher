@@ -1,8 +1,8 @@
 # US market & X/Twitter marketing plan
 
 **Product:** [Classroom Prompt Builder](https://promptanatomy.online/) · **Brand:** Prompt Anatomy  
-**Last updated:** May 20, 2026  
-**Status:** Partially ready — live Stripe checkout + fulfillment verified (2026-05-19); free-tool X promotion unblocked (Gate A ops); paid ads after Gate B proof.
+**Last updated:** July 22, 2026  
+**Status:** Partially ready — live Stripe checkout + fulfillment verified (2026-05-19); free-tool X promotion unblocked (Gate A ops); paid ads after Gate B proof. School email outreach resumes with first-touch rewarm then `sy2026_followup` (back-to-school).
 
 This plan is the canonical go-to-market reference for US promotion. It is tied to release blockers in [todo.md](../todo.md) (operator scratch, not indexed) and deployment steps in [DEPLOY.md](../DEPLOY.md). Legal pages: [privacy.html](../privacy.html), [terms.html](../terms.html).
 
@@ -32,7 +32,7 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | Biggest blocker | X account + demo content ([todo.md](../todo.md) Gate A); permissioned testimonials (Gate B) |
 | Promote free tool on X now? | **Yes** (ops E2E done — [todo.md](../todo.md) P0 §1b–§2 verified 2026-05-19) |
 | Run paid X ads for PDFs? | **No** until Gate B (organic sales or analytics proof + permissioned testimonial) |
-| Highest-ROI next move | 30s lesson-mode screen recording → X account + UTM → **free builder**; parallel: Resend outreach metrics (hold TX50d) |
+| Highest-ROI next move | Resume school outreach: `.blog` rewarm (NY/OH) → `sy2026_followup` email #2 (~Aug 5–20); parallel Gate A X demo pin |
 
 ### Readiness scores (1–10)
 
@@ -140,6 +140,22 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 
 - Secondary for **instructional coaches** and district PD; repurpose X threads as document posts after X organic proof.
 
+### School email outreach (Resend / Railway)
+
+Cold B2B outreach to US K–12 **principals** (public directories). Stack lives in sibling repo `cpb-school-outreach` — not Vercel fulfillment.
+
+| Item | Detail |
+|------|--------|
+| First-touch campaign | `pilot_50` (paused / dry_run between waves) |
+| Follow-up campaign | `sy2026_followup` — new school year / free builder |
+| Sender | `hello@promptanatomy.blog` |
+| UTM | `?utm_source=email&utm_medium=outreach&utm_campaign=<slug>` |
+| Resume sequence | Tiny NY/OH first-touch rewarm → Aug follow-up to prior `pilot_50` recipients |
+| Window | Soft reopen late July; main follow-up **~Aug 5–20, 2026** |
+| Messaging | Same §5 rules; lead free tool; no paid PDF lead in email #2; Advertisement + postal address + unsubscribe |
+
+Ops: [memo_outreach.md](../memo_outreach.md), [changelog_outreach.md](../changelog_outreach.md), runbook `cpb-school-outreach/docs/pilot_sy2026_followup_runbook.md`.
+
 ---
 
 ## 7. Content playbook (X)
@@ -216,6 +232,14 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | Test | $10–20/day promoted post → free tool OR Beginners PDF |
 | Review | Refunds, fulfillment tickets, ad rejection reasons |
 
+### Back-to-school email (parallel, Aug 2026)
+
+| When | Action |
+|------|--------|
+| Late Jul | Phase 0 preflight + NY/OH rewarm (50/day); hold NJ/TX until bounce clean |
+| ~Aug 5–20 | `sy2026_followup` F1→Fn waves (50–100/day); pause after each; stop on complaint spike |
+| After each wave | Registry row in [changelog_outreach.md](../changelog_outreach.md) |
+
 ### Stop / go (scale paid)
 
 | Signal | Go | Stop |
@@ -254,6 +278,8 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | [llms.txt](../llms.txt) | Machine-readable product brief for AI/search |
 | [AGENTS.md](../AGENTS.md) | Stage-gate roles; Orchestrator owns promotion priority |
 | [memo_pdf.md](../memo_pdf.md) | Fulfillment ops runbook (operator; not in INDEX hygiene list) |
+| [memo_outreach.md](../memo_outreach.md) | Outreach split-system ops (Railway / Resend / UTM) |
+| [changelog_outreach.md](../changelog_outreach.md) | Live send registry + outreach Unreleased status |
 
 ---
 

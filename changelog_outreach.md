@@ -2,41 +2,339 @@
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
-**Scope:** This file tracks **only** the school outreach stack (sibling repo `..\cpb-school-outreach`, GitHub `DITreneris/outreach`): Railway deploy, Supabase Postgres, contact enrichment, campaign sending, and Resend marketing on `news.promptanatomy.online`. Vercel product, PDF fulfillment, Stripe, marketing copy, design system, and infra entries stay in [CHANGELOG.md](CHANGELOG.md). Repo boundary rule: [AGENTS.md](AGENTS.md) "Dviejų repo riba / routing".
+**Scope:** This file tracks **only** the school outreach stack (sibling repo `..\cpb-school-outreach`, GitHub `DITreneris/outreach`): Railway deploy, Supabase Postgres, contact enrichment, campaign sending, and Resend marketing. Vercel product, PDF fulfillment, Stripe, marketing copy, design system, and infra entries stay in [CHANGELOG.md](CHANGELOG.md). Repo boundary: [AGENTS.md](AGENTS.md) "Dviejų repo riba / routing".
+
+### How to log
+
+| Event | Where |
+|-------|--------|
+| Multi-batch live day | One row per wave in [Live send registry](#live-send-registry); optional [Operator day](#operator-day--2026-06-02) if ≥3 waves same day |
+| Bounce ≥10% or incident | Bullet under operator day or `### Incident` in `[Unreleased]` |
+| Tooling / import / registry | `### Added` / `Changed` under `[Unreleased]` until version cut |
+| Pool milestone | Update [Pool snapshot](#pool-snapshot) in `[Unreleased]` only |
+| Version cut | Move `[Unreleased]` → `## [0.x.y] - date` (~monthly or per sender domain) |
+
+Do **not** add per-session `### Live —` blocks here — use the registry table and [`docs/archive/changelog_outreach_sessions_2026-05-06.md`](docs/archive/changelog_outreach_sessions_2026-05-06.md) for verbatim session history.
+
+## Contents
+
+- [Unreleased](#unreleased)
+- [0.4.0](#040---2026-06-02)
+- [0.3.0](#030---2026-05-31)
+- [0.2.0](#020---2026-05-26)
+- [0.1.0](#010---2026-05-22)
+- [Reference — insights](#reference--mining--deliverability-insights)
+- [Sender timeline](#live-sender-timeline-pilot_50)
+- [Operator index](#operator-references)
+
+**Live sender timeline (pilot_50):**
+
+| Period | From domain |
+|--------|-------------|
+| TX50–TX50e | `news.promptanatomy.online` / mixed |
+| TX50f–TX50g | `promptanatomy.help` |
+| TX50j–TX50l | `hello@promptanatomy.ceo` |
+| TX50m–TX50p, **VA11a, CA29a, MN50, OH50, MA50, MI50**, **XX50a** (OH/MA/MI) | `hello@promptanatomy.info` |
+| **XX50b–d**, **OH50e/f**, **NJ50/b**, **MN50a**, **MA23**, **NY50–o / Wave 15** | **`hello@promptanatomy.cloud`** |
+| **Wave 16+ geo** (NY50p / NJ50v / OH50z / TX50z onward) | **`hello@promptanatomy.blog`** |
 
 Operator references:
 
-- [memo_outreach.md](memo_outreach.md) - split-system summary, Resend split, UTM, first 500 contacts source order.
-- [docs/outreach_experience_memo_2026-05-17.md](docs/outreach_experience_memo_2026-05-17.md) - end-to-end experience memo, contact-acquisition lessons, pivot strategy, send plan, agent guidance.
+- [memo_outreach.md](memo_outreach.md) — split-system summary, Resend split, UTM, first 500 contacts source order.
+- [docs/outreach_experience_memo_2026-05-17.md](docs/outreach_experience_memo_2026-05-17.md) — contact-acquisition lessons, pivot strategy, send plan, agent guidance.
+- Live batch metrics → [Live send registry](#live-send-registry) below; per-batch detail → `cpb-school-outreach/docs/pilot_*_results.md`.
+- Session archive (pre-refactor detail): [`docs/archive/changelog_outreach_sessions_2026-05-06.md`](docs/archive/changelog_outreach_sessions_2026-05-06.md)
+- TX50 runbook: `..\cpb-school-outreach\docs\pilot_tx50_runbook.md`
+- Geo runbooks: `..\cpb-school-outreach\docs\pilot_va11a_runbook.md`, `..\cpb-school-outreach\docs\pilot_ca29a_runbook.md`
+- Sender gate (`.info`): `..\cpb-school-outreach\docs\promptanatomy_info_sender_gate.md`
+- Sender gate (`.cloud`, Wave 8–15): `..\cpb-school-outreach\docs\promptanatomy_cloud_sender_gate.md`
+- Sender gate (`.blog`, Wave 16+): `..\cpb-school-outreach\docs\promptanatomy_blog_sender_gate.md`
+- Mining cycle runbook: `..\cpb-school-outreach\docs\mining_cycle_runbook.md`
+- MN50/OH50/MA50/MI50/NJ50/**NY50** runbooks: `..\cpb-school-outreach\docs\pilot_mn50_runbook.md`, `pilot_oh50_runbook.md`, `pilot_ma50_runbook.md`, `pilot_mi50_runbook.md`, `pilot_nj50_runbook.md`, **`pilot_ny50_runbook.md`**
 
 ## [Unreleased]
 
-### Added
-- **pilot_tx50e live send (2026-05-20):** 50 TX on `pilot_50`, seed `2026052014`, 15-domain exclude + 200 prior ids; send completed via chunked `limit=5` after Railway reset on `limit=50`; **11 bounced / 38 sent / 1 opted_out** (22%). Results: `docs/pilot_tx50e_results.md`; campaign paused.
+### Current status
+
+- Campaign `pilot_50`: **paused** / `dry_run=true`
+- Follow-up campaign **`sy2026_followup`**: seeded in Supabase (`draft`/`dry_run`); F1 selection prepared (`docs/sy2026_followup_f1_batch`); **F1 live gated** on Railway deploy of `prior_sent` + ~Aug 5–20 window
+- Sender: **`hello@promptanatomy.blog`** (Wave 16+)
+- **Rewarm done (W39, 2026-07-22):** NY50am **6%** bounce / OH50aw **6%** bounce — gate to follow-up **open**
+- Cumulative geo+TX live ids: **~8394** (+100 W39) | Exclude domains: **~316**
+- Principal `ready` (post W39 restore): **~22524** total
+- **Next:** Deploy outreach `prior_sent` to Railway → `run_sy2026_followup_f1_live.ps1` in Aug window; **hold NJ**; hold aggressive TX
+- Runbook: `..\cpb-school-outreach\docs\pilot_sy2026_followup_runbook.md` | Checklist: `..\cpb-school-outreach\docs\sy2026_resume_operator_checklist.md`
 
 ### Added
-- **pilot_tx50d live send (2026-05-19):** 50 TX principals on `pilot_50`, seed `2026051915`, 12-domain exclude + 150 prior ids; API `sent=50`; webhook **8 bounced / 42 sent** (16%, Bryan/Brazosport clusters). **Pause recommended.** Results: outreach `docs/pilot_tx50d_results.md`; pool restored (`ready` ~8162).
 
-### Added
-- **pilot_tx50c live send (2026-05-19):** 50 TX principals on `pilot_50` with bounce-domain audit (9 at prep → **12** after Resend/DB sync incl. `bisd.net`, `braination.net`), batch-1+2 id exclude, seed `20260520`; API `sent=50`; webhook **6 bounced / 44 sent** (12%). Registry: `docs/pilot_tx50_bounced_addresses.md`, `docs/pilot_tx50_exclude_domains.txt`. Pool restored (`ready` ~8212).
-
-### Added
-- **pilot_tx50b live send (2026-05-19):** 50 TX principals on `pilot_50` with `--exclude-domains aldineisd.org` and batch-1 id exclude; API `sent=50`; early webhook **8 bounced / 42 sent** (16%, down from 22% Aldine-heavy TX50). Results: `docs/pilot_tx50b_results.md`; `prepare_tx50_batch.py` gains `--exclude-domains` / `--exclude-batch`.
-
-### Added
-- **Oklahoma OKCareerGuide ICAP PDF (2026-05-18):** `scripts/prepare_ok_icap_from_pdf.py` (pdfplumber extract); 75 ICAP coordinator contacts imported via `import-state-directory --state OK`; `ready` pool **8312** (+75). No live send.
-
-### Added
-- **Wisconsin DPI HS import + scrape (2026-05-18):** `scripts/prepare_wi_schools_csv.py`; 506 WI high schools with websites via `import-schools`; scrape smoke/full aborted early (~170 schools, ~7 new `ready` WI) — low ROI vs TX directory; documented in outreach `data/README.md`.
-
-### Added
-- **pilot_tx50 live send (2026-05-18):** 50 TX principals on `pilot_50` after quarantine; API `sent=50`, `send_log` 50×`sent`; pool restored via `restore.sql` / `apply_tx50_quarantine` companion restore. Results: outreach repo `docs/pilot_tx50_results.md`.
-
-### Added
-- Texas AskTED geocoded import (`Schools_2024_to_2025.csv`): `USER_*` column aliases, `--geocode-status`, `--high-school-only` on `import-state-directory`; production import raised `ready` pool to ~2400 contacts.
+- **`sy2026_followup`** campaign tooling (outreach repo): `templates/sy2026_followup.html`, seed `20260722000001_sy2026_followup_campaign.sql`, `prepare_followup_batch.py`, `assert_followup_cohort.py`, `_run_followup_slug_live.ps1`, F1 prep/live wrappers.
+- Sender/API **`eligibility=prior_sent`** (default `ready` unchanged) so follow-up does not flip `sent` → `ready`.
 
 ### Changed
-- Collection target raised from 500 to **1000** ready contacts; outreach repo adds `scripts/run_cycle_1000.ps1` and `scripts/download_tx_askted.py` for operator cycle (official TX/CA imports when CSVs are on disk, then scrape fallback).
+
+- Product [`privacy.html`](privacy.html): school outreach disclosure (separate Resend marketing sender; public-directory contacts; unsubscribe).
+- [`docs/marketing_plan.md`](docs/marketing_plan.md) + [`memo_outreach.md`](memo_outreach.md): back-to-school resume + follow-up slug.
+- **Geo import PS scripts:** `run_nj_homeroom_refresh.ps1`, `run_ny_sedref_import.ps1`, `run_oh_oeds_refresh.ps1` — splat `@(...)` for CLI args (fixes PowerShell 5.x `--flag` parse error on line continuations).
+- **`apply_tx50_quarantine.py`:** promote selection contacts in **`pending`** (not only `ready`) so NY→NJ→OH multi-batch live in one session works after the first quarantine.
+- **`_run_pilot_slug_prep.ps1`:** optional **`-MaxPerDomain`** (default `1`) for NJ pool shortfall batches.
+
+### Live send registry
+
+| Date | Session | Batches | Sender | T+0 sent | Bounce % | Cum. ids | Excl. dom. | Notes | Results |
+|------|---------|---------|--------|---------:|---------:|---------:|-----------:|-------|---------|
+| 2026-07-22 | W39 | **NY50am** / **OH50aw** | `.blog` | 100 | NY 6% / OH 6% | ~8394 | ~316 | Post-cooldown rewarm; NJ/TX held; `sy2026_followup` F1 prepped | [ny50am](../cpb-school-outreach/docs/pilot_ny50am_results.md) / [oh50aw](../cpb-school-outreach/docs/pilot_oh50aw_results.md) |
+| 2026-06-05 | W38 | NY50al / OH50av / **TX50c** | `.blog` | 140 | NY 2% / OH 4% / TX 6% | 8294 | 313 | **NJ50ar prep failed** (34 max); TX after geo gate | [ny50al](../cpb-school-outreach/docs/pilot_ny50al_results.md) / [nj50ar](../cpb-school-outreach/docs/pilot_nj50ar_results.md) / [oh50av](../cpb-school-outreach/docs/pilot_oh50av_results.md) / [tx50c](../cpb-school-outreach/docs/pilot_tx50c_results.md) |
+| 2026-06-05 | W37 | NY50ak / NJ50aq / OH50au | `.blog` | 148 | NY/NJ 2% / OH 0% | 8154 | 307 | TX paused; NJ md1→**md10** (9 dom.); Homeroom refresh | [ny50ak](../cpb-school-outreach/docs/pilot_ny50ak_results.md) / [nj50aq](../cpb-school-outreach/docs/pilot_nj50aq_results.md) / [oh50au](../cpb-school-outreach/docs/pilot_oh50au_results.md) |
+| 2026-06-05 | W36 | NY50aj / NJ50ap / OH50at / **TX50b** | `.blog` | 193 | NY 2% / NJ 0% / OH 0% / TX 4% | 8006 | 305 | NJ md1→**md5** (13 dom.); TX retry after W17 | [ny50aj](../cpb-school-outreach/docs/pilot_ny50aj_results.md) / [nj50ap](../cpb-school-outreach/docs/pilot_nj50ap_results.md) / [oh50at](../cpb-school-outreach/docs/pilot_oh50at_results.md) / [tx50b](../cpb-school-outreach/docs/pilot_tx50b_results.md) |
+| 2026-06-05 | W35 | NY50ai / NJ50ao / OH50as | `.blog` | 145 | NY/NJ 4% / OH 2% | 7813 | 302 | TX paused; NJ md1→md2→**md3**; Homeroom refresh | [ny50ai](../cpb-school-outreach/docs/pilot_ny50ai_results.md) / [nj50ao](../cpb-school-outreach/docs/pilot_nj50ao_results.md) / [oh50as](../cpb-school-outreach/docs/pilot_oh50as_results.md) |
+| 2026-06-04 | W34 | NY50ah / NJ50an / OH50ar | `.blog` | 148 | NY/NJ 2% | 7668 | 297 | TX paused; NJ md1→md2; OH 0% | [ny50ah](../cpb-school-outreach/docs/pilot_ny50ah_results.md) / [nj50an](../cpb-school-outreach/docs/pilot_nj50an_results.md) / [oh50ar](../cpb-school-outreach/docs/pilot_oh50ar_results.md) |
+| 2026-06-03 | W33 | NY50ag / NJ50am / OH50aq | `.blog` | 145 | OH 6% / NJ 2% | 7520 | 295 | TX paused; NJ max-per-domain 2; Resend quota OH retry | [ny50ag](../cpb-school-outreach/docs/pilot_ny50ag_results.md) / [nj50am](../cpb-school-outreach/docs/pilot_nj50am_results.md) / [oh50aq](../cpb-school-outreach/docs/pilot_oh50aq_results.md) |
+| 2026-06-03 | W32 | NY50af / NJ50al / OH50ap | `.blog` | 149 | OH 2% | 7375 | 291 | TX paused; NJ Homeroom refresh; NY/NJ 0% | [ny50af](../cpb-school-outreach/docs/pilot_ny50af_results.md) / [nj50al](../cpb-school-outreach/docs/pilot_nj50al_results.md) / [oh50ap](../cpb-school-outreach/docs/pilot_oh50ap_results.md) |
+| 2026-06-03 | W31 | NY50ae / NJ50ak / OH50ao | `.blog` | 147 | NY/OH 2–4% | 7226 | 290 | TX paused; NJ Homeroom refresh; NJ 0% | [ny50ae](../cpb-school-outreach/docs/pilot_ny50ae_results.md) / [nj50ak](../cpb-school-outreach/docs/pilot_nj50ak_results.md) / [oh50ao](../cpb-school-outreach/docs/pilot_oh50ao_results.md) |
+| 2026-06-03 | W30 | NY50ad / NJ50aj / OH50an | `.blog` | 147 | NJ/OH 2–4% | 7079 | 287 | TX paused; NY 0%; NJ prep ~554 | [ny50ad](../cpb-school-outreach/docs/pilot_ny50ad_results.md) / [nj50aj](../cpb-school-outreach/docs/pilot_nj50aj_results.md) / [oh50an](../cpb-school-outreach/docs/pilot_oh50an_results.md) |
+| 2026-06-03 | W29 | NY50ac / NJ50ai / OH50am | `.blog` | 148 | OH 4% | 6932 | 284 | TX paused; NJ Homeroom re-import; NY/NJ 0% | [ny50ac](../cpb-school-outreach/docs/pilot_ny50ac_results.md) / [nj50ai](../cpb-school-outreach/docs/pilot_nj50ai_results.md) / [oh50am](../cpb-school-outreach/docs/pilot_oh50am_results.md) |
+| 2026-06-03 | W28 | NY50ab / NJ50ah / OH50al | `.blog` | 145 | NJ/OH 4% | 6784 | 282 | TX paused; NY 0%; NJ prep **668** | [ny50ab](../cpb-school-outreach/docs/pilot_ny50ab_results.md) / [nj50ah](../cpb-school-outreach/docs/pilot_nj50ah_results.md) / [oh50al](../cpb-school-outreach/docs/pilot_oh50al_results.md) |
+| 2026-06-02 | W27 | NY50aa / NJ50ag / OH50ak | `.blog` | 148 | NJ/OH 2% | 6639 | 277 | TX paused; NY 0%; NJ chunk resume | [ny50aa](../cpb-school-outreach/docs/pilot_ny50aa_results.md) / [nj50ag](../cpb-school-outreach/docs/pilot_nj50ag_results.md) / [oh50ak](../cpb-school-outreach/docs/pilot_oh50ak_results.md) |
+| 2026-06-02 | W26 | NY50z / NJ50af / OH50aj | `.blog` | 145 | NJ 4% / OH 6% | 6491 | 275 | TX paused; NY 0% | [ny50z](../cpb-school-outreach/docs/pilot_ny50z_results.md) / [nj50af](../cpb-school-outreach/docs/pilot_nj50af_results.md) / [oh50aj](../cpb-school-outreach/docs/pilot_oh50aj_results.md) |
+| 2026-06-02 | W25 | NY50y / NJ50ae / OH50ai | `.blog` | 146 | NY 4% | 6346 | 270 | TX paused; OH improved | [ny50y](../cpb-school-outreach/docs/pilot_ny50y_results.md) / [nj50ae](../cpb-school-outreach/docs/pilot_nj50ae_results.md) / [oh50ai](../cpb-school-outreach/docs/pilot_oh50ai_results.md) |
+| 2026-06-02 | W24 | NY50x / NJ50ad / OH50ah | `.blog` | 144 | OH 8% | 6200 | 266 | TX paused | [ny50x](../cpb-school-outreach/docs/pilot_ny50x_results.md) / [nj50ad](../cpb-school-outreach/docs/pilot_nj50ad_results.md) / [oh50ah](../cpb-school-outreach/docs/pilot_oh50ah_results.md) |
+| 2026-06-02 | W23 | NY50w / NJ50ac / OH50ag | `.blog` | 141 | OH 12% | 6056 | 260 | TX paused | [ny50w](../cpb-school-outreach/docs/pilot_ny50w_results.md) / [nj50ac](../cpb-school-outreach/docs/pilot_nj50ac_results.md) / [oh50ag](../cpb-school-outreach/docs/pilot_oh50ag_results.md) |
+| 2026-06-02 | W22 | NY50v / NJ50ab / OH50af | `.blog` | 149 | 0–2% | 5915 | 251 | TX paused | [ny50v](../cpb-school-outreach/docs/pilot_ny50v_results.md) / [nj50ab](../cpb-school-outreach/docs/pilot_nj50ab_results.md) / [oh50af](../cpb-school-outreach/docs/pilot_oh50af_results.md) |
+| 2026-06-02 | W21 | NY50u / NJ50aa / OH50ae | `.blog` | 149 | 0–2% | 5766 | 250 | TX paused | [ny50u](../cpb-school-outreach/docs/pilot_ny50u_results.md) / [nj50aa](../cpb-school-outreach/docs/pilot_nj50aa_results.md) / [oh50ae](../cpb-school-outreach/docs/pilot_oh50ae_results.md) |
+| 2026-06-02 | W20 | NY50t / NJ50z / OH50ad | `.blog` | 147 | 0–4% | 5617 | 249 | TX paused; NJ50z exhausted a–z | [ny50t](../cpb-school-outreach/docs/pilot_ny50t_results.md) / [nj50z](../cpb-school-outreach/docs/pilot_nj50z_results.md) / [oh50ad](../cpb-school-outreach/docs/pilot_oh50ad_results.md) |
+| 2026-06-02 | W19 | NY50s / NJ50y / OH50ac | `.blog` | 147 | 0–4% | 5470 | 246 | TX paused | [ny50s](../cpb-school-outreach/docs/pilot_ny50s_results.md) / [nj50y](../cpb-school-outreach/docs/pilot_nj50y_results.md) / [oh50ac](../cpb-school-outreach/docs/pilot_oh50ac_results.md) |
+| 2026-06-01 | W18 | NY50r / NJ50x / OH50ab | `.blog` | 147 | 0–4% | 5323 | 240 | TX skipped | [ny50r](../cpb-school-outreach/docs/pilot_ny50r_results.md) / [nj50x](../cpb-school-outreach/docs/pilot_nj50x_results.md) / [oh50ab](../cpb-school-outreach/docs/pilot_oh50ab_results.md) |
+| 2026-06-01 | W17 | NY50q / NJ50w / OH50aa / TX50a | `.blog` | 188 | TX 14% | 5176 | 240 | TX50a backward-fill; OH post-z slug | [ny50q](../cpb-school-outreach/docs/pilot_ny50q_results.md) / [nj50w](../cpb-school-outreach/docs/pilot_nj50w_results.md) / [oh50aa](../cpb-school-outreach/docs/pilot_oh50aa_results.md) / [tx50a](../cpb-school-outreach/docs/pilot_tx50a_results.md) |
+| 2026-06-01 | W16 | NY50p / NJ50v / OH50z / TX50z | `.blog` | 194 | 0–2% | 4988 | 230 | First `.blog` + personal copy | [ny50p](../cpb-school-outreach/docs/pilot_ny50p_results.md) / [nj50v](../cpb-school-outreach/docs/pilot_nj50v_results.md) / [oh50z](../cpb-school-outreach/docs/pilot_oh50z_results.md) / [tx50z](../cpb-school-outreach/docs/pilot_tx50z_results.md) |
+| 2026-06-01 | W15 | NY50o / NJ50u / OH50y / TX50y | `.cloud` | 190 | 0–10% | 4794 | 216 | NJ 10% | [ny50o](../cpb-school-outreach/docs/pilot_ny50o_results.md) / [nj50u](../cpb-school-outreach/docs/pilot_nj50u_results.md) / [oh50y](../cpb-school-outreach/docs/pilot_oh50y_results.md) / [tx50y](../cpb-school-outreach/docs/pilot_tx50y_results.md) |
+| 2026-05-29 | W14 | NY50n / NJ50t / OH50x / TX50x | `.cloud` | 193 | 0–6% | 4604 | 215 | | [ny50n](../cpb-school-outreach/docs/pilot_ny50n_results.md) / [nj50t](../cpb-school-outreach/docs/pilot_nj50t_results.md) / [oh50x](../cpb-school-outreach/docs/pilot_oh50x_results.md) / [tx50x](../cpb-school-outreach/docs/pilot_tx50x_results.md) |
+| 2026-05-29 | W13 | NY50m / NJ50s / OH50w / TX50w | `.cloud` | 193 | 0–4% | 4411 | 205 | | [ny50m](../cpb-school-outreach/docs/pilot_ny50m_results.md) / [nj50s](../cpb-school-outreach/docs/pilot_nj50s_results.md) / [oh50w](../cpb-school-outreach/docs/pilot_oh50w_results.md) / [tx50w](../cpb-school-outreach/docs/pilot_tx50w_results.md) |
+| 2026-05-29 | W12 | NY50l / NJ50r / OH50v | `.cloud` | 144 | 0–4% | 4218 | 200 | geo-only | [ny50l](../cpb-school-outreach/docs/pilot_ny50l_results.md) / [nj50r](../cpb-school-outreach/docs/pilot_nj50r_results.md) / [oh50v](../cpb-school-outreach/docs/pilot_oh50v_results.md) |
+| 2026-05-28 | W11 | NY50k / NJ50q / OH50u / TX50v | `.cloud` | 194 | 0–8% | 4074 | 193 | | [ny50k](../cpb-school-outreach/docs/pilot_ny50k_results.md) / [nj50q](../cpb-school-outreach/docs/pilot_nj50q_results.md) / [oh50u](../cpb-school-outreach/docs/pilot_oh50u_results.md) / [tx50v](../cpb-school-outreach/docs/pilot_tx50v_results.md) |
+| 2026-05-28 | W10 | NY50j / NJ50p / OH50t / TX50u | `.cloud` | 193 | 0–6% | 3880 | 188 | | [ny50j](../cpb-school-outreach/docs/pilot_ny50j_results.md) / [nj50p](../cpb-school-outreach/docs/pilot_nj50p_results.md) / [oh50t](../cpb-school-outreach/docs/pilot_oh50t_results.md) / [tx50u](../cpb-school-outreach/docs/pilot_tx50u_results.md) |
+| 2026-05-28 | W9 | NY50i / NJ50o / OH50s / TX50t | `.cloud` | 188 | 0–8% | 3687 | 178 | post–Wave 8 harness | [ny50i](../cpb-school-outreach/docs/pilot_ny50i_results.md) / [nj50o](../cpb-school-outreach/docs/pilot_nj50o_results.md) / [oh50s](../cpb-school-outreach/docs/pilot_oh50s_results.md) / [tx50t](../cpb-school-outreach/docs/pilot_tx50t_results.md) |
+| 2026-05-28 | W8 | NY50h / NJ50n / OH50r / TX50s | `.cloud` | 192 | 0–6% | 3499 | 171 | new `pilot_50` copy | [ny50h](../cpb-school-outreach/docs/pilot_ny50h_results.md) / [nj50n](../cpb-school-outreach/docs/pilot_nj50n_results.md) / [oh50r](../cpb-school-outreach/docs/pilot_oh50r_results.md) / [tx50s](../cpb-school-outreach/docs/pilot_tx50s_results.md) |
+| 2026-05-28 | W7 | NY50g / NJ50m / OH50q / TX50r | `.cloud` | 191 | 0–8% | 3307 | 164 | | [ny50g](../cpb-school-outreach/docs/pilot_ny50g_results.md) / [nj50m](../cpb-school-outreach/docs/pilot_nj50m_results.md) / [oh50q](../cpb-school-outreach/docs/pilot_oh50q_results.md) / [tx50r](../cpb-school-outreach/docs/pilot_tx50r_results.md) |
+| 2026-05-28 | W6 | NY50f / NJ50l / OH50p / TX50q | `.cloud` | 195 | 0–4% | 3116 | 158 | NY/NJ second live pass fix | [ny50f](../cpb-school-outreach/docs/pilot_ny50f_results.md) / [nj50l](../cpb-school-outreach/docs/pilot_nj50l_results.md) / [oh50p](../cpb-school-outreach/docs/pilot_oh50p_results.md) / [tx50q](../cpb-school-outreach/docs/pilot_tx50q_results.md) |
+| 2026-05-28 | W5 | NY50e / NJ50k / OH50o | `.cloud` | 145 | 0–4% | 2921 | 153 | | [ny50e](../cpb-school-outreach/docs/pilot_ny50e_results.md) / [nj50k](../cpb-school-outreach/docs/pilot_nj50k_results.md) / [oh50o](../cpb-school-outreach/docs/pilot_oh50o_results.md) |
+| 2026-05-27 | W4 | NY50c–d / NJ50i–j / OH50m–n | `.cloud` | 292 | 0–4% | 2776 | 147 | 6 batches one session | [ny50c](../cpb-school-outreach/docs/pilot_ny50c_results.md) … |
+| 2026-05-27 | W3 | NY50b / NJ50h / OH50l | `.cloud` | 146 | 0–2% | 2484 | 142 | | [ny50b](../cpb-school-outreach/docs/pilot_ny50b_results.md) / [nj50h](../cpb-school-outreach/docs/pilot_nj50h_results.md) / [oh50l](../cpb-school-outreach/docs/pilot_oh50l_results.md) |
+| 2026-05-27 | W2 | NY50a / NJ50g / OH50k | `.cloud` | 147 | 0–4% | 2338 | 142 | | [ny50a](../cpb-school-outreach/docs/pilot_ny50a_results.md) / [nj50g](../cpb-school-outreach/docs/pilot_nj50g_results.md) / [oh50k](../cpb-school-outreach/docs/pilot_oh50k_results.md) |
+| 2026-05-27 | W1 | NY50 / NJ50f / OH50j | `.cloud` | 145 | 0–6% | 2191 | 133 | first NY/NJ/OH `.cloud` | [ny50](../cpb-school-outreach/docs/pilot_ny50_results.md) / [nj50f](../cpb-school-outreach/docs/pilot_nj50f_results.md) / [oh50j](../cpb-school-outreach/docs/pilot_oh50j_results.md) |
+
+Earlier TX / XX50 / VA / CA batches (pre-W1): see [0.1.0](#010---2026-05-22) geo pivot table and [archive](docs/archive/changelog_outreach_sessions_2026-05-06.md).
+
+### Operator day — 2026-06-02
+
+Five geo live sessions (NY/NJ/OH only; **TX50b** deferred since W17 **TX50a 14%**). Sender **`hello@promptanatomy.blog`**; personal `pilot_50` copy throughout.
+
+| Session | Batches | T+0 sent (sum) | Cumulative IDs (end) | Exclude domains (end) |
+|--------:|---------|---------------:|---------------------:|----------------------:|
+| **W19** | NY50s / NJ50y / OH50ac | **147** | **5470** | **246** |
+| **W20** | NY50t / NJ50z / OH50ad | **147** | **5617** | **249** |
+| **W21** | NY50u / NJ50aa / OH50ae | **149** | **5766** | **250** |
+| **W22** | NY50v / NJ50ab / OH50af | **149** | **5915** | **251** |
+| **W23** | NY50w / NJ50ac / OH50ag | **141** | **6056** | **260** |
+
+**Day totals:** **733** T+0 sent across **15** batches; cumulative ids **5323 → 6056** (+733); exclude domains **243 → 260** (+17).
+
+**NJ prep pool (after exclusions):** **1132** (W19) → **928** (W23) — declining ~50/wave; refresh official directory if next prep fails.
+
+**Notable:** NJ50z exhausted a–z (W20); post-z slugs **nj50aa** onward (W21+). **OH50ag 12%** T+0 bounce (W23) — watch **OH50ah** next.
+
+### Pool snapshot
+
+| Metric | Value (2026-06-05, post W38) |
+|--------|------------------------------|
+| Cumulative geo+TX live ids | **8294** |
+| Exclude domains | **313** |
+| Principal `ready` (post restore) | NY **3173** / NJ **2262** / OH **1173** / TX **8013** |
+
+**W38 session:** **140** T+0 sent (NY **49** / OH **47** / TX **44**); **NJ50ar skipped** (prep max **34** at md50; **147** after exclusions). **0** complaints. NJ Homeroom re-import pre-wave (principal ready **2315**). **TX50c** after geo gate (NY **2%**, OH **4%**). New bounce domains: `mtvernoncsd.org`, `summitacademies.org`, `ulschools.com`, `clevelandisd.org`, `conroeisd.net`, `crowley.k12.tx.us`. OH prep **388**.
+
+**W37 session:** **148** T+0 sent (NY **49** / NJ **49** / OH **50**); **0** complaints. NJ Homeroom re-import pre-wave (principal ready **2315**); NJ prep **`max-per-domain=1` failed (9)** → **`max-per-domain=2` failed (15)** → **`max-per-domain=3` failed (21)** → **`max-per-domain=4` failed (27)** → **`max-per-domain=5` failed (33)** → **`max-per-domain=6` failed (37)** → fallback **`max-per-domain=10`** (9 unique domains; **197** after exclusions). New bounce domains: `nycap.rr.com`, `trenton.k12.nj.us`. OH prep **438**.
+
+**W36 session:** **193** T+0 sent (NY **48** / NJ **50** / OH **50** / TX **45**); **0** complaints. NJ Homeroom re-import (principal ready **2318**); NJ prep **`max-per-domain=1→5`** (13 unique domains). **TX50b retry** after geo gates — **4%** T+0 (vs TX50a **14%**). New bounce domains: `northernrivers.org`, `comstockisd.net`, `cooperbulldogs.net`. OH prep **488**.
+
+**W35 session:** **145** T+0 sent (NY **48** / NJ **48** / OH **49**); **0** complaints. NJ Homeroom re-import pre-wave (principal ready **2320**); NJ prep **`max-per-domain=1` failed (22)** → **`max-per-domain=2` failed (39)** → **`max-per-domain=3`** (20 unique domains). New bounce domains: `msd.k12.ny.us`, `nhart.org`, `westorangeschools.org`, `woodstown.org`, `stjohnlogan.org`. OH prep **538**.
+
+**W34 session:** **148** T+0 sent (NY **49** / NJ **49** / OH **50**); **0** complaints. NJ Homeroom re-import pre-wave; NJ prep **`max-per-domain=1` failed (29)** → **`max-per-domain=2`**. New bounce domains: `nasboces.org`, `wpschools.org`. OH **0%** T+0 (recovery from W33 6%). OH prep **588**.
+
+**W33 session:** **145** T+0 sent (NY **49** / NJ **49** / OH **47**); **0** complaints. NJ Homeroom re-import ×2 (first import HTTP/2 reset). NJ prep **max-per-domain=2** after only **38** at `max-per-domain=1`. New bounce domains: `plainfield.k12.nj.us`, `reyn.org`, `nhaschools.com`, `shelbyk12.org`. OH live paused once on Resend daily quota. OH prep **643**.
+
+**W32 session:** **149** T+0 sent (NY **50** / NJ **50** / OH **49**); **0** complaints. Pre-W32 NJ Homeroom re-import (principal ready **2284**). New bounce domain: `seovec.org`. NJ prep **454** after exclusions; post-W32 NJ eligible **~404**. OH prep **694**.
+
+**W31 session:** **147** T+0 sent (NY **48** / NJ **50** / OH **49**); **0** complaints. Pre-W31 NJ Homeroom re-import (principal ready **2285**). New bounce domains: `malverneschools.org`, `marlboroschools.org`, `rollred.org`. NJ prep **~500**; post-W31 NJ eligible **454**. OH prep **747**.
+
+Mining detail and historical pool steps: [0.2.0](#020---2026-05-26).
+
+### Open actions
+
+| P | Action | Why |
+|---|--------|-----|
+| **P0** | **NJ pool exhausted** — **NJ50as** blocked until Homeroom refresh / mining adds principals | W38 prep max **34** principals (**147** after exclusions) |
+| **P1** | `run_geo_wave_preflight.ps1` before **NY50am / OH50aw** (+ TX50d if gates pass) | Bounce file, counts, `verify_blog_from` |
+| **P2** | NJ Homeroom refresh + pool investigation before next NJ batch | W37 md10 exhausted remaining domains |
+| **P2** | Resend daily quota headroom before geo+TX live | W38 sent **140** emails |
+| **P2** | **TX50d** if W38 **TX50c 6%** holds | Monitor `.blog` TX bounce trend |
+| **P2** | **GA** import when `ga_contacts_raw.csv` exists | `run_ga_import.ps1` |
+| **P3** | `audit_pilot_bounce_domains.py` before each live wave | Global exclude list (~313 domains) |
+
+---
+
+## [0.4.0] - 2026-06-02
+
+Wave 16–23 on **`hello@promptanatomy.blog`**; four-state geo preflight + `assert_batch_cohort.py`; **TX50a** live then **TX50b** deferred (**14%** T+0). See [Live send registry](#live-send-registry).
 
 ### Added
-- [docs/outreach_experience_memo_2026-05-17.md](docs/outreach_experience_memo_2026-05-17.md): operator/agent memo documenting the school outreach bot experience, current contact-acquisition status, low hit-rate lessons, strategy pivot toward official state directories (NCES scraping demoted to fallback), and the explicit rule that outreach runs as a separate Railway/Supabase/Resend stack outside the Vercel `promptanatomy.online` fulfillment deployment. Adds the 2026-05-17 pilot readiness milestone: Resend marketing domain `news.promptanatomy.online` verified, US business address in Alameda, CA used for CAN-SPAM, Variant C copy (`Quick look for {{state}} schools - 30 seconds`), one-click unsubscribe write-back to `suppressions`, operator self-test PASS on SPF/DKIM/DMARC, campaign held at `dry_run = true` until pilot_20 plan executes in the outreach repo.
+
+- Sender gate **`.blog`**: `promptanatomy_blog_sender_gate.md`, `verify_blog_from.ps1`, `run_geo_wave_preflight.ps1` (four-state).
+
+### Changed
+
+- **2026-06-01:** Pivot live sender to `hello@promptanatomy.blog` (Wave 16, NY50p+); revert `pilot_50` to personal template (California / I'm Tomas).
+- Campaign remains **`paused`** / `dry_run=true` between waves.
+
+---
+
+## [0.3.0] - 2026-05-31
+
+NY50 **W1–W15** on `.cloud` (then W16+ in 0.4.0); geo wave tooling; TX AskTED personnel pool refresh; ops hardening post–Wave 8.
+
+### Added
+
+- **`prep_meta` on `selection.json`**, **`assert_batch_cohort.py`**, chunk retries in `run_tx50f_send_chunks.ps1`, `-AssertPilot50Copy` on `verify_outreach_from.ps1`.
+- **Strategic geo refresh:** `run_geo_official_refresh.ps1`, `_geo_main_repo.ps1`, MN REC_REQ refresh, GA import scaffold.
+- **NY SEDREF import** (2026-05-27): `run_ny_sedref_import.ps1`, charter HS supplement — NY principal **~661** ready.
+- **MA DESE** org catalog API + principal refresh tooling.
+
+### Changed
+
+- **`prepare_tx50_batch.py` / `state_ready_count.py`:** paginated state fetch (Supabase 1000-row cap fix).
+- **`apply_tx50_quarantine.py`:** paginated `_fetch_state_school_ids` (OH quarantine fix).
+- **TX email refresh (2026-05-28):** AskTED personnel [`Directory.csv`](Directory.csv) → `reconcile_tx_askted_directory.py`; TX principal **~7097** ready pre-MX. Full TX50 resume checklist: [`pilot_tx50_runbook.md`](../cpb-school-outreach/docs/pilot_tx50_runbook.md) (not duplicated here).
+
+### Fixed
+
+- Partial cohort live passes (NY50f/NJ50l second pass); OH50j quarantine race during slow `restore_pending_pool`.
+
+---
+
+## [0.2.0] - 2026-05-26
+
+Mining v3/v4 official-first expansion; XX50 stagger on `.cloud`; NJ Homeroom; email sanitization gate.
+
+### Mining v4 (2026-05-27)
+
+| Import | Prep rows | contacts_ready | Principal pool (post) |
+|--------|----------:|---------------:|----------------------:|
+| OH OEDS all-grades | 2268 | **2174** | OH **761** |
+| MA DESE Profiles refresh | 263 | **249** | MA **250** |
+| NY SEDREF CEO CSV | 5165 | **5062** | NY **651** |
+| NY charter HS supplement | 82 | **80** | NY **661** |
+
+**Phase gate:** +2308 net principal delta — **PASS**. Total principal **~14,318**. VA gap-fill smoke **0%** — STOP bulk scrape.
+
+Deliverables: `run_ny_sedref_import.ps1`, `MINING_OH_ALL_GRADES=1`, `docs/pilot_ny50_runbook.md`, snapshots `baseline_v4*.txt`.
+
+### Mining v3 (2026-05-23)
+
+Shift metric to **send-ready principal** (`principal` + `mx_ok` + official source). Baseline **~8503** principal ready. Tooling: `run_cycle_mining_v3.ps1`, `config/state_source_registry.json`, `probe_state_registry.py`, scrape STOP extended (OH, MA, PA).
+
+### Pool history (consolidated)
+
+| Milestone | `ready` total | `principal` ready |
+|-----------|-------------:|------------------:|
+| Mining v2 Phase 1 (TX personnel + MN supplement) | **10411** | **7575** |
+| Phase 2 (+ FL private/district) | **12671** | **7635** |
+| Post OH OEDS + MA Profiles (v3) | **~13539** | **~8503** |
+| Post MI EEM | **~15987** | **~9334** |
+| Mining v4 (2026-05-27) | — | **~14318** |
+
+### Added
+
+- **NJ Homeroom import (2026-05-24):** public school CSV path; sanitization + send gate scripts.
+- **XX50 batch prep** complete; stagger live OH/NJ/MN/MA/MI on `.cloud` (see table below).
+- **MI / MA / OH official imports (2026-05-23)** per [0.1.0](#010---2026-05-22).
+
+**XX50 official geo (2026-05-25–26, `.cloud`):**
+
+| Batch | State | T+0 sent / bounced | Bounce % | Notes |
+|-------|-------|-------------------|----------|--------|
+| OH50a–i, NJ50b–e, MN50a, MA23 | OH/NJ/MN/MA | stagger 50s | 2–4% | Official principals |
+| MN50 / OH50 / MA50 / MI50 | MN/OH/MA/MI | 49–50 / 1–2 | **2–4%** | XX50 official geo complete |
+
+**1034** cumulative ids before NY50 **W1** (2026-05-27).
+
+### Changed
+
+- `run_cycle_mining.ps1` v3/v4 flags; `prepare_oh_oeds_principals.py` all-grades + org-email fallback.
+
+---
+
+## [0.1.0] - 2026-05-22
+
+TX50 pilot through TX50p; sender pivots `.help` → `.ceo` → `.info`; VA/CA scrape geo; mining v2 official-first.
+
+### Geo pivot (TX depleted; official geo on `.info`)
+
+| Batch | State | Mailed | T+0 sent / bounced | Bounce % | Notes |
+|-------|-------|--------|-------------------|----------|--------|
+| **VA11a** | VA | 11 | 8 / 3 | 27% | Scrape `other` |
+| **CA29a** | CA | 23 | 18 / 5 | 22% | Scrape; generic inboxes |
+| **MN50** | MN | 50 | 49 / 1 | **2%** | Official OrgView principals |
+| **OH50** | OH | 50 | 48 / 2 | **4%** | Official OEDS principals |
+| **MA50** | MA | 50 | 48 / 2 | **4%** | Official DESE Profiles principals |
+| **MI50** | MI | 50 | 48 / 2 | **4%** | Official CEPI EEM principals |
+| *(cumulative)* | TX50–p | 800 | — | — | Pool depleted |
+
+### Added
+
+- **Michigan CEPI EEM import (2026-05-23):** `prepare_mi_eem_principals.py` — **2448** `contacts_ready`, MI **831** principal.
+- **IL ISBE + gated scrape (2026-05-23):** smoke **2%** → IL STOP.
+- **MA DESE Profiles / OH OEDS wide-format (2026-05-23):** **262** / **605** HS principal `contacts_ready`.
+- **Official-first mining v2 Phase 1–2 (2026-05-23):** TX personnel + MN supplement; FL private **2272** ready.
+- **CAIS California independent schools (2026-05-22–23):** 98 schools, **47%** enrich hit, **0** principal — not send-ready.
+- **Urban Institute CCD API** exploration; **Data mining cycle** tooling (`mining_inventory.py`, `run_cycle_mining.ps1`).
+- **pilot_tx50** through **tx50p** live sends; **VA11a / CA29a**; geo batch tooling (`prepare_tx50_batch.py --state`, `apply_tx50_quarantine.py`).
+- **Sender pivot `promptanatomy.info` (2026-05-22)** after `.ceo` ~13.88% domain bounce.
+- **TX50l incident:** leaky quarantine → ~363 non-selection sends; hardened quarantine.
+- Texas AskTED geocoded import; [docs/outreach_experience_memo_2026-05-17.md](docs/outreach_experience_memo_2026-05-17.md).
+- **Oklahoma ICAP PDF (2026-05-18):** 75 contacts; **Wisconsin DPI** 506 schools (low scrape ROI).
+- **pilot_tx50 (2026-05-18):** first 50 TX — **22%** bounce.
+
+### Changed
+
+- **`run_cycle_mining.ps1`:** MI EEM block; scrape **off by default** (`MINING_ENABLE_SCRAPE=1`); Phase 2 OH/FL imports.
+- **`prepare_oh_oeds_principals.py`:** wide OEDS + person-level formats.
+- **`enrich-contacts`:** `--domains-file` for CAIS.
+- **`import_state_directory.py`:** infer `role_target=principal` from org names (MN REC_REQ).
+- **Exclude domains file:** ~100 domains; global `audit_pilot_bounce_domains.py` before XX50 live.
+- **`apply_tx50_quarantine.py` / `restore_pending_pool.py`:** batched park/restore at ~18k `ready` scale.
+- Collection target **1000** ready; marketing sender docs `.help` → `.info`.
+
+### Fixed
+
+- **`run_phase3_scrape.ps1`:** `state_ready_count.py` join via `schools`.
+- **`import_supabase.py`:** pandas `NaN` → `null` for CAIS import.
+- **`apply_tx50_quarantine.py`:** batched global park; `daily_cap` + state guard from `selection.json`.
+- **`_run_xx50_live.ps1`:** PowerShell Unicode dash fix.
+- **`prepare_tx50_batch.py`:** `--max-per-domain N` when N>1.
+
+---
+
+## Reference — mining & deliverability insights
+
+Canonical lessons (2026-05-23); full narrative in [archive](docs/archive/changelog_outreach_sessions_2026-05-06.md).
+
+1. **Official state dirs >> scrape.** MN OrgView (+2170), TX AskTED personnel (2470 processed), **OH OEDS wide export (+605 principal)**, **MA DESE Profiles (+262 principal)**, **MI CEPI EEM (+831 principal, 2448 imported)** delivered net-new principal contacts without website scrape. Bulk smoke **0–8%** on OK/NY/PA/OH/IL remains below the 8% gate; **MA website scrape ~17%** — still prefer Profiles export.
+2. **Catalog pages ≠ contact sources.** [NYSED school lists](https://data.nysed.gov/lists.php?type=school) and FL PK-12 publications = enrollment/report cards, no principal email. [MA Organization Search](https://profiles.doe.mass.edu/search/search.aspx?leftNavId=11238) — emails via **People Search → Principal → Export** (`showEmail=Y`). NY principal emails: [SEDREF COGNOS](https://p12.nysed.gov/irs/schoolDirectory/) #28/#30/#31.
+3. **Federal CCD layer = catalog, not contacts.** [Urban Education Data Portal](https://educationdata.urban.org/documentation) directories have no email/website/superintendent — use for master list + joins only.
+4. **Urban API ≠ raw NCES CSV.** Urban omits `WEBSITE`; raw NCES needed for scrape-first pools (VA via `prepare_va_nces_pool.py`).
+5. **Geo scrape vs official.** VA11a **27%** and CA29a **22%** T+0 bounce vs **MN50/OH50 2–4%** on official principal dirs.
+6. **Quarantine at scale.** `apply_tx50_quarantine` must **batch-park** all `ready` (~18k); single PostgREST update left thousands stray `ready` (OH50: 977 before fix).
+7. **CAIS pipeline:** **47% hit, 0 principal** — not send-ready like TX/MN official.
+8. **MN OrgView auto-download blocked** (Radware) — HTML export + `prepare_mn_org_supplement.py`.
+9. **OH OEDS wide-format** (`20260523_report.csv`) vs person-level DataExtract — both in `prepare_oh_oeds_principals.py`.
+10. **MA ASP.NET People Search** — use `search_export.aspx?showEmail=Y`.
+11. **MI CEPI EEM.** MDE URLs 404; operator **EEM Data Report** (filter `LEA`) beats scrape; State-only exports wrong for K–12 mining.
