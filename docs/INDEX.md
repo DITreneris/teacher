@@ -22,7 +22,6 @@ The single documentation navigation hub after `README.md`.
 ## Active go-to-market
 
 - [marketing_plan.md](marketing_plan.md) - US promotion readiness, X/Twitter plan, compliance gates, 30-day calendar; cross-links [DEPLOY.md](../DEPLOY.md) and operator release blockers (see plan §10).
-- [outreach_experience_memo_2026-05-17.md](outreach_experience_memo_2026-05-17.md) - school outreach bot experience memo: separate Railway/Supabase outreach stack, contact enrichment lessons, current acquisition status, pivot strategy, and agent/operator guidance.
 
 ## Active legal pages
 
@@ -78,10 +77,6 @@ Listed here for agent/operator discovery; not part of the lean active-doc set ab
 
 - [memo_pdf.md](../memo_pdf.md) - Stripe + PDF fulfillment deployment memo (EN).
 - P0/P1 release blockers: operator scratch file at repo root (not linked here per docs-hygiene).
-
-## Archive
-
-- [archive/pre-github-cleanup_2026-03/](archive/pre-github-cleanup_2026-03/)
-- [archive/legacy-mokytojas_2026-03/](archive/legacy-mokytojas_2026-03/)
-- [archive/legacy-di-promptu-biblioteka_2026-02/](archive/legacy-di-promptu-biblioteka_2026-02/)
-- [archive/legacy-vaizdo-generatorius_2026-02/](archive/legacy-vaizdo-generatorius_2026-02/)
+- [memo_outreach.md](../memo_outreach.md) - split-system pointer (Vercel product vs sibling Railway outreach); not a product launch criterion.
+- [changelog_outreach.md](../changelog_outreach.md) - outreach work log (sibling repo `cpb-school-outreach`; not part of lean active-doc set).
+- [outreach_experience_memo_2026-05-17.md](outreach_experience_memo_2026-05-17.md) - sibling-repo contact-acquisition lessons; not part of product launch criteria.

@@ -22,7 +22,7 @@ Outreach sistema yra atskiras sibling repo:
 
 Outreach repo valdo Railway deploy, Supabase Postgres, kontaktų enrichment, kampanijų siuntimą ir marketing Resend (`news.promptanatomy.online`). Jei užduotis susijusi su school outreach, scraperiais, Supabase kontaktais, campaign workeriais ar marketing email webhookais, agentas turi dirbti `..\cpb-school-outreach`, ne šiame Vercel repo.
 
-Nedėti outreach logikos į `api/**`, Stripe fulfillment, Upstash, Vercel Blob, product env ar transactional email kelius. Sistemų atskyrimas dokumentuotas [`memo_outreach.md`](memo_outreach.md) ir [`docs/outreach_experience_memo_2026-05-17.md`](docs/outreach_experience_memo_2026-05-17.md).
+Nedėti outreach logikos į `api/**`, Stripe fulfillment, Upstash, Vercel Blob, product env ar transactional email kelius. Sistemų atskyrimas dokumentuotas operator runbooks [`memo_outreach.md`](memo_outreach.md) ir [`docs/outreach_experience_memo_2026-05-17.md`](docs/outreach_experience_memo_2026-05-17.md) (ne Active go-to-market — produktinis GTM yra tik [`docs/marketing_plan.md`](docs/marketing_plan.md)).
 
 ## Stage-gate darbo seka
 

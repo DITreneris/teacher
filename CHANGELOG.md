@@ -9,6 +9,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); version
 ### Fixed
 - [`vercel.json`](vercel.json): remove deprecated top-level `public` so Vercel schema validation passes on Production deploys.
 
+### Changed
+- Product docs boundary: Active go-to-market is only [`docs/marketing_plan.md`](docs/marketing_plan.md); outreach memos moved to operator runbooks; root `/*.csv` / `/*.pdf` / `__pycache__/` gitignored so school-directory dumps stay out of the product repo.
+
 ## [1.1.2] - 2026-05-20 - SEO/GEO, DS performance, and fulfillment env truth
 
 ### Added

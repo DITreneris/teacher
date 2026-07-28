@@ -29,7 +29,10 @@ Desktop.ini
 # Jei reikia lokalių juodraščių – naudok atskirą sufiksą ir ignoruok čia.
 *.local.md
 
-# ─── Large NCES extracts (use outreach repo data/nces_raw/) ───
+# ─── Operator school-directory / catalog dumps (sibling outreach owns these) ───
+/*.csv
+/*.pdf
+__pycache__/
 schools.csv
 ccd_schools.csv
 

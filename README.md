@@ -24,6 +24,8 @@ Open [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 - [`DEPLOY.md`](DEPLOY.md) — **human + robot deployment reference** (Vercel, DNS, SEO files)
 - [`CHANGELOG.md`](CHANGELOG.md) — release notes
 
+School email outreach is a **separate sibling repo** (`cpb-school-outreach`) and is not required for product deploy. See the repo boundary in [`AGENTS.md`](AGENTS.md); optional operator pointer: [`memo_outreach.md`](memo_outreach.md).
+
 ## Deployment (summary)
 
 **Hosting:** Vercel, static root plus serverless API routes, no build command.  

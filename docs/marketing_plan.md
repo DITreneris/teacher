@@ -1,8 +1,8 @@
 # US market & X/Twitter marketing plan
 
 **Product:** [Classroom Prompt Builder](https://promptanatomy.online/) · **Brand:** Prompt Anatomy  
-**Last updated:** July 22, 2026  
-**Status:** Partially ready — live Stripe checkout + fulfillment verified (2026-05-19); free-tool X promotion unblocked (Gate A ops); paid ads after Gate B proof. School email outreach resumes with first-touch rewarm then `sy2026_followup` (back-to-school).
+**Last updated:** July 28, 2026  
+**Status:** Partially ready — live Stripe checkout + fulfillment verified (2026-05-19); free-tool X promotion unblocked on ops (Gate A remaining: handle + pin + UTM); paid ads after Gate B proof. School email outreach is a parallel sibling-repo channel, not a product launch blocker.
 
 This plan is the canonical go-to-market reference for US promotion. It is tied to release blockers in [todo.md](../todo.md) (operator scratch, not indexed) and deployment steps in [DEPLOY.md](../DEPLOY.md). Legal pages: [privacy.html](../privacy.html), [terms.html](../terms.html).
 
@@ -32,7 +32,7 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | Biggest blocker | X account + demo content ([todo.md](../todo.md) Gate A); permissioned testimonials (Gate B) |
 | Promote free tool on X now? | **Yes** (ops E2E done — [todo.md](../todo.md) P0 §1b–§2 verified 2026-05-19) |
 | Run paid X ads for PDFs? | **No** until Gate B (organic sales or analytics proof + permissioned testimonial) |
-| Highest-ROI next move | Resume school outreach: `.blog` rewarm (NY/OH) → `sy2026_followup` email #2 (~Aug 5–20); parallel Gate A X demo pin |
+| Highest-ROI next move | Gate A X (handle + pinned 30s lesson-mode demo + UTM), then Gate B proof / permissioned testimonials ([todo.md](../todo.md) P1) |
 
 ### Readiness scores (1–10)
 
@@ -140,21 +140,16 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 
 - Secondary for **instructional coaches** and district PD; repurpose X threads as document posts after X organic proof.
 
-### School email outreach (Resend / Railway)
+### School email outreach (parallel channel — sibling repo)
 
-Cold B2B outreach to US K–12 **principals** (public directories). Stack lives in sibling repo `cpb-school-outreach` — not Vercel fulfillment.
+Cold B2B email to US K–12 principals is **not** part of this product’s launch or Vercel fulfillment criteria. Ops live only in sibling repo `cpb-school-outreach` (Railway / Supabase / marketing Resend).
 
 | Item | Detail |
 |------|--------|
-| First-touch campaign | `pilot_50` (paused / dry_run between waves) |
-| Follow-up campaign | `sy2026_followup` — new school year / free builder |
-| Sender | `hello@promptanatomy.blog` |
-| UTM | `?utm_source=email&utm_medium=outreach&utm_campaign=<slug>` |
-| Resume sequence | Tiny NY/OH first-touch rewarm → Aug follow-up to prior `pilot_50` recipients |
-| Window | Soft reopen late July; main follow-up **~Aug 5–20, 2026** |
-| Messaging | Same §5 rules; lead free tool; no paid PDF lead in email #2; Advertisement + postal address + unsubscribe |
-
-Ops: [memo_outreach.md](../memo_outreach.md), [changelog_outreach.md](../changelog_outreach.md), runbook `cpb-school-outreach/docs/pilot_sy2026_followup_runbook.md`.
+| Stack | Sibling `cpb-school-outreach` — do not add to `api/**` |
+| Product UTM pattern | `?utm_source=email&utm_medium=outreach&utm_campaign=<slug>` |
+| Messaging rules | Same §5 teacher-safe rules; free tool lead; Advertisement + postal + unsubscribe |
+| Ops pointers | [memo_outreach.md](../memo_outreach.md) (operator); live registry in [changelog_outreach.md](../changelog_outreach.md) |
 
 ---
 
@@ -232,13 +227,9 @@ Ops: [memo_outreach.md](../memo_outreach.md), [changelog_outreach.md](../changel
 | Test | $10–20/day promoted post → free tool OR Beginners PDF |
 | Review | Refunds, fulfillment tickets, ad rejection reasons |
 
-### Back-to-school email (parallel, Aug 2026)
+### Back-to-school email (parallel — not a product Gate)
 
-| When | Action |
-|------|--------|
-| Late Jul | Phase 0 preflight + NY/OH rewarm (50/day); hold NJ/TX until bounce clean |
-| ~Aug 5–20 | `sy2026_followup` F1→Fn waves (50–100/day); pause after each; stop on complaint spike |
-| After each wave | Registry row in [changelog_outreach.md](../changelog_outreach.md) |
+Wave schedule, cool-downs, and live-send registry live in the sibling outreach repo and [changelog_outreach.md](../changelog_outreach.md). They do **not** gate X organic, PDF promo, or Vercel deploy.
 
 ### Stop / go (scale paid)
 
@@ -277,9 +268,9 @@ Ops: [memo_outreach.md](../memo_outreach.md), [changelog_outreach.md](../changel
 | [CHANGELOG.md](../CHANGELOG.md) | Shipped buyer-confidence features |
 | [llms.txt](../llms.txt) | Machine-readable product brief for AI/search |
 | [AGENTS.md](../AGENTS.md) | Stage-gate roles; Orchestrator owns promotion priority |
-| [memo_pdf.md](../memo_pdf.md) | Fulfillment ops runbook (operator; not in INDEX hygiene list) |
-| [memo_outreach.md](../memo_outreach.md) | Outreach split-system ops (Railway / Resend / UTM) |
-| [changelog_outreach.md](../changelog_outreach.md) | Live send registry + outreach Unreleased status |
+| [memo_pdf.md](../memo_pdf.md) | Fulfillment ops runbook (operator) |
+| [memo_outreach.md](../memo_outreach.md) | Sibling outreach split-system pointer (operator; not a product launch blocker) |
+| [changelog_outreach.md](../changelog_outreach.md) | Sibling outreach live-send registry (operator; not a product launch blocker) |
 
 ---
 
