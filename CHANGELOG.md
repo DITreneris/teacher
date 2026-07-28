@@ -12,6 +12,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); version
 
 ## [Unreleased]
 
+### Fixed
+- Ops mobile visual (`visual-ops-mobile`): raise `maxDiffPixelRatio` to 0.12 so shared Windows/Ubuntu Chromium baselines tolerate Inter AA drift; CI uploads `test-results/` on Playwright failure.
+
 ## [1.2.0] - 2026-07-28 - Fall content polish, product hero, Lucide sprite, pre-launch gates
 
 ### Added
