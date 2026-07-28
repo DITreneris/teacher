@@ -46,7 +46,7 @@ function readPngDimensions(filePath) {
   return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
 }
 
-function extractBuyerFaqJsonLd(html) {
+function extractFaqJsonLd(html) {
   const match = html.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
   if (!match) return null;
   try {
@@ -54,7 +54,7 @@ function extractBuyerFaqJsonLd(html) {
     const graph = data['@graph'];
     if (!Array.isArray(graph)) return null;
     return graph.find(function (node) {
-      return node['@id'] === 'https://promptanatomy.online/#buyer-faq';
+      return node['@id'] === 'https://promptanatomy.online/#faq';
     });
   } catch (_e) {
     return null;
@@ -178,11 +178,11 @@ function run() {
   else failed++;
   if (assert(html.includes('class="pdf-guide-license"') && html.includes('Classroom license') && html.includes('terms.html#paid-pdf-license'), 'Classroom license line links to terms anchor')) passed++;
   else failed++;
-  if (assert(html.includes('class="pdf-guide-refund"') && html.includes('14-day no-questions refund'), '14-day refund badge sits beside the CTA')) passed++;
+  if (assert(html.includes('class="pdf-guide-refund"') && html.includes('14-day no-questions refund'), '14-day refund badge present in shared PDF assurance strip')) passed++;
   else failed++;
   if (assert(html.includes('class="pdf-guide-trust"') && html.includes('Stripe checkout') && html.includes('Apple Pay') && html.includes('256-bit SSL'), 'Trust row lists Stripe, card brands, Apple Pay, and SSL')) passed++;
   else failed++;
-  if (assert(html.includes('class="pdf-guide-promise"') && html.includes('data-commerce-delivery-promise'), 'Delivery promise hook exists on both PDF cards')) passed++;
+  if (assert(html.includes('class="pdf-guides-assurance"') && html.includes('class="pdf-guide-promise"') && html.includes('data-commerce-delivery-promise'), 'Shared PDF assurance strip with delivery promise hook exists')) passed++;
   else failed++;
   if (assert(html.includes('data-preview-trigger="beginners"') && html.includes('data-preview-trigger="advanced"'), 'Preview-3-pages buttons exist for both guides')) passed++;
   else failed++;
@@ -190,43 +190,47 @@ function run() {
   else failed++;
   if (assert(html.includes('data-toc="beginners"') && html.includes('data-toc="advanced"') && html.includes('data-toc-list="beginners"'), 'Whats inside TOC accordion exists for both guides with data-toc-list hooks')) passed++;
   else failed++;
-  if (assert(html.includes('id="pdf-guides-faq"') && html.includes('data-buyer-faq-list'), 'Buyer FAQ section + populate hook present')) passed++;
+  if (assert(html.includes('id="product-faq"') && html.includes('data-product-faq-list') && html.includes('id="product-faq-free"'), 'Product FAQ section with static no-JS answers present')) passed++;
   else failed++;
-  if (assert(html.includes('"@id": "https://promptanatomy.online/#buyer-faq"') && html.includes('"name": "Can I use this guide in more than one of my classrooms?"'), 'Buyer FAQ JSON-LD entry present with first question')) passed++;
+  if (assert(html.includes('id="pdf-guides-faq"') && html.includes('data-buyer-faq-list') && html.includes('id="buyer-faq-multi-classroom"'), 'Buyer FAQ section + static no-JS answers + populate hook present')) passed++;
+  else failed++;
+  if (assert(html.includes('"@id": "https://promptanatomy.online/#faq"') && html.includes('"name": "Is Classroom Prompt Builder free?"'), 'FAQ JSON-LD entry present with product question')) passed++;
   else failed++;
 
   let faqPageCount = 0;
-  let buyerFaqHasPageName = false;
+  let faqHasPageName = false;
   try {
     const faqMatch = html.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
     if (faqMatch) {
       const faqData = JSON.parse(faqMatch[1]);
       const faqGraph = Array.isArray(faqData['@graph']) ? faqData['@graph'] : [];
       faqPageCount = faqGraph.filter(function (node) { return node && node['@type'] === 'FAQPage'; }).length;
-      const buyerFaqPage = faqGraph.find(function (node) {
-        return node && node['@type'] === 'FAQPage' && node['@id'] === 'https://promptanatomy.online/#buyer-faq';
+      const faqPage = faqGraph.find(function (node) {
+        return node && node['@type'] === 'FAQPage' && node['@id'] === 'https://promptanatomy.online/#faq';
       });
-      buyerFaqHasPageName = !!(buyerFaqPage && buyerFaqPage.name === 'Buyer FAQ');
+      faqHasPageName = !!(faqPage && faqPage.name === 'FAQ');
     }
   } catch (_e) {
     faqPageCount = 0;
-    buyerFaqHasPageName = false;
+    faqHasPageName = false;
   }
   if (assert(faqPageCount === 1, 'Exactly one FAQPage entity in JSON-LD @graph')) passed++;
   else failed++;
-  if (assert(buyerFaqHasPageName, 'Buyer FAQPage JSON-LD includes page-level name')) passed++;
+  if (assert(faqHasPageName, 'FAQPage JSON-LD includes page-level name FAQ')) passed++;
   else failed++;
 
-  let buyerFaqJsonLdSync = false;
+  let faqJsonLdSync = false;
   try {
     const sotForFaq = JSON.parse(readFile(SOT_PATH));
-    const buyerFaqNode = extractBuyerFaqJsonLd(html);
-    const sotBuyerFaq = sotForFaq.buyerFaq;
-    if (buyerFaqNode && Array.isArray(sotBuyerFaq) && Array.isArray(buyerFaqNode.mainEntity)) {
-      buyerFaqJsonLdSync =
-        buyerFaqNode.mainEntity.length === sotBuyerFaq.length &&
-        sotBuyerFaq.every(function (item, index) {
-          const entity = buyerFaqNode.mainEntity[index];
+    const faqNode = extractFaqJsonLd(html);
+    const sotProductFaq = Array.isArray(sotForFaq.productFaq) ? sotForFaq.productFaq : [];
+    const sotBuyerFaq = Array.isArray(sotForFaq.buyerFaq) ? sotForFaq.buyerFaq : [];
+    const expectedFaq = sotProductFaq.concat(sotBuyerFaq);
+    if (faqNode && Array.isArray(faqNode.mainEntity)) {
+      faqJsonLdSync =
+        faqNode.mainEntity.length === expectedFaq.length &&
+        expectedFaq.every(function (item, index) {
+          const entity = faqNode.mainEntity[index];
           return (
             entity &&
             entity.name === item.q &&
@@ -236,13 +240,13 @@ function run() {
         });
     }
   } catch (_e) {
-    buyerFaqJsonLdSync = false;
+    faqJsonLdSync = false;
   }
-  if (assert(buyerFaqJsonLdSync, 'Buyer FAQ JSON-LD matches config/sot.json#buyerFaq')) passed++;
+  if (assert(faqJsonLdSync, 'FAQ JSON-LD matches config/sot.json#productFaq + #buyerFaq')) passed++;
   else failed++;
   if (assert(html.includes('id="lostLinkMailto"') && html.includes('mailto:info@promptanatomy.app?subject=Resend'), 'Lost-your-link footer mailto link present')) passed++;
   else failed++;
-  if (assert(html.includes('class="pdf-testimonials"') && html.includes('data-commerce-testimonials'), 'Testimonials list + commerce hook present')) passed++;
+  if (assert(html.includes('class="pdf-testimonials"') && html.includes('data-commerce-testimonials') && html.includes('class="pdf-testimonial"'), 'Testimonials list + commerce hook + static no-JS quote present')) passed++;
   else failed++;
   if (assert(html.includes('class="pdf-compare-strip"') && html.includes('data-commerce-compare-strip') && html.includes('$4.99') && html.includes('$9.99'), 'Compare strip exposes commerce hooks and PDF guide prices')) passed++;
   else failed++;
@@ -261,6 +265,14 @@ function run() {
     Array.isArray(sotPdfGuides.pdfGuides.advanced.chapters) &&
     sotPdfGuides.pdfGuides.advanced.chapters.length >= 8,
     'config/sot.json#pdfGuides exposes chapter lists for both guides'
+  )) passed++;
+  else failed++;
+  if (assert(
+    sotPdfGuides &&
+    Array.isArray(sotPdfGuides.productFaq) &&
+    sotPdfGuides.productFaq.length === 4 &&
+    sotPdfGuides.productFaq.every(function (item) { return item.id && item.q && item.a; }),
+    'config/sot.json#productFaq has 4 well-formed product questions'
   )) passed++;
   else failed++;
   if (assert(
@@ -544,7 +556,12 @@ function run() {
   // --- Self-hosted fonts (no Google Fonts CDN in shipped HTML) ---
   if (assert(!html.includes('fonts.googleapis.com') && !html.includes('fonts.gstatic.com'), 'index.html does not load Google Fonts CDN')) passed++;
   else failed++;
-  if (assert(html.includes('/assets/fonts/Inter-Regular.woff2') && html.includes('/assets/fonts/Inter-Bold.woff2'), 'index.html preloads self-hosted Inter Regular + Bold')) passed++;
+  if (assert(
+    html.includes('/assets/fonts/Inter-Regular.woff2')
+      && html.includes('/assets/fonts/Inter-Medium.woff2')
+      && html.includes('/assets/fonts/Inter-Bold.woff2'),
+    'index.html preloads self-hosted Inter Regular + Medium + Bold'
+  )) passed++;
   else failed++;
   const fontFiles = [
     'Inter-Regular.woff2',
@@ -564,12 +581,21 @@ function run() {
   if (assert(styleFileForFonts && /@font-face[^}]+font-family:\s*'Inter'/.test(styleFileForFonts), 'style.css declares @font-face for Inter')) passed++;
   else failed++;
 
-  // --- Subresource Integrity ---
-  if (assert(html.includes('integrity="sha384-') && html.includes('crossorigin="anonymous"'), 'Lucide CDN script uses SRI')) passed++;
+  // --- Icon sprite (no Lucide CDN) ---
+  if (assert(!html.includes('unpkg.com/lucide') && !html.includes('lucide.min.js'), 'index.html does not load Lucide from unpkg')) passed++;
+  else failed++;
+  if (assert(html.includes('src="icons.js"') && html.includes('/assets/icons.svg#icon-'), 'icons.js + SVG sprite use() hooks present')) passed++;
+  else failed++;
+  if (assert(fs.existsSync(path.join(__dirname, '..', 'assets', 'icons.svg')), 'assets/icons.svg sprite file exists')) passed++;
+  else failed++;
+  const vercelJsonForCsp = readFile(path.join(__dirname, '..', 'vercel.json'));
+  if (assert(vercelJsonForCsp && !vercelJsonForCsp.includes('https://unpkg.com'), 'vercel.json CSP drops unpkg.com')) passed++;
   else failed++;
 
   const robotsTxt = readFile(path.join(__dirname, '..', 'robots.txt'));
   if (assert(robotsTxt && robotsTxt.includes('Sitemap: https://promptanatomy.online/sitemap.xml'), 'robots.txt sitemap URL')) passed++;
+  else failed++;
+  if (assert(robotsTxt && robotsTxt.includes('Disallow: /docs/'), 'robots.txt disallows /docs/ authoring paths')) passed++;
   else failed++;
   if (assert(robotsTxt && robotsTxt.includes('github.com/DITreneris/teacher'), 'robots.txt repo comment')) passed++;
   else failed++;
@@ -873,6 +899,14 @@ function run() {
     assert(
       blockHasHeader(apiBlock, 'X-Robots-Tag', /noindex/i),
       'vercel.json /api/(.*) sets X-Robots-Tag: noindex, nofollow'
+    )
+  ) passed++;
+  else failed++;
+  const docsBlock = findHeaderBlock('/docs/(.*)');
+  if (
+    assert(
+      blockHasHeader(docsBlock, 'X-Robots-Tag', /noindex/i),
+      'vercel.json /docs/(.*) sets X-Robots-Tag: noindex, nofollow'
     )
   ) passed++;
   else failed++;

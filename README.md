@@ -1,3 +1,9 @@
+---
+status: active
+audience: both
+updated: 2026-07-28
+---
+
 # Classroom Prompt Builder
 
 A free, single-page AI prompt builder for K-12 teachers. Pick a mode, fill in a few fields, and copy a ready-made prompt for ChatGPT, Claude, or Gemini. Optional paid PDF guides are sold separately through Stripe-hosted checkout and delivered by secure email links.
@@ -7,7 +13,7 @@ A free, single-page AI prompt builder for K-12 teachers. Pick a mode, fill in a 
 | **Repository** | [github.com/DITreneris/teacher](https://github.com/DITreneris/teacher) |
 | **Production** | [promptanatomy.online](https://promptanatomy.online/) |
 | **Parent brand** | [promptanatomy.app](https://www.promptanatomy.app/) |
-| **Status** | US MVP (v1.1.2) |
+| **Status** | US MVP (v1.2.0) |
 
 ## Quick start
 
@@ -19,9 +25,12 @@ Open [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 
 ## Documentation
 
-- [`docs/INDEX.md`](docs/INDEX.md) — doc navigation
+- [`docs/INDEX.md`](docs/INDEX.md) — doc navigation + intent → file routing table
+- [`docs/roadmap.md`](docs/roadmap.md) — product + GTM ambition / non-gos through 2027-01-01
+- [`todo.md`](todo.md) — weekly Discover / Trust now-board (operator scratch)
 - [`docs/marketing_plan.md`](docs/marketing_plan.md) — US market & X/Twitter promotion plan (gates, messaging, 30-day calendar)
 - [`DEPLOY.md`](DEPLOY.md) — **human + robot deployment reference** (Vercel, DNS, SEO files)
+- [`memo_pdf.md`](memo_pdf.md) — Stripe + PDF fulfillment runbook
 - [`CHANGELOG.md`](CHANGELOG.md) — release notes
 
 School email outreach is a **separate sibling repo** (`cpb-school-outreach`) and is not required for product deploy. See the repo boundary in [`AGENTS.md`](AGENTS.md); optional operator pointer: [`memo_outreach.md`](memo_outreach.md).

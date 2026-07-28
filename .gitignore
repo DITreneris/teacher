@@ -53,6 +53,7 @@ yarn.lock
 npm-debug.log*
 test-results/
 playwright-report/
+.lighthouseci/
 .nyc_output/
 
 # ─── Env / secrets ───

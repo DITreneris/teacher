@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers | Prompt Anatomy</title>
-    <meta name="description" content="Save time on lesson prep. AI prompts in minutes for lesson plans, assessments, tasks, presentations, and teaching strategy. No account. Works with ChatGPT, Claude, and Gemini.">
+    <meta name="description" content="For Sunday planning and the first week back. Classroom-ready AI prompts for lesson plans, assessments, tasks, presentations, and teaching strategy. No account. Works with ChatGPT, Claude, and Gemini.">
     <meta name="author" content="Prompt Anatomy">
     <meta name="application-name" content="Classroom Prompt Builder">
     <meta name="apple-mobile-web-app-title" content="CPB">
@@ -18,7 +18,7 @@
     <link rel="alternate" type="text/plain" title="LLM-friendly summary" href="/llms.txt">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers">
-    <meta property="og:description" content="Save time on lesson prep. AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.">
+    <meta property="og:description" content="For Sunday planning and the first week back. Classroom-ready prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.">
     <meta property="og:url" content="https://promptanatomy.online/">
     <meta property="og:image" content="https://promptanatomy.online/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -29,15 +29,16 @@
     <meta property="og:site_name" content="Prompt Anatomy">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Classroom Prompt Builder &mdash; AI Prompts for K&ndash;12 Teachers">
-    <meta name="twitter:description" content="Save time on lesson prep. AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.">
+    <meta name="twitter:description" content="For Sunday planning and the first week back. Classroom-ready prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.">
     <meta name="twitter:image" content="https://promptanatomy.online/og-image.png">
     <meta name="twitter:image:alt" content="Classroom-ready AI prompts for K-12 teachers &mdash; by Prompt Anatomy">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="mask-icon" href="favicon.svg" color="#0F2A44">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" href="style.css?v=1.1.2">
+    <link rel="stylesheet" href="style.css?v=1.2.3">
     <link rel="preload" href="/assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/Inter-Medium.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/assets/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
     <script type="application/ld+json">
     {
@@ -106,17 +107,49 @@
                 },
                 "countriesSupported": "US",
                 "datePublished": "2026-02-01",
-                "dateModified": "2026-05-20",
+                "dateModified": "2026-07-28",
                 "screenshot": "https://promptanatomy.online/og-image.png",
                 "isAccessibleForFree": true,
                 "publisher": { "@id": "https://promptanatomy.online/#org" }
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://promptanatomy.online/#buyer-faq",
-                "name": "Buyer FAQ",
-                "about": { "@id": "https://promptanatomy.online/#pdf-guides" },
+                "@id": "https://promptanatomy.online/#faq",
+                "name": "FAQ",
+                "about": { "@id": "https://promptanatomy.online/#website" },
                 "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Is Classroom Prompt Builder free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. The prompt builder is free and requires no account. Optional downloadable PDF guides are sold separately."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which AI tools does it work with?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "It generates prompts that you can paste into ChatGPT, Claude, or Gemini. The tool itself does not call any AI API."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Does it collect student data?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. The Service does not collect personal information or student PII. Theme preference, grade selection, and up to five saved sessions are stored only in the browser's localStorage."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Who is it for?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "US K-12 teachers planning lessons, assessments, tasks, presentations, or instructional strategy."
+                        }
+                    },
                     {
                         "@type": "Question",
                         "name": "Can I use this guide in more than one of my classrooms?",
@@ -280,13 +313,13 @@
     <nav class="top-nav" aria-label="Quick navigation">
         <div class="top-nav-inner">
             <a href="#main-content" class="top-nav-brand" aria-label="Classroom Prompt Builder" title="Classroom Prompt Builder">
-                <i data-lucide="command" class="icon icon--sm"></i>
+                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-command"></use></svg>
                 <span class="top-nav-brand-text-full">Classroom Prompt Builder</span>
                 <span class="top-nav-brand-text-short" aria-hidden="true">CPB</span>
             </a>
             <div class="top-nav-actions">
                 <button type="button" class="top-nav-icon-btn" id="themeToggleBtn" aria-label="Toggle dark mode" title="Switch color mode">
-                    <i data-lucide="moon" class="icon icon--sm"></i>
+                    <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-moon"></use></svg>
                 </button>
                 <button type="button" class="top-nav-copy-btn is-hidden" id="stickyCopyBtn" aria-hidden="true">Copy prompt</button>
             </div>
@@ -303,7 +336,7 @@
                 <a href="https://www.promptanatomy.app/" class="badge" target="_blank" rel="noopener noreferrer" aria-label="Prompt Anatomy &mdash; interactive prompt training (opens in a new tab)">Prompt Anatomy</a>
             </div>
             <h1 id="heroTitle">Classroom Prompt Builder</h1>
-            <p id="heroSubtitle">Save time on lesson prep. AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.</p>
+            <p id="heroSubtitle">For Sunday planning and the first week back. Classroom-ready prompts in minutes. No account.</p>
             <ul class="header-steps" aria-label="Workflow steps">
                 <li><a href="#operationsCenter" class="header-step is-active"><span class="header-step-num">1</span> Mode</a></li>
                 <li><a href="#opsForm" class="header-step"><span class="header-step-num">2</span> Form</a></li>
@@ -320,12 +353,22 @@
                 <div class="hero-prompt-card__chrome" aria-hidden="true">
                     <span></span><span></span><span></span>
                 </div>
-                <div class="hero-prompt-card__label">CLASSROOM PROMPT</div>
-                <div class="hero-prompt-card__rows">
-                    <div class="hero-prompt-card__row"><span>Objective</span></div>
-                    <div class="hero-prompt-card__row"><span>Activity</span></div>
-                    <div class="hero-prompt-card__row"><span>Rubric</span></div>
-                    <div class="hero-prompt-card__row hero-prompt-card__row--muted"><span>Ready to copy</span></div>
+                <div class="hero-prompt-card__preview">
+                    <div class="hero-prompt-card__modes">
+                        <span class="hero-prompt-card__mode is-active">Lesson</span>
+                        <span class="hero-prompt-card__mode">Assessment</span>
+                        <span class="hero-prompt-card__mode">Tasks</span>
+                    </div>
+                    <div class="hero-prompt-card__output">
+                        <div class="hero-prompt-card__output-bar">
+                            <span class="hero-prompt-card__output-label">Generated prompt</span>
+                            <span class="hero-prompt-card__output-grade">Grade 7</span>
+                        </div>
+                        <div class="hero-prompt-card__output-line"></div>
+                        <div class="hero-prompt-card__output-line"></div>
+                        <div class="hero-prompt-card__output-line hero-prompt-card__output-line--short"></div>
+                        <div class="hero-prompt-card__copy">Copy prompt</div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -335,7 +378,7 @@
             <div class="ops-center-header">
                 <span class="step-badge" aria-hidden="true">1</span>
                 <div class="ops-center-header-text">
-                    <span class="collapsible-title">Lesson workflow center</span>
+                    <span class="collapsible-title">Build your classroom prompt</span>
                     <span class="collapsible-value">Pick a mode, fill in the fields, and get a ready-made prompt.</span>
                 </div>
             </div>
@@ -343,23 +386,23 @@
             <!-- Mode Tabs -->
             <div class="mode-tabs" role="tablist" aria-label="Mode selection">
                 <button type="button" class="mode-tab is-active" role="tab" id="tab-lesson" aria-selected="true" aria-controls="form-lesson" data-mode="LESSON">
-                    <span class="mode-tab-label">LESSON</span>
+                    <span class="mode-tab-label">Lesson</span>
                     <span class="mode-tab-desc">Full lesson plan</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-assessment" aria-selected="false" aria-controls="form-assessment" data-mode="ASSESSMENT">
-                    <span class="mode-tab-label">ASSESSMENT</span>
+                    <span class="mode-tab-label">Assessment</span>
                     <span class="mode-tab-desc">Knowledge check</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-tasks" aria-selected="false" aria-controls="form-tasks" data-mode="TASKS">
-                    <span class="mode-tab-label">TASKS</span>
+                    <span class="mode-tab-label">Tasks</span>
                     <span class="mode-tab-desc">Classwork and homework</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-presentation" aria-selected="false" aria-controls="form-presentation" data-mode="PRESENTATION">
-                    <span class="mode-tab-label">PRESENTATION</span>
+                    <span class="mode-tab-label">Presentation</span>
                     <span class="mode-tab-desc">Slide outline</span>
                 </button>
                 <button type="button" class="mode-tab" role="tab" id="tab-strategy" aria-selected="false" aria-controls="form-strategy" data-mode="STRATEGY">
-                    <span class="mode-tab-label">STRATEGY</span>
+                    <span class="mode-tab-label">Strategy</span>
                     <span class="mode-tab-desc">Teaching methods and priorities</span>
                 </button>
             </div>
@@ -367,7 +410,7 @@
             <!-- Grade Selector -->
             <div class="depth-bar">
                 <div class="depth-options">
-                    <label class="field-label" for="classLevelSelect"><i data-lucide="graduation-cap" class="icon icon--sm"></i> Pick a grade (1&ndash;12)</label>
+                    <label class="field-label" for="classLevelSelect"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-graduation-cap"></use></svg> Pick a grade (1&ndash;12)</label>
                     <select id="classLevelSelect" class="field-select" aria-label="Grade selection">
                         <option value="1">Grade 1</option>
                         <option value="2">Grade 2</option>
@@ -395,7 +438,7 @@
                     <div id="form-lesson" role="tabpanel" aria-labelledby="tab-lesson">
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="book-open" class="icon icon--sm"></i> Lesson builder
+                                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-book-open"></use></svg> Lesson builder
                             </div>
                             <div class="ops-form-grid">
                                 <div>
@@ -432,7 +475,7 @@
                     <div id="form-assessment" role="tabpanel" aria-labelledby="tab-assessment" hidden>
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="clipboard-check" class="icon icon--sm"></i> Assessment builder
+                                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-clipboard-check"></use></svg> Assessment builder
                             </div>
                             <div class="ops-form-grid">
                                 <div>
@@ -459,7 +502,7 @@
                     <div id="form-tasks" role="tabpanel" aria-labelledby="tab-tasks" hidden>
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="pencil-ruler" class="icon icon--sm"></i> Tasks builder
+                                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-pencil-ruler"></use></svg> Tasks builder
                             </div>
                             <div class="ops-form-grid">
                                 <div>
@@ -486,7 +529,7 @@
                     <div id="form-presentation" role="tabpanel" aria-labelledby="tab-presentation" hidden>
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="presentation" class="icon icon--sm"></i> Presentation builder
+                                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-presentation"></use></svg> Presentation builder
                             </div>
                             <div class="ops-form-grid">
                                 <div>
@@ -513,7 +556,7 @@
                     <div id="form-strategy" role="tabpanel" aria-labelledby="tab-strategy" hidden>
                         <div class="ops-form-section">
                             <div class="ops-form-section-title">
-                                <i data-lucide="brain" class="icon icon--sm"></i> Teaching strategy
+                                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-brain"></use></svg> Teaching strategy
                             </div>
                             <div class="ops-form-grid">
                                 <div>
@@ -552,7 +595,7 @@
                             </div>
                             <span class="ops-output-depth" id="classBadge">Grade 7</span>
                             <button class="ops-output-copy" id="outputCopyBtn" aria-label="Copy the generated prompt">
-                                <i data-lucide="copy" class="icon icon--md"></i>
+                                <svg class="icon icon--md" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-copy"></use></svg>
                             </button>
                         </div>
                         <div class="ops-output-text" id="opsOutput" aria-live="polite">
@@ -563,7 +606,7 @@
                             <p>Edit the form, then paste into ChatGPT, Claude, or Gemini.</p>
                             <button class="ops-output-cta" id="outputCopyCta" aria-label="Copy prompt">
                                 <span>Copy prompt</span>
-                                <i data-lucide="arrow-right" class="icon icon--md"></i>
+                                <svg class="icon icon--md" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                             </button>
                             <div class="ops-tool-launchers" role="group" aria-label="AI tool selection">
                                 <p class="ops-tool-launchers-label">Want to test the prompt? Pick a tool:</p>
@@ -586,20 +629,20 @@
                     <div class="ops-sessions" id="sessionsPanel">
                         <div class="ops-sessions-header">
                             <span class="ops-sessions-title">
-                                <i data-lucide="history" class="icon icon--sm"></i> Sessions
+                                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-history"></use></svg> Sessions
                             </span>
                             <div class="ops-sessions-actions">
                                 <button type="button" class="session-btn" id="sessionSaveBtn">
-                                    <i data-lucide="save" class="icon icon--sm"></i> Save
+                                    <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-save"></use></svg> Save
                                 </button>
                                 <button type="button" class="session-btn session-btn--danger" id="sessionClearBtn">
-                                    <i data-lucide="trash-2" class="icon icon--sm"></i> Delete sessions
+                                    <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-trash-2"></use></svg> Delete sessions
                                 </button>
                             </div>
                         </div>
                         <ul class="session-list" id="sessionList" aria-label="Saved sessions">
                             <li class="sessions-empty" id="sessionsEmpty">
-                                <span class="sessions-empty-icon" aria-hidden="true"><i data-lucide="sparkles" class="icon icon--sm"></i></span>
+                                <span class="sessions-empty-icon" aria-hidden="true"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-sparkles"></use></svg></span>
                                 No sessions yet. Save your first one.
                             </li>
                         </ul>
@@ -608,8 +651,44 @@
             </div>
         </section>
 
+        <!-- PRODUCT FAQ (free tool) -->
+        <section class="buyer-faq" id="product-faq" aria-labelledby="product-faq-title">
+            <h2 id="product-faq-title">About the free builder</h2>
+            <p class="buyer-faq-lead">Four questions teachers ask before they try Classroom Prompt Builder.</p>
+            <ul class="buyer-faq-list" data-product-faq-list>
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="product-faq-free">
+                        <summary><span>Is Classroom Prompt Builder free?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>Yes. The prompt builder is free and requires no account. Optional downloadable PDF guides are sold separately.</p>
+                    </details>
+                </li>
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="product-faq-ai-tools">
+                        <summary><span>Which AI tools does it work with?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>It generates prompts that you can paste into ChatGPT, Claude, or Gemini. The tool itself does not call any AI API.</p>
+                    </details>
+                </li>
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="product-faq-student-data">
+                        <summary><span>Does it collect student data?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>No. The Service does not collect personal information or student PII. Theme preference, grade selection, and up to five saved sessions are stored only in the browser&rsquo;s localStorage.</p>
+                    </details>
+                </li>
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="product-faq-audience">
+                        <summary><span>Who is it for?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>US K-12 teachers planning lessons, assessments, tasks, presentations, or instructional strategy.</p>
+                    </details>
+                </li>
+            </ul>
+        </section>
+
         <!-- PDF GUIDES -->
-        <section class="pdf-guides" id="pdf-guides" aria-labelledby="pdf-guides-title" itemscope itemtype="https://schema.org/ItemList">
+        <section class="pdf-guides" id="pdf-guides" aria-labelledby="pdf-guides-title">
             <div class="pdf-guides-header">
                 <span class="eyebrow">Optional PDF guides</span>
                 <h2 id="pdf-guides-title">Download classroom-ready AI prompt guides</h2>
@@ -617,14 +696,17 @@
             </div>
 
             <p class="pdf-guides-pilot-meta" aria-label="Pilot context">
-                <i data-lucide="users" class="icon icon--sm" aria-hidden="true"></i>
+                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-users"></use></svg>
                 <span data-commerce-pilot-meta>Shaped with pilot feedback from US K&ndash;12 teachers across grade bands and content areas.</span>
             </p>
 
             <ul class="pdf-testimonials" aria-label="Pilot teacher feedback" data-commerce-testimonials>
-                <!-- Populated by generator.js from config/sot.json#commerce.testimonials -->
+                <li class="pdf-testimonial">
+                    <blockquote><p>&ldquo;The 7-point verification checklist alone changed how my team uses AI. We stopped pasting outputs straight to students.&rdquo;</p></blockquote>
+                    <footer><cite>Pilot teacher</cite> &middot; Middle school ELA · Northeast US</footer>
+                </li>
             </ul>
-            <p class="pdf-testimonials-note" data-commerce-testimonials-note>Quotes paraphrased from pilot feedback during private beta. Names withheld at request; school identifiers redacted.</p>
+            <p class="pdf-testimonials-note" data-commerce-testimonials-note>Paraphrased pilot feedback; name withheld.</p>
 
             <div class="pdf-compare-strip" role="note" data-commerce-compare-strip>
                 <div class="pdf-compare-strip-row">
@@ -657,7 +739,7 @@
                     </figure>
                     <div class="pdf-guide-card-top">
                         <span class="pdf-guide-badge">Best for first steps</span>
-                        <i data-lucide="file-text" class="icon icon--lg" aria-hidden="true"></i>
+                        <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-file-text"></use></svg>
                     </div>
                     <h3 id="pdf-guide-beginners-title">Beginners &mdash; Prompt Anatomy</h3>
                     <ul class="pdf-guide-specs" aria-label="Beginners guide specifications">
@@ -678,10 +760,10 @@
                     </ul>
                     <details class="pdf-guide-toc" data-toc="beginners">
                         <summary>
-                            <i data-lucide="list" class="icon icon--sm" aria-hidden="true"></i>
+                            <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-list"></use></svg>
                             <span>What&rsquo;s inside</span>
                             <span class="pdf-guide-toc-count" data-toc-count="beginners">11 sections</span>
-                            <i data-lucide="chevron-down" class="icon icon--sm pdf-guide-toc-chevron" aria-hidden="true"></i>
+                            <svg class="icon icon--sm pdf-guide-toc-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <ol class="pdf-guide-toc-list" data-toc-list="beginners">
                             <!-- Populated by generator.js from config/sot.json#pdfGuides.beginners.chapters -->
@@ -689,33 +771,17 @@
                     </details>
                     <p class="pdf-guide-preview-trigger">
                         <button type="button" class="pdf-guide-preview-btn" data-preview-trigger="beginners">
-                            <i data-lucide="eye" class="icon icon--sm" aria-hidden="true"></i>
+                            <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-eye"></use></svg>
                             <span>Preview 3 pages</span>
                         </button>
                     </p>
                     <p class="pdf-guide-license">
-                        <i data-lucide="shield-check" class="icon icon--sm" aria-hidden="true"></i>
+                        <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-shield-check"></use></svg>
                         <span><strong>Classroom license.</strong> Use in your own classroom and share within your immediate teaching team. Do not redistribute as-is. <a href="terms.html#paid-pdf-license">Full license</a>.</span>
                     </p>
                     <a href="https://buy.stripe.com/eVq28r8e88Rf6pC4dGfjG04" class="pdf-guide-cta" target="_blank" rel="noopener noreferrer" data-product="beginners-pdf" data-stripe-cta="beginners" aria-label="Buy and download Beginners &mdash; Prompt Anatomy for $4.99">
                         Download PDF for $4.99
                     </a>
-                    <div class="pdf-guide-assurance" aria-label="Payment and purchase assurance">
-                        <ul class="pdf-guide-trust" aria-label="Payment and security">
-                            <li><i data-lucide="shield-check" class="icon icon--sm" aria-hidden="true"></i><span>Stripe checkout</span></li>
-                            <li><i data-lucide="credit-card" class="icon icon--sm" aria-hidden="true"></i><span>Visa &middot; Mastercard &middot; Amex</span></li>
-                            <li><i data-lucide="apple" class="icon icon--sm" aria-hidden="true"></i><span>Apple Pay</span></li>
-                            <li><i data-lucide="lock" class="icon icon--sm" aria-hidden="true"></i><span>256-bit SSL</span></li>
-                        </ul>
-                        <p class="pdf-guide-refund">
-                            <i data-lucide="badge-check" class="icon icon--sm" aria-hidden="true"></i>
-                            <span><strong>14-day no-questions refund.</strong> Just reply to your receipt email.</span>
-                        </p>
-                        <p class="pdf-guide-promise">
-                            <i data-lucide="zap" class="icon icon--sm" aria-hidden="true"></i>
-                            <span data-commerce-delivery-promise>Usually within a minute: Stripe receipt plus a separate download email. The success page also shows a one-click download. Link valid 7 days &mdash; ask us to resend anytime.</span>
-                        </p>
-                    </div>
                 </article>
 
                 <article class="pdf-guide-card pdf-guide-card--featured" aria-labelledby="pdf-guide-advanced-title">
@@ -729,7 +795,7 @@
                     </figure>
                     <div class="pdf-guide-card-top">
                         <span class="pdf-guide-badge">For trainers and leads</span>
-                        <i data-lucide="graduation-cap" class="icon icon--lg" aria-hidden="true"></i>
+                        <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-graduation-cap"></use></svg>
                     </div>
                     <h3 id="pdf-guide-advanced-title">Advanced &mdash; Prompt Anatomy</h3>
                     <ul class="pdf-guide-specs" aria-label="Advanced guide specifications">
@@ -750,10 +816,10 @@
                     </ul>
                     <details class="pdf-guide-toc" data-toc="advanced">
                         <summary>
-                            <i data-lucide="list" class="icon icon--sm" aria-hidden="true"></i>
+                            <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-list"></use></svg>
                             <span>What&rsquo;s inside</span>
                             <span class="pdf-guide-toc-count" data-toc-count="advanced">16 sections</span>
-                            <i data-lucide="chevron-down" class="icon icon--sm pdf-guide-toc-chevron" aria-hidden="true"></i>
+                            <svg class="icon icon--sm pdf-guide-toc-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <ol class="pdf-guide-toc-list" data-toc-list="advanced">
                             <!-- Populated by generator.js from config/sot.json#pdfGuides.advanced.chapters -->
@@ -761,34 +827,35 @@
                     </details>
                     <p class="pdf-guide-preview-trigger">
                         <button type="button" class="pdf-guide-preview-btn" data-preview-trigger="advanced">
-                            <i data-lucide="eye" class="icon icon--sm" aria-hidden="true"></i>
+                            <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-eye"></use></svg>
                             <span>Preview 3 pages</span>
                         </button>
                     </p>
                     <p class="pdf-guide-license">
-                        <i data-lucide="shield-check" class="icon icon--sm" aria-hidden="true"></i>
+                        <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-shield-check"></use></svg>
                         <span><strong>Classroom license.</strong> Use in your own classroom and share within your immediate teaching team. Do not redistribute as-is. <a href="terms.html#paid-pdf-license">Full license</a>.</span>
                     </p>
                     <a href="https://buy.stripe.com/28E8wPamgd7v15i11ufjG05" class="pdf-guide-cta" target="_blank" rel="noopener noreferrer" data-product="advanced-pdf" data-stripe-cta="advanced" aria-label="Buy and download Advanced &mdash; Prompt Anatomy for $9.99">
                         Download PDF for $9.99
                     </a>
-                    <div class="pdf-guide-assurance" aria-label="Payment and purchase assurance">
-                        <ul class="pdf-guide-trust" aria-label="Payment and security">
-                            <li><i data-lucide="shield-check" class="icon icon--sm" aria-hidden="true"></i><span>Stripe checkout</span></li>
-                            <li><i data-lucide="credit-card" class="icon icon--sm" aria-hidden="true"></i><span>Visa &middot; Mastercard &middot; Amex</span></li>
-                            <li><i data-lucide="apple" class="icon icon--sm" aria-hidden="true"></i><span>Apple Pay</span></li>
-                            <li><i data-lucide="lock" class="icon icon--sm" aria-hidden="true"></i><span>256-bit SSL</span></li>
-                        </ul>
-                        <p class="pdf-guide-refund">
-                            <i data-lucide="badge-check" class="icon icon--sm" aria-hidden="true"></i>
-                            <span><strong>14-day no-questions refund.</strong> Just reply to your receipt email.</span>
-                        </p>
-                        <p class="pdf-guide-promise">
-                            <i data-lucide="zap" class="icon icon--sm" aria-hidden="true"></i>
-                            <span data-commerce-delivery-promise>Usually within a minute: Stripe receipt plus a separate download email. The success page also shows a one-click download. Link valid 7 days &mdash; ask us to resend anytime.</span>
-                        </p>
-                    </div>
                 </article>
+            </div>
+
+            <div class="pdf-guides-assurance" aria-label="Payment and purchase assurance">
+                <ul class="pdf-guide-trust" aria-label="Payment and security">
+                    <li><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-shield-check"></use></svg><span>Stripe checkout</span></li>
+                    <li><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-credit-card"></use></svg><span>Visa &middot; Mastercard &middot; Amex</span></li>
+                    <li><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-apple"></use></svg><span>Apple Pay</span></li>
+                    <li><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-lock"></use></svg><span>256-bit SSL</span></li>
+                </ul>
+                <p class="pdf-guide-refund">
+                    <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-badge-check"></use></svg>
+                    <span><strong>14-day no-questions refund.</strong> Just reply to your receipt email.</span>
+                </p>
+                <p class="pdf-guide-promise">
+                    <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-zap"></use></svg>
+                    <span data-commerce-delivery-promise>Usually within a minute: Stripe receipt plus a separate download email. The success page also shows a one-click download. Link valid 7 days &mdash; ask us to resend anytime.</span>
+                </p>
             </div>
         </section>
 
@@ -797,14 +864,48 @@
             <h2 id="pdf-guides-faq-title">Buyer FAQ</h2>
             <p class="buyer-faq-lead">Five questions teachers ask before buying a Prompt Anatomy PDF.</p>
             <ul class="buyer-faq-list" data-buyer-faq-list>
-                <!-- Populated by generator.js from config/sot.json#buyerFaq -->
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="buyer-faq-multi-classroom">
+                        <summary><span>Can I use this guide in more than one of my classrooms?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>Yes. The Classroom License covers all classes you personally teach. Use the same prompts and templates across every section you teach this year and next.</p>
+                    </details>
+                </li>
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="buyer-faq-share-team">
+                        <summary><span>Can I share it with my co-teacher or department?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>Privately, yes. The Classroom License lets you share the file with your immediate teaching team (co-teacher, instructional coach, mentor, department head) at the same school. School-wide and district-wide licenses are available on request via info@promptanatomy.app.</p>
+                    </details>
+                </li>
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="buyer-faq-print-students">
+                        <summary><span>Can I print copies for my students?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>Yes. You can print individual prompts, checklists, and templates for your own students and your own classroom use. Do not redistribute the full PDF.</p>
+                    </details>
+                </li>
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="buyer-faq-lost-email">
+                        <summary><span>What if I lose the download email?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>Email info@promptanatomy.app from the address you used to buy and we will resend the link. The original link is valid for 7 days; we re-issue a fresh signed link any time you ask.</p>
+                    </details>
+                </li>
+                <li class="buyer-faq-item">
+                    <details class="buyer-faq-details" id="buyer-faq-not-satisfied">
+                        <summary><span>What if I am not satisfied?</span>
+                        <svg class="icon icon--sm buyer-faq-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg></summary>
+                        <p>Reply to your Stripe receipt within 14 days for a no-questions refund. We approve the refund through Stripe and revoke the download link, no follow-up survey.</p>
+                    </details>
+                </li>
             </ul>
         </section>
 
         <!-- AUTHOR PANEL -->
         <aside class="pdf-author-panel" aria-labelledby="pdf-author-title">
             <div class="pdf-author-mark" aria-hidden="true">
-                <i data-lucide="command" class="icon icon--md"></i>
+                <svg class="icon icon--md" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-command"></use></svg>
             </div>
             <div class="pdf-author-body">
                 <h3 id="pdf-author-title">Published by Prompt Anatomy</h3>
@@ -812,7 +913,7 @@
                 <p class="pdf-author-link">
                     <a href="https://www.promptanatomy.app/" target="_blank" rel="noopener noreferrer">
                         promptanatomy.app
-                        <i data-lucide="external-link" class="icon icon--sm" aria-hidden="true"></i>
+                        <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-external-link"></use></svg>
                     </a>
                 </p>
             </div>
@@ -826,7 +927,7 @@
                     <span class="collapsible-title">Template library</span>
                     <span class="collapsible-value">Ready-to-use prompt templates &mdash; apply to the form or copy.</span>
                     <span class="collapsible-count" id="libraryTemplateCount">6 templates</span>
-                    <i data-lucide="chevron-down" class="icon icon--sm collapsible-chevron" aria-hidden="true"></i>
+                    <svg class="icon icon--sm collapsible-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                 </button>
             </h2>
             <div class="library-body" id="libraryBody" hidden>
@@ -843,7 +944,7 @@
                     <span class="step-badge" aria-hidden="true">5</span>
                     <span class="collapsible-title">Lesson quality principles</span>
                     <span class="collapsible-value">Built-in decision rules &mdash; prompts are designed around these principles.</span>
-                    <i data-lucide="chevron-down" class="icon icon--sm collapsible-chevron" aria-hidden="true"></i>
+                    <svg class="icon icon--sm collapsible-chevron" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                 </button>
             </h2>
             <div class="rules-body" id="rulesBody" hidden>
@@ -855,27 +956,27 @@
 
         <!-- COMMUNITY -->
         <section class="community" id="community" aria-labelledby="community-title">
-            <h2 id="community-title">Want more?<br>Join our Telegram community.</h2>
-            <p class="community-subtitle">Share prompts, swap lesson ideas, and stay current on AI in the classroom.</p>
+            <h2 id="community-title">Go deeper with Prompt Anatomy</h2>
+            <p class="community-subtitle">Learn the full prompt framework, or join an optional Telegram group to swap classroom prompt ideas.</p>
             <div class="community-actions">
-                <a href="https://t.me/prompt_anatomy" class="community-cta-primary" target="_blank" rel="noopener noreferrer" aria-label="Join our Telegram community (opens in a new tab)">Join our Telegram</a>
-                <a href="https://www.promptanatomy.app/" class="community-cta-secondary" target="_blank" rel="noopener noreferrer" aria-label="Open Prompt Anatomy (opens in a new tab)">Learn the prompt framework &rarr;</a>
+                <a href="https://www.promptanatomy.app/" class="community-cta-primary" target="_blank" rel="noopener noreferrer" aria-label="Open Prompt Anatomy (opens in a new tab)">Learn the prompt framework</a>
+                <a href="https://t.me/prompt_anatomy" class="community-cta-secondary" target="_blank" rel="noopener noreferrer" aria-label="Join our Telegram community (opens in a new tab)">Optional Telegram group</a>
             </div>
         </section>
 
         <!-- FOOTER -->
         <footer class="footer">
-            <h3>Classroom Prompt Builder <span class="icon-wrap" aria-hidden="true"><i data-lucide="sparkles" class="icon icon--md"></i></span></h3>
+            <h3>Classroom Prompt Builder <span class="icon-wrap" aria-hidden="true"><svg class="icon icon--md" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-sparkles"></use></svg></span></h3>
             <p>Helping teachers build classroom-ready AI prompts.</p>
             <p class="footer-product-link">By Prompt Anatomy. Contact: <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
             <div class="tags" role="list">
-                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="command" class="icon icon--sm"></i></span> Prompt builder</span>
-                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="book-open" class="icon icon--sm"></i></span> For teachers</span>
-                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="zap" class="icon icon--sm"></i></span> 5 modes</span>
-                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><i data-lucide="layers" class="icon icon--sm"></i></span> Grades 1&ndash;12</span>
+                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-command"></use></svg></span> Prompt builder</span>
+                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-book-open"></use></svg></span> For teachers</span>
+                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-zap"></use></svg></span> 5 modes</span>
+                <span class="tag" role="listitem"><span class="icon-wrap" aria-hidden="true"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-layers"></use></svg></span> Grades 1&ndash;12</span>
             </div>
             <p class="footer-lost-link">
-                <i data-lucide="life-buoy" class="icon icon--sm" aria-hidden="true"></i>
+                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-life-buoy"></use></svg>
                 Bought a PDF and lost the email?
                 <a href="mailto:info@promptanatomy.app?subject=Resend%20my%20Prompt%20Anatomy%20PDF%20link&amp;body=Hi%20Prompt%20Anatomy%2C%0A%0APlease%20resend%20my%20download%20link.%0A%0AOrder%20email%3A%20%5Byour%20purchase%20email%5D%0AGuide%3A%20%5BBeginners%20%2F%20Advanced%5D%0AStripe%20receipt%20%23%20%28optional%29%3A%20%5Bcs_test_%20or%20cs_live_%E2%80%A6%5D%0A%0AThank%20you." id="lostLinkMailto">Email us a resend</a>.
             </p>
@@ -896,7 +997,7 @@
     <div class="pdf-sticky-cta" id="pdfStickyCta" role="region" aria-label="Quick buy" hidden>
         <a class="pdf-sticky-cta-link" href="#pdf-guides" target="_blank" rel="noopener noreferrer" id="pdfStickyCtaLink" data-stripe-cta="">
             <span class="pdf-sticky-cta-label" id="pdfStickyCtaLabel">Download PDF</span>
-            <i data-lucide="arrow-right" class="icon icon--sm" aria-hidden="true"></i>
+            <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
         </a>
     </div>
 
@@ -904,11 +1005,11 @@
         <div class="pdf-preview-dialog-header">
             <h3 id="pdfPreviewTitle" class="pdf-preview-dialog-title">Preview pages</h3>
             <button type="button" class="pdf-preview-dialog-close" id="pdfPreviewClose" aria-label="Close preview">
-                <i data-lucide="x" class="icon icon--md" aria-hidden="true"></i>
+                <svg class="icon icon--md" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-x"></use></svg>
             </button>
         </div>
         <p class="pdf-preview-dialog-note">Sample pages from the paid guide. Watermarked. The full PDF is delivered after purchase.</p>
-        <div class="pdf-preview-dialog-pages" id="pdfPreviewPages" role="list">
+        <div class="pdf-preview-dialog-pages" id="pdfPreviewPages" role="list" tabindex="0" aria-label="Sample preview pages">
             <!-- Filled by generator.js based on data-preview-trigger -->
         </div>
         <div class="pdf-preview-dialog-footer">
@@ -919,15 +1020,12 @@
     <textarea class="hidden" id="hiddenTextarea" aria-label="Hidden field for copying text" aria-hidden="true"></textarea>
 
     <div class="toast is-success" id="toast" role="status" aria-live="polite" aria-atomic="true" aria-label="Success message">
-        <div class="toast-icon" aria-hidden="true"><i data-lucide="check" class="icon icon--lg"></i></div>
+        <div class="toast-icon" aria-hidden="true"><svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-check"></use></svg></div>
         <span id="toastMessage">Prompt copied.</span>
         <span class="toast-progress" id="toastProgress" aria-hidden="true"></span>
     </div>
 
-    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"
-            integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge"
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"></script>
+    <script src="icons.js"></script>
     <script src="generator.js?v=1.0.2"></script>
     <script src="copy.js"></script>
     <script type="module" src="analytics.js"></script>

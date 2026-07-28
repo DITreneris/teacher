@@ -190,6 +190,10 @@ html { scroll-behavior: smooth; }
     fill: none;
     vertical-align: middle;
     flex-shrink: 0;
+    overflow: visible;
+}
+svg.icon {
+    display: inline-block;
 }
 .icon--sm { width: var(--icon-size-sm); height: var(--icon-size-sm); }
 .icon--md { width: var(--icon-size-md); height: var(--icon-size-md); }
@@ -233,6 +237,23 @@ body {
 
 body.legal {
     padding-top: calc(var(--space-24) + var(--safe-top));
+}
+
+/* Reading wrap helpers — scoped outside #pdf-guides to avoid visual snapshot churn. */
+.header h1,
+.collapsible-title,
+.community h2,
+.buyer-faq > h2,
+.footer h3 {
+    text-wrap: balance;
+}
+.community-subtitle,
+.buyer-faq-lead,
+.buyer-faq-details > p,
+.rules-item,
+.footer p,
+.ops-output-text {
+    text-wrap: pretty;
 }
 
 .container {
@@ -429,34 +450,82 @@ body.legal {
     background: rgba(74, 222, 128, 0.55);
 }
 
-.hero-prompt-card__label {
-    font-size: 12px;
-    line-height: 1;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.88);
-}
-
-.hero-prompt-card__rows {
-    margin-top: 18px;
+.hero-prompt-card__preview {
     display: grid;
-    gap: 10px;
+    gap: 12px;
 }
 
-.hero-prompt-card__row {
-    padding: 10px 12px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.82);
-    font-size: 14px;
-    line-height: 1.2;
-    font-weight: 700;
+.hero-prompt-card__modes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
 }
 
-.hero-prompt-card__row--muted {
+.hero-prompt-card__mode {
+    padding: 5px 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
     color: rgba(255, 255, 255, 0.62);
-    background: rgba(255, 255, 255, 0.07);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero-prompt-card__mode.is-active {
+    background: var(--accent-gold);
+    color: var(--cta-text);
+}
+
+.hero-prompt-card__output {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(11, 22, 37, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hero-prompt-card__output-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.hero-prompt-card__output-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-prompt-card__output-grade {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.hero-prompt-card__output-line {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.hero-prompt-card__output-line--short {
+    width: 62%;
+    background: rgba(245, 197, 24, 0.35);
+}
+
+.hero-prompt-card__copy {
+    margin-top: 4px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--accent-gold);
+    color: var(--cta-text);
+    font-size: 12px;
+    font-weight: 800;
+    text-align: center;
 }
 
 @keyframes hero-card-float {
@@ -861,8 +930,7 @@ body.legal {
 .mode-tab-label {
     font-size: 13px;
     font-weight: 800;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    letter-spacing: 0.01em;
 }
 
 .mode-tab-desc {
@@ -898,6 +966,7 @@ body.legal {
     display: grid;
     grid-template-columns: 7fr 5fr;
     gap: 32px;
+    align-items: stretch;
 }
 
 /* ===== DYNAMIC FORM ===== */
@@ -905,6 +974,38 @@ body.legal {
     display: flex;
     flex-direction: column;
     gap: var(--space-20);
+    min-width: 0;
+}
+
+/*
+ * Desktop: form column is shorter than output + sessions, which left a bare
+ * white void under the fields. Stretch the active form card to the row height
+ * so the workbench reads as two intentional panels (no promo filler).
+ */
+@media (min-width: 769px) {
+    .ops-form {
+        height: 100%;
+        min-height: 100%;
+    }
+
+    .ops-form > [role="tabpanel"]:not([hidden]) {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 100%;
+    }
+
+    .ops-form-section {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+
+    .ops-form-grid {
+        flex: 1 1 auto;
+        align-content: start;
+    }
 }
 
 .ops-form-section {
@@ -989,7 +1090,7 @@ body.legal {
 .field-help {
     font-size: 12px;
     font-weight: 500;
-    color: #5F697E;
+    color: var(--text-muted);
     margin-top: 6px;
     line-height: 1.4;
     opacity: 1;
@@ -1064,8 +1165,8 @@ body.legal {
     font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 @keyframes pulse {
@@ -1107,11 +1208,12 @@ body.legal {
 
 .ops-output-text {
     min-height: 180px;
-    font-size: 15px;
+    font-size: 16px;
     line-height: var(--leading-relaxed);
     font-weight: 500;
     color: var(--output-text);
-    word-break: break-word;
+    overflow-wrap: break-word;
+    word-break: normal;
     transition: opacity 220ms ease, transform 220ms ease;
 }
 
@@ -1829,6 +1931,9 @@ body.legal {
     color: var(--primary);
     text-decoration: underline;
     font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
 }
 
 .pdf-guide-refund {
@@ -1845,11 +1950,20 @@ body.legal {
 .pdf-guide-license .icon { color: var(--primary); }
 .pdf-guide-refund .icon { color: #2E7D32; }
 
-.pdf-guide-assurance {
+.pdf-guide-assurance,
+.pdf-guides-assurance {
     display: flex;
     flex-direction: column;
     gap: var(--space-8);
     margin: 0;
+}
+
+.pdf-guides-assurance {
+    margin-top: var(--space-20);
+    padding: var(--space-16) var(--space-20);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    background: var(--surface-1);
 }
 
 .pdf-guide-trust {
@@ -2011,7 +2125,7 @@ body.legal {
 .buyer-faq-lead {
     margin: 0 0 var(--space-20) 0;
     color: var(--text-muted);
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .buyer-faq-list {
@@ -2066,7 +2180,7 @@ body.legal {
 .buyer-faq-details > p {
     margin: 0 var(--space-8) var(--space-16) var(--space-8);
     color: var(--text);
-    font-size: 14px;
+    font-size: 15px;
     line-height: var(--leading-relaxed);
 }
 
@@ -2547,7 +2661,7 @@ body.legal {
 
 .library-card-desc {
     font-size: 13px;
-    color: var(--text-light);
+    color: var(--text-muted);
     font-weight: 500;
 }
 
@@ -2555,7 +2669,7 @@ body.legal {
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
     line-height: 1.55;
-    color: var(--text-light);
+    color: var(--text-muted);
     background: var(--surface-0);
     border: 1px solid var(--border-subtle);
     border-radius: var(--r-btn);
@@ -2574,7 +2688,7 @@ body.legal {
 .library-card-hint {
     margin-top: var(--space-8);
     font-size: 11px;
-    color: var(--text-light);
+    color: var(--text-muted);
     line-height: 1.35;
 }
 
@@ -2682,8 +2796,8 @@ body.legal {
     margin: 0 auto 20px;
     max-width: 48ch;
     font-size: 16px;
-    color: var(--text-light);
-    line-height: 1.45;
+    color: var(--text-muted);
+    line-height: 1.55;
 }
 .community-actions {
     display: flex;
@@ -2766,6 +2880,8 @@ body.legal {
     color: var(--text-muted);
     line-height: 1.6;
     margin-bottom: 20px;
+    max-width: 60ch;
+    margin-inline: auto;
 }
 .footer-product-link { margin-bottom: 24px; }
 .footer-product-link a {
@@ -3055,7 +3171,8 @@ body.legal {
 }
 
 [data-theme="dark"] .pdf-guides,
-[data-theme="dark"] .pdf-guide-card {
+[data-theme="dark"] .pdf-guide-card,
+[data-theme="dark"] .pdf-guides-assurance {
     background: var(--surface-1);
     border-color: var(--border-subtle);
 }
@@ -3236,7 +3353,7 @@ body.legal {
 [data-theme="dark"] .library-card-prompt {
     background: var(--surface-0);
     border-color: var(--border-subtle);
-    color: var(--text-light);
+    color: var(--text-muted);
 }
 
 [data-theme="dark"] .rules-item {
@@ -3373,9 +3490,10 @@ body.legal {
     .pdf-guides-header { order: 0; }
     .pdf-guides-pilot-meta { order: 1; }
     .pdf-guides-grid { order: 2; grid-template-columns: 1fr; }
-    .pdf-compare-strip { order: 3; }
-    .pdf-testimonials { order: 4; }
-    .pdf-testimonials-note { order: 5; }
+    .pdf-guides-assurance { order: 3; }
+    .pdf-compare-strip { order: 4; }
+    .pdf-testimonials { order: 5; }
+    .pdf-testimonials-note { order: 6; }
     .pdf-guides h2 { font-size: 24px; }
     .ops-center { padding: var(--space-20); }
     .session-item-load { opacity: 0.82; }
@@ -3416,11 +3534,12 @@ body.legal {
     .top-nav-brand { font-size: 13px; }
     .top-nav-copy-btn { font-size: 11px; padding: 0 10px; }
     .top-nav-icon-btn { width: 44px; }
-    .header { padding: 20px 16px; }
-    .header-cta { flex-direction: column; align-items: flex-start; }
+    .header { padding: 16px 14px 18px; }
+    .header-cta { flex-direction: column; align-items: flex-start; gap: var(--space-8); }
     .header h1 { font-size: 22px; }
+    .header #heroSubtitle { font-size: 14px; line-height: 1.45; margin-bottom: var(--space-8); }
     .cta-button { min-height: 44px; width: 100%; max-width: 280px; }
-    .header .header-cta .cta-button { min-height: 44px; padding: 12px 24px; }
+    .header .header-cta .cta-button { min-height: 48px; padding: 12px 24px; }
     .header .header-cta .cta-button-outline {
         width: 100%; max-width: 280px; justify-content: center;
         background: rgba(255, 255, 255, 0.12);
@@ -3460,14 +3579,21 @@ body.legal {
     .pdf-guide-card-cover img { object-fit: contain; }
     .pdf-guide-price-now { font-size: 28px; }
     .pdf-guide-specs { grid-template-columns: 1fr; }
+    .pdf-guides-assurance {
+        margin-top: var(--space-16);
+        padding: var(--space-12) var(--space-16);
+        min-width: 0;
+    }
     .pdf-guide-trust {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: var(--space-8);
     }
+    .pdf-guide-refund,
     .pdf-guide-promise {
         font-size: 11px;
         overflow-wrap: anywhere;
+        min-width: 0;
     }
     .pdf-guide-preview-btn {
         min-height: 44px;

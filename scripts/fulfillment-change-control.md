@@ -1,4 +1,12 @@
+---
+status: ops
+audience: both
+updated: 2026-07-28
+---
+
 # Fulfillment change control
+
+**Purpose:** Operator gate for edits to production fulfillment paths while school outreach runs in a sibling repo. Not Active product doctrine.
 
 While the school outreach bot is in active development, treat these paths as **production-critical**:
 

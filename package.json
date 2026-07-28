@@ -1,6 +1,6 @@
 {
   "name": "classroom-prompt-builder",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "private": true,
   "description": "Classroom Prompt Builder - a free AI prompt builder for K-12 teachers with optional paid PDF guides. By Prompt Anatomy.",
   "repository": {
@@ -12,9 +12,11 @@
     "test": "npm run test:docs && node tests/structure.test.js && npm run lint:js",
     "test:docs": "node tests/docs-hygiene.test.js",
     "test:structure": "node tests/structure.test.js",
-    "test:smoke": "start-server-and-test \"serve . -l 3000\" http://127.0.0.1:3000/ \"playwright test tests/e2e/smoke.spec.js\"",
-    "test:e2e": "start-server-and-test \"serve . -l 3000\" http://127.0.0.1:3000/ \"playwright test tests/e2e/\"",
+    "test:smoke": "start-server-and-test \"serve . -l 3000\" http://127.0.0.1:3000/ \"playwright test --project=chromium tests/e2e/smoke.spec.js\"",
+    "test:e2e": "start-server-and-test \"serve . -l 3000\" http://127.0.0.1:3000/ \"playwright test --project=chromium\"",
     "test:mixed": "npm run test && npm run test:smoke && npm run test:e2e && npm run test:a11y",
+    "test:webkit": "start-server-and-test \"serve . -l 3000\" http://127.0.0.1:3000/ \"playwright test --project=webkit-mobile\"",
+    "test:lighthouse": "lhci autorun",
     "test:a11y": "start-server-and-test \"serve . -l 3000\" http://127.0.0.1:3000/ \"pa11y http://127.0.0.1:3000/ --config .pa11yrc.json && pa11y http://127.0.0.1:3000/privacy.html --config .pa11yrc.json && pa11y http://127.0.0.1:3000/terms.html --config .pa11yrc.json && pa11y http://127.0.0.1:3000/success?session_id=cs_test_A1b2C3d4E5f6G7h8I9j0KlMnOpQr --config .pa11yrc.json\"",
     "lint:html": "npx html-validator-cli --file index.html && npx html-validator-cli --file privacy.html && npx html-validator-cli --file terms.html && npx html-validator-cli --file success.html",
     "lint:js": "eslint . --ext .js",
@@ -27,9 +29,12 @@
     "optimize:covers": "node scripts/optimize-pdf-covers.js",
     "generate:og": "node scripts/generate-og-image.js",
     "build:social": "npm run generate:og && npm run optimize:social",
+    "build:icons": "node scripts/build-icon-sprite.js",
     "postinstall": "node scripts/vendor-vercel-analytics.js"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.53.2",
     "@vercel/blob": "^2.3.3",
     "eslint": "^8.57.0",

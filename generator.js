@@ -19,35 +19,42 @@
         'gemini.google.com': true
     };
 
+    function iconHtml(name, className) {
+        if (window.CPBIcons && typeof window.CPBIcons.iconHtml === 'function') {
+            return window.CPBIcons.iconHtml(name, className);
+        }
+        return '';
+    }
+
     /* ===== CONSTANTS ===== */
     var DEFAULT_SOT = {
         modes: {
             LESSON: {
-                label: 'LESSON',
+                label: 'Lesson',
                 desc: 'Full lesson plan',
                 formId: 'form-lesson',
                 fields: ['topic', 'duration', 'goal', 'context', 'question']
             },
             ASSESSMENT: {
-                label: 'ASSESSMENT',
+                label: 'Assessment',
                 desc: 'Knowledge check',
                 formId: 'form-assessment',
                 fields: ['topic', 'format', 'difficulty', 'question']
             },
             TASKS: {
-                label: 'TASKS',
+                label: 'Tasks',
                 desc: 'Classwork and homework',
                 formId: 'form-tasks',
                 fields: ['topic', 'task_type', 'constraints', 'question']
             },
             PRESENTATION: {
-                label: 'PRESENTATION',
+                label: 'Presentation',
                 desc: 'Slide outline',
                 formId: 'form-presentation',
                 fields: ['topic', 'slides', 'style', 'question']
             },
             STRATEGY: {
-                label: 'STRATEGY',
+                label: 'Strategy',
                 desc: 'Teaching methods and priorities',
                 formId: 'form-strategy',
                 fields: ['topic', 'goal', 'challenges', 'question']
@@ -144,7 +151,7 @@
             },
             deliveryPromise: 'Usually within a minute: Stripe receipt plus a separate download email. The success page also shows a one-click download. Link valid 7 days \u2014 ask us to resend anytime.',
             pilotMeta: 'Shaped with pilot feedback from US K\u201312 teachers across grade bands and content areas.',
-            testimonialsNote: 'Quotes paraphrased from pilot feedback during private beta. Names withheld at request; school identifiers redacted.',
+            testimonialsNote: 'Paraphrased pilot feedback; name withheld.',
             testimonials: []
         },
         legal: {
@@ -616,10 +623,7 @@
                 clearTimeout(clearUndoTimer);
                 clearUndoTimer = null;
             }
-            if (clearBtn) clearBtn.innerHTML = '<i data-lucide="trash-2" class="icon icon--sm"></i> Delete sessions';
-            if (window.lucide && typeof window.lucide.createIcons === 'function' && clearBtn) {
-                window.lucide.createIcons({ root: clearBtn });
-            }
+            if (clearBtn) clearBtn.innerHTML = iconHtml('trash-2', 'icon icon--sm') + ' Delete sessions';
             renderSessions();
             showToastIfAvailable('Sessions restored.', 'success');
             return;
@@ -638,19 +642,13 @@
         lastClearedSessions = sessions;
         try { localStorage.removeItem(SESSIONS_KEY); } catch (_) { /* ignore */ }
         renderSessions();
-        if (clearBtn) clearBtn.innerHTML = '<i data-lucide="rotate-ccw" class="icon icon--sm"></i> Restore sessions';
-        if (window.lucide && typeof window.lucide.createIcons === 'function' && clearBtn) {
-            window.lucide.createIcons({ root: clearBtn });
-        }
+        if (clearBtn) clearBtn.innerHTML = iconHtml('rotate-ccw', 'icon icon--sm') + ' Restore sessions';
         showToastIfAvailable('Sessions deleted. Tap "Restore sessions" within 8s.', 'error');
 
         clearUndoTimer = setTimeout(function () {
             lastClearedSessions = null;
             clearUndoTimer = null;
-            if (clearBtn) clearBtn.innerHTML = '<i data-lucide="trash-2" class="icon icon--sm"></i> Delete sessions';
-            if (window.lucide && typeof window.lucide.createIcons === 'function' && clearBtn) {
-                window.lucide.createIcons({ root: clearBtn });
-            }
+            if (clearBtn) clearBtn.innerHTML = iconHtml('trash-2', 'icon icon--sm') + ' Delete sessions';
         }, CLEAR_SESSIONS_UNDO_MS);
     }
 
@@ -668,13 +666,10 @@
             li.id = 'sessionsEmpty';
             li.innerHTML =
                 '<span class="sessions-empty-icon" aria-hidden="true">' +
-                    '<i data-lucide="sparkles" class="icon icon--sm"></i>' +
+                    iconHtml('sparkles', 'icon icon--sm') +
                 '</span>' +
                 'No sessions yet. Save your first one.';
             list.appendChild(li);
-            if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                window.lucide.createIcons({ root: list });
-            }
             return;
         }
 
@@ -702,10 +697,6 @@
 
             list.appendChild(li);
         });
-
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons({ root: list });
-        }
     }
 
     /* ===== LIBRARY ===== */
@@ -727,7 +718,7 @@
 
             card.innerHTML =
                 '<div class="library-card-header">' +
-                    '<div class="library-card-icon"><i data-lucide="' + escapeHtml(item.icon) + '" class="icon icon--md"></i></div>' +
+                    '<div class="library-card-icon">' + iconHtml(item.icon, 'icon icon--md') + '</div>' +
                     '<div>' +
                         '<div class="library-card-title">' + escapeHtml(item.title) + '</div>' +
                         '<div class="library-card-desc">' + escapeHtml(item.desc) + '</div>' +
@@ -736,20 +727,16 @@
                 '<div class="library-card-prompt">' + escapeHtml(item.prompt) + '</div>' +
                 '<div class="library-card-actions">' +
                     '<button type="button" class="library-btn library-btn--primary" data-library-apply="' + escapeHtml(item.id) + '">' +
-                        '<i data-lucide="file-input" class="icon icon--sm"></i> Apply to form' +
+                        iconHtml('file-input', 'icon icon--sm') + ' Apply to form' +
                     '</button>' +
                     '<button type="button" class="library-btn" data-library-copy="' + escapeHtml(item.id) + '">' +
-                        '<i data-lucide="copy" class="icon icon--sm"></i> Copy' +
+                        iconHtml('copy', 'icon icon--sm') + ' Copy' +
                     '</button>' +
                 '</div>' +
                 '<p class="library-card-hint">Pastes into the "Main question for the AI" field \u2014 edit it in the form.</p>';
 
             grid.appendChild(card);
         });
-
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons({ root: grid });
-        }
 
         grid.addEventListener('click', function (e) {
             var applyBtn = e.target.closest('[data-library-apply]');
@@ -800,14 +787,10 @@
             var li = document.createElement('li');
             li.className = 'rules-item';
             li.innerHTML =
-                '<i data-lucide="' + escapeHtml(rule.icon) + '" class="icon icon--md"></i>' +
+                iconHtml(rule.icon, 'icon icon--md') +
                 '<span>' + escapeHtml(rule.text) + '</span>';
             list.appendChild(li);
         });
-
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons({ root: list });
-        }
     }
 
     /* ===== COPY ===== */
@@ -888,12 +871,9 @@
         toast.classList.remove('is-success', 'is-error');
         toast.classList.add(tone === 'error' ? 'is-error' : 'is-success');
         toast.setAttribute('aria-label', tone === 'error' ? 'Error message' : 'Success message');
-        var icon = toast.querySelector('.toast-icon .icon');
-        if (icon) {
-            icon.setAttribute('data-lucide', tone === 'error' ? 'alert-circle' : 'check');
-            if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                window.lucide.createIcons({ root: toast });
-            }
+        var iconWrap = toast.querySelector('.toast-icon');
+        if (iconWrap) {
+            iconWrap.innerHTML = iconHtml(tone === 'error' ? 'alert-circle' : 'check', 'icon icon--lg');
         }
         toast.classList.add('show');
         var progress = document.getElementById('toastProgress');
@@ -946,12 +926,9 @@
             });
         }
 
-        var icon = document.querySelector('#themeToggleBtn i');
-        if (icon) {
-            icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
-            if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                window.lucide.createIcons({ root: document.getElementById('themeToggleBtn') });
-            }
+        var themeBtn = document.getElementById('themeToggleBtn');
+        if (themeBtn) {
+            themeBtn.innerHTML = iconHtml(theme === 'dark' ? 'sun' : 'moon', 'icon icon--sm');
         }
         updateThemeToggleA11y(theme);
     }
@@ -1365,16 +1342,13 @@
                 '<li class="buyer-faq-item">' +
                 '<details class="buyer-faq-details"' + detailsId + '>' +
                 '<summary><span>' + escapeHtmlText(item.q) + '</span>' +
-                '<i data-lucide="chevron-down" class="icon icon--sm buyer-faq-chevron" aria-hidden="true"></i>' +
+                iconHtml('chevron-down', 'icon icon--sm buyer-faq-chevron') +
                 '</summary>' +
                 '<p>' + escapeHtmlText(item.a) + '</p>' +
                 '</details>' +
                 '</li>';
         }
         list.innerHTML = html;
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons();
-        }
     }
 
     function initPdfPreviewDialog() {

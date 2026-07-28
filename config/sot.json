@@ -26,38 +26,38 @@
   },
   "copy": {
     "heroTitle": "Classroom Prompt Builder",
-    "heroSubtitle": "Save time on lesson prep. AI prompts in minutes. No account. Works with ChatGPT, Claude, and Gemini.",
+    "heroSubtitle": "For Sunday planning and the first week back. Classroom-ready prompts in minutes. No account.",
     "heroCtaPrimary": "Build a lesson prompt",
     "heroCtaSecondary": "Browse templates",
     "heroCtaMeta": "Made for K\u201312 teachers. By Prompt Anatomy."
   },
   "modes": {
     "LESSON": {
-      "label": "LESSON",
+      "label": "Lesson",
       "desc": "Full lesson plan",
       "formId": "form-lesson",
       "fields": ["topic", "duration", "goal", "context", "question"]
     },
     "ASSESSMENT": {
-      "label": "ASSESSMENT",
+      "label": "Assessment",
       "desc": "Knowledge check",
       "formId": "form-assessment",
       "fields": ["topic", "format", "difficulty", "question"]
     },
     "TASKS": {
-      "label": "TASKS",
+      "label": "Tasks",
       "desc": "Classwork and homework",
       "formId": "form-tasks",
       "fields": ["topic", "task_type", "constraints", "question"]
     },
     "PRESENTATION": {
-      "label": "PRESENTATION",
+      "label": "Presentation",
       "desc": "Slide outline",
       "formId": "form-presentation",
       "fields": ["topic", "slides", "style", "question"]
     },
     "STRATEGY": {
-      "label": "STRATEGY",
+      "label": "Strategy",
       "desc": "Teaching methods and priorities",
       "formId": "form-strategy",
       "fields": ["topic", "goal", "challenges", "question"]
@@ -226,22 +226,12 @@
     },
     "deliveryPromise": "Usually within a minute: Stripe receipt plus a separate download email. The success page also shows a one-click download. Link valid 7 days \u2014 ask us to resend anytime.",
     "pilotMeta": "Shaped with pilot feedback from US K\u201312 teachers across grade bands and content areas.",
-    "testimonialsNote": "Quotes paraphrased from pilot feedback during private beta. Names withheld at request; school identifiers redacted.",
+    "testimonialsNote": "Paraphrased pilot feedback; name withheld.",
     "testimonials": [
-      {
-        "quote": "The prompt formula is the part I keep coming back to for Sunday planning.",
-        "cite": "Pilot teacher",
-        "meta": "Grade 5 \u00b7 Midwest US"
-      },
       {
         "quote": "The 7-point verification checklist alone changed how my team uses AI. We stopped pasting outputs straight to students.",
         "cite": "Pilot teacher",
         "meta": "Middle school ELA \u00b7 Northeast US"
-      },
-      {
-        "quote": "Used the Advanced guide as the spine of a half-day PD session. The rubric and rollout playbook saved me from building from scratch.",
-        "cite": "Pilot instructional coach",
-        "meta": "HS science \u00b7 West Coast US"
       }
     ]
   },
@@ -259,6 +249,28 @@
       "countryName": "United States"
     }
   },
+  "productFaq": [
+    {
+      "id": "product-faq-free",
+      "q": "Is Classroom Prompt Builder free?",
+      "a": "Yes. The prompt builder is free and requires no account. Optional downloadable PDF guides are sold separately."
+    },
+    {
+      "id": "product-faq-ai-tools",
+      "q": "Which AI tools does it work with?",
+      "a": "It generates prompts that you can paste into ChatGPT, Claude, or Gemini. The tool itself does not call any AI API."
+    },
+    {
+      "id": "product-faq-student-data",
+      "q": "Does it collect student data?",
+      "a": "No. The Service does not collect personal information or student PII. Theme preference, grade selection, and up to five saved sessions are stored only in the browser's localStorage."
+    },
+    {
+      "id": "product-faq-audience",
+      "q": "Who is it for?",
+      "a": "US K-12 teachers planning lessons, assessments, tasks, presentations, or instructional strategy."
+    }
+  ],
   "buyerFaq": [
     {
       "id": "buyer-faq-multi-classroom",

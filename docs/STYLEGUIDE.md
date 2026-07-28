@@ -1,7 +1,13 @@
-# Classroom Prompt Builder — Styleguide (Design System 2.0.0)
+---
+status: active
+audience: both
+updated: 2026-07-28
+---
 
-**Version:** Design System 2.0.0 (product release 1.1.2)
-**Last updated:** May 2026  
+# Classroom Prompt Builder — Styleguide (Design System 2.1.0)
+
+**Version:** Design System 2.1.0 (product release 1.2.0)
+**Last updated:** July 2026  
 **Locale:** en-US  
 **Implementation:** [`style.css`](../style.css) + [`config/sot.json`](../config/sot.json)
 
@@ -40,16 +46,34 @@ CTA pair: `--cta-bg` `#F5C518` on `--cta-text` `#0F2A44`.
 
 ## Typography
 
-- **Family:** self-hosted Inter, system fallback.
-- **Body:** 16px, `line-height: 1.6`.
-- **Headings:** tight leading (`--leading-tight`), negative letter-spacing on h1/h2.
+- **Family:** self-hosted Inter, system fallback; JetBrains Mono for template/prompt monospace.
+- **Body:** 16px, `line-height: 1.6` (`--leading-relaxed`).
+- **Ops output (`.ops-output-text`):** 16px, relaxed leading — primary reading surface.
+- **Buyer FAQ answers / lead:** 15px.
+- **Headings:** tight leading (`--leading-tight`), negative letter-spacing on h1/h2; `text-wrap: balance` on hero/community/FAQ/footer titles (not `#pdf-guides`).
+- **Sentence wrap:** `text-wrap: pretty` on community subtitle, FAQ copy, rules, footer paragraphs, ops output — scoped outside `#pdf-guides` to protect visual snapshots.
+- **Footer measure:** `.footer p` max-width `60ch`.
+
+### Text color roles
+
+| Token | Hex (light) | Use for |
+|-------|-------------|---------|
+| `--text` | `#1C2B3A` | Primary body, labels, headings |
+| `--text-muted` | `#4F5F71` | Supporting **sentences** (community, library cards, FAQ leads, field help) |
+| `--text-light` | `#6B7A8C` | Meta only (timestamps, idle tabs, chrome hints) |
+
+Do not use `--text-light` for readable secondary paragraphs. `@media (prefers-contrast: more)` darkens `--text-light` and `--text-muted`.
 
 ---
 
 ## Icons
 
-- **Library:** Lucide 0.460.0 (CDN + SRI on `index.html`).
+- **Library:** Lucide (MIT) subset as a self-hosted SVG sprite — [`assets/icons.svg`](../assets/icons.svg).
+- **Runtime helper:** [`icons.js`](../icons.js) `CPBIcons.iconHtml(name, className)` with an allowlist (unknown names fall back to `sparkles`).
+- **Markup:** `<svg class="icon …" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#icon-{name}"></use></svg>`.
+- **Rebuild:** `node scripts/build-icon-sprite.js` (requires `lucide-static` available under `node_modules` for the extract step).
 - **Sizes:** `.icon--sm` 16px, default 20px, `.icon--lg` 24px.
+- Do **not** load Lucide from unpkg or call `lucide.createIcons()`.
 
 ---
 
@@ -71,6 +95,7 @@ CTA pair: `--cta-bg` `#F5C518` on `--cta-text` `#0F2A44`.
 | `.pdf-guide-card-cover` | Cover image (Letter ratio 734×950) |
 | `.pdf-guide-specs` | Length / format metadata |
 | `.pdf-guide-cta` | Stripe checkout link |
+| `.pdf-guides-assurance` | Shared trust / refund / delivery strip (once per section) |
 | `.pdf-compare-strip` | PD vs guide pricing |
 | `.pdf-testimonials` | Social proof |
 | `.pdf-preview-dialog` | Sample-page lightbox |
@@ -82,9 +107,9 @@ All new commerce or operations UI **must** include rules under `@media (max-widt
 - No horizontal overflow; use `min-width: 0`, `overflow-wrap`, column stacks.
 - Touch targets ≥ 44px on interactive controls.
 - Prefer `100dvh` with `100vh` fallback for full-viewport dialogs.
-- PDF section order on ≤768px: header → pilot meta → **cards** → compare → testimonials (CSS `order` on `.pdf-guides` flex children).
+- PDF section order on ≤768px: header → pilot meta → **cards** → shared assurance → compare → testimonials (CSS `order` on `.pdf-guides` flex children).
 
-See [`design-system-audit_2026-05.md`](design-system-audit_2026-05.md) for audit notes.
+Historical audit snapshots (do not edit): [`archive/design-system-audit_2026-07.md`](archive/design-system-audit_2026-07.md) and [`archive/design-system-audit_2026-05.md`](archive/design-system-audit_2026-05.md). This STYLEGUIDE is the living DS truth.
 
 ---
 
@@ -94,7 +119,7 @@ See [`design-system-audit_2026-05.md`](design-system-audit_2026-05.md) for audit
 |-------|-------------|
 | ≤768px (mobile) | `.header .header-steps` is **hidden**. The ops-center `.step-badge` ("1") together with the in-section `.journey-next-link` ("View generated prompt") is the canonical mobile progress. |
 | 769–1024px (tablet) | `.header-steps` visible as the desktop pill row; connectors softened (`rgba(255,255,255,0.55)`); `.hero-prompt-card` still hidden. |
-| ≥1025px (desktop) | Full grid: `.hero-content` left, `.hero-prompt-card` right (`width: clamp(260px, 22vw, 300px)`, glass + float). |
+| ≥1025px (desktop) | Full grid: `.hero-content` left, `.hero-prompt-card` right (`width: clamp(260px, 22vw, 300px)`, glass + float). Card is a static **product preview** (mode chips + output panel), still `aria-hidden` / non-interactive. |
 
 `.header-steps` DOM stays present at every width so anchor links remain crawlable and keyboard-reachable on tablet+.
 
@@ -123,8 +148,8 @@ Post-deploy validation: Facebook Sharing Debugger, Twitter Card Validator, Linke
 
 | Class | Role | Tokens |
 |-------|------|--------|
-| `.community-cta-primary` | Primary (Telegram) | `--cta-bg` / `--cta-text`; hover `--cta-hover` |
-| `.community-cta-secondary` | Outline (parent brand) | `--primary` border, transparent background |
+| `.community-cta-primary` | Primary (Prompt Anatomy framework) | `--cta-bg` / `--cta-text`; hover `--cta-hover` |
+| `.community-cta-secondary` | Outline (optional Telegram) | `--primary` border, transparent background |
 
 Do **not** use `--green` for community CTA backgrounds; green is reserved for success/status UI (toast, refund icon).
 
@@ -165,7 +190,7 @@ Today most rules are **unlayered** (they keep higher specificity than any future
 
 ## Self-hosted fonts (DS 2.0.1)
 
-`Inter` (400-800) and `JetBrains Mono` (500/600) ship as latin WOFF2 in [`assets/fonts/`](../assets/fonts/) (SIL OFL 1.1). All shipped HTML preloads `Inter-Regular.woff2` + `Inter-Bold.woff2`; no Google Fonts CDN. Adding a new weight: drop the WOFF2 in `assets/fonts/`, add a matching `@font-face` block at the top of `style.css`, run `npm test`.
+`Inter` (400-800) and `JetBrains Mono` (500/600) ship as latin WOFF2 in [`assets/fonts/`](../assets/fonts/) (SIL OFL 1.1). All shipped HTML preloads `Inter-Regular.woff2` + `Inter-Medium.woff2` + `Inter-Bold.woff2`; no Google Fonts CDN. Adding a new weight: drop the WOFF2 in `assets/fonts/`, add a matching `@font-face` block at the top of `style.css`, run `npm test`.
 
 ## Quality gates
 

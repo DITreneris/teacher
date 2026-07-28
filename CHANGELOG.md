@@ -1,3 +1,9 @@
+---
+status: active
+audience: both
+updated: 2026-07-28
+---
+
 # Changelog
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); versioning follows [Semantic Versioning](https://semver.org/).
@@ -6,11 +12,48 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); version
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-07-28 - Fall content polish, product hero, Lucide sprite, pre-launch gates
+
+### Added
+- Self-hosted Lucide SVG sprite ([`assets/icons.svg`](assets/icons.svg)) + [`icons.js`](icons.js) allowlist helper; rebuild via `node scripts/build-icon-sprite.js`.
+- Shared PDF purchase assurance strip (`.pdf-guides-assurance`) under the product grid.
+- Desktop hero product preview (mode tabs + generated-prompt panel) replacing the abstract chrome rows.
+- Playwright visual regression for `#pdf-guides` at 320 / 768 / 1280 (light + dark): [`tests/e2e/visual-pdf-commerce.spec.js`](tests/e2e/visual-pdf-commerce.spec.js).
+- [`docs/archive/design-system-audit_2026-07.md`](docs/archive/design-system-audit_2026-07.md) Fall 2026 DS note (archived snapshot).
+- [`docs/mobile-prelaunch-audit_2026-07.md`](docs/mobile-prelaunch-audit_2026-07.md) — mobile / pre-launch scorecard, PSI operator table, thin engineering gates.
+- Lighthouse CI (`lighthouserc.js`, `npm run test:lighthouse`) — mobile a11y error ≥0.9; performance / best-practices / SEO warn; CI artifact upload.
+- WebKit mobile smoke (`npm run test:webkit`, `tests/e2e/webkit-mobile-smoke.spec.js`) — overflow, PDF preview, success poll.
+- Playwright axe dynamic a11y (`tests/e2e/a11y-dynamic.spec.js`), touch targets ≥44px (`tests/e2e/touch-targets.spec.js`), ops header visual @375 (`tests/e2e/visual-ops-mobile.spec.js`).
+- [`docs/roadmap.md`](docs/roadmap.md) — Active product + GTM ambition through 2027-01-01 (discovery-led; PDF catalog expansion and workflow OS non-go).
+- [`docs/archive/roadmap_implied_2026-07-28.md`](docs/archive/roadmap_implied_2026-07-28.md) — archived snapshot of the prior implied strategy (no prior `roadmap.md` existed).
+- Cursor skills [`.cursor/skills/product-roadmap/SKILL.md`](.cursor/skills/product-roadmap/SKILL.md) and [`.cursor/skills/outreach-boundary/SKILL.md`](.cursor/skills/outreach-boundary/SKILL.md) — ambition routing + two-repo outreach boundary.
+- Pre–Gate A AEO lite: `config/sot.json#productFaq` (4 free-builder Q&As), static `#product-faq` section, single FAQPage JSON-LD (`#faq` = product + buyer), static no-JS buyer FAQ + testimonial fallbacks.
+
 ### Fixed
-- [`vercel.json`](vercel.json): remove deprecated top-level `public` so Vercel schema validation passes on Production deploys.
+- PDF preview sample scroller (`#pdfPreviewPages`) is keyboard-focusable (`tabindex="0"`) for axe `scrollable-region-focusable`.
+- `.pdf-guide-license a` touch target raised to min-height 44px.
+- Desktop ops workbench: stretch the active `.ops-form` card to match the output + Sessions column height so the bare white void under the fields disappears (no promo filler; mobile single-column unchanged).
 
 ### Changed
+- Seasonal hero / meta copy (Sunday planning + first week back); sentence-case mode labels; warmer ops header.
+- Testimonials cut to one paraphrased pilot quote with a short disclaimer.
+- Community CTAs: Prompt Anatomy primary, Telegram secondary/optional.
+- Drop Lucide unpkg CDN; CSP-Report-Only `script-src` no longer allows `https://unpkg.com`.
+- Cache-bust `style.css?v=1.2.3`; package version `1.2.0`.
+- Design System docs bumped to 2.1.0 (sprite icons + shared assurance).
+- Docs navigation (iteration 1): [`docs/INDEX.md`](docs/INDEX.md) Doc routing table; [`todo.md`](todo.md) linked under Operator runbooks (not Active); README routing pointers; hygiene allows Operator `todo.md` and forbids it under Active lean/GTM.
+- Docs navigation (iteration 2): DS audits moved to [`docs/archive/`](docs/archive/); [`docs/mobile-prelaunch-audit_2026-07.md`](docs/mobile-prelaunch-audit_2026-07.md) demoted to Operator; INDEX Code navigation slimmed; living DS = [`docs/STYLEGUIDE.md`](docs/STYLEGUIDE.md).
+- Docs navigation (iteration 3): [`AGENTS.md`](AGENTS.md) EN Start-here + sole quality-gate owner; [`cpb-core.mdc`](.cursor/rules/cpb-core.mdc) points to AGENTS instead of duplicating the full gate table.
+- Docs navigation (iteration 4): YAML frontmatter (`status` / `audience` / `updated`) on Active, Operator, and archived docs; [`tests/docs-hygiene.test.js`](tests/docs-hygiene.test.js) enforces Active allowlist + Operator `ops|scratch` + archive guard.
+- Docs navigation (iteration 5): [`AGENTS.md`](AGENTS.md) full en-US; [`gold_legacy_standard.md`](gold_legacy_standard.md) sister-clone purpose + DS/gates pointers; [`scripts/fulfillment-change-control.md`](scripts/fulfillment-change-control.md) in INDEX Operator; purpose lines on ops memos.
 - Product docs boundary: Active go-to-market is only [`docs/marketing_plan.md`](docs/marketing_plan.md); outreach memos moved to operator runbooks; root `/*.csv` / `/*.pdf` / `__pycache__/` gitignored so school-directory dumps stay out of the product repo.
+- [`todo.md`](todo.md) rewritten as maturity/GTM now-board (Ship / Discover / Trust / Parked eng); eng debt parked; cross-links retargeted in marketing, deploy, and agent docs.
+- [`docs/INDEX.md`](docs/INDEX.md), [`todo.md`](todo.md), and [`docs/marketing_plan.md`](docs/marketing_plan.md) §10 cross-link the new Active roadmap.
+- [`AGENTS.md`](AGENTS.md), [`.cursor/rules/cpb-core.mdc`](.cursor/rules/cpb-core.mdc), [`.cursor/rules/cpb-pdf-commerce.mdc`](.cursor/rules/cpb-pdf-commerce.mdc), and `outreach-boundary` skill wired to discovery-led roadmap / SKU freeze.
+- Typography readability harden (DS): `--text-muted` for sentence-level secondary copy; ops output 16px + safer wrap; buyer FAQ 15px; `text-wrap` balance/pretty outside `#pdf-guides`; footer measure `60ch`; Inter Medium preload.
+- SEO/GEO hygiene: `sitemap.xml` / SoftwareApplication `dateModified` refreshed; `llms-full.txt` privacy date synced to July 22, 2026; `robots.txt` `Disallow: /docs/` + `vercel.json` `X-Robots-Tag: noindex` for `/docs/(.*)`; incomplete `#pdf-guides` ItemList microdata removed.
+- Playwright `#pdf-guides` visual snapshots refreshed after static FAQ/testimonial no-JS fallbacks; visual helper pins scroll and hides sticky header for less flaky clips.
+- CI (`.github/workflows/ci.yml`): after `test:mixed`, run WebKit smoke and Lighthouse CI with artifact upload.
 
 ## [1.1.2] - 2026-05-20 - SEO/GEO, DS performance, and fulfillment env truth
 

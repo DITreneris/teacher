@@ -13,10 +13,10 @@
     "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "no-console": ["error", { "allow": ["warn", "error"] }]
   },
-  "ignorePatterns": ["node_modules/", "vendor/**", "docs/archive/**", "*.min.js", "vaizdo_generatorius.txt"],
+  "ignorePatterns": ["node_modules/", "vendor/**", "*.min.js"],
   "overrides": [
     {
-      "files": ["playwright.config.js"],
+      "files": ["playwright.config.js", "lighthouserc.js"],
       "env": { "node": true, "es2022": true }
     },
     {

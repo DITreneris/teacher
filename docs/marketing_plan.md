@@ -1,10 +1,16 @@
+---
+status: active
+audience: both
+updated: 2026-07-28
+---
+
 # US market & X/Twitter marketing plan
 
 **Product:** [Classroom Prompt Builder](https://promptanatomy.online/) · **Brand:** Prompt Anatomy  
 **Last updated:** July 28, 2026  
-**Status:** Partially ready — live Stripe checkout + fulfillment verified (2026-05-19); free-tool X promotion unblocked on ops (Gate A remaining: handle + pin + UTM); paid ads after Gate B proof. School email outreach is a parallel sibling-repo channel, not a product launch blocker.
+**Plan status:** Partially ready — live Stripe checkout + fulfillment verified (2026-05-19); free-tool X promotion unblocked on ops (Gate A remaining: handle + pin + UTM); paid ads after Gate B proof. School email outreach is a parallel sibling-repo channel, not a product launch blocker.
 
-This plan is the canonical go-to-market reference for US promotion. It is tied to release blockers in [todo.md](../todo.md) (operator scratch, not indexed) and deployment steps in [DEPLOY.md](../DEPLOY.md). Legal pages: [privacy.html](../privacy.html), [terms.html](../terms.html).
+This plan is the canonical go-to-market reference for US promotion. Product + GTM ambition through 2027-01-01 lives in [roadmap.md](roadmap.md). It is tied to the operator now-board in [todo.md](../todo.md) (INDEX Operator, not Active) and deployment steps in [DEPLOY.md](../DEPLOY.md). Legal pages: [privacy.html](../privacy.html), [terms.html](../terms.html).
 
 > **Not legal advice.** Flag uncertain compliance items for professional review before scaled paid spend.
 
@@ -29,10 +35,10 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 | Question | Answer |
 |----------|--------|
 | Ready for US promotion? | **Partially** |
-| Biggest blocker | X account + demo content ([todo.md](../todo.md) Gate A); permissioned testimonials (Gate B) |
-| Promote free tool on X now? | **Yes** (ops E2E done — [todo.md](../todo.md) P0 §1b–§2 verified 2026-05-19) |
+| Biggest blocker | X account + demo content ([todo.md](../todo.md) Discover); permissioned testimonials (Trust) |
+| Promote free tool on X now? | **Yes** (ops E2E done — [todo.md](../todo.md) Ship verified 2026-05-19) |
 | Run paid X ads for PDFs? | **No** until Gate B (organic sales or analytics proof + permissioned testimonial) |
-| Highest-ROI next move | Gate A X (handle + pinned 30s lesson-mode demo + UTM), then Gate B proof / permissioned testimonials ([todo.md](../todo.md) P1) |
+| Highest-ROI next move | Gate A X (handle + pinned 30s lesson-mode demo + UTM), then Gate B proof / permissioned testimonials ([todo.md](../todo.md) Trust) |
 
 ### Readiness scores (1–10)
 
@@ -40,9 +46,9 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 |------|-------|------|
 | Positioning clarity | 8 | Teacher ICP clear in hero and schema |
 | US buyer relevance (teachers) | 9 | |
-| Trust signals | 7 | Live checkout; pilot quotes still anonymous |
+| Trust signals | 7 | Live checkout; one anonymous pilot quote + short disclaimer |
 | Pricing / checkout | 8 | Live `buy.stripe.com` in SOT; one live sale verified (Stage 6c) |
-| Proof | 5 | Honest pilot disclosure; needs attributable quotes |
+| Proof | 5 | Single paraphrased pilot quote; still needs attributable names for Gate B |
 | Free CTA / conversion logic | 8 | |
 | Paid CTA / conversion logic | 8 | Live links + fulfillment E2E verified |
 | X profile readiness | 2 | No verified handle / `twitter:site` yet |
@@ -53,21 +59,21 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 
 ### Gate A — Free organic X (minimum)
 
-- [x] [todo.md](../todo.md) P0 §1: live Stripe URLs in [`config/sot.json`](../config/sot.json) `commerce.stripePaymentLinks` and `commerce.allowPlaceholderCheckout: false` (CHANGELOG Stage 5; publish gate in `npm test`)
-- [x] [todo.md](../todo.md) P0 §2: purchase + fulfillment path verified (2026-05-19; live + test)
-- [ ] X account created, bio + link to `https://promptanatomy.online`
-- [ ] Pinned post: 30s demo of lesson mode (no hype claims)
-- [ ] UTM on all X links: `?utm_source=twitter&utm_medium=organic&utm_campaign=cpb`
+- [x] Live Stripe URLs in [`config/sot.json`](../config/sot.json) `commerce.stripePaymentLinks` and `commerce.allowPlaceholderCheckout: false` (CHANGELOG Stage 5; publish gate in `npm test`) — [todo.md](../todo.md) Ship
+- [x] Purchase + fulfillment path verified (2026-05-19; live + test) — [todo.md](../todo.md) Ship / [DEPLOY.md](../DEPLOY.md)
+- [ ] X account created, bio + link to `https://promptanatomy.online` ([todo.md](../todo.md) Discover)
+- [ ] Pinned post: 30s demo of lesson mode (no hype claims) ([todo.md](../todo.md) Discover)
+- [ ] UTM on all X links: `?utm_source=twitter&utm_medium=organic&utm_campaign=cpb` ([todo.md](../todo.md) Discover)
 
 ### Gate B — Paid PDF promotion
 
 - [ ] Gate A complete
-- [x] Mobile PDF storefront audited and hardened (DS 2.0.0 — [`docs/design-system-audit_2026-05.md`](design-system-audit_2026-05.md), `tests/e2e/mobile-pdf-commerce.spec.js`, 320 / 375 px)
+- [x] Mobile PDF storefront audited and hardened (DS 2.1.0 — [`docs/STYLEGUIDE.md`](STYLEGUIDE.md); archived audits [`archive/design-system-audit_2026-07.md`](archive/design-system-audit_2026-07.md) / [`archive/design-system-audit_2026-05.md`](archive/design-system-audit_2026-05.md); `tests/e2e/mobile-pdf-commerce.spec.js` 320/375 + `visual-pdf-commerce.spec.js` 320/768/1280 light+dark)
 - [ ] 3+ organic PDF sales OR 50+ weekly free-tool sessions (Vercel Analytics)
-- [ ] At least 1 permissioned testimonial with name (see [todo.md](../todo.md) P1)
-- [ ] Compare strip PD figure fully sourced ([todo.md](../todo.md) P1; SOT already uses audit-safe `often $100+`, not `~ $149`)
-- [ ] Footer: legal entity / operator line added (counsel-approved copy)
-- [ ] `twitter:site` meta in `index.html` once handle is verified
+- [ ] At least 1 permissioned testimonial with name (see [todo.md](../todo.md) Trust)
+- [ ] Compare strip PD figure fully sourced ([todo.md](../todo.md) Trust; SOT already uses audit-safe `often $100+`, not `~ $149`)
+- [ ] Footer: legal entity / operator line added (counsel-approved copy) ([todo.md](../todo.md) Trust)
+- [ ] `twitter:site` meta in `index.html` once handle is verified ([todo.md](../todo.md) Trust)
 
 ### Gate C — Paid X ads
 
@@ -130,7 +136,8 @@ This plan is the canonical go-to-market reference for US promotion. It is tied t
 ### SEO / GEO / AI visibility
 
 - Maintain `llms.txt`, `sitemap.xml`, FAQ JSON-LD on [index.html](../index.html).
-- No code change required for baseline; content wins = teacher-specific examples in posts and future blog/snippets.
+- Product FAQ (free builder) + buyer FAQ are on-page with a single FAQPage JSON-LD; `/docs/` is noindex. Baseline maintained — not a blog program.
+- Content wins = teacher-specific examples in posts and future blog/snippets.
 
 ### Retargeting
 
@@ -197,7 +204,7 @@ Cold B2B email to US K–12 principals is **not** part of this product’s launc
 | Day | Action |
 |-----|--------|
 | 1–2 | ✅ Stripe Payment Links + SOT publish gate complete; static `index.html` Stripe fallbacks present |
-| 3 | ✅ Live/test purchase and fulfillment path verified per [DEPLOY.md](../DEPLOY.md) / [todo.md](../todo.md) P0 |
+| 3 | ✅ Live/test purchase and fulfillment path verified per [DEPLOY.md](../DEPLOY.md) / [todo.md](../todo.md) Ship |
 | 4 | Footer legal/operator line review (counsel-approved entity name still pending) |
 | 5 | Keep qualified compare-strip copy (`often $100+`) unless a sourced exact figure is added; tighten testimonial copy for ads |
 | 6–7 | Create X profile, bio, UTM link, pin demo post |
@@ -210,7 +217,7 @@ Cold B2B email to US K–12 principals is **not** part of this product’s launc
 |-----|--------|
 | 8–10 | Bio link A/B: `#operationsCenter` vs `#pdf-guides` (UTM differs) |
 | 11–12 | 3 organic posts (lesson, assessment, checklist) |
-| 13–14 | Collect 1–2 permissioned quotes ([todo.md](../todo.md) P1) |
+| 13–14 | Collect 1–2 permissioned quotes ([todo.md](../todo.md) Trust) |
 
 **Metrics:** Bio CTR 2–5%; session length ≥ 45s on site.
 
@@ -263,7 +270,8 @@ Wave schedule, cool-downs, and live-send registry live in the sibling outreach r
 
 | Doc | Role |
 |-----|------|
-| [todo.md](../todo.md) | P0/P1 release blockers (Stripe, testimonials, compare strip) |
+| [roadmap.md](roadmap.md) | Product + GTM ambition through 2027-01-01 (discovery-led; catalog / workflow non-go) |
+| [todo.md](../todo.md) | Maturity now-board + open Gate A/B actions (Discover / Trust) |
 | [DEPLOY.md](../DEPLOY.md) | Stripe webhook, success URL, env vars, post-deploy checklist |
 | [CHANGELOG.md](../CHANGELOG.md) | Shipped buyer-confidence features |
 | [llms.txt](../llms.txt) | Machine-readable product brief for AI/search |
@@ -278,5 +286,5 @@ Wave schedule, cool-downs, and live-send registry live in the sibling outreach r
 
 - Update **Last updated** when gates, scores, or channel tactics change.
 - After X handle is live: note handle in §6 and track meta tag task in [CHANGELOG.md](../CHANGELOG.md).
-- When release gates or fulfillment env requirements change, update [todo.md](../todo.md), [DEPLOY.md](../DEPLOY.md), and `.cursor/rules/cpb-fulfillment.mdc` together.
+- When maturity gates or open GTM actions change, update [todo.md](../todo.md) Discover / Trust. When fulfillment env requirements change, update [DEPLOY.md](../DEPLOY.md) and `.cursor/rules/cpb-fulfillment.mdc` together.
 - Commerce / social-proof copy lives in [`config/sot.json`](../config/sot.json) under `commerce` (Stripe links, pricing, compare strip, delivery promise, testimonials). Edit there - `generator.js` `initCommerce()` hydrates [`index.html`](../index.html) at runtime; the publish gate in `tests/structure.test.js` enforces no `YOUR_` placeholder when `allowPlaceholderCheckout: false`.

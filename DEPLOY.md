@@ -1,3 +1,9 @@
+---
+status: active
+audience: both
+updated: 2026-07-28
+---
+
 # Deployment — Classroom Prompt Builder
 
 **Canonical repository:** [github.com/DITreneris/teacher](https://github.com/DITreneris/teacher)  
@@ -65,8 +71,9 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
   - [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/)
   - [Twitter Card Validator](https://cards-dev.twitter.com/validator) — verify `summary_large_image` renders the new headline + brand row without clipping
   - Slack / Discord — paste the URL, verify the navy preview thumbnail (no broken glyph in upper-left, URL fully visible in lower-left)
-- [ ] [Google Rich Results Test](https://search.google.com/test/rich-results) — `SoftwareApplication` + `FAQPage` (Buyer FAQ) on home URL
-- [ ] CSP remains `Content-Security-Policy-Report-Only` until one week of clean production reports; then promote to enforcing `Content-Security-Policy` in `vercel.json` (see [todo.md](todo.md) §7)
+- [ ] [Google Rich Results Test](https://search.google.com/test/rich-results) — `SoftwareApplication` + `FAQPage` (product + buyer FAQ) on home URL
+- [ ] CSP remains `Content-Security-Policy-Report-Only` until one week of clean production reports; then promote to enforcing `Content-Security-Policy` in `vercel.json` (see [todo.md](todo.md) Parked eng)
+- [ ] After a large frontend deploy: optional mobile [PageSpeed Insights](https://pagespeed.web.dev/) on `/` and `/#pdf-guides`; record LCP/INP/CLS in [docs/mobile-prelaunch-audit_2026-07.md](docs/mobile-prelaunch-audit_2026-07.md)
 
 ---
 

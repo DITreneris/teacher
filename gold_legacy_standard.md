@@ -1,12 +1,19 @@
+---
+status: active
+audience: both
+updated: 2026-07-28
+---
+
 # Gold Legacy Standard - Classroom Prompt Builder
 
+**Purpose:** Sister-repo / clone checklist — day-to-day agents prefer [`AGENTS.md`](AGENTS.md) + [`docs/STYLEGUIDE.md`](docs/STYLEGUIDE.md) + [`docs/roadmap.md`](docs/roadmap.md).  
 **Product:** Classroom Prompt Builder  
 **Production:** https://promptanatomy.online/  
 **Repository:** https://github.com/DITreneris/teacher  
-**Current gold baseline:** v1.1.2, May 2026  
-**Audience:** internal agents, operators, and sister repos adopting this stack.
+**Current gold baseline:** v1.2.0, July 2026  
+**Audience:** sister repos adopting this stack; operators freezing a gold baseline.
 
-This document freezes the current best version of the repo and site as the reference standard. If future work changes these principles, update this file together with the code, tests, and docs it references.
+This document freezes the current best version of the repo and site as the reference standard for handoff. If future work changes these principles, update this file together with the code, tests, and docs it references.
 
 ## 1. Product Standard
 
@@ -53,28 +60,13 @@ Any sister repo should copy this pattern before adding new config files.
 
 ## 3. Design System Standard
 
-The canonical design system is `docs/STYLEGUIDE.md`, implemented by `style.css` and hydrated from `config/sot.json`.
+Living DS truth: [`docs/STYLEGUIDE.md`](docs/STYLEGUIDE.md) (DS 2.1.0) + `style.css` + `config/sot.json` theme. Icons: self-hosted Lucide in `assets/icons.svg` via `icons.js` — no CDN.
 
-Current gold tokens:
+Invariants for sister clones (details in STYLEGUIDE):
 
-- Deep blue: `#0F2A44`
-- Gold CTA: `#F5C518`
-- Soft blue: `#2F6FED`
-- Page background: `#F4F7FB`
-- Body text: `#1C2B3A`
-- Muted text: `#6B7A8C`
-- Border: `#E6ECF2`
-
-Design rules:
-
-- Use self-hosted fonts from `assets/fonts/`; do not add Google Fonts CDN.
-- Keep `Inter` as the product font and `JetBrains Mono` for mono UI.
-- Use the existing token names and radius/spacing scale before inventing new tokens.
-- New `.pdf-*` or `.ops-*` UI must include `@media (max-width: 480px)` rules.
-- Mobile touch targets must be at least 44px.
-- No horizontal overflow at 320px and 375px.
-- Dialogs should use `100dvh` with sensible fallback behavior.
-- `docs/design-system-audit_2026-05.md` is the current mobile audit baseline.
+- Self-hosted fonts only (`Inter`, `JetBrains Mono`); no Google Fonts CDN.
+- New `.pdf-*` / `.ops-*` UI needs `@media (max-width: 480px)`, touch ≥44px, no overflow at 320/375, dialogs `100dvh`.
+- Archived audit snapshots (do not edit): `docs/archive/design-system-audit_2026-07.md`, `docs/archive/design-system-audit_2026-05.md`.
 
 ## 4. Frontend Flow Standard
 
@@ -267,25 +259,28 @@ Current standards:
 
 `docs/INDEX.md` is the documentation navigation authority.
 
-Active docs should be listed there. Archived docs under `docs/archive/` are historical and should not be updated unless explicitly reactivated.
+Only docs listed in `docs/INDEX.md` are canonical. Operator scratch files (`todo.md`, `memo_pdf.md`, `memo_outreach.md`, `changelog_outreach.md`) may exist outside INDEX.
 
-Core active docs:
+Core active docs (must match `docs/INDEX.md` Active sections):
 
 - `README.md`
 - `docs/INDEX.md`
 - `AGENTS.md`
 - `DEPLOY.md`
 - `CHANGELOG.md`
+- `gold_legacy_standard.md`
 - `docs/STYLEGUIDE.md`
-- `docs/design-system-audit_2026-05.md`
+- `docs/roadmap.md`
 - `docs/marketing_plan.md`
-- `docs/outreach_experience_memo_2026-05-17.md`
 
-Operator scratch files may remain outside active docs:
+Operator / sibling runbooks (INDEX navigation only — not lean-active):
 
 - `todo.md`
 - `memo_pdf.md`
+- `docs/mobile-prelaunch-audit_2026-07.md`
 - `memo_outreach.md`
+- `changelog_outreach.md`
+- `docs/outreach_experience_memo_2026-05-17.md`
 
 ## 11. Sister Repo Boundary
 
@@ -319,61 +314,15 @@ Do not add outreach logic to this repo's `api/**`, Stripe fulfillment, Upstash, 
 
 ## 12. Quality Gates
 
-CI source of truth:
-
-```bash
-npm run test:mixed
-```
-
-Local baseline:
-
-```bash
-npm ci
-npm test
-npm run test:smoke
-npm run test:e2e
-npm run test:a11y
-```
-
-Fulfillment/API changes:
-
-```bash
-npm test
-npm run check:fulfillment
-```
-
-Public HTML changes:
-
-```bash
-npm run sitemap:update
-npm run test:mixed
-```
-
-OG/social image changes:
-
-```bash
-npm run build:social
-npm test
-```
-
-PDF commerce/mobile layout changes:
-
-```bash
-npm test
-npm run test:e2e
-npm run test:a11y
-```
+Canonical change-type → test matrix: [`AGENTS.md`](AGENTS.md) § Quality gates.  
+CI: `npm run test:mixed`, then `test:webkit` and `test:lighthouse`. Mobile scorecard: [docs/mobile-prelaunch-audit_2026-07.md](docs/mobile-prelaunch-audit_2026-07.md).
 
 Minimum acceptance for gold baseline:
 
-- Structural tests pass.
-- Smoke tests pass at 320, 375, and 768 px.
-- E2E core flow passes.
-- Mobile PDF commerce tests pass.
-- Pa11y reports no blocking accessibility issues.
-- Stripe CTA hrefs are live `buy.stripe.com` links.
+- Structural + smoke (320/375/768) + e2e core-flow + mobile PDF commerce pass.
+- Pa11y reports no blocking a11y issues.
+- Stripe CTA hrefs are live `buy.stripe.com` links; no public paid PDF binaries committed.
 - Fulfillment health reports complete env in production.
-- No public paid PDF binaries are committed.
 
 ## 13. Drift Checklist
 
@@ -398,8 +347,8 @@ These are not blockers to the gold baseline, but should not be forgotten:
 - CSP is still Report-Only.
 - Real named testimonials are still needed before stronger paid promotion.
 - Compare-strip exact PD price needs a source before using exact-dollar claims.
-- Lucide CDN can later be replaced with a local SVG sprite.
 - Local private PDF filenames should be reconciled with fulfillment fallback names.
+- Full `light-dark()` token migration remains deferred (see `todo.md` Parked eng).
 
 ## 15. Sister Repo Adoption Template
 

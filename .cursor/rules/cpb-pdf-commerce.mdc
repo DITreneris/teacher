@@ -1,6 +1,6 @@
 ---
 description: PDF storefront UI, SOT commerce, mobile DS rules, initCommerce bootstrap
-globs: index.html,success.html,style.css,generator.js,config/sot.json,assets/pdf-covers/**
+globs: index.html,success.html,style.css,generator.js,config/sot.json,assets/pdf-covers/**,icons.js,assets/icons.svg,scripts/build-icon-sprite.js,tests/e2e/*pdf*
 alwaysApply: false
 ---
 
@@ -8,8 +8,9 @@ alwaysApply: false
 
 ## Design system
 
-- Component catalog and tokens: [`docs/STYLEGUIDE.md`](../../docs/STYLEGUIDE.md) (DS 2.0.0).
+- Component catalog and tokens: [`docs/STYLEGUIDE.md`](../../docs/STYLEGUIDE.md) (DS 2.1.0).
 - Prefixes: `.pdf-*`, `.ops-*`, `.buyer-faq*`, `.success-page*`.
+- Icons: self-hosted Lucide subset via `icons.js` + `assets/icons.svg` — rebuild with `npm run build:icons`; do not load Lucide from a CDN.
 
 ## Mobile (required before merge)
 
@@ -19,7 +20,11 @@ New `.pdf-*` or `.ops-*` block **must** include `@media (max-width: 480px)` rule
 - Touch targets ≥ 44px
 - Preview dialog: `100dvh`, scroll-snap for sample pages where applicable
 
-Regression: [`tests/e2e/mobile-pdf-commerce.spec.js`](../../tests/e2e/mobile-pdf-commerce.spec.js) at 320 / 375 px.
+Regression:
+
+- [`tests/e2e/mobile-pdf-commerce.spec.js`](../../tests/e2e/mobile-pdf-commerce.spec.js) at 320 / 375 px
+- [`tests/e2e/visual-pdf-commerce.spec.js`](../../tests/e2e/visual-pdf-commerce.spec.js) screenshots for `#pdf-guides` (320 / 768 / 1280, light + dark) — update snapshots when CSS changes are intentional
+- Dynamic a11y / touch / ops visual ride with `npm run test:e2e`; Safari lab smoke via `npm run test:webkit` (see [`docs/mobile-prelaunch-audit_2026-07.md`](../../docs/mobile-prelaunch-audit_2026-07.md))
 
 ## SOT & hydration
 
@@ -27,9 +32,12 @@ Edit copy in [`config/sot.json`](../../config/sot.json):
 
 - `#commerce` — Stripe links, pricing, compare strip, delivery promise, testimonials
 - `#pdfGuides` — chapter lists (TOC accordions)
-- `#buyerFaq` — buyer FAQ + JSON-LD mirror
+- `#productFaq` — free-builder FAQ (static HTML + merged FAQPage JSON-LD)
+- `#buyerFaq` — buyer FAQ (static HTML + hydrate) + merged FAQPage JSON-LD
 
 `generator.js`: `initCommerce()`, `initLegal()`, `initPdfGuideTocs()`, `initBuyerFaq()`, `initPdfPreviewDialog()`.
+
+**SKU freeze (roadmap through 2027-01-01):** keep Beginners + Advanced only. Do not add a third product/guide without revising [`docs/roadmap.md`](../../docs/roadmap.md) (skill `product-roadmap`). Gate B work = proof/copy on existing SKUs.
 
 ## Bootstrap invariant (do not break)
 
@@ -51,10 +59,13 @@ When `commerce.allowPlaceholderCheckout === false`, `npm test` requires live `ht
 
 ## Tests
 
+PDF-specific rows below; global matrix: [`AGENTS.md`](../../AGENTS.md) § Quality gates.
+
 | Change | Command |
 |--------|---------|
 | UX / interactions | `npm run test:smoke`, `npm run test:a11y` |
-| PDF layout / CSS | `npm run test:e2e` |
+| PDF layout / CSS | `npm run test:e2e` (mobile-pdf-commerce + visual-pdf-commerce) |
+| Icon sprite | `npm run build:icons`, then `npm test` |
 | SOT commerce only | `npm test` (+ smoke for Stripe href poll) |
 
 `success.html` is included in a11y (`/success?session_id=cs_test_...`).

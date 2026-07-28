@@ -33,9 +33,9 @@ for (const viewport of viewports) {
       await expect.poll(async () => beginnersCover.evaluate((img) => img.complete && img.naturalWidth || 0)).toBeGreaterThan(100);
 
       await expect(page.locator('.pdf-guide-card .pdf-guide-license').first()).toContainText('Classroom license');
-      await expect(page.locator('.pdf-guide-card .pdf-guide-refund').first()).toContainText('14-day no-questions refund');
-      await expect(page.locator('.pdf-guide-card .pdf-guide-trust').first()).toContainText('Stripe checkout');
-      await expect(page.locator('.pdf-guide-card .pdf-guide-promise [data-commerce-delivery-promise]').first()).not.toBeEmpty();
+      await expect(page.locator('.pdf-guides-assurance .pdf-guide-refund')).toContainText('14-day no-questions refund');
+      await expect(page.locator('.pdf-guides-assurance .pdf-guide-trust')).toContainText('Stripe checkout');
+      await expect(page.locator('.pdf-guides-assurance .pdf-guide-promise [data-commerce-delivery-promise]')).not.toBeEmpty();
 
       await page.click('[data-mode="ASSESSMENT"]');
       await expect(page.locator('[data-mode="ASSESSMENT"]')).toHaveClass(/is-active/);
@@ -73,7 +73,7 @@ for (const viewport of viewports) {
 
     test('ops-center header sits above the fold on mobile', async ({ page }) => {
       await page.goto('/');
-      // After removing the hero stepper, the Lesson workflow center header should be
+      // After removing the hero stepper, the ops-center header should be
       // reachable without scrolling so the user immediately sees where to start.
       await expect(page.locator('.ops-center-header')).toBeInViewport({ ratio: 0.4, timeout: 3000 });
     });

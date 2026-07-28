@@ -3,7 +3,7 @@
 > Site: https://promptanatomy.online/
 > Audience: US K-12 teachers
 > Edition: US Edition
-> Last updated: 2026-05-20
+> Last updated: 2026-07-28
 > Operator: Prompt Anatomy
 > Contact: info@promptanatomy.app
 > Source repository: https://github.com/DITreneris/teacher
@@ -178,7 +178,7 @@ Quotes paraphrased from pilot feedback during private beta. Names withheld at re
 SECTION 7 - PRIVACY POLICY SUMMARY
 ================================================================================
 
-Last updated: May 15, 2026.
+Last updated: July 22, 2026.
 
 What is collected: nothing through the prompt-building workflow itself. There are no signup forms, no accounts, no email collection, and no data sent to product servers from the prompt builder. If a teacher buys an optional PDF, Stripe collects payment information during checkout and shares limited purchase details (checkout session ID, purchased product, buyer email) used only to send the secure download link, support, and prevent duplicate fulfillment.
 

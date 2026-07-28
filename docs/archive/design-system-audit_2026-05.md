@@ -1,4 +1,14 @@
+---
+status: archive
+audience: both
+updated: 2026-07-28
+---
+
 # Design system & mobile audit — May 2026
+
+**Snapshot:** Archived — do not edit.  
+**DS truth:** [docs/STYLEGUIDE.md](../STYLEGUIDE.md). Context: [CHANGELOG.md](../../CHANGELOG.md) [1.2.0].  
+**Not Active** — see [docs/INDEX.md](../INDEX.md).
 
 **Product:** Classroom Prompt Builder v1.1.2  
 **Scope:** Full site + PDF commerce block (`#pdf-guides`)  
@@ -34,10 +44,10 @@ After the PDF storefront expansion (covers, compare strip, testimonials, preview
 ## P0 / P1 / P2 backlog (post-1.1.0)
 
 - ~~**P1:** Sticky mini-CTA when main PDF CTA scrolls off-screen~~ — shipped in v1.1.2 (`pdf-sticky-cta`, mobile-only, `IntersectionObserver`).
-- ~~**P1:** WebP covers (`todo.md` §5)~~ — shipped in v1.1.2 (`<picture>` + `scripts/optimize-pdf-covers.js`; ~70-80% size reduction).
-- **P2:** Playwright visual regression screenshots for `#pdf-guides` @ 320px
+- ~~**P1:** WebP covers~~ — shipped in v1.1.2 (`<picture>` + `scripts/optimize-pdf-covers.js`; ~70-80% size reduction).
+- ~~**P2:** Playwright visual regression screenshots for `#pdf-guides` @ 320px~~ — shipped in v1.2.0 (`tests/e2e/visual-pdf-commerce.spec.js` @ 320 / 768 / 1280 light+dark; see [design-system-audit_2026-07.md](design-system-audit_2026-07.md) in this archive).
 
-See [`.cursor/plans/ds_p0-p3_micro-improvements_b250ea79.plan.md`](../.cursor/plans/ds_p0-p3_micro-improvements_b250ea79.plan.md) for the full v1.1.2 / v1.2.0 design-system rollout (color-scheme, prefers-contrast, content-visibility, Product JSON-LD, self-hosted fonts, color-mix tokens, clamp typography, container queries, dialog @starting-style, light-dark seed) and [`todo.md`](../todo.md) §9 for the deferred P3 follow-ups (full light-dark migration + Lucide sprite).
+See [CHANGELOG.md](../CHANGELOG.md) [1.1.2] / [1.2.0], [STYLEGUIDE.md](STYLEGUIDE.md), and [`todo.md`](../todo.md) Parked eng for the v1.1.2–1.2.0 design-system rollout (color-scheme, prefers-contrast, content-visibility, Product JSON-LD, self-hosted fonts, color-mix tokens, clamp typography, container queries, dialog @starting-style, light-dark seed, Lucide sprite) and deferred follow-ups (full light-dark migration).
 
 ## Quality gates (release)
 
@@ -48,4 +58,4 @@ npm run test:e2e
 npm run test:a11y
 ```
 
-Manual: Stripe test purchase on iOS Safari + Android Chrome ([todo.md](../todo.md) §2).
+Manual: Stripe test purchase on iOS Safari + Android Chrome ([todo.md](../todo.md) Parked eng).

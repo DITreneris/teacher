@@ -1,9 +1,16 @@
+---
+status: ops
+audience: both
+updated: 2026-07-28
+---
+
 # Deployment memo: Stripe + paid PDF fulfillment
 
+**Purpose:** Operator runbook for Stripe + PDF fulfillment deploy/incident recovery — not Active product doctrine.  
 **Audience:** Engineers and operators rolling out the same pattern on sister projects (static/Vercel site + serverless fulfillment).  
 **Source:** Production incident and recovery on **promptanatomy.online**, May 16, 2026.  
 **Language:** English (product copy and buyer-facing strings should also stay in **en-US** for the US K–12 market).  
-**Related repo docs:** [DEPLOY.md](DEPLOY.md), [.env.example](.env.example), [CHANGELOG.md](CHANGELOG.md) (Stage 6b–6c), [todo.md](todo.md) §1b.
+**Related repo docs:** [DEPLOY.md](DEPLOY.md), [scripts/fulfillment-change-control.md](scripts/fulfillment-change-control.md), [.env.example](.env.example), [CHANGELOG.md](CHANGELOG.md) (Stage 6b–6c).
 
 ---
 

@@ -4,12 +4,12 @@
 # Stance: allow all crawlers. Citation/search bots and training bots are
 # both explicitly enumerated below so the policy is auditable. Review
 # quarterly against https://github.com/ai-robots-txt/ai.robots.txt.
-# Last reviewed: 2026-05-20
+# Last reviewed: 2026-07-28
 
 # --- Default: allow everyone ---
 User-agent: *
 Allow: /
-Disallow:
+Disallow: /docs/
 
 # --- AI search / citation bots (explicitly allowed) ---
 User-agent: OAI-SearchBot

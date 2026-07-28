@@ -3,20 +3,20 @@ description: Classroom Prompt Builder — project map, en-US copy, SOT, docs, qu
 alwaysApply: true
 ---
 
-# Classroom Prompt Builder (US MVP v1.1.2)
+# Classroom Prompt Builder (US MVP v1.2.0)
 
 ## Product
 
 - **Site:** https://promptanatomy.online — free K–12 prompt builder + optional paid PDF guides ($4.99 / $9.99).
 - **Stack:** static root (no build step) + Vercel serverless `api/*`.
-- **Core files:** `index.html`, `success.html`, `privacy.html`, `terms.html`, `generator.js`, `copy.js`, `style.css`, `config/sot.json`.
+- **Core files:** `index.html`, `success.html`, `privacy.html`, `terms.html`, `generator.js`, `copy.js`, `style.css`, `config/sot.json`, `icons.js`, `assets/icons.svg`.
 
 ## Repo boundary
 
 - This repo is the **Vercel product + PDF fulfillment** repo: `promptanatomy.online`, Stripe checkout, Upstash Redis, Vercel Blob, transactional Resend, and `api/**`.
-- School outreach is a separate sibling repo: `..\cpb-school-outreach` (Railway, Supabase Postgres, contact enrichment, campaign sending, marketing Resend on `news.promptanatomy.online`).
+- School outreach is a separate sibling repo: `..\cpb-school-outreach` (Railway, Supabase Postgres, contact enrichment, campaign sending, marketing Resend — current From `hello@promptanatomy.blog`).
 - Do **not** add outreach logic to Vercel `api/**`, Stripe fulfillment, Upstash, Blob, product env, or transactional email paths.
-- For outreach tasks, work in `..\cpb-school-outreach` and follow its own `AGENTS.md` / Cursor rules.
+- For outreach tasks, work in `..\cpb-school-outreach` and follow its own `AGENTS.md` / Cursor rules / skills.
 
 ## User-facing language
 
@@ -26,12 +26,13 @@ alwaysApply: true
 ## Agent workflow
 
 - Roles and stage-gate: [`AGENTS.md`](../../AGENTS.md).
-- Internal agent docs may stay Lithuanian; **product** copy stays English.
+- Ambition / priority through 2027-01-01: [`docs/roadmap.md`](../../docs/roadmap.md) — discovery-led; **non-go** new PDF SKUs and classroom workflow OS (skill `product-roadmap`).
+- Agent docs ([`AGENTS.md`](../../AGENTS.md)) and product copy are **English** (en-US for product UI).
 
 ## Documentation
 
-- Active docs only via [`docs/INDEX.md`](../../docs/INDEX.md).
-- Operator scratch (not INDEX, not archived): [`todo.md`](../../todo.md), [`memo_pdf.md`](../../memo_pdf.md).
+- Active docs + Doc routing: [`docs/INDEX.md`](../../docs/INDEX.md) (Active GTM: `docs/roadmap.md`, `docs/marketing_plan.md`).
+- Operator runbooks (INDEX Operator, not Active): [`todo.md`](../../todo.md), [`memo_pdf.md`](../../memo_pdf.md), [`docs/mobile-prelaunch-audit_2026-07.md`](../../docs/mobile-prelaunch-audit_2026-07.md).
 
 ## Single source of truth (SOT)
 
@@ -43,19 +44,13 @@ alwaysApply: true
 - Never commit secrets (`.env`, API keys, tokens).
 - Production API: no sensitive data in logs; avoid `console.log` in shipped paths.
 
-## Quality gates (summary)
+## Quality gates
 
-| Change | Run |
-|--------|-----|
-| Any code/docs | `npm test` |
-| UX / HTML interactions | `npm run test:smoke`, `npm run test:a11y` |
-| Forms, sessions, copy, modes | `npm run test:e2e` (core-flow) |
-| PDF commerce CSS / layout | `npm run test:e2e` (includes mobile-pdf-commerce) |
-| Fulfillment `api/**` | `npm test`; recommend `npm run check:fulfillment` before deploy |
-
-**CI truth:** `.github/workflows/ci.yml` runs `npm run test:mixed` — match or exceed locally before PR.
+Canonical change-type → test matrix: [`AGENTS.md`](../../AGENTS.md) § Quality gates.  
+**CI truth:** `.github/workflows/ci.yml` runs `npm run test:mixed`, then `test:webkit` and `test:lighthouse` — match or exceed locally before PR.
 
 ## Specialized rules
 
 - PDF commerce UI: `.cursor/rules/cpb-pdf-commerce.mdc`
 - Stripe fulfillment: `.cursor/rules/cpb-fulfillment.mdc`
+- Skills: `product-roadmap`, `pdf-fulfillment`, `outreach-boundary`

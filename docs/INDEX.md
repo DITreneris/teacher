@@ -1,3 +1,9 @@
+---
+status: active
+audience: both
+updated: 2026-07-28
+---
+
 # Documentation index
 
 The single documentation navigation hub after `README.md`.
@@ -7,6 +13,21 @@ The single documentation navigation hub after `README.md`.
 - Active / archived status is decided only in this file.
 - If a document is not listed under "Active", it is treated as archived.
 - Archived files are not updated unless explicitly returned to the active zone.
+- Operator runbooks below are navigable for discovery but are **not** Active — do not treat or update them as product doctrine unless explicitly promoted into an Active section.
+
+## Doc routing
+
+| If you need… | Open |
+|--------------|------|
+| Build priority / non-gos | [roadmap.md](roadmap.md) (+ skill `product-roadmap`) |
+| This week’s checkboxes | [todo.md](../todo.md) |
+| Gates / calendar / messaging | [marketing_plan.md](marketing_plan.md) |
+| Deploy / DNS / SEO | [DEPLOY.md](../DEPLOY.md) |
+| Stripe / PDF fulfillment broken | [memo_pdf.md](../memo_pdf.md) (+ skill `pdf-fulfillment`) |
+| School email / Railway outreach | skill `outreach-boundary` → sibling `cpb-school-outreach` |
+| Visual tokens / DS | [STYLEGUIDE.md](STYLEGUIDE.md) |
+| Roles / which tests to run | [AGENTS.md](../AGENTS.md) |
+| Sister-repo / clone checklist (not day-to-day) | [gold_legacy_standard.md](../gold_legacy_standard.md) |
 
 ## Active documents (lean)
 
@@ -14,69 +35,40 @@ The single documentation navigation hub after `README.md`.
 - [INDEX.md](INDEX.md) - canonical documentation index.
 - [DEPLOY.md](../DEPLOY.md) - deployment for humans (Vercel, DNS) and robots (sitemap, robots.txt).
 - [AGENTS.md](../AGENTS.md) - role-based work and quality rules.
-- [gold_legacy_standard.md](../gold_legacy_standard.md) - canonical gold baseline for the current repo/site, drift checks, and sister-repo handoff.
+- [gold_legacy_standard.md](../gold_legacy_standard.md) - sister-repo / clone gold baseline and drift checks.
 - [CHANGELOG.md](../CHANGELOG.md) - release notes.
-- [STYLEGUIDE.md](STYLEGUIDE.md) - Design System 2.0.0 (tokens, components, mobile rules).
-- [design-system-audit_2026-05.md](design-system-audit_2026-05.md) - Mobile & DS audit matrix (May 2026).
+- [STYLEGUIDE.md](STYLEGUIDE.md) - Design System 2.1.0 (tokens, components, mobile rules, icon sprite).
 
 ## Active go-to-market
 
-- [marketing_plan.md](marketing_plan.md) - US promotion readiness, X/Twitter plan, compliance gates, 30-day calendar; cross-links [DEPLOY.md](../DEPLOY.md) and operator release blockers (see plan §10).
+- [roadmap.md](roadmap.md) - Product + GTM ambition through 2027-01-01 (discovery-led; PDF catalog expansion and workflow OS non-go).
+- [marketing_plan.md](marketing_plan.md) - US promotion readiness, X/Twitter plan, compliance gates, 30-day calendar; cross-links [DEPLOY.md](../DEPLOY.md) and the operator now-board (see plan §10).
 
-## Active legal pages
+## Product surfaces
 
 - [privacy.html](../privacy.html) - US Privacy Policy.
 - [terms.html](../terms.html) - Terms of Use + Responsible AI disclaimer + Classroom License (`#paid-pdf-license`) + 14-day refund clause.
-
-## Active post-purchase flow
-
-- [success.html](../success.html) - Post-purchase confirmation page; polls `/api/download-link` until the Stripe webhook has finished, then surfaces a one-click download button + masked email + license / refund recap.
-
-## Active PDF authoring source
-
-- [pdf-source/](pdf-source/) - HTML and CSS source for the paid PDF guides; export via browser Save-as-PDF per [pdf-source/README.md](pdf-source/README.md).
-- [pdf-source/beginners-prompt-anatomy.html](pdf-source/beginners-prompt-anatomy.html) - 12-page Beginner guide source.
-- [pdf-source/advanced-prompt-anatomy.html](pdf-source/advanced-prompt-anatomy.html) - 24-page Advanced guide source.
-- [pdf-source/pdf-print.css](pdf-source/pdf-print.css) - shared print stylesheet for both guides.
+- [success.html](../success.html) - Post-purchase confirmation; polls `/api/download-link` until fulfillment completes.
+- [pdf-source/](pdf-source/) - HTML/CSS source for paid PDF guides; export via [pdf-source/README.md](pdf-source/README.md).
 
 ## Code navigation
 
-- [index.html](../index.html)
-- [404.html](../404.html)
-- [generator.js](../generator.js)
-- [copy.js](../copy.js)
-- [api/stripe-webhook.js](../api/stripe-webhook.js)
-- [api/download.js](../api/download.js) - long-lived (7-day) signed download endpoint, used by the email link.
-- [api/download-link.js](../api/download-link.js) - JSON endpoint returning a short-lived (15-min) in-page download URL by Stripe Checkout Session ID; used by `success.html`.
-- [api/_lib/fulfillment.js](../api/_lib/fulfillment.js)
-- [api/fulfillment-health.js](../api/fulfillment-health.js) - GET operator probe for Production env, Redis, and Blob PDF config.
-- [assets/pdf-covers/beginners.png](../assets/pdf-covers/beginners.png) - public web cover for the Beginners PDF guide card.
-- [assets/pdf-covers/advanced.png](../assets/pdf-covers/advanced.png) - public web cover for the Advanced PDF guide card.
-- [assets/pdf-covers/beginners-p2.png](../assets/pdf-covers/beginners-p2.png), `-p3.png`, `-p4.png` - PREVIEW-watermarked sample pages 2-4 of the Beginners guide, rendered by `scripts/verify-pdf-cover.js --preview` and shown inside the public "Preview 3 pages" lightbox.
-- [assets/pdf-covers/advanced-p2.png](../assets/pdf-covers/advanced-p2.png), `-p3.png`, `-p4.png` - PREVIEW-watermarked sample pages 2-4 of the Advanced guide.
-- [style.css](../style.css)
-- [config/sot.json](../config/sot.json)
-- [vercel.json](../vercel.json)
-- [robots.txt](../robots.txt)
-- [sitemap.xml](../sitemap.xml)
-- [humans.txt](../humans.txt)
-- [llms.txt](../llms.txt)
-- [.well-known/security.txt](../.well-known/security.txt)
-- [manifest.webmanifest](../manifest.webmanifest)
-- [og-image.png](../og-image.png)
-- [apple-touch-icon.png](../apple-touch-icon.png)
-- [DEPLOY.md](../DEPLOY.md)
-- [tests/structure.test.js](../tests/structure.test.js)
-- [tests/e2e/core-flow.spec.js](../tests/e2e/core-flow.spec.js)
-- [tests/e2e/smoke.spec.js](../tests/e2e/smoke.spec.js)
-- [tests/e2e/mobile-pdf-commerce.spec.js](../tests/e2e/mobile-pdf-commerce.spec.js)
+Core product: [index.html](../index.html), [generator.js](../generator.js), [copy.js](../copy.js), [style.css](../style.css), [config/sot.json](../config/sot.json).
+
+Icons: [icons.js](../icons.js) + [assets/icons.svg](../assets/icons.svg) (`npm run build:icons`).
+
+Fulfillment API: `api/stripe-webhook.js`, `api/download.js`, `api/download-link.js`, `api/_lib/fulfillment.js`, `api/fulfillment-health.js`.
+
+Tests / CI: see [AGENTS.md](../AGENTS.md) quality gates; CI runs `npm run test:mixed`, then `test:webkit` and `test:lighthouse`.
 
 ## Operator runbooks (navigation only — not active docs for hygiene)
 
 Listed here for agent/operator discovery; not part of the lean active-doc set above.
 
 - [memo_pdf.md](../memo_pdf.md) - Stripe + PDF fulfillment deployment memo (EN).
-- P0/P1 release blockers: operator scratch file at repo root (not linked here per docs-hygiene).
+- [fulfillment-change-control.md](../scripts/fulfillment-change-control.md) - Change control for production fulfillment paths while outreach is active.
+- [todo.md](../todo.md) - Maturity / GTM now-board (Discover / Trust checkboxes); operator scratch, not Active doctrine.
+- [mobile-prelaunch-audit_2026-07.md](mobile-prelaunch-audit_2026-07.md) - Mobile / pre-launch scorecard, CWV operator table, thin engineering gates (LHCI, WebKit, axe, touch, ops visual).
 - [memo_outreach.md](../memo_outreach.md) - split-system pointer (Vercel product vs sibling Railway outreach); not a product launch criterion.
 - [changelog_outreach.md](../changelog_outreach.md) - outreach work log (sibling repo `cpb-school-outreach`; not part of lean active-doc set).
 - [outreach_experience_memo_2026-05-17.md](outreach_experience_memo_2026-05-17.md) - sibling-repo contact-acquisition lessons; not part of product launch criteria.

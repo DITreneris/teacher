@@ -1,14 +1,22 @@
+---
+status: ops
+audience: both
+updated: 2026-07-28
+---
+
 # Outreach changelog (school outreach bot)
+
+**Purpose:** Operator work log for school outreach (sibling repo) — not Active product doctrine; not the Vercel product changelog.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
-**Scope:** This file tracks **only** the school outreach stack (sibling repo `..\cpb-school-outreach`, GitHub `DITreneris/outreach`): Railway deploy, Supabase Postgres, contact enrichment, campaign sending, and Resend marketing. Vercel product, PDF fulfillment, Stripe, marketing copy, design system, and infra entries stay in [CHANGELOG.md](CHANGELOG.md). Repo boundary: [AGENTS.md](AGENTS.md) "Dviejų repo riba / routing".
+**Scope:** This file tracks **only** the school outreach stack (sibling repo `..\cpb-school-outreach`, GitHub `DITreneris/outreach`): Railway deploy, Supabase Postgres, contact enrichment, campaign sending, and Resend marketing. Vercel product, PDF fulfillment, Stripe, marketing copy, design system, and infra entries stay in [CHANGELOG.md](CHANGELOG.md). Repo boundary: [AGENTS.md](AGENTS.md) § Two-repo boundary / routing.
 
 ### How to log
 
 | Event | Where |
 |-------|--------|
-| Multi-batch live day | One row per wave in [Live send registry](#live-send-registry); optional [Operator day](#operator-day--2026-06-02) if ≥3 waves same day |
+| Multi-batch live day | One row per wave in [Live send registry](#live-send-registry); optional Operator day if ≥3 waves same day ([2026-07-28](#operator-day--2026-07-28), [2026-07-27](#operator-day--2026-07-27), [2026-07-23](#operator-day--2026-07-23), [2026-07-22](#operator-day--2026-07-22), [2026-06-02](#operator-day--2026-06-02)) |
 | Bounce ≥10% or incident | Bullet under operator day or `### Incident` in `[Unreleased]` |
 | Tooling / import / registry | `### Added` / `Changed` under `[Unreleased]` until version cut |
 | Pool milestone | Update [Pool snapshot](#pool-snapshot) in `[Unreleased]` only |
@@ -42,7 +50,8 @@ Operator references:
 
 - [memo_outreach.md](memo_outreach.md) — split-system summary, Resend split, UTM, first 500 contacts source order.
 - [docs/outreach_experience_memo_2026-05-17.md](docs/outreach_experience_memo_2026-05-17.md) — contact-acquisition lessons, pivot strategy, send plan, agent guidance.
-- Live batch metrics → [Live send registry](#live-send-registry) below; per-batch detail → `cpb-school-outreach/docs/pilot_*_results.md`.
+- Live batch metrics → [Live send registry](#live-send-registry) below; per-batch detail → `cpb-school-outreach/docs/pilot_*_results.md` / `sy2026_followup_f*_results.md`.
+- Operator days: [2026-07-28](#operator-day--2026-07-28) (F38–F45) · [2026-07-27](#operator-day--2026-07-27) (F19–F37) · [2026-07-23](#operator-day--2026-07-23) (F13–F18) · [2026-07-22](#operator-day--2026-07-22) (W39 + F1–F12) · [2026-06-02](#operator-day--2026-06-02)
 - Session archive (pre-refactor detail): [`docs/archive/changelog_outreach_sessions_2026-05-06.md`](docs/archive/changelog_outreach_sessions_2026-05-06.md)
 - TX50 runbook: `..\cpb-school-outreach\docs\pilot_tx50_runbook.md`
 - Geo runbooks: `..\cpb-school-outreach\docs\pilot_va11a_runbook.md`, `..\cpb-school-outreach\docs\pilot_ca29a_runbook.md`
@@ -57,18 +66,18 @@ Operator references:
 ### Current status
 
 - Campaign `pilot_50`: **paused** / `dry_run=true`
-- Follow-up campaign **`sy2026_followup`**: seeded in Supabase (`draft`/`dry_run`); F1 selection prepared (`docs/sy2026_followup_f1_batch`); **F1 live gated** on Railway deploy of `prior_sent` + ~Aug 5–20 window
-- Sender: **`hello@promptanatomy.blog`** (Wave 16+)
-- **Rewarm done (W39, 2026-07-22):** NY50am **6%** bounce / OH50aw **6%** bounce — gate to follow-up **open**
-- Cumulative geo+TX live ids: **~8394** (+100 W39) | Exclude domains: **~316**
-- Principal `ready` (post W39 restore): **~22524** total
-- **Next:** Deploy outreach `prior_sent` to Railway → `run_sy2026_followup_f1_live.ps1` in Aug window; **hold NJ**; hold aggressive TX
-- Runbook: `..\cpb-school-outreach\docs\pilot_sy2026_followup_runbook.md` | Checklist: `..\cpb-school-outreach\docs\sy2026_resume_operator_checklist.md`
+- Follow-up **`sy2026_followup`**: **paused** / `dry_run=true` after **F1–F45** (**2250** sends; F38–F45 on **2026-07-28**)
+- Sender: **`hello@promptanatomy.blog`**
+- **Cool-down:** 48h from F45 pause (~**2026-07-28 12:38 UTC** → earliest live **~2026-07-30 12:38 UTC**)
+- **Next:** W40 `ny50an`/`oh50ax` after cool-down; parallel GA Open Records → import → ga50 (separate day). Remnants all &lt;50
+- Runbook: `..\cpb-school-outreach\docs\pilot_sy2026_followup_runbook.md` | Checklist: `..\cpb-school-outreach\docs\sy2026_resume_operator_checklist.md` | GA: `..\cpb-school-outreach\docs\pilot_ga50_runbook.md`
 
 ### Added
 
-- **`sy2026_followup`** campaign tooling (outreach repo): `templates/sy2026_followup.html`, seed `20260722000001_sy2026_followup_campaign.sql`, `prepare_followup_batch.py`, `assert_followup_cohort.py`, `_run_followup_slug_live.ps1`, F1 prep/live wrappers.
+- **`sy2026_followup`** campaign tooling (outreach repo): `templates/sy2026_followup.html`, seed `20260722000001_sy2026_followup_campaign.sql`, `prepare_followup_batch.py`, `assert_followup_cohort.py`, `_run_followup_slug_live.ps1`, F1–F45 prep/live wrappers (A+B + NJ/TX hold lift).
+- **W40 + GA first-touch tooling:** `run_ny50an_*` / `run_oh50ax_*` / `run_ga50_*`; `run_ga_import_and_activate.ps1`; `ValidateSet` includes **GA**; `docs/pilot_ga50_runbook.md` + `docs/ga_open_records_request.md` + `docs/w40_go_live.md`; `prepare_ga_principals` City-align fix + unit test; PS5 splat fix on `run_ga_import.ps1` / `run_oh_oeds_refresh.ps1`.
 - Sender/API **`eligibility=prior_sent`** (default `ready` unchanged) so follow-up does not flip `sent` → `ready`.
+- Railway **worker** `run_send.py`: exit 0 (skip) when send env incomplete (`SUPABASE_*`, `UNSUBSCRIBE_SIGNING_SECRET`, `PHYSICAL_ADDRESS`, Resend/from/`PUBLIC_BASE_URL`) instead of crash-looping.
 
 ### Changed
 
@@ -77,11 +86,57 @@ Operator references:
 - **Geo import PS scripts:** `run_nj_homeroom_refresh.ps1`, `run_ny_sedref_import.ps1`, `run_oh_oeds_refresh.ps1` — splat `@(...)` for CLI args (fixes PowerShell 5.x `--flag` parse error on line continuations).
 - **`apply_tx50_quarantine.py`:** promote selection contacts in **`pending`** (not only `ready`) so NY→NJ→OH multi-batch live in one session works after the first quarantine.
 - **`_run_pilot_slug_prep.ps1`:** optional **`-MaxPerDomain`** (default `1`) for NJ pool shortfall batches.
+- **Follow-up geo:** NY exhausted after F9; F11–F18 **OH**; Phase B MA→MI→MN; **F26–F45** NJ×2→TX×2 cadence (Homeroom before F26); NJ/TX ≥50 exhausted after F45.
 
 ### Live send registry
 
 | Date | Session | Batches | Sender | T+0 sent | Bounce % | Cum. ids | Excl. dom. | Notes | Results |
 |------|---------|---------|--------|---------:|---------:|---------:|-----------:|-------|---------|
+| 2026-07-28 | F45 | **sy2026_followup F45** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | Final TX≥50; **2250** follow-up total; paused | [f45](../cpb-school-outreach/docs/sy2026_followup_f45_results.md) |
+| 2026-07-28 | F44 | **sy2026_followup F44** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | NJ×2→TX×2 cadence; prior_sent; paused | [f44](../cpb-school-outreach/docs/sy2026_followup_f44_results.md) |
+| 2026-07-28 | F43 | **sy2026_followup F43** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | Final NJ≥50; prior_sent; paused | [f43](../cpb-school-outreach/docs/sy2026_followup_f43_results.md) |
+| 2026-07-28 | F42 | **sy2026_followup F42** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | F42–F45 final NJ/TX≥50 series; prior_sent; paused | [f42](../cpb-school-outreach/docs/sy2026_followup_f42_results.md) |
+| 2026-07-28 | F41 | **sy2026_followup F41** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | Day mid; **2050** follow-up total; paused | [f41](../cpb-school-outreach/docs/sy2026_followup_f41_results.md) |
+| 2026-07-28 | F40 | **sy2026_followup F40** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | NJ×2→TX×2 cadence; prior_sent; paused | [f40](../cpb-school-outreach/docs/sy2026_followup_f40_results.md) |
+| 2026-07-28 | F39 | **sy2026_followup F39** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | 2026-07-28 NJ continue; prior_sent; paused | [f39](../cpb-school-outreach/docs/sy2026_followup_f39_results.md) |
+| 2026-07-28 | F38 | **sy2026_followup F38** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | F38–F41 series start; prior_sent; paused | [f38](../cpb-school-outreach/docs/sy2026_followup_f38_results.md) |
+| 2026-07-27 | F37 | **sy2026_followup F37** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | Hold lift continue; **1850** follow-up total; paused | [f37](../cpb-school-outreach/docs/sy2026_followup_f37_results.md) |
+| 2026-07-27 | F36 | **sy2026_followup F36** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | NJ×2→TX×2 cadence; prior_sent; paused | [f36](../cpb-school-outreach/docs/sy2026_followup_f36_results.md) |
+| 2026-07-27 | F35 | **sy2026_followup F35** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | Hold lift continue NJ; prior_sent; paused | [f35](../cpb-school-outreach/docs/sy2026_followup_f35_results.md) |
+| 2026-07-27 | F34 | **sy2026_followup F34** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | F34–F37 series start; prior_sent; paused | [f34](../cpb-school-outreach/docs/sy2026_followup_f34_results.md) |
+| 2026-07-27 | F33 | **sy2026_followup F33** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | Hold lift continue; **1650** follow-up total; paused | [f33](../cpb-school-outreach/docs/sy2026_followup_f33_results.md) |
+| 2026-07-27 | F32 | **sy2026_followup F32** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | NJ×2→TX×2 cadence; prior_sent; paused | [f32](../cpb-school-outreach/docs/sy2026_followup_f32_results.md) |
+| 2026-07-27 | F31 | **sy2026_followup F31** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | Hold lift continue NJ; prior_sent; paused | [f31](../cpb-school-outreach/docs/sy2026_followup_f31_results.md) |
+| 2026-07-27 | F30 | **sy2026_followup F30** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | F30–F33 series start; prior_sent; paused | [f30](../cpb-school-outreach/docs/sy2026_followup_f30_results.md) |
+| 2026-07-27 | F29 | **sy2026_followup F29** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | Hold lift; **1450** follow-up total; paused | [f29](../cpb-school-outreach/docs/sy2026_followup_f29_results.md) |
+| 2026-07-27 | F28 | **sy2026_followup F28** (TX50) | `.blog` | 50 | T+0 clean | — | ~316 | First TX follow-up; prior_sent; paused | [f28](../cpb-school-outreach/docs/sy2026_followup_f28_results.md) |
+| 2026-07-27 | F27 | **sy2026_followup F27** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | Hold lift NJ×2; prior_sent; paused | [f27](../cpb-school-outreach/docs/sy2026_followup_f27_results.md) |
+| 2026-07-27 | F26 | **sy2026_followup F26** (NJ50) | `.blog` | 50 | T+0 clean | — | ~316 | Slug reused after MA skip; Homeroom refresh; paused | [f26](../cpb-school-outreach/docs/sy2026_followup_f26_results.md) |
+| 2026-07-27 | F25 | **sy2026_followup F25** (MA50) | `.blog` | 50 | T+0 clean | — | ~316 | Phase B; **1250** follow-up total; paused | [f25](../cpb-school-outreach/docs/sy2026_followup_f25_results.md) |
+| 2026-07-27 | F24 | **sy2026_followup F24** (MA50) | `.blog` | 50 | T+0 clean | — | ~316 | F24 repurposed MN→MA; prior_sent; paused | [f24](../cpb-school-outreach/docs/sy2026_followup_f24_results.md) |
+| 2026-07-27 | F23 | **sy2026_followup F23** (MN50) | `.blog` | 50 | T+0 clean | — | ~316 | Only MN50; remnant ~24 skip | [f23](../cpb-school-outreach/docs/sy2026_followup_f23_results.md) |
+| 2026-07-27 | F22 | **sy2026_followup F22** (MI50) | `.blog` | 50 | T+0 clean | — | ~316 | Phase B; **1100** follow-up total; paused | [f22](../cpb-school-outreach/docs/sy2026_followup_f22_results.md) |
+| 2026-07-27 | F21 | **sy2026_followup F21** (MI50) | `.blog` | 50 | T+0 clean | — | ~316 | Phase B MI; prior_sent; paused | [f21](../cpb-school-outreach/docs/sy2026_followup_f21_results.md) |
+| 2026-07-27 | F20 | **sy2026_followup F20** (MA50) | `.blog` | 50 | T+0 clean | — | ~316 | Phase B MA; prior_sent; paused | [f20](../cpb-school-outreach/docs/sy2026_followup_f20_results.md) |
+| 2026-07-27 | F19 | **sy2026_followup F19** (MA50) | `.blog` | 50 | T+0 clean | — | ~316 | Phase B start post cool-down; MA probe; paused | [f19](../cpb-school-outreach/docs/sy2026_followup_f19_results.md) |
+| 2026-07-23 | F18 | **sy2026_followup F18** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | Phase A end; **900** total; **48h cool-down** before F19 | [f18](../cpb-school-outreach/docs/sy2026_followup_f18_results.md) |
+| 2026-07-23 | F17 | **sy2026_followup F17** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | Phase A OH drain; prior_sent; paused | [f17](../cpb-school-outreach/docs/sy2026_followup_f17_results.md) |
+| 2026-07-23 | F16 | **sy2026_followup F16** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | Final of F13–F16; **800** follow-up total; paused | [f16](../cpb-school-outreach/docs/sy2026_followup_f16_results.md) |
+| 2026-07-23 | F15 | **sy2026_followup F15** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | F13–F16 OH series; prior_sent; paused | [f15](../cpb-school-outreach/docs/sy2026_followup_f15_results.md) |
+| 2026-07-23 | F14 | **sy2026_followup F14** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | F13–F16 OH series; prior_sent; paused | [f14](../cpb-school-outreach/docs/sy2026_followup_f14_results.md) |
+| 2026-07-23 | F13 | **sy2026_followup F13** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | F13–F16 OH series; prior_sent; paused | [f13](../cpb-school-outreach/docs/sy2026_followup_f13_results.md) |
+| 2026-07-22 | F12 | **sy2026_followup F12** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | Final of F9–F12; **600** follow-up total; paused | [f12](../cpb-school-outreach/docs/sy2026_followup_f12_results.md) |
+| 2026-07-22 | F11 | **sy2026_followup F11** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | NY exhausted; OH substitute; paused | [f11](../cpb-school-outreach/docs/sy2026_followup_f11_results.md) |
+| 2026-07-22 | F10 | **sy2026_followup F10** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | F9–F12 series; prior_sent; paused | [f10](../cpb-school-outreach/docs/sy2026_followup_f10_results.md) |
+| 2026-07-22 | F9 | **sy2026_followup F9** (NY50) | `.blog` | 50 | T+0 clean | — | ~316 | F9–F12; NY pool ~78→28 after; paused | [f9](../cpb-school-outreach/docs/sy2026_followup_f9_results.md) |
+| 2026-07-22 | F8 | **sy2026_followup F8** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | Final of F5–F8; **400** follow-up total; paused | [f8](../cpb-school-outreach/docs/sy2026_followup_f8_results.md) |
+| 2026-07-22 | F7 | **sy2026_followup F7** (NY50) | `.blog` | 50 | T+0 clean | — | ~316 | F5–F8 series; prior_sent; paused | [f7](../cpb-school-outreach/docs/sy2026_followup_f7_results.md) |
+| 2026-07-22 | F6 | **sy2026_followup F6** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | F5–F8 series; prior_sent; paused | [f6](../cpb-school-outreach/docs/sy2026_followup_f6_results.md) |
+| 2026-07-22 | F5 | **sy2026_followup F5** (NY50) | `.blog` | 50 | T+0 clean | — | ~316 | F5–F8 series; prior_sent; paused | [f5](../cpb-school-outreach/docs/sy2026_followup_f5_results.md) |
+| 2026-07-22 | F4 | **sy2026_followup F4** (OH50) | `.blog` | 50 | T+0 clean | — | ~316 | Final of first 4; paused | [f4](../cpb-school-outreach/docs/sy2026_followup_f4_results.md) |
+| 2026-07-22 | F3 | **sy2026_followup F3** (NY50) | `.blog` | 50 | ~2% | — | ~316 | Follow-up; 1 opted_out; paused | [f3](../cpb-school-outreach/docs/sy2026_followup_f3_results.md) |
+| 2026-07-22 | F2 | **sy2026_followup F2** (OH50) | `.blog` | 50 | ~0% T+0 | — | ~316 | Follow-up #2; prior_sent; paused | [f2](../cpb-school-outreach/docs/sy2026_followup_f2_results.md) |
+| 2026-07-22 | F1 | **sy2026_followup F1** (NY50) | `.blog` | 50 | ~2% | — | ~316 | First follow-up email #2; prior_sent; campaign paused | [f1](../cpb-school-outreach/docs/sy2026_followup_f1_results.md) |
 | 2026-07-22 | W39 | **NY50am** / **OH50aw** | `.blog` | 100 | NY 6% / OH 6% | ~8394 | ~316 | Post-cooldown rewarm; NJ/TX held; `sy2026_followup` F1 prepped | [ny50am](../cpb-school-outreach/docs/pilot_ny50am_results.md) / [oh50aw](../cpb-school-outreach/docs/pilot_oh50aw_results.md) |
 | 2026-06-05 | W38 | NY50al / OH50av / **TX50c** | `.blog` | 140 | NY 2% / OH 4% / TX 6% | 8294 | 313 | **NJ50ar prep failed** (34 max); TX after geo gate | [ny50al](../cpb-school-outreach/docs/pilot_ny50al_results.md) / [nj50ar](../cpb-school-outreach/docs/pilot_nj50ar_results.md) / [oh50av](../cpb-school-outreach/docs/pilot_oh50av_results.md) / [tx50c](../cpb-school-outreach/docs/pilot_tx50c_results.md) |
 | 2026-06-05 | W37 | NY50ak / NJ50aq / OH50au | `.blog` | 148 | NY/NJ 2% / OH 0% | 8154 | 307 | TX paused; NJ md1→**md10** (9 dom.); Homeroom refresh | [ny50ak](../cpb-school-outreach/docs/pilot_ny50ak_results.md) / [nj50aq](../cpb-school-outreach/docs/pilot_nj50aq_results.md) / [oh50au](../cpb-school-outreach/docs/pilot_oh50au_results.md) |
@@ -124,6 +179,70 @@ Operator references:
 
 Earlier TX / XX50 / VA / CA batches (pre-W1): see [0.1.0](#010---2026-05-22) geo pivot table and [archive](docs/archive/changelog_outreach_sessions_2026-05-06.md).
 
+### Operator day — 2026-07-28
+
+Continue NJ×2→TX×2: **F38–F45** on `sy2026_followup` / `prior_sent` / **`.blog`**.
+
+| Session | Batches | T+0 sent (sum) | Notes |
+|--------:|---------|---------------:|-------|
+| **F38–F39** | NJ50 ×2 | **100** | Continue NJ |
+| **F40–F41** | TX50 ×2 | **100** | Continue TX |
+| **F42–F43** | NJ50 ×2 | **100** | Final NJ≥50 |
+| **F44–F45** | TX50 ×2 | **100** | Final TX≥50 |
+
+**Day totals:** **400** follow-up sends; cumulative **1850 → 2250**. All T+0 cohort asserts clean.
+
+**Pools after F45:** NJ ~**21** / TX ~**24** (both skip &lt;50). Safe ≥50 follow-up geos exhausted — next needs new geo / import / cool-down.
+
+### Operator day — 2026-07-27
+
+Phase B + hold lift: **F19–F37** on `sy2026_followup` / `prior_sent` / **`.blog`**.
+
+| Session | Batches | T+0 sent (sum) | Notes |
+|--------:|---------|---------------:|-------|
+| **F19–F20** | MA50 ×2 | **100** | First non-OH follow-up geo |
+| **F21–F22** | MI50 ×2 | **100** | MI remnant ~32 after F22 |
+| **F23** | MN50 | **50** | Only MN50; remnant ~24 skip |
+| **F24–F25** | MA50 ×2 | **100** | F24 repurposed MN→MA; MA F26 prep failed |
+| **F26–F27** | NJ50 ×2 | **100** | Hold lift after Homeroom refresh |
+| **F28–F29** | TX50 ×2 | **100** | First TX follow-up waves |
+| **F30–F31** | NJ50 ×2 | **100** | Continue NJ×2→TX×2 |
+| **F32–F33** | TX50 ×2 | **100** | Continue TX |
+| **F34–F35** | NJ50 ×2 | **100** | Continue NJ |
+| **F36–F37** | TX50 ×2 | **100** | Continue TX |
+
+**Day totals:** **950** follow-up sends; cumulative **900 → 1850**. All live T+0 cohort asserts clean.
+
+**Pools after F37:** NJ ~**225** / TX ~**225**. Remnants MA/MI/MN/OH/NY all &lt;50.
+
+### Operator day — 2026-07-23
+
+Follow-up continuation + A+B Phase A:
+
+| Session | Batches | T+0 sent (sum) | Notes |
+|--------:|---------|---------------:|-------|
+| **F13–F16** | OH50 ×4 | **200** | Morning OH series; cumulative **800** |
+| **F17–F18** | OH50 ×2 | **100** | Phase A drain; cumulative **900**; start **48h cool-down** |
+
+**Day totals:** **300** follow-up sends this day (plus earlier F1–F12 on 2026-07-22). Phase B (MA→MI→MN) blocked until **≥2026-07-25 ~03:21 UTC**.
+
+**Pools after F18:** MA **245** / MI **132** / MN **74** prior_sent eligible. OH remnant ~**10**.
+
+### Operator day — 2026-07-22
+
+Post-cooldown resume: first-touch rewarm **W39**, then follow-up **F1–F12** on `sy2026_followup` / `prior_sent` / **`.blog`**.
+
+| Session | Batches | T+0 sent (sum) | Notes |
+|--------:|---------|---------------:|-------|
+| **W39** | NY50am / OH50aw | **100** | ~6% bounce each; NJ/TX held |
+| **F1–F4** | NY/OH/NY/OH | **200** | First follow-up waves; immediate bounce low |
+| **F5–F8** | NY/OH/NY/OH | **200** | T+0 cohort asserts clean |
+| **F9–F12** | NY + OH×3 | **200** | NY pool exhausted after F9 (~78→~28); F11 OH substitute |
+
+**Day totals:** **100** first-touch + **600** follow-up = **700** T+0 sends that day. Cumulative follow-up end-of-day: **600**.
+
+**Notable:** Railway worker crash-loop (missing env / `UNSUBSCRIBE_SIGNING_SECRET`) hardened to skip. Campaigns left **paused** / `dry_run=true` between waves.
+
 ### Operator day — 2026-06-02
 
 Five geo live sessions (NY/NJ/OH only; **TX50b** deferred since W17 **TX50a 14%**). Sender **`hello@promptanatomy.blog`**; personal `pilot_50` copy throughout.
@@ -143,6 +262,24 @@ Five geo live sessions (NY/NJ/OH only; **TX50b** deferred since W17 **TX50a 14%*
 **Notable:** NJ50z exhausted a–z (W20); post-z slugs **nj50aa** onward (W21+). **OH50ag 12%** T+0 bounce (W23) — watch **OH50ah** next.
 
 ### Pool snapshot
+
+| Metric | Value (2026-07-28, post geo refresh + cool-down prep) |
+|--------|------------------------------|
+| Principal `ready` NY / NJ / OH | **5115** / **2306** / **2975** |
+| Cumulative first-touch geo+TX live ids (pilot_50) | **~8394** (post W39; W40 live gated to ≥2026-07-30 12:38 UTC) |
+| Follow-up `sy2026_followup` sends | **2250** (F1–F45) |
+| Follow-up NJ / TX prior_sent remaining | **~21** / **~24** (both skip &lt;50) |
+| Follow-up MA / MI / MN prior_sent remaining | **~44** / **~32** / **~24** (all skip &lt;50) |
+| Follow-up OH prior_sent remaining | **~10** (skip &lt;50) |
+| GA principal ready | **0** (await ORR `ga_contacts_raw.csv`) |
+| Exclude domains | **~316** |
+| W40 selections prepped | `ny50an` / `oh50ax` (live after cool-down) |
+
+| Metric | Value (2026-07-23, post F18 / Phase A) |
+|--------|----------------------------------------|
+| Follow-up `sy2026_followup` sends | **900** (F1–F18) |
+| Follow-up MA / MI / MN prior_sent | **245** / **132** / **74** |
+| Cool-down ends (earliest F19) | **2026-07-25 ~03:21 UTC** (honored) |
 
 | Metric | Value (2026-06-05, post W38) |
 |--------|------------------------------|
@@ -172,13 +309,12 @@ Mining detail and historical pool steps: [0.2.0](#020---2026-05-26).
 
 | P | Action | Why |
 |---|--------|-----|
-| **P0** | **NJ pool exhausted** — **NJ50as** blocked until Homeroom refresh / mining adds principals | W38 prep max **34** principals (**147** after exclusions) |
-| **P1** | `run_geo_wave_preflight.ps1` before **NY50am / OH50aw** (+ TX50d if gates pass) | Bounce file, counts, `verify_blog_from` |
-| **P2** | NJ Homeroom refresh + pool investigation before next NJ batch | W37 md10 exhausted remaining domains |
-| **P2** | Resend daily quota headroom before geo+TX live | W38 sent **140** emails |
-| **P2** | **TX50d** if W38 **TX50c 6%** holds | Monitor `.blog` TX bounce trend |
-| **P2** | **GA** import when `ga_contacts_raw.csv` exists | `run_ga_import.ps1` |
-| **P3** | `audit_pilot_bounce_domains.py` before each live wave | Global exclude list (~313 domains) |
+| **P0** | Honor **48h cool-down** until **~2026-07-30 12:38 UTC** (from F45 pause) | Reputation after Jul 27–28 burst |
+| **P0** | After cool-down: live **W40** per [w40_go_live.md](../cpb-school-outreach/docs/w40_go_live.md) (selections prepped) | Refill first-touch; create new `prior_sent` |
+| **P0** | Operator: **send** GA ORR email ([ga_open_records_request.md](../cpb-school-outreach/docs/ga_open_records_request.md)); save `ga_contacts_raw.csv` | DOE catalog timeout; no emails on disk |
+| **P1** | When CSV ready: `.\scripts\run_ga_import_and_activate.ps1` → **ga50** day ≠ W40 | [pilot_ga50_runbook.md](../cpb-school-outreach/docs/pilot_ga50_runbook.md) |
+| **P1** | Keep Railway **worker** disabled or env-parity with API | Avoid auto-send / crash loops |
+| **P3** | `audit_pilot_bounce_domains.py` before each live wave | Global exclude list (~316 domains) |
 
 ---
 

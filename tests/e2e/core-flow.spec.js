@@ -98,7 +98,7 @@ test.describe('core first-run flows', () => {
     }
 
     await expect(page.locator('#sessionList .session-item')).toHaveCount(5);
-    await expect(page.locator('#sessionList .session-item').first()).toContainText('LESSON');
+    await expect(page.locator('#sessionList .session-item').first()).toContainText('Lesson');
     await page.locator('#sessionList .session-item').last().click();
     await expect(page.locator('#l-goal')).toHaveValue('Goal 2');
   });

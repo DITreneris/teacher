@@ -4,7 +4,7 @@ async function heroCardDisplay(page) {
   return page.locator('.hero-prompt-card').evaluate((el) => getComputedStyle(el).display);
 }
 
-test.describe('hero prompt card (decorative)', () => {
+test.describe('hero prompt card (product preview)', () => {
   test('hidden at mobile and tablet widths (max 1024px)', async ({ page }) => {
     const widths = [320, 375, 768, 1024];
     for (const width of widths) {
@@ -31,6 +31,8 @@ test.describe('hero prompt card (decorative)', () => {
     await expect(card).toHaveAttribute('aria-hidden', 'true');
     const pointerEvents = await card.evaluate((el) => getComputedStyle(el).pointerEvents);
     expect(pointerEvents).toBe('none');
+    await expect(card.locator('.hero-prompt-card__preview')).toBeVisible();
+    await expect(card.locator('.hero-prompt-card__mode.is-active')).toContainText('Lesson');
   });
 
   test('desktop: card sits on the right side of the hero', async ({ page }) => {

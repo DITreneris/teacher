@@ -20,7 +20,7 @@ alwaysApply: false
 
 Payment Link **success URL**, Stripe **webhook URL**, Upstash Redis, and Vercel **Production env** must all target the **same** buyer-facing domain (e.g. `promptanatomy.online`).
 
-**Anti-pattern:** webhook on `promptanatomy.app` while buyers land on `promptanatomy.online` → webhook returns 200 but `success.html` shows “session not found”. See [`todo.md`](../../todo.md) §1b and [`memo_pdf.md`](../../memo_pdf.md).
+**Anti-pattern:** webhook on `promptanatomy.app` while buyers land on `promptanatomy.online` → webhook returns 200 but `success.html` shows “session not found”. See [`memo_pdf.md`](../../memo_pdf.md) and [`DEPLOY.md`](../../DEPLOY.md).
 
 ## Environment (all or nothing)
 
@@ -51,7 +51,7 @@ npm test
 npm run check:fulfillment   # local Redis + optional checks
 ```
 
-Production: DEPLOY post-deploy checklist + [`todo.md`](../../todo.md) P0 §2 (test-mode purchase + refund).
+Production: DEPLOY post-deploy checklist (test-mode purchase + refund).
 
 ## Tests
 
