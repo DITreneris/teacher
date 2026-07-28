@@ -6,8 +6,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); version
 
 ## [Unreleased]
 
-### Changed
-- Nothing yet.
+### Fixed
+- [`vercel.json`](vercel.json): remove deprecated top-level `public` so Vercel schema validation passes on Production deploys.
 
 ## [1.1.2] - 2026-05-20 - SEO/GEO, DS performance, and fulfillment env truth
 
