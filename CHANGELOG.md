@@ -12,6 +12,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); version
 
 ## [Unreleased]
 
+### Changed
+- PDF copy maturity pass (Beginners + Advanced): self-help voice for teachers and coaches; trimmed creator/ops jargon; version 1.1 (Sep 2026).
+
 ### Fixed
 - Ops mobile visual (`visual-ops-mobile`): raise `maxDiffPixelRatio` to 0.12 so shared Windows/Ubuntu Chromium baselines tolerate Inter AA drift; CI uploads `test-results/` on Playwright failure.
 

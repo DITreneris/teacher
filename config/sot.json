@@ -147,7 +147,7 @@
       "label": "Beginners \u2014 AI-Assisted Teaching Foundations",
       "chapters": [
         "5-minute AI safety start: teacher-in-the-loop rules",
-        "The Simple Prompt Formula",
+        "One prompt shape that works every time",
         "10 ready-to-use teacher prompts (lesson, assessment, feedback)",
         "Lesson packs: 30-min, 45-min, and differentiated",
         "Assessment and exit-ticket packs",
@@ -156,16 +156,16 @@
         "7-point AI output verification checklist",
         "Glossary and beginner mistakes to avoid",
         "Use this tomorrow: 5-step adoption workflow",
-        "Source appendix"
+        "Next steps"
       ]
     },
     "advanced": {
       "label": "Advanced \u2014 AI-Enhanced Instructional Design",
       "chapters": [
-        "Executive overview for curriculum leads",
+        "How this guide works",
         "Instructional design foundations table",
         "Bloom and DOK quick reference",
-        "Methodologist master prompt",
+        "Master prompt for coaches",
         "Backward design pipeline (UbD)",
         "UDL prompt system",
         "Differentiation transformations (DOK 1 to DOK 4)",
@@ -176,8 +176,8 @@
         "6-phase school rollout playbook",
         "QA, governance, risk register, and observation checklists",
         "90-day implementation roadmap",
-        "Three composite case studies (elementary, HS dept, district)",
-        "Source and license appendix"
+        "Three case studies (elementary, HS dept, district)",
+        "Sources appendix"
       ]
     }
   },
@@ -194,7 +194,7 @@
     "products": {
       "beginners": {
         "name": "Beginners \u2014 Prompt Anatomy",
-        "description": "A 12-page practical guide for teachers new to AI. Clear prompt patterns, classroom examples, and a simple verification workflow.",
+        "description": "A 12-page practical guide for teachers new to AI. Copy-paste prompts, classroom examples, and a verification workflow — use the same day.",
         "image": "/assets/pdf-covers/beginners.png",
         "price": "4.99",
         "currency": "USD",
@@ -203,7 +203,7 @@
       },
       "advanced": {
         "name": "Advanced \u2014 Prompt Anatomy",
-        "description": "A 24-page methodologist's guide for curriculum leads, instructional coaches, and PD trainers. Frameworks, audit rubrics, PD models, and rollout playbooks.",
+        "description": "A 24-page guide for lead teachers and instructional coaches. Frameworks, rubrics, and rollout tools you can use with your team.",
         "image": "/assets/pdf-covers/advanced.png",
         "price": "9.99",
         "currency": "USD",
