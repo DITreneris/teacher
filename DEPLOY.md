@@ -1,13 +1,13 @@
 ---
 status: active
 audience: both
-updated: 2026-07-28
+updated: 2026-09-03
 ---
 
 # Deployment — Classroom Prompt Builder
 
 **Canonical repository:** [github.com/DITreneris/teacher](https://github.com/DITreneris/teacher)  
-**Production URL:** [promptanatomy.online](https://promptanatomy.online/)  
+**Production URL:** [www.promptanatomy.online](https://www.promptanatomy.online/) (apex `promptanatomy.online` 308-redirects to `www`)  
 **Hosting:** Vercel (static files + serverless API routes, no build step)  
 **Parent brand:** [promptanatomy.app](https://www.promptanatomy.app/)
 
@@ -41,7 +41,7 @@ Vercel project → **Analytics** → Enable.
 
 ### 4. Add custom domain
 
-Vercel project → **Domains** → Add `promptanatomy.online` (and optionally `www.promptanatomy.online`).
+Vercel project → **Domains** → Add `promptanatomy.online` and `www.promptanatomy.online`. Set **`www.promptanatomy.online`** as the primary domain so apex redirects to `www`.
 
 Configure DNS at your registrar (example — use values Vercel shows in the dashboard):
 
@@ -52,22 +52,22 @@ Configure DNS at your registrar (example — use values Vercel shows in the dash
 
 ### 5. Verify after deploy
 
-- [ ] https://promptanatomy.online/ loads the app
-- [ ] https://promptanatomy.online/privacy.html loads
-- [ ] https://promptanatomy.online/terms.html loads
-- [ ] https://promptanatomy.online/robots.txt is reachable
-- [ ] https://promptanatomy.online/sitemap.xml is reachable
+- [ ] https://www.promptanatomy.online/ loads the app
+- [ ] https://www.promptanatomy.online/privacy.html loads
+- [ ] https://www.promptanatomy.online/terms.html loads
+- [ ] https://www.promptanatomy.online/robots.txt is reachable
+- [ ] https://www.promptanatomy.online/sitemap.xml is reachable
 - [ ] Copy prompt → toast “Prompt copied.”
 - [ ] PDF guide buttons open the correct Stripe Payment Links
-- [ ] Stripe webhook endpoint is configured: `https://promptanatomy.online/api/stripe-webhook`
-- [ ] Stripe Payment Links redirect to `https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}`
+- [ ] Stripe webhook endpoint is configured: `https://www.promptanatomy.online/api/stripe-webhook` (use `www` directly — do not rely on apex redirect)
+- [ ] Stripe Payment Links redirect to `https://www.promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}`
 - [ ] Stripe customer email receipts are enabled
 - [ ] Test purchase opens `success.html`, shows a one-click Download button within ~5 seconds, and sends a separate Resend email with a signed `/api/download?t=...` link
 - [ ] Submit sitemap in [Google Search Console](https://search.google.com/search-console)
-- [ ] [Bing Webmaster Tools](https://www.bing.com/webmasters) — add site, submit `https://promptanatomy.online/sitemap.xml`
-- [ ] Google Search Console — URL Inspection for `https://promptanatomy.online/` (request indexing after SEO metadata deploy)
+- [ ] [Bing Webmaster Tools](https://www.bing.com/webmasters) — add site, submit `https://www.promptanatomy.online/sitemap.xml`
+- [ ] Google Search Console — URL Inspection for `https://www.promptanatomy.online/` (request indexing after SEO metadata deploy)
 - [ ] Social preview sanity (after `og-image.png` deploy):
-  - [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) — Scrape Again for `https://promptanatomy.online/`
+  - [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) — Scrape Again for `https://www.promptanatomy.online/`
   - [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/)
   - [Twitter Card Validator](https://cards-dev.twitter.com/validator) — verify `summary_large_image` renders the new headline + brand row without clipping
   - Slack / Discord — paste the URL, verify the navy preview thumbnail (no broken glyph in upper-left, URL fully visible in lower-left)
@@ -119,7 +119,7 @@ Set these in Vercel Project Settings → Environment Variables. Do not commit se
 | Variable | Required | Purpose |
 |----------|----------|---------|
 | `STRIPE_SECRET_KEY` | Yes | Stripe API key used by the webhook to retrieve Checkout Sessions. |
-| `STRIPE_WEBHOOK_SECRET` | Yes | Verifies events from `https://promptanatomy.online/api/stripe-webhook`. |
+| `STRIPE_WEBHOOK_SECRET` | Yes | Verifies events from `https://www.promptanatomy.online/api/stripe-webhook`. |
 | `STRIPE_PRICE_BEGINNERS_PDF` | Yes | Stripe Price ID for the `$4.99` Beginners PDF Guide. |
 | `STRIPE_PRICE_ADVANCED_PDF` | Yes | Stripe Price ID for the `$9.99` Advanced Educators PDF Guide. |
 | `DOWNLOAD_TOKEN_SECRET` | Yes | HMAC secret for signed download links. Use a long random value. |
@@ -127,7 +127,7 @@ Set these in Vercel Project Settings → Environment Variables. Do not commit se
 | `FULFILLMENT_FROM_EMAIL` | Yes | Verified sender, for example `Prompt Anatomy <downloads@promptanatomy.online>`. |
 | `UPSTASH_REDIS_REST_URL` | Yes | Redis REST URL for fulfillment records and active download tokens. |
 | `UPSTASH_REDIS_REST_TOKEN` | Yes | Redis REST token. Legacy `KV_REST_API_*` and `VERCEL_KV_REST_API_*` names are also supported. |
-| `SITE_URL` | Yes | Canonical site URL used in emailed download links. Use `https://promptanatomy.online`. |
+| `SITE_URL` | Yes | Canonical site URL used in emailed download links. Use `https://www.promptanatomy.online`. |
 | `PDF_BEGINNERS_SOURCE_URL` | Yes | Private storage URL for the Beginners PDF. |
 | `PDF_ADVANCED_SOURCE_URL` | Yes | Private storage URL for the Advanced Educators PDF. |
 | `BLOB_READ_WRITE_TOKEN` | Yes | Required for server-side reads from private Vercel Blob PDF URLs. |
@@ -145,15 +145,15 @@ Set these in Vercel Project Settings → Environment Variables. Do not commit se
    - Copy each Payment Link's **Price ID** (`price_...`) into Vercel as `STRIPE_PRICE_BEGINNERS_PDF` / `STRIPE_PRICE_ADVANCED_PDF`. If these env vars are missing or point at a different Price than the Payment Link uses, the webhook cannot match the product unless metadata or the `$4.99` / `$9.99` amount fallback applies.
 3. **Set the success URL** on each Payment Link (Stripe Dashboard → Payment Link → After payment → "Don't show confirmation page → Redirect customers to your website") to:
    ```
-   https://promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}
+   https://www.promptanatomy.online/success.html?session_id={CHECKOUT_SESSION_ID}
    ```
    The `{CHECKOUT_SESSION_ID}` literal is replaced by Stripe with the real session id and consumed by `success.html`.
 4. **Enable Stripe receipts** for both products (Stripe Dashboard → Settings → Customer emails → Successful payments → ON). Optionally enable invoice creation on the Payment Link if you want a paid invoice PDF in addition to the receipt.
-5. Add a live webhook endpoint for **`https://promptanatomy.online/api/stripe-webhook`** (not `promptanatomy.app` unless that domain is the **same** Vercel project and shares the same Redis env vars).
+5. Add a live webhook endpoint for **`https://www.promptanatomy.online/api/stripe-webhook`** (not apex-only, not `promptanatomy.app` unless that domain is the **same** Vercel project and shares the same Redis env vars).
 6. Subscribe to `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
 7. Use Stripe CLI locally to forward events when testing webhook changes.
 
-**Critical:** Payment Links redirect buyers to `promptanatomy.online/success.html` and the download API is `promptanatomy.online/api/download-link`. Fulfillment state is stored in the **promptanatomy.online** Vercel project's Redis. A webhook pointing at `https://www.promptanatomy.app/api/stripe-webhook` (or any other host) will return `200` but the buyer will still see *"We could not find this checkout session"* on `.online` because that deployment never wrote `fulfillment:cs_...`.
+**Critical:** Payment Links redirect buyers to `www.promptanatomy.online/success.html` and the download API is `www.promptanatomy.online/api/download-link`. Fulfillment state is stored in the **promptanatomy.online** Vercel project's Redis. A webhook pointing at `https://www.promptanatomy.app/api/stripe-webhook` (or any other host) will return `200` but the buyer will still see *"We could not find this checkout session"* because that deployment never wrote `fulfillment:cs_...`. Apex `promptanatomy.online` 308-redirects to `www`; register Stripe webhook and success URLs on **`www`** directly.
 
 ### PDF storage (Vercel Blob — recommended)
 
@@ -176,10 +176,10 @@ Production PDFs must not live in the public site root. Local-only copies may sit
 
 This means the Stripe webhook never wrote `fulfillment:cs_...` to **promptanatomy.online's** Redis (or used the wrong Stripe mode). The buyer still paid; fix fulfillment and **replay** the event.
 
-**First check:** Stripe → Webhooks → which URL received `checkout.session.completed`? If it is `promptanatomy.app` (or any host other than `promptanatomy.online`), add a second endpoint for `https://promptanatomy.online/api/stripe-webhook`, paste its signing secret into the **promptanatomy.online** Vercel env as `STRIPE_WEBHOOK_SECRET`, then **Resend** the event to the `.online` endpoint.
+**First check:** Stripe → Webhooks → which URL received `checkout.session.completed`? If it is `promptanatomy.app`, apex-only `promptanatomy.online`, or any host other than `www.promptanatomy.online`, add or fix the endpoint for `https://www.promptanatomy.online/api/stripe-webhook`, paste its signing secret into the **promptanatomy.online** Vercel env as `STRIPE_WEBHOOK_SECRET`, then **Resend** the event.
 
-1. **Stripe Dashboard → Developers → Webhooks** → your `https://promptanatomy.online/api/stripe-webhook` endpoint → open the `checkout.session.completed` event. Read the response body (`fulfillment` or `detail` field) and HTTP status. A `200` with only `{ "received": true }` and no `fulfillment` field on the **wrong host** does not help `.online`.
-2. **Vercel → Project → Settings → Environment Variables** (Production): confirm all of `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_BEGINNERS_PDF`, `STRIPE_PRICE_ADVANCED_PDF`, `DOWNLOAD_TOKEN_SECRET`, `RESEND_API_KEY`, `FULFILLMENT_FROM_EMAIL`, `UPSTASH_REDIS_REST_*`, `PDF_BEGINNERS_SOURCE_URL`, `PDF_ADVANCED_SOURCE_URL`, `BLOB_READ_WRITE_TOKEN`, and `SITE_URL=https://promptanatomy.online` are set. `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` must be **live** keys if the Payment Link is live (not test).
+1. **Stripe Dashboard → Developers → Webhooks** → your `https://www.promptanatomy.online/api/stripe-webhook` endpoint → open the `checkout.session.completed` event. Read the response body (`fulfillment` or `detail` field) and HTTP status. A `200` with only `{ "received": true }` and no `fulfillment` field on the **wrong host** does not help.
+2. **Vercel → Project → Settings → Environment Variables** (Production): confirm all of `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_BEGINNERS_PDF`, `STRIPE_PRICE_ADVANCED_PDF`, `DOWNLOAD_TOKEN_SECRET`, `RESEND_API_KEY`, `FULFILLMENT_FROM_EMAIL`, `UPSTASH_REDIS_REST_*`, `PDF_BEGINNERS_SOURCE_URL`, `PDF_ADVANCED_SOURCE_URL`, `BLOB_READ_WRITE_TOKEN`, and `SITE_URL=https://www.promptanatomy.online` are set. `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` must be **live** keys if the Payment Link is live (not test).
 3. **Payment Link metadata**: each link should have `product` = `beginners` or `advanced`.
 4. **Resend**: domain/sender `FULFILLMENT_FROM_EMAIL` must be verified; check Resend dashboard for bounces.
 5. After fixing env/metadata, **Replay** the event in Stripe (Webhooks → event → Resend). Or run locally: `stripe events resend evt_...`.

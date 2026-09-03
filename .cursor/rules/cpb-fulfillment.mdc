@@ -18,9 +18,9 @@ alwaysApply: false
 
 ## Golden rule (same production host)
 
-Payment Link **success URL**, Stripe **webhook URL**, Upstash Redis, and Vercel **Production env** must all target the **same** buyer-facing domain (e.g. `promptanatomy.online`).
+Payment Link **success URL**, Stripe **webhook URL**, Upstash Redis, and Vercel **Production env** must all target the **same** buyer-facing domain (e.g. `www.promptanatomy.online`).
 
-**Anti-pattern:** webhook on `promptanatomy.app` while buyers land on `promptanatomy.online` → webhook returns 200 but `success.html` shows “session not found”. See [`memo_pdf.md`](../../memo_pdf.md) and [`DEPLOY.md`](../../DEPLOY.md).
+**Anti-pattern:** webhook on `promptanatomy.app` or apex-only `promptanatomy.online` while buyers land on `www.promptanatomy.online` → webhook may fail or return 200 on the wrong host while `success.html` shows “session not found”. See [`memo_pdf.md`](../../memo_pdf.md) and [`DEPLOY.md`](../../DEPLOY.md).
 
 ## Environment (all or nothing)
 

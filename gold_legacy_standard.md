@@ -141,10 +141,10 @@ The Stripe Payment Link success URL, Stripe webhook URL, Vercel Production env, 
 For this repo, that host is:
 
 ```text
-https://promptanatomy.online
+https://www.promptanatomy.online
 ```
 
-Never point the webhook at `promptanatomy.app` while buyers return to `promptanatomy.online`.
+Never point the webhook at `promptanatomy.app` or apex-only `promptanatomy.online` while buyers return to `www.promptanatomy.online`.
 
 Required fulfillment env set:
 

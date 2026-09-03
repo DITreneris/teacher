@@ -26,7 +26,7 @@ updated: 2026-07-28
 | **Private PDF storage** | Vercel Blob (recommended); served via `GET /api/download?t=...`. |
 | **Success page** | Polls `GET /api/download-link?session_id=...` for a 15-minute in-page link. |
 
-**Golden rule:** The domain in the Payment Link **success URL**, the **webhook URL**, and the **Vercel project env** must be the **same production host**. Fulfillment data does not sync across domains or projects.
+**Golden rule:** The domain in the Payment Link **success URL**, the **webhook URL**, and the **Vercel project env** must be the **same production host**. Fulfillment data does not sync across domains or projects. For **promptanatomy.online**, use **`www.promptanatomy.online`** directly (apex 308-redirects to `www`; do not register Stripe webhook on apex-only URL).
 
 ---
 
@@ -65,7 +65,7 @@ Use this as a copy-paste gate before announcing paid PDFs.
   Keep `{CHECKOUT_SESSION_ID}` literally—Stripe substitutes it.
 - [ ] **Metadata** on each Payment Link: `product` = `beginners` | `advanced` (or your internal ids). Do not rely only on amount matching.
 - [ ] **Customer emails → Successful payments** enabled (Stripe receipt = second email you promise on the site).
-- [ ] **Webhook endpoint** on **YOUR_DOMAIN** only:
+- [ ] **Webhook endpoint** on **YOUR_DOMAIN** only (for this site: `https://www.promptanatomy.online/api/stripe-webhook`):
   ```text
   https://YOUR_DOMAIN/api/stripe-webhook
   ```

@@ -17,14 +17,14 @@ description: Diagnose and fix Stripe PDF fulfillment on Classroom Prompt Builder
 **Same production host** for:
 
 1. Payment Link success URL (`https://YOUR_DOMAIN/success.html?session_id={CHECKOUT_SESSION_ID}`)
-2. Stripe webhook (`https://YOUR_DOMAIN/api/stripe-webhook`)
+2. Stripe webhook (`https://www.promptanatomy.online/api/stripe-webhook`)
 3. Vercel Production env + Upstash Redis for that project
 
 `.app` webhook + `.online` redirect = empty fulfillment lookup.
 
 ## Ordered checklist
 
-1. Confirm buyer domain matches Vercel project (e.g. `promptanatomy.online`).
+1. Confirm buyer domain matches Vercel project (e.g. `www.promptanatomy.online`).
 2. Stripe Dashboard: webhook on **that** domain only; events `checkout.session.completed`.
 3. Vercel Production: full env set per `memo_pdf.md` §3 and `DEPLOY.md` (all or nothing).
 4. `GET /api/fulfillment-health` → `ok: true`, `missing: []`.

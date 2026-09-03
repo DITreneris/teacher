@@ -293,7 +293,7 @@ function getSiteUrl(origin) {
   if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/$/, '');
   if (origin) return origin.replace(/\/$/, '');
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return 'https://promptanatomy.online';
+  return 'https://www.promptanatomy.online';
 }
 
 function getLocalPdfPath(product) {
